@@ -60,9 +60,13 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
   | TEST | test code |
   | STUDY | personal study code |
   EX)
+
   > [BE] : [FEAT] Jwt 토큰 생성 기능 구현
+
   > [FE] : [FEAT] 서비스 안내 페이지 HTML CSS 완성 // 데이터 처리는 구현 중
+
   > [COMMON] : [STUDY] 1주차 회원가입 기능 구현
+
 - 규칙
   - 제목은 전체 내용을 간결하게 요약할 것.
   - 함수 기반의 커밋을 진행하며, 함수 작성 이유를 담을 것.
