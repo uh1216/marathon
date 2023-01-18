@@ -132,9 +132,11 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
   ex) UserDto(요청dto), UserResponseDto(응답dto), User(entity)
   → 단 요청과 응답이 다르지 않을경우 UserDto로 통일
 
-- 객체생성시 setter 로할지 builder 로할지
+- 객체생성시 builder로 생성하기
 
 - CRUD 메소드 네이밍
+
+- 구글 코드 컨벤션 IDE적용 
 
 ---
 
