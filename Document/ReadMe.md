@@ -1,4 +1,4 @@
-# 팀 규칙 / 깃 콘벤션 / 정리
+# 팀 규칙 / 콘벤션 / 정리
 
 핵심 => 부가기능 => 심화기능 :: 단계를 나누자
 
@@ -41,6 +41,8 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 
 # 1. Conventions
 
+---
+
 ### - Git 메세지 컨벤션
 
 > [prefix]: [type] #issue 제목
@@ -79,7 +81,73 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 | study  | 개인용 제출 브랜치, master에 머지 안함          |
 | source | 기타 자료 보관용 저장소 브랜치                  |
 
-# 2. Planning
+---
+
+### - 프론트 컨벤션
+
+- let, const로 변수 선언하기
+
+- 변수, 함수명 모두 Camel Case로 작성
+
+- CSS의 경우 **[페이지 or 컴포넌트 이름].module.css** 를 활용
+  CSS 모듈을 사용해서 각자 class 이름은 겹쳐도 상관없으니 편한대로 작명
+
+- CSS 파일의 경우 해당하는 컴포넌트 / 페이지 폴더 안에 JSX파일과 함께 생성한다.
+
+- 동적 페이지를 위한 Grid 레이아웃은 공통적으로 BootStrap의 Class 사용
+  ”**md**(768≤ : 테블릿 화면), **lg**(960px≤ : 데스크탑 화면) 명만 사용 → 모바일은 별도 grid X”
+
+- **Boolean 변수**는 “is”로 시작하기
+
+- JSX 파일 구조에서 변수 - 함수 - useEffet - HTML 순으로 구성하기. Styled Components를 사용시 useEffect 다음 부분에 만들어서 사용하기. 각 부분은 // 변수 // 함수 // useEffect 식으로 구분해 주기.
+
+- 함수와 변수를 작성 할 때 **주석**으로 무엇에 활용하는 용도인지 간단하게 적어주기
+
+- 메인 함수 제외하고는 모두 화살표 함수로 표기
+
+- Redux의 initialState를 바꾸는 변경함수는 chang변수명(Camel 케이스) 규칙을 적용 하자.
+  ps. 참고로 Redux의 상태변경 함수(Slice)안에서는 ajax(우린 axios 활용)사용하면 안된다.
+  통신은 전부 Component안에서 수행해야 하며 아마 대부분 useEffect 훅에서 사용 될 예정.
+
+- 프론트의 스켈레톤 코드 : 페이지 별로 분할, 각 페이지의 별로 또 컴포넌트 폴더를 분할,
+  각 페이지 or 기능을 중심으로 redux store를 분할, axios를 수행할 통신 기능을 분할,
+  서버에 요청시 자동으로 해더에 쿠키(JWT or 세션쿠키) 달아주는 custom axios
+
+* 각 store를 중심으로 별도의 axios용 함수들을 모아 놓는 클래스 파일 모듈화
+
+---
+
+### - 백엔드 컨벤션
+
+- 의존성 주입방법 : 생성자 주입
+- 로그 기록 방식
+  `LOGGER.info("[loadUserByUsername] loadUserByUsername 수행. username : {}", username);`
+- dto, entity 네이밍
+  ex) UserDto(요청dto), UserResponseDto(응답dto), User(entity)
+  → 단 요청과 응답이 다르지 않을경우 UserDto로 통일
+- 객체생성시 setter 로할지 builder 로할지
+- CRUD 메소드 네이밍
+
+---
+
+# 2. Planning && 아이디어 정리
+
+---
+
+### 아이디어 기능정리
+
+![아이디어](./img/아이디어1.png)
+![아이디어](./img/아이디어2.png)
+![아이디어](./img/아이디어3.png)
+![아이디어](./img/아이디어4.png)
+
+### FlowChart
+
+![플로우차트](./img/FlowChart.png)
+
+### ERD 다이어그램 (수정중)
+
+![ERD](./img/ERD.png)
 
 ---
 
