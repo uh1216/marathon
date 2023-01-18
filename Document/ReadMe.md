@@ -169,7 +169,7 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 
 ![플로우차트](./img/FlowChart.png)
 
-### ERD 다이어그램 (수정중)
+### ERD 다이어그램
 
 ![ERD](./img/ERD.png)
 
