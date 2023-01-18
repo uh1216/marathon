@@ -63,7 +63,7 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
   > [BE] : [FEAT] Jwt 토큰 생성 기능 구현
   - [FE] : [FEAT] 서비스 안내 페이지 HTML CSS 완성 // 데이터 처리는 구현 중
   - [COMMON] : [STUDY] 1주차 회원가입 기능 구현
-- 규칙
+    > 규칙
   - 제목은 전체 내용을 간결하게 요약할 것.
   - 함수 기반의 커밋을 진행하며, 함수 작성 이유를 담을 것.
   - 함수가 사용된 기능 및 관련 기능을 밝힐 것.
@@ -120,17 +120,37 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 ### - 백엔드 컨벤션
 
 - 의존성 주입방법 : 생성자 주입
+
 - 로그 기록 방식
   `LOGGER.info("[loadUserByUsername] loadUserByUsername 수행. username : {}", username);`
+
 - dto, entity 네이밍
   ex) UserDto(요청dto), UserResponseDto(응답dto), User(entity)
   → 단 요청과 응답이 다르지 않을경우 UserDto로 통일
+
 - 객체생성시 setter 로할지 builder 로할지
+
 - CRUD 메소드 네이밍
 
 ---
 
-# 2. Planning && 아이디어 정리
+# 2. Planning
+
+---
+
+### - 프로젝트 명세서 (일단 백엔드만)
+
+- SpringBoot 2.5.6
+  - Spring Security
+  - Spring Data JPA
+  - Lombok
+  - swagger (차후 수정)
+  - mysql driver
+  - spring web
+  - spring configuration processor
+  - jjwt 0.9.1
+- MySQL 8.0.31
+- API 통합 테스트 툴 : postman
 
 ---
 
@@ -151,6 +171,19 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 
 ---
 
+### API 명세서 (준비중)
+
+---
+
 # 3. Design & MookUp
 
 ---
+
+- 거의 마무리 단계. 나중에 이미지화해서 옮길 예정
+  https://ramen-buang.notion.site/Mock-Up-Figma-695ed13d97654180bce7212121bcadfc
+
+---
+
+## 프로젝트 노션
+
+https://ramen-buang.notion.site/SSAFY-2-1-4c60153fe8824115a14fcdabecdd8169
