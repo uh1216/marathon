@@ -1,7 +1,7 @@
 import React from "react";
-import style from "./MainPage.module.css";
+import style from "./Main.module.css";
 
-export default function MainPage() {
+export default function Main() {
   return (
     <>
       <div className={style.mainBanner}></div>

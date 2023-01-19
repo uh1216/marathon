@@ -1,12 +1,14 @@
+import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import logo from "../../img/logoMain.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faTimes } from "@fortawesome/free-solid-svg-icons";
-import logo from "../../img/logoMain.png";
-import styled from "styled-components";
-import React, { useState } from "react";
 
 export default function Header() {
   const [isToggled, setIsToggled] = useState(false);
   const [isUserToggled, setIsUserToggled] = useState(false);
+  const navigate = useNavigate();
 
   const Header = styled.div`
     max-width: 1600px;
@@ -36,14 +38,13 @@ export default function Header() {
     .header__menulist {
       list-style: none;
       display: flex;
-      margin-left: 5px;
       margin-bottom: 0px;
+      margin-left: 5px;
       font-size: 1em;
     }
 
     .sub_menu {
       color: black;
-      padding-top: 10px;
       border-radius: 10px;
       background-color: white;
       width: 165px;
@@ -70,7 +71,8 @@ export default function Header() {
     }
 
     .sub_menu dl {
-      margin-left: 10px;
+      margin-top: 1rem;
+      margin-left: 15px;
     }
 
     .sub_menu dl:hover {
@@ -135,15 +137,15 @@ export default function Header() {
 
     @media screen and (max-width: 992px) {
       font-size: 14px;
+
       .header__menulist {
         margin-left: -10px;
       }
 
       .sub_menu {
         top: 60px;
-        left: 5px;
+        left: 6px;
         width: 142px;
-        height: 113px;
       }
 
       li {
@@ -172,7 +174,7 @@ export default function Header() {
         top: 100%;
         display: flex;
         flex-direction: column;
-        width: 20%;
+        width: 195px;
         background-color: white;
         margin-top: 0px;
         margin-right: 0px;
@@ -186,9 +188,9 @@ export default function Header() {
         top: 100%;
         display: flex;
         flex-direction: column;
-        width: 23%;
+        width: 195px;
         background-color: white;
-        margin-top: 0px;
+        margin-top: 0 auto;
         margin-left: 0px;
         position: absolute;
         overflow: hidden;
@@ -204,7 +206,7 @@ export default function Header() {
 
       .header__right li {
         text-align: right;
-        margin-right: 40px;
+        margin-right: 32px;
       }
 
       .header_eatspace {
@@ -217,6 +219,7 @@ export default function Header() {
 
       .logo {
         margin-left: 0px;
+        margin-top: -10px;
       }
 
       .user {
@@ -255,7 +258,7 @@ export default function Header() {
       </div>
 
       <div className="logo">
-        <img src={logo} alt="" />
+        <img onClick={() => navigate("/")} src={logo} alt="" />
       </div>
 
       <div
@@ -282,7 +285,7 @@ export default function Header() {
             <dl>지정병원 소개</dl>
           </div>
         </li>
-        <li>공지사항</li>
+        <li onClick={() => navigate("/notice")}>공지사항</li>
         <li>
           스스로 학습
           <div className="sub_menu">
