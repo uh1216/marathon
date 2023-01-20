@@ -102,12 +102,6 @@
   width: 78%;
 }
 
-@media screen and (max-width: 992px) {
-  .centerdiv {
-    font-size: 0.7rem;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .footer {
     height: auto;
