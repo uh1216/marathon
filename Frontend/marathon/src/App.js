@@ -1,10 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HeaderFooterPage from "./pages/router-page/HeaderFooterPage";
-import HeaderPage from "./pages/router-page/HeaderFooterPage";
+import HeaderPage from "./pages/router-page/HeaderPage";
 import Main from "./pages/Main";
 import Notice from "./pages/Notice";
 import User from "./pages/User";
+import "./App.css";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route path="/mypage" element={<div>마이페이지</div>} />
         </Route>
         <Route element={<HeaderPage />}>
-          <Route path="/user" element={<User />} />
+          <Route path="/user/*" element={<User />} />
         </Route>
       </Routes>
     </>

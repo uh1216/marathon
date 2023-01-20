@@ -174,7 +174,7 @@ export default function Header() {
         top: 100%;
         display: flex;
         flex-direction: column;
-        width: 195px;
+        width: 200px;
         background-color: white;
         margin-top: 0px;
         margin-right: 0px;
@@ -188,7 +188,7 @@ export default function Header() {
         top: 100%;
         display: flex;
         flex-direction: column;
-        width: 195px;
+        width: 200px;
         background-color: white;
         margin-top: 0 auto;
         margin-left: 0px;
