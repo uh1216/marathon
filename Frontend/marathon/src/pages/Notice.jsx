@@ -1,8 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import NoticeBoard from "../components/notice/NoticeBoard";
-import NoticeCreate from "../components/notice/NoticeCreate";
-import style from "./Notice.module.css";
+import NoticeBoard from "components/notice/NoticeBoard";
 
 export default function Notice() {
   return (
