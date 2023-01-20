@@ -1,13 +1,12 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import NoticeBoard from "../components/notice/NoticeBoard";
+
 export default function Notice() {
   return (
-    <>
+    <div className="contanier">
       <div>배너 이미지 삽입</div>
-      <Routes>
-        <Route path="/:pagenum" element={<div>리스트 들어감</div>}></Route>
-      </Routes>
+      <NoticeBoard />
       <div>잘 나오냐?</div>
-    </>
+    </div>
   );
 }
