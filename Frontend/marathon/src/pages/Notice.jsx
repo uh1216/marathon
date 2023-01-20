@@ -1,5 +1,5 @@
 import React from "react";
-import NoticeBoard from "../components/notice/NoticeBoard";
+import NoticeBoard from "components/notice/NoticeBoard";
 
 export default function Notice() {
   return (
