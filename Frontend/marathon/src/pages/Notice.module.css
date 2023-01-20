@@ -1,0 +1,11 @@
+.banner {
+  background: url(../../public/img/mainBanner.png.png);
+  background-color: black;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+  height: 400px;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}

@@ -1,12 +1,17 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 import NoticeBoard from "../components/notice/NoticeBoard";
+import NoticeCreate from "../components/notice/NoticeCreate";
+import style from "./Notice.module.css";
 
 export default function Notice() {
   return (
-    <div className="contanier">
-      <div>배너 이미지 삽입</div>
-      <NoticeBoard />
-      <div>잘 나오냐?</div>
+    <div>
+      <div className={style.banner}></div>
+      <Routes>
+        <Route path="/" element={<NoticeBoard />} />
+        <Route path="notice-create" element={<NoticeCreate />} />
+      </Routes>
     </div>
   );
 }
