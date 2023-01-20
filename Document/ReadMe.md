@@ -35,8 +35,6 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 
 2월 10일 마감 (노력!)
 
-- 기본적인 아이디어들 정리되면 프론트는 목업, 백은 테이블 + API 설계하기
-
 ---
 
 # 1. Conventions
@@ -102,11 +100,16 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 
 - **Boolean 변수**는 “is”로 시작하기
 
-- JSX 파일 구조에서 변수 - 함수 - useEffet - HTML 순으로 구성하기. Styled Components를 사용시 useEffect 다음 부분에 만들어서 사용하기. 각 부분은 // 변수 // 함수 // useEffect 식으로 구분해 주기.
+- JSX 파일 구조에서 변수 - 함수 - useEffet - HTML 순으로 구성하기. Styled Components를 사용시 useEffect 다음 부분에 만들어서 사용하기. 각 부분은 // 변수 // 함수 // useEffect 식으로
+  구분해 주기.
 
 - 함수와 변수를 작성 할 때 **주석**으로 무엇에 활용하는 용도인지 간단하게 적어주기
 
 - 메인 함수 제외하고는 모두 화살표 함수로 표기
+
+- import로 본문에 이미지 자체를 가져 올 때에는 꼭 src 폴더 안에 이미지 파일을 위치시켜야 한다.
+  반대로 src를 통해서 css로 간접적으로 이미지를 가져올 때에는 꼭 public 폴더 안에 넣어야 한다.
+  ( 안지키면 어차피 에러나서 강제로 지켜야 한다. )
 
 - Redux의 initialState를 바꾸는 변경함수는 chang변수명(Camel 케이스) 규칙을 적용 하자.
   ps. 참고로 Redux의 상태변경 함수(Slice)안에서는 ajax(우린 axios 활용)사용하면 안된다.
@@ -116,7 +119,14 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
   각 페이지 or 기능을 중심으로 redux store를 분할, axios를 수행할 통신 기능을 분할,
   서버에 요청시 자동으로 해더에 쿠키(JWT or 세션쿠키) 달아주는 custom axios
 
-* 각 store를 중심으로 별도의 axios용 함수들을 모아 놓는 클래스 파일 모듈화
+- 각 store를 중심으로 별도의 axios용 함수들을 모아 놓는 클래스 파일 모듈화
+
+- CSS의 클래스 명은 Snake case, 변수명 선언은 Camel case, 파일 이름은 Pascal case
+
+- src는 절대 경로가 설정되어 있지만 public은 상대경로로 입력해야됨!!
+
+- 폰트 사이즈는 em 단위 쓰기, 루트 폰트 사이즈 16px 기준 - App.css에 설정되어 있음  
+  해상도가 작아지면 개별 컴포넌트에서 미디어 쿼리를 이용해 부모 폰트 사이즈를 변경해주기
 
 ---
 
