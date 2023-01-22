@@ -20,7 +20,6 @@ export default function Header() {
     color: black;
     font-size: 16px;
     position: relative;
-    box-shadow: 0px 3px 4px 1px rgb(67, 67, 65);
 
     .clickable {
       cursor: pointer;
@@ -181,6 +180,7 @@ export default function Header() {
         position: absolute;
         overflow: hidden;
         box-shadow: 0px 3px 4px 1px rgb(67, 67, 65);
+        z-index: 2;
       }
 
       .header__menulist {
@@ -195,6 +195,7 @@ export default function Header() {
         position: absolute;
         overflow: hidden;
         box-shadow: 0px 3px 4px 1px rgb(67, 67, 65);
+        z-index: 2;
       }
 
       .header__menulist li,
@@ -242,142 +243,144 @@ export default function Header() {
   `;
 
   return (
-    <Header isToggled={isToggled} isUserToggled={isUserToggled}>
-      <div
-        className="toggle"
-        onClick={() => {
-          setIsToggled(!isToggled);
-        }}
-      >
-        <div style={{ width: "10px" }}>
-          <FontAwesomeIcon
-            className="clickable"
-            icon={!isToggled ? faBars : faTimes}
-          />
-        </div>
-      </div>
-
-      <div className="logo">
-        <img onClick={() => navigate("/")} src={logo} alt="" />
-      </div>
-
-      <div
-        className="user"
-        onClick={() => {
-          setIsUserToggled(!isUserToggled);
-        }}
-      >
-        <div style={{ width: "30px" }}>
-          <FontAwesomeIcon
-            className="clickable"
-            icon={!isUserToggled ? faUser : faTimes}
-          />
-        </div>
-      </div>
-
-      <ul className="header__menulist">
-        <li
+    <div style={{ boxShadow: "0px 3px 4px 1px rgb(67, 67, 65)", zIndex: "2" }}>
+      <Header isToggled={isToggled} isUserToggled={isUserToggled}>
+        <div
+          className="toggle"
           onClick={() => {
-            if (isToggled) setIsToggled(!isToggled);
+            setIsToggled(!isToggled);
           }}
         >
-          상담신청
-        </li>
-        <li
-          onClick={() => {
-            if (isToggled) setIsToggled(!isToggled);
-          }}
-        >
-          서비스 안내
-          <div className="sub_menu">
-            <dl
-              onClick={() => {
-                if (isToggled) setIsToggled(!isToggled);
-              }}
-            >
-              서비스 정보
-            </dl>
-            <dl
-              onClick={() => {
-                if (isToggled) setIsToggled(!isToggled);
-              }}
-            >
-              파트너 재활사 소개
-            </dl>
-            <dl
-              onClick={() => {
-                if (isToggled) setIsToggled(!isToggled);
-              }}
-            >
-              지정병원 소개
-            </dl>
+          <div style={{ width: "10px" }}>
+            <FontAwesomeIcon
+              className="clickable"
+              icon={!isToggled ? faBars : faTimes}
+            />
           </div>
-        </li>
-        <li
+        </div>
+
+        <div className="logo">
+          <img onClick={() => navigate("/")} src={logo} alt="" />
+        </div>
+
+        <div
+          className="user"
           onClick={() => {
-            if (isToggled) setIsToggled(!isToggled);
-            navigate("/notice");
+            setIsUserToggled(!isUserToggled);
           }}
         >
-          공지사항
-        </li>
-        <li
-          onClick={() => {
-            if (isToggled) setIsToggled(!isToggled);
-          }}
-        >
-          스스로 학습
-          <div className="sub_menu">
-            <dl
-              onClick={() => {
-                if (isToggled) setIsToggled(!isToggled);
-              }}
-            >
-              색깔 위치 맞추기
-            </dl>
-            <dl
-              onClick={() => {
-                if (isToggled) setIsToggled(!isToggled);
-              }}
-            >
-              그림 카드 맞추기
-            </dl>
-            <dl
-              onClick={() => {
-                if (isToggled) setIsToggled(!isToggled);
-              }}
-            >
-              도형 위치 맞추기
-            </dl>
+          <div style={{ width: "30px" }}>
+            <FontAwesomeIcon
+              className="clickable"
+              icon={!isUserToggled ? faUser : faTimes}
+            />
           </div>
-        </li>
-        <li
-          onClick={() => {
-            if (isToggled) setIsToggled(!isToggled);
-          }}
-        >
-          수업 예약
-        </li>
-      </ul>
+        </div>
 
-      <div className="header_eatspace"></div>
+        <ul className="header__menulist">
+          <li
+            onClick={() => {
+              if (isToggled) setIsToggled(!isToggled);
+            }}
+          >
+            상담신청
+          </li>
+          <li
+            onClick={() => {
+              if (isToggled) setIsToggled(!isToggled);
+            }}
+          >
+            서비스 안내
+            <div className="sub_menu">
+              <dl
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                }}
+              >
+                서비스 정보
+              </dl>
+              <dl
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                }}
+              >
+                파트너 재활사 소개
+              </dl>
+              <dl
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                }}
+              >
+                지정병원 소개
+              </dl>
+            </div>
+          </li>
+          <li
+            onClick={() => {
+              if (isToggled) setIsToggled(!isToggled);
+              navigate("/notice");
+            }}
+          >
+            공지사항
+          </li>
+          <li
+            onClick={() => {
+              if (isToggled) setIsToggled(!isToggled);
+            }}
+          >
+            스스로 학습
+            <div className="sub_menu">
+              <dl
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                }}
+              >
+                색깔 위치 맞추기
+              </dl>
+              <dl
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                }}
+              >
+                그림 카드 맞추기
+              </dl>
+              <dl
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                }}
+              >
+                도형 위치 맞추기
+              </dl>
+            </div>
+          </li>
+          <li
+            onClick={() => {
+              if (isToggled) setIsToggled(!isToggled);
+            }}
+          >
+            수업 예약
+          </li>
+        </ul>
 
-      <ul className="header__right">
-        <li
-          onClick={() => {
-            if (isUserToggled) setIsUserToggled(!isUserToggled);
-          }}
-        >
-          로그인
-        </li>
-        <li
-          onClick={() => {
-            if (isUserToggled) setIsUserToggled(!isUserToggled);
-          }}
-        >
-          회원가입
-        </li>
-      </ul>
-    </Header>
+        <div className="header_eatspace"></div>
+
+        <ul className="header__right">
+          <li
+            onClick={() => {
+              if (isUserToggled) setIsUserToggled(!isUserToggled);
+            }}
+          >
+            로그인
+          </li>
+          <li
+            onClick={() => {
+              if (isUserToggled) setIsUserToggled(!isUserToggled);
+            }}
+          >
+            회원가입
+          </li>
+        </ul>
+      </Header>
+    </div>
   );
 }
