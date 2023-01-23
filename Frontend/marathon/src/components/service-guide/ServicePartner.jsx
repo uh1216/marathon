@@ -19,7 +19,7 @@ export default function ServicePartner() {
     <>
       <div className={style.side_right_board}>
         <h4 style={{ fontWeight: "bold" }}>파트너 재활사 소개</h4>
-        <hr style={{ marginBottom: "20px" }} />
+        <hr />
         <div className={style.card_box}>
           <div className={style.card_img + " " + style.fl}>
             <img src={Doctor1} alt="" />
