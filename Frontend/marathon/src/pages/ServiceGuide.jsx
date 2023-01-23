@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import SideNav from "components/common/SideNav";
 import ServiceInfo from "components/service-guide/ServiceInfo";
+import ServicePartner from "components/service-guide/ServicePartner";
 
 export default function ServiceGuide() {
   const sideNavTitle = "서비스 안내";
@@ -29,7 +30,7 @@ export default function ServiceGuide() {
           />
           <Routes>
             <Route path="/" element={<ServiceInfo />} />
-            <Route path="/partners" element={<div>파트너당</div>} />
+            <Route path="/partners" element={<ServicePartner />} />
           </Routes>
         </div>
       </div>

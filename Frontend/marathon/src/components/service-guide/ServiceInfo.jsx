@@ -13,7 +13,7 @@ export default function ServiceInfo() {
     <div className={style.side_right_board}>
       <h1>언어 재활이 필요한 대상</h1>
       <hr />
-      <h4>신경언어장애</h4>
+      <h4 style={{ fontWeight: "bold" }}>신경언어장애</h4>
       <p style={{ color: "gray" }}>
         Acquired neurogenic communication disorders
       </p>

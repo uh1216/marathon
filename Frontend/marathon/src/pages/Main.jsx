@@ -58,7 +58,7 @@ export default function Main() {
               상호작용 할 수 있는 훈련용 도구들을 지원합니다.
             </p>
           </div>
-          <div style={{ clear: "both" }}></div>
+          <div style={{ clear: "both" }} />
           <div className={style.main_img_board}>
             <img className={style.card2 + " " + style.fl} src={Main3} alt="" />
             <div className={style.card3 + " " + style.fl}>
@@ -76,7 +76,7 @@ export default function Main() {
               </div>
             </div>
           </div>
-          <div style={{ clear: "both" }}></div>
+          <div style={{ clear: "both" }} />
           <div className={style.main_img_board}>
             <img className={style.card2 + " " + style.fr} src={Main4} alt="" />
             <div className={style.card3 + " " + style.fr}>
@@ -94,7 +94,7 @@ export default function Main() {
               </div>
             </div>
           </div>
-          <div style={{ clear: "both" }}></div>
+          <div style={{ clear: "both" }} />
           <hr style={{ fontWeight: "bold" }} />
           <div className={style.last_box}>
             <h3 style={{ color: "blue" }}>재활의 시작에서 사회복귀 까지</h3>

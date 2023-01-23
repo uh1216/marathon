@@ -287,17 +287,20 @@ export default function Header() {
           >
             상담신청
           </li>
-          <li
-            onClick={() => {
-              if (isToggled) setIsToggled(!isToggled);
-              navigate("/guide");
-            }}
-          >
-            서비스 안내
+          <li>
+            <span
+              onClick={() => {
+                if (isToggled) setIsToggled(!isToggled);
+                navigate("/guide");
+              }}
+            >
+              서비스 안내
+            </span>
             <div className="sub_menu">
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  navigate("/guide");
                 }}
               >
                 서비스 정보
@@ -305,6 +308,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  navigate("/guide/partners");
                 }}
               >
                 파트너 재활사 소개
@@ -326,12 +330,14 @@ export default function Header() {
           >
             공지사항
           </li>
-          <li
-            onClick={() => {
-              if (isToggled) setIsToggled(!isToggled);
-            }}
-          >
-            스스로 학습
+          <li>
+            <span
+              onClick={() => {
+                if (isToggled) setIsToggled(!isToggled);
+              }}
+            >
+              스스로 학습
+            </span>
             <div className="sub_menu">
               <dl
                 onClick={() => {
