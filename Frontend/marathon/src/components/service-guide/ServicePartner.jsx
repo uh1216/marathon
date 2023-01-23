@@ -1,10 +1,20 @@
-import React from "react";
+import { React, useEffect } from "react";
 import style from "./ServicePartner.module.css";
 import Doctor1 from "img/doctor_1.jpg";
 import Doctor2 from "img/doctor_2.jpg";
 import Doctor3 from "img/doctor_3.jpg";
+import { changeNowSideNav } from "stores/store";
+import { useDispatch } from "react-redux";
 
 export default function ServicePartner() {
+  const dispath = useDispatch();
+
+  // 처음 해당 컴포넌트를 불러올 때 단 한번만 NowSideNav를 업데이트 한다.
+  useEffect(() => {
+    dispath(changeNowSideNav("파트너 재활사 소개"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <div className={style.side_right_board}>

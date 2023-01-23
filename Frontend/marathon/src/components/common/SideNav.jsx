@@ -1,9 +1,13 @@
 import React from "react";
 import style from "./SideNav.module.css";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { changeNowSideNav } from "stores/store";
 
 export default function SideNav(props) {
   const navigate = useNavigate();
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -11,7 +15,7 @@ export default function SideNav(props) {
         <h4>{props.sideNavTitle}</h4>
         <hr />
         {props.sideNavContent.map((data, i) => {
-          return props.nowSideNav === data ? (
+          return state.nowSideNav === data ? (
             <p
               key={i}
               className={style.now}
@@ -25,7 +29,7 @@ export default function SideNav(props) {
             <p
               key={i}
               onClick={() => {
-                props.setNowSideNav(data);
+                dispatch(changeNowSideNav(data));
                 navigate(props.urls[i]);
               }}
             >

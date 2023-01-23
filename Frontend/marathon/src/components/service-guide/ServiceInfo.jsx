@@ -1,14 +1,24 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import style from "./ServiceInfo.module.css";
 import Consult1 from "img/consult_1.png";
+import { changeNowSideNav } from "stores/store";
+import { useDispatch } from "react-redux";
 
 export default function ServiceInfo() {
   const [isHidden1, setIsHidden1] = useState(true);
   const [isHidden2, setIsHidden2] = useState(true);
   const [isHidden3, setIsHidden3] = useState(true);
   const [isHidden4, setIsHidden4] = useState(true);
+  const dispath = useDispatch();
+
+  // 처음 해당 컴포넌트를 불러올 때 단 한번만 NowSideNav를 업데이트 한다.
+  useEffect(() => {
+    dispath(changeNowSideNav("서비스 정보"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className={style.side_right_board}>
       <h1>언어 재활이 필요한 대상</h1>
@@ -48,7 +58,13 @@ export default function ServiceInfo() {
         </div>
       </div>
       <hr />
-      <div className={isHidden1 ? style.content_box_hiden : null}>
+      <div
+        className={
+          isHidden1
+            ? style.content_box_hiden
+            : style.content_box_hiden + " " + style.content_box_opened
+        }
+      >
         뇌손상으로 인해 언어를 이해·표현하는데 어려움을 보이는 후천적인 의사소통
         장애입니다. 지적·발달장애로 인한 언어장애와는 구별되며 뇌손상 전에는
         원활한 의사소통이 가능했던 경우입니다. 듣기, 말하기, 읽기, 쓰기 중 한
@@ -76,7 +92,13 @@ export default function ServiceInfo() {
         </div>
       </div>
       <hr />
-      <div className={isHidden2 ? style.content_box_hiden : null}>
+      <div
+        className={
+          isHidden2
+            ? style.content_box_hiden
+            : style.content_box_hiden + " " + style.content_box_opened
+        }
+      >
         말소리 산출에 관여하는 뇌신경 손상에 의해 나타나는 구음장애입니다. 얼굴,
         입술, 혀, 연구개 등 구강 근육의 마비 또는 약화로 인해 구어 운동성 및
         협응이 제한되어 호흡이 짧아지고, 쉬거나 쥐어짜는 듯한 목소리 산출,
@@ -103,7 +125,13 @@ export default function ServiceInfo() {
         </div>
       </div>
       <hr />
-      <div className={isHidden3 ? style.content_box_hiden : null}>
+      <div
+        className={
+          isHidden3
+            ? style.content_box_hiden
+            : style.content_box_hiden + " " + style.content_box_opened
+        }
+      >
         후천적인 뇌손상으로 인해 구강근육의 마비나 약화가 없음에도 말소리(음소나
         단어)를 정확하게 발음하는데 어려움을 겪는 증상입니다. 머릿속으로 단어를
         알고 있지만 자신의 의지대로 자동화 된 말 산출의 순서가 계획/프로그래밍
@@ -130,7 +158,13 @@ export default function ServiceInfo() {
         </div>
       </div>
       <hr />
-      <div className={isHidden4 ? style.content_box_hiden : null}>
+      <div
+        className={
+          isHidden4
+            ? style.content_box_hiden
+            : style.content_box_hiden + " " + style.content_box_opened
+        }
+      >
         원활한 의사소통을 위해서는 생각하고, 말하고자 하는 요지와 의도를
         유지하며 전달할 수 있어야 합니다. 뇌졸중이나 사고, 퇴행성 질환(예:
         치매)으로 인해 발생할 수 있는 인지-의사소통 장애는 기억력이나 지각,

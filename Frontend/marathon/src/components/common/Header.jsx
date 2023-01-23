@@ -4,11 +4,14 @@ import styled from "styled-components";
 import logo from "img/logoMain.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { changeNowSideNav } from "stores/store";
+import { useDispatch } from "react-redux";
 
 export default function Header() {
   const [isToggled, setIsToggled] = useState(false);
   const [isUserToggled, setIsUserToggled] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const Header = styled.div`
     max-width: 1600px;
@@ -291,6 +294,7 @@ export default function Header() {
             <span
               onClick={() => {
                 if (isToggled) setIsToggled(!isToggled);
+                dispatch(changeNowSideNav("서비스 정보"));
                 navigate("/guide");
               }}
             >
@@ -300,6 +304,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  dispatch(changeNowSideNav("서비스 정보"));
                   navigate("/guide");
                 }}
               >
@@ -308,6 +313,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  dispatch(changeNowSideNav("파트너 재활사 소개"));
                   navigate("/guide/partners");
                 }}
               >

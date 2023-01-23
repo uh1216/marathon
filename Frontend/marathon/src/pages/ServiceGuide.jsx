@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { Routes, Route } from "react-router-dom";
 import SideNav from "components/common/SideNav";
 import ServiceInfo from "components/service-guide/ServiceInfo";
@@ -8,7 +8,6 @@ export default function ServiceGuide() {
   const sideNavTitle = "서비스 안내";
   const sideNavContent = ["서비스 정보", "파트너 재활사 소개", "지정병원 소개"];
   const urls = ["/guide", "/guide/partners", "/"];
-  const [nowSideNav, setNowSideNav] = useState("서비스 정보");
 
   return (
     <>
@@ -24,8 +23,6 @@ export default function ServiceGuide() {
           <SideNav
             sideNavTitle={sideNavTitle}
             sideNavContent={sideNavContent}
-            nowSideNav={nowSideNav}
-            setNowSideNav={setNowSideNav}
             urls={urls}
           />
           <Routes>

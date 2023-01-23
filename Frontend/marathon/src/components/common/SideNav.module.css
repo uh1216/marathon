@@ -1,6 +1,6 @@
 .side_board {
   width: 15%;
-  min-width: 190px;
+  min-width: 188px;
   height: auto;
   font-size: 1.1em;
 }
@@ -32,11 +32,13 @@
 .now {
   font-weight: bold;
   text-shadow: 1px 1px 1px gray;
+  position: relative;
+  left: -22px;
 }
 
 @media screen and (max-width: 992px) {
   .side_board {
-    min-width: 175px;
+    min-width: 171px;
   }
 
   .side_board h4 {
