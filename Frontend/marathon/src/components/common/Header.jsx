@@ -40,6 +40,7 @@ export default function Header() {
       margin-bottom: 0px;
       margin-left: 5px;
       font-size: 1em;
+      z-index: 1;
     }
 
     .sub_menu {
@@ -88,6 +89,7 @@ export default function Header() {
       margin-right: 2em;
       font-size: 1em;
       margin-bottom: 0px;
+      z-index: 1;
     }
 
     .header__right div {
@@ -288,6 +290,7 @@ export default function Header() {
           <li
             onClick={() => {
               if (isToggled) setIsToggled(!isToggled);
+              navigate("/guide");
             }}
           >
             서비스 안내
