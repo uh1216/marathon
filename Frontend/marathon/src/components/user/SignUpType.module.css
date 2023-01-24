@@ -1,0 +1,37 @@
+/* 하얀색 박스 */
+.user_box {
+  width: 700px;
+  height: 450px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+
+  margin: 0 auto;
+}
+
+/* 제목 */
+.title {
+  color: #a38aec;
+  font-size: 1.875em;
+  padding: 67px 0 23px 0;
+  border-bottom: 1px solid #c0afaf;
+  margin-bottom: 23px;
+  text-align: center;
+  width: 345px;
+}
+
+/* 아이콘 이미지 & 글귀 */
+.img {
+  width: 100px;
+}
+
+.txt {
+  font-size: 0.94em;
+}
+
+.box {
+  width: 298px;
+  height: 220px;
+  border-radius: 5px;
+  border: 1px solid #ededed;
+  float: left;
+}

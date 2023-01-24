@@ -366,6 +366,7 @@ export default function Header() {
         <li
           onClick={() => {
             if (isUserToggled) setIsUserToggled(!isUserToggled);
+            navigate("/user/login");
           }}
         >
           로그인
@@ -373,6 +374,7 @@ export default function Header() {
         <li
           onClick={() => {
             if (isUserToggled) setIsUserToggled(!isUserToggled);
+            navigate("/user/sign-up-type");
           }}
         >
           회원가입
