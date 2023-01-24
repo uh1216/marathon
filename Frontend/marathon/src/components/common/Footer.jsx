@@ -1,21 +1,37 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import style from "./Footer.module.css";
-import marathon from "../../img/marathon.png";
-import ssafy from "../../img/ssafy.png";
-import gitlab from "../../img/gitlab.png";
-import jira from "../../img/jira.png";
-import notion from "../../img/notion.png";
+import marathon from "img/marathon.png";
+import ssafy from "img/ssafy.png";
+import gitlab from "img/gitlab.png";
+import jira from "img/jira.png";
+import notion from "img/notion.png";
 
 export default function Footer() {
+  const navigate = useNavigate();
   return (
     <footer className={style.footer}>
-      <div className={style.innerfooter}>
-        <div className={style.leftdiv}>
-          <img src={marathon} className={style.marathon} alt="" />
-          <img src={ssafy} className={style.ssafy} alt="" />
+      <div className={style.inner_footer}>
+        <div className={style.left_div}>
+          <img
+            src={marathon}
+            className={style.marathon}
+            onClick={() => {
+              navigate("/");
+            }}
+            alt=""
+          />
+          <img
+            src={ssafy}
+            className={style.ssafy}
+            onClick={() => {
+              window.open("https://www.ssafy.com/ksp/jsp/swp/swpMain.jsp");
+            }}
+            alt=""
+          />
         </div>
-        <div className={style.centerdiv}>
-          <div className={style.centerinnerdiv}>
+        <div className={style.center_div}>
+          <div className={style.center_inner_div}>
             <p>이용약관</p>
             <p>개인처리방침</p>
           </div>
@@ -25,15 +41,42 @@ export default function Footer() {
           </div>
           <p>Copyright©MARATHON All Rights Reserved.</p>
         </div>
-        <div className={style.rightdiv}>
+        <div className={style.right_div}>
           <div className={style.ground}>
-            <img src={gitlab} className={style.gitlab} alt="" />
+            <img
+              src={gitlab}
+              className={style.gitlab}
+              onClick={() => {
+                window.open(
+                  "https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A304"
+                );
+              }}
+              alt=""
+            />
           </div>
           <div className={style.ground} style={{ paddingTop: "10px" }}>
-            <img src={jira} className={style.jira} alt="" />
+            <img
+              src={jira}
+              className={style.jira}
+              onClick={() => {
+                window.open(
+                  "https://ssafy.atlassian.net/jira/software/c/projects/S08P12A304/boards/1303"
+                );
+              }}
+              alt=""
+            />
           </div>
           <div className={style.ground}>
-            <img src={notion} className={style.notion} alt="" />
+            <img
+              src={notion}
+              className={style.notion}
+              onClick={() => {
+                window.open(
+                  "https://ramen-buang.notion.site/SSAFY-2-1-4c60153fe8824115a14fcdabecdd8169"
+                );
+              }}
+              alt=""
+            />
           </div>
         </div>
       </div>

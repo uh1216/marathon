@@ -35,8 +35,6 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 
 2월 10일 마감 (노력!)
 
-- 기본적인 아이디어들 정리되면 프론트는 목업, 백은 테이블 + API 설계하기
-
 ---
 
 # 1. Conventions
@@ -68,7 +66,7 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
   > [COMMON] : [STUDY] 1주차 회원가입 기능 구현
 
 - 규칙
-  - 제목은 전체 내용을 간결하게 요약할 것.
+  - Merge Request 제목은 전체 내용을 간결하게 요약할 것.
   - 함수 기반의 커밋을 진행하며, 함수 작성 이유를 담을 것.
   - 함수가 사용된 기능 및 관련 기능을 밝힐 것.
   - 내용은 한글로 작성한다.
@@ -83,7 +81,6 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 | dev    | 개발 완료한 기능이 포함된 상태                  |
 | hotfix | 긴급한 오류 수정 시 master 브랜치의 직속 브랜치 |
 | study  | 개인용 제출 브랜치, master에 머지 안함          |
-| source | 기타 자료 보관용 저장소 브랜치                  |
 
 ---
 
@@ -103,11 +100,16 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 
 - **Boolean 변수**는 “is”로 시작하기
 
-- JSX 파일 구조에서 변수 - 함수 - useEffet - HTML 순으로 구성하기. Styled Components를 사용시 useEffect 다음 부분에 만들어서 사용하기. 각 부분은 // 변수 // 함수 // useEffect 식으로 구분해 주기.
+- JSX 파일 구조에서 변수 - 함수 - useEffet - HTML 순으로 구성하기. Styled Components를 사용시 useEffect 다음 부분에 만들어서 사용하기. 각 부분은 // 변수 // 함수 // useEffect 식으로
+  구분해 주기.
 
 - 함수와 변수를 작성 할 때 **주석**으로 무엇에 활용하는 용도인지 간단하게 적어주기
 
 - 메인 함수 제외하고는 모두 화살표 함수로 표기
+
+- import로 본문에 이미지 자체를 가져 올 때에는 꼭 src 폴더 안에 이미지 파일을 위치시켜야 한다.
+  반대로 src를 통해서 css로 간접적으로 이미지를 가져올 때에는 꼭 public 폴더 안에 넣어야 한다.
+  ( 안지키면 어차피 에러나서 강제로 지켜야 한다. )
 
 - Redux의 initialState를 바꾸는 변경함수는 chang변수명(Camel 케이스) 규칙을 적용 하자.
   ps. 참고로 Redux의 상태변경 함수(Slice)안에서는 ajax(우린 axios 활용)사용하면 안된다.
@@ -117,7 +119,14 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
   각 페이지 or 기능을 중심으로 redux store를 분할, axios를 수행할 통신 기능을 분할,
   서버에 요청시 자동으로 해더에 쿠키(JWT or 세션쿠키) 달아주는 custom axios
 
-* 각 store를 중심으로 별도의 axios용 함수들을 모아 놓는 클래스 파일 모듈화
+- 각 store를 중심으로 별도의 axios용 함수들을 모아 놓는 클래스 파일 모듈화
+
+- CSS의 클래스 명은 Snake case, 변수명 선언은 Camel case, 파일 이름은 Pascal case
+
+- src는 절대 경로가 설정되어 있지만 public은 상대경로로 입력해야됨!!
+
+- 폰트 사이즈는 em 단위 쓰기, 루트 폰트 사이즈 16px 기준 - App.css에 설정되어 있음  
+  해상도가 작아지면 개별 컴포넌트에서 미디어 쿼리를 이용해 부모 폰트 사이즈를 변경해주기
 
 ---
 
@@ -136,7 +145,7 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 
 - CRUD 메소드 네이밍
 
-- 구글 코드 컨벤션 IDE적용 
+- 구글 코드 컨벤션 IDE적용
 
 ---
 
@@ -144,19 +153,37 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 
 ---
 
-### - 프로젝트 명세서 (일단 백엔드만)
+### - 프로젝트 버전 정보
 
-- SpringBoot 2.5.6
-  - Spring Security
-  - Spring Data JPA
-  - Lombok
-  - swagger (차후 수정)
-  - mysql driver
-  - spring web
-  - spring configuration processor
-  - jjwt 0.9.1
+# 백엔드
+
+- Java Zulu 11.0.17
+  - SpringBoot 2.5.6
+    - Spring Security
+    - Spring Data JPA
+    - Lombok
+    - swagger (차후 수정)
+    - mysql driver
+    - spring web
+    - spring configuration processor
+    - jjwt 0.9.1
 - MySQL 8.0.31
 - API 통합 테스트 툴 : postman
+
+# 프론트엔드
+
+- Node 18.12.1 LTS
+  - NPM 8.19.2
+  - React 18.2.0
+    - React-Dom 18.2.0
+    - React-Redux 8.0.5
+    - React-Router-Dom 6.7.0
+    - Reduxjs/Toolkit 1.9.1
+    - React-Scripts 5.0.1
+    - React-Query 4.22.0
+    - Styled-Components 5.3.6
+  - axios 1.2.3
+  - bootstrap 5.2.3
 
 ---
 
@@ -185,7 +212,7 @@ webRTC 툴 - 오픈비두 / 명세서에 있는거 뭐할지 선택 + HTTPS설�
 
 ---
 
-- 거의 마무리 단계. 나중에 이미지화해서 옮길 예정
+- 마무리 됨. 나중에 이미지화해서 옮길 예정
   https://ramen-buang.notion.site/Mock-Up-Figma-695ed13d97654180bce7212121bcadfc
 
 ---

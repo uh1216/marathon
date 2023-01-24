@@ -1,5 +1,31 @@
 .board {
-  width: 1200px;
+  max-width: 1600px;
+  height: 900px;
+  margin-left: auto;
+  margin-right: auto;
+
+  font-size: 1em;
+}
+
+.innerboard {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.notice_body {
   height: 700px;
-  background-color: aqua;
+}
+
+.notice_button {
+  display: flex;
+}
+
+.notice_list {
+  background-color: #d5f0f0;
+  height: 650px;
+}
+
+.notice_pagination {
+  text-align: center;
 }
