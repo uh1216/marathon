@@ -125,11 +125,23 @@ export default function SignIn() {
   const [isPwdValid, SetIsPwdValid] = useState(false);
   const [isPwdChkValid, SetIsPwdChkValid] = useState(false);
 
+  const [userIdMsg, setUserIdMsg] = useState(
+    "8자 이상, 16자 이하의 아이디를 입력해주세요."
+  );
+  const [userPwdMsg, setUserPwdMsg] = useState(
+    "9자 이상, 16자 이하의 영문, 숫자, 특수문자를 조합해주세요."
+  );
+  const [userPwdChkMsg, setUserPwdChkMsg] = useState(
+    "비밀번호를 한 번 더 기입해주세요."
+  );
+
+  const [isNotIdDuplicated, setIsNotIdDuplicated] = useState(false);
+
   const [userName, setUserName] = useState("");
   const [userGender, setUserGender] = useState("none");
   const [userYear, setUserYear] = useState("none");
   const [userMonth, setUserMonth] = useState("none");
-  const [userDay, setUserDay] = useState();
+  const [userDay, setUserDay] = useState("none");
   const [userId, setUserId] = useState("");
   const [userPwd, setUserPwd] = useState("");
   const [userPwdChk, setUserPwdChk] = useState("");
@@ -183,63 +195,103 @@ export default function SignIn() {
     } else if (userYear === "none" || userYear === null) {
       alert("생년월일을 선택해주세요.");
       inputUserYear.current.focus();
-    } else if (userId) {
+    } else if (userMonth === "none" || userMonth === null) {
+      alert("생년월일을 선택해주세요.");
+      inputUserMonth.current.focus();
+    } else if (userDay === "none" || userDay === null) {
+      alert("생년월일을 선택해주세요.");
+      inputUserDay.current.focus();
+    } else if (!isIdValid) {
       alert("아이디가 유효하지 않습니다.");
       inputUserId.current.focus();
-    } else if (userId) {
+    } else if (!isNotIdDuplicated) {
       alert("아이디 중복확인을 해주세요.");
       inputUserId.current.focus();
-    } else if (userPwd) {
+    } else if (!isPwdValid) {
       alert("비밀번호가 유효하지 않습니다.");
       inputUserPwd.current.focus();
-    } else if (userPwdChk) {
-      alert("비밀번호가 일치하지 않습니다.");
+    } else if (!isPwdChkValid) {
+      alert("비밀번호 확인이 일치하지 않습니다.");
       inputUserPwdChk.current.focus();
-    } else if (userEmailId) {
+    } else if (userEmailId === "" || userEmailId === null) {
       alert("이메일을 입력해주세요.");
       inputUserEmailId.current.focus();
-    } else if (userEmailId) {
+    } else if (userEmailHost === "" || userEmailHost === null) {
       alert("이메일을 입력해주세요.");
       inputUserEmailHost.current.focus();
-    } else if (userPhone) {
+    } else if (userPhone === "" || userPhone === null) {
       alert("연락처를 입력해주세요.");
       inputUserPhone.current.focus();
-    } else if (userFirstResponder) {
-      alert("비상 연락처를 입력해주세요.");
+    } else if (!chkPhone(userPhone)) {
+      alert("연락처가 유효하지 않습니다.");
+      inputUserPhone.current.focus();
+    } else if (
+      type === "normal" &&
+      (userFirstResponder === "" || userFirstResponder === null)
+    ) {
+      alert("비상 연락처 1을 입력해주세요.");
       inputUserFirstResponder.current.focus();
-    } else if (userFirstResponder) {
-      alert("비상 연락처를 입력해주세요.");
+    } else if (type === "normal" && !chkPhone(userFirstResponder)) {
+      alert("연락처가 유효하지 않습니다.");
+      inputUserFirstResponder.current.focus();
+    } else if (
+      type === "normal" &&
+      (userFirstResponderRelationship === "none" ||
+        userFirstResponderRelationship === null)
+    ) {
+      alert("비상 연락처 1의 관계를 입력해주세요.");
       inputUserFirstResponderRelationship.current.focus();
-    } else if (userLicense) {
+    } else if (
+      type === "normal" &&
+      userSecondResponderRelationship !== "none" &&
+      userSecondResponderRelationship !== null &&
+      (userSecondResponder === "" || userSecondResponder === null)
+    ) {
+      alert("비상 연락처 2를 입력해주세요.");
+      inputUserSecondResponder.current.focus();
+    } else if (
+      type === "normal" &&
+      userSecondResponder.length > 0 &&
+      !chkPhone(userSecondResponder)
+    ) {
+      alert("연락처가 유효하지 않습니다.");
+      inputUserSecondResponder.current.focus();
+    } else if (
+      type === "normal" &&
+      userSecondResponder.length > 0 &&
+      (userSecondResponderRelationship === "none" ||
+        userSecondResponderRelationship === null)
+    ) {
+      alert("비상 연락처 2의 관계를 입력해주세요.");
+      inputUserSecondResponderRelationship.current.focus();
+    } else if (
+      type === "teacher" &&
+      (userLicense === "none" || userLicense === null)
+    ) {
       alert("자격증을 선택해주세요.");
       inputUserLicense.current.focus();
-    } else if (userEducation) {
+    } else if (
+      type === "teacher" &&
+      (userEducation === "none" || userEducation === null)
+    ) {
       alert("최종학력을 선택해주세요.");
       inputUserEducation.current.focus();
+    } else if (!userTos) {
+      alert("이용약관 및 개인정보 처리방침에 동의해주세요.");
+      inputUserTos.current.focue();
     } else {
       navigate("/");
     }
   };
 
-  /** 비밀번호 체크하는 함수*/
-  // function checkPwd() {
-  //   let pw = password;
-  //   let num = 0;
-  //   let eng = 0;
-  //   let special = 0;
-  //   for (let i = 0; i < pw.length; i++) {
-  //     if (0 <= pw.charAt(i) && pw.charAt(i) <= 9) {
-  //       num++;
-  //     } else if (
-  //       (65 <= pw.charCodeAt(i) && pw.charCodeAt(i) <= 90) ||
-  //       (97 <= pw.charCodeAt(i) && pw.charCodeAt(i) <= 122)
-  //     ) {
-  //       eng++;
-  //     } else special++;
-  //   }
-  //   if (!num || !eng || !special) return false;
-  //   else return true;
-  // }
+  /** 연락처가 유효한지 체크하는 함수 */
+  const chkPhone = (phone) => {
+    if (phone.length < 9) return false;
+    for (let i = 0; i < phone.length; i++) {
+      if ("0" > phone[i] || "9" < phone[i]) return false;
+    }
+    return true;
+  };
 
   /** 이메일 호스트 select box를 선택했을 때 실행되는 함수 */
   const selectEmailHost = (x) => {
@@ -249,6 +301,12 @@ export default function SignIn() {
       setIsReadOnly(false);
     }
     setUserEmailHost(x);
+  };
+
+  /** 아이디 중복 체크 (axios 연결 필요함) */
+  const chkIdDuplicated = () => {
+    setIsNotIdDuplicated(true);
+    alert("사용 가능한 아이디입니다.");
   };
 
   /** year와 month가 선택되고 난 뒤 day 일 수를 결정 */
@@ -264,6 +322,73 @@ export default function SignIn() {
       setOptionsDay(days);
     }
   }, [userYear, userMonth]);
+
+  /** 아이디 유효성 체크 */
+  useEffect(() => {
+    if (userId.length > 16) {
+      setUserIdMsg("최대 16자까지 입력 가능합니다.");
+      SetIsIdValid(false);
+    } else if (userId.length === 0) {
+      setUserIdMsg("8자 이상, 16자 이하의 아이디를 입력해주세요.");
+      SetIsIdValid(false);
+    } else if (userId.length < 8) {
+      setUserIdMsg("아이디는 최소 8자 이상이어야 합니다.");
+      SetIsIdValid(false);
+    } else {
+      setUserIdMsg("유효한 아이디입니다.");
+      SetIsIdValid(true);
+    }
+  }, [userId]);
+
+  /** 비밀번호 유효성 체크 */
+  useEffect(() => {
+    if (userPwd.length === 0) {
+      setUserPwdMsg(
+        "9자 이상, 16자 이하의 영문, 숫자, 특수문자를 조합해주세요."
+      );
+      SetIsPwdValid(false);
+    } else if (userPwd.length < 9) {
+      setUserPwdMsg("최소 9글자를 입력해야 합니다.");
+      SetIsPwdValid(false);
+    } else if (userPwd.length > 16) {
+      setUserPwdMsg("최대 16자까지 입력 가능합니다.");
+      SetIsPwdValid(false);
+    } else {
+      let isAlpha = false;
+      let isNumber = false;
+      let isSpecial = false;
+      [...userPwd].forEach((element) => {
+        if (
+          ("a" <= element && element <= "z") ||
+          ("A" <= element && element <= "Z")
+        )
+          isAlpha = true;
+        else if ("1" <= element && element <= "9") isNumber = true;
+        else isSpecial = true;
+      });
+      if (isAlpha && isNumber && isSpecial) {
+        setUserPwdMsg("사용 가능한 비밀번호입니다.");
+        SetIsPwdValid(true);
+      } else {
+        setUserPwdMsg("비밀번호는 영문, 숫자, 특수문자가 조합되어야 합니다.");
+        SetIsPwdValid(false);
+      }
+    }
+  }, [userPwd]);
+
+  /** 비밀번호가 일치하는지 확인 */
+  useEffect(() => {
+    if (userPwdChk === "" || userPwdChk === null) {
+      setUserPwdChkMsg("비밀번호를 한 번 더 기입해주세요.");
+      SetIsPwdChkValid(false);
+    } else if (userPwd === userPwdChk) {
+      setUserPwdChkMsg("입력한 비밀번호와 일치합니다.");
+      SetIsPwdChkValid(true);
+    } else {
+      setUserPwdChkMsg("입력한 비밀번호와 일치하지 않습니다.");
+      SetIsPwdChkValid(false);
+    }
+  }, [userPwd, userPwdChk]);
 
   return (
     <div className={style.user_box}>
@@ -345,15 +470,27 @@ export default function SignIn() {
             className={style.input_middle}
             type="text"
             id="user_id"
+            maxLength="16"
             value={userId}
             onChange={(e) => {
               setUserId(e.target.value);
             }}
             ref={inputUserId}
           />
-          <button className={style.chk_id_btn}>중복확인</button>
-          <div className={`${style.sub_information}`}>
-            유효성 검사 메시지 들어가는 곳
+          <button className={style.chk_id_btn} onClick={chkIdDuplicated}>
+            중복확인
+          </button>
+          <div
+            className={`${style.sub_information}`}
+            style={
+              userId === ""
+                ? { color: "#858585" }
+                : isIdValid
+                ? { color: "blue" }
+                : { color: "red" }
+            }
+          >
+            {userIdMsg}
           </div>
         </div>
         {/* 비밀번호 */}
@@ -365,14 +502,24 @@ export default function SignIn() {
             className={style.input_long}
             type="password"
             id="user_pwd"
+            maxLength="16"
             value={userPwd}
             onChange={(e) => {
               setUserPwd(e.target.value);
             }}
             ref={inputUserPwd}
           />
-          <div className={`${style.sub_information}`}>
-            유효성 검사 메시지 들어가는 곳
+          <div
+            className={`${style.sub_information}`}
+            style={
+              userPwd === ""
+                ? { color: "#858585" }
+                : isPwdValid
+                ? { color: "blue" }
+                : { color: "red" }
+            }
+          >
+            {userPwdMsg}
           </div>
         </div>
         {/* 비밀번호 확인 */}
@@ -384,14 +531,24 @@ export default function SignIn() {
             className={style.input_long}
             type="password"
             id="user_pwd_chk"
+            maxLength="16"
             value={userPwdChk}
             onChange={(e) => {
               setUserPwdChk(e.target.value);
             }}
             ref={inputUserPwdChk}
           />
-          <div className={`${style.sub_information}`}>
-            유효성 검사 메시지 들어가는 곳
+          <div
+            className={`${style.sub_information}`}
+            style={
+              userPwdChk === ""
+                ? { color: "#858585" }
+                : isPwdChkValid
+                ? { color: "blue" }
+                : { color: "red" }
+            }
+          >
+            {userPwdChkMsg}
           </div>
         </div>
         {/* 이메일 */}
@@ -432,7 +589,7 @@ export default function SignIn() {
           </label>
           <input
             className={`${style.input_number} ${style.input_long}`}
-            type="text"
+            type="number"
             id="user_phone"
             placeholder="'-'를 제외한 숫자만 입력해 주세요."
             value={userPhone}
@@ -454,7 +611,7 @@ export default function SignIn() {
               </label>
               <input
                 className={`${style.input_number} ${style.input_middle}`}
-                type="text"
+                type="number"
                 id="user_first_responder"
                 placeholder="'-'를 제외한 숫자만 입력해 주세요."
                 value={userFirstResponder}
@@ -483,7 +640,7 @@ export default function SignIn() {
               </label>
               <input
                 className={`${style.input_number} ${style.input_middle}`}
-                type="text"
+                type="number"
                 id="user_second_responder"
                 placeholder="'-'를 제외한 숫자만 입력해 주세요."
                 value={userSecondResponder}

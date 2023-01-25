@@ -10,7 +10,7 @@ export default function SignInType() {
   return (
     <div className={style.user_box}>
       <div className={style.title}>가입 유형을 선택해주세요</div>
-      <div>
+      <div className={style.select_box}>
         <div
           className={style.box}
           onClick={() => navigate("/user/sign-up/normal")}
