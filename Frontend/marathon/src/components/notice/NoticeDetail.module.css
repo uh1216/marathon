@@ -1,0 +1,94 @@
+.container {
+  max-width: 1600px;
+  height: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1em;
+}
+
+.inner_container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.notice_body {
+  height: 700px;
+}
+
+.notice_inner_body {
+  height: 700px;
+}
+
+.right_menu {
+  margin-right: 20px;
+}
+
+/** 
+  .notice_top_interface
+  공지사항 상세내용 상단 그리드를 위한 css
+*/
+.notice_top_interface {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 45px;
+  margin-bottom: 15px;
+}
+
+/** 
+  input 타입의 태그들을 각 페이지별로 css를 차별하기 위해서 클래스로 따로 구분
+*/
+.notice_button {
+  width: 101px;
+  height: 45px;
+  border: 0;
+  color: white;
+  background-color: #a38aec;
+  border-radius: 10px;
+}
+.notice_detail_body {
+  border: solid 1px;
+  border-radius: 20px;
+  height: 750px;
+  justify-content: center;
+  align-items: center;
+}
+
+.notice_detail_body_header_grid {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: grid;
+  grid-template-columns: 10% 20% 10% 40% 10%;
+  grid-template-rows: 70% 30%;
+}
+
+.notice_detail_body_header_item1 {
+  grid-column-start: 2;
+  grid-column-end: 6;
+}
+.notice_detail_body_header_item2 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.notice_detail_body_header_item3 {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+
+.notice_detail_body_header_item4 {
+  grid-column-start: 4;
+  grid-column-end: 5;
+}
+
+.notice_detail_body_header_item5 {
+  grid-column-start: 5;
+  grid-column-end: 6;
+}
+
+.notice_detail_body_content {
+  margin-left: 100px;
+  margin-right: 100px;
+  line-height: 30px;
+  text-align: left;
+}

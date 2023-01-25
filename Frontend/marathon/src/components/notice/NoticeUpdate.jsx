@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import style from "./NoticeCreate.module.css";
+import style from "./NoticeUpdate.module.css";
 
-export default function NoticeCreate() {
+export default function NoticeUpdate() {
   const navigate = useNavigate();
 
   return (
@@ -12,7 +12,7 @@ export default function NoticeCreate() {
           <div className={style.notice_body}>
             <div className={style.notice_top_interface}>
               <div>
-                <h1>공지사항 쓰기</h1>
+                <h1>수정하기</h1>
               </div>
               <div>
                 <button
