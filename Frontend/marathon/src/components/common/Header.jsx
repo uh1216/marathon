@@ -250,7 +250,11 @@ export default function Header() {
 
   return (
     <div
-      style={{ boxShadow: "0px 3px 4px 1px rgb(67, 67, 65, 50%)", zIndex: "2" }}
+      style={{
+        boxShadow: "0px 3px 4px 1px rgb(67, 67, 65, 50%)",
+        zIndex: "2",
+        backgroundColor: "white",
+      }}
     >
       <Header isToggled={isToggled} isUserToggled={isUserToggled}>
         <div
