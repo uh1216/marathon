@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import HeaderFooterPage from "pages/router-page/HeaderFooterPage";
 import HeaderPage from "pages/router-page/HeaderPage";
 import Main from "pages/Main";
+import ConsultEnroll from "pages/ConsultEnroll";
 import ServiceGuide from "pages/ServiceGuide";
 import Notice from "pages/Notice";
 import User from "pages/User";
@@ -14,7 +15,7 @@ function App() {
       <Routes>
         <Route element={<HeaderFooterPage />}>
           <Route path="/" element={<Main />} />
-          <Route path="/consult-enroll" element={<div>상담신청</div>} />
+          <Route path="/consult-enroll" element={<ConsultEnroll />} />
           <Route path="/guide/*" element={<ServiceGuide />} />
           <Route path="/notice/*" element={<Notice />} />
           <Route path="/self-study/*" element={<div>스스로 학습</div>} />

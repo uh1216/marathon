@@ -3,7 +3,7 @@ import style from "./ServicePartner.module.css";
 import Doctor1 from "img/doctor_1.jpg";
 import Doctor2 from "img/doctor_2.jpg";
 import Doctor3 from "img/doctor_3.jpg";
-import { changeNowSideNav } from "stores/store";
+import { changeNowSideNav } from "stores/toggle.store";
 import { useDispatch } from "react-redux";
 
 export default function ServicePartner() {

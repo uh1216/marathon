@@ -4,7 +4,7 @@ import styled from "styled-components";
 import logo from "img/logoMain.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { changeNowSideNav } from "stores/store";
+import { changeNowSideNav } from "stores/toggle.store";
 import { useDispatch } from "react-redux";
 
 export default function Header() {
@@ -23,6 +23,7 @@ export default function Header() {
     color: black;
     font-size: 16px;
     position: relative;
+    background-color: white;
 
     .clickable {
       cursor: pointer;
@@ -52,7 +53,7 @@ export default function Header() {
       background-color: white;
       width: 165px;
       text-shadow: none;
-      box-shadow: 0px 3px 4px 1px rgb(67, 67, 65);
+      box-shadow: 0px 3px 4px 1px rgb(67, 67, 67);
       position: absolute;
       bottom: -168px;
       left: 10px;
@@ -248,7 +249,9 @@ export default function Header() {
   `;
 
   return (
-    <div style={{ boxShadow: "0px 3px 4px 1px rgb(67, 67, 65)", zIndex: "2" }}>
+    <div
+      style={{ boxShadow: "0px 3px 4px 1px rgb(67, 67, 65, 50%)", zIndex: "2" }}
+    >
       <Header isToggled={isToggled} isUserToggled={isUserToggled}>
         <div
           className="toggle"
@@ -286,6 +289,7 @@ export default function Header() {
           <li
             onClick={() => {
               if (isToggled) setIsToggled(!isToggled);
+              navigate("/consult-enroll");
             }}
           >
             상담신청

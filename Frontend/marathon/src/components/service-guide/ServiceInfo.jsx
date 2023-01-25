@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import style from "./ServiceInfo.module.css";
 import Consult1 from "img/consult_1.png";
-import { changeNowSideNav } from "stores/store";
+import { changeNowSideNav } from "stores/toggle.store";
 import { useDispatch } from "react-redux";
 
 export default function ServiceInfo() {
@@ -13,7 +13,10 @@ export default function ServiceInfo() {
   const [isHidden4, setIsHidden4] = useState(true);
   const dispath = useDispatch();
 
-  // 처음 해당 컴포넌트를 불러올 때 단 한번만 NowSideNav를 업데이트 한다.
+  /** 처음 해당 컴포넌트를 불러올 때 단 한번만 NowSideNav를 업데이트 한다.
+   *  이를 통해서 설령 onClick이 아닌 직접 url로 접속하더라도 옳바르게 nowSideNav가
+   *  강조되서 표시되도록 만들 수 있다.
+   */
   useEffect(() => {
     dispath(changeNowSideNav("서비스 정보"));
     // eslint-disable-next-line react-hooks/exhaustive-deps

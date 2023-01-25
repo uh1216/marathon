@@ -1,0 +1,41 @@
+.color_box {
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 3%;
+  background-color: #ebfffe;
+  border-radius: 30px;
+}
+
+.title_box {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 25px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: 500;
+  background-color: #bdd7d5;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.icon_contain_box {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  text-align: center;
+}
+
+.icon_box {
+  background: white;
+  color: #454242;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  padding: 30px;
+  box-shadow: 2px 2px 2px 2px rgb(12, 12, 12, 50%);
+  margin-bottom: 10px;
+}
