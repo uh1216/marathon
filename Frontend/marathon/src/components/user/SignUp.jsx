@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SelectBox from "components/common/SelectBox";
 import style from "./SignUp.module.css";
@@ -57,27 +57,27 @@ const optionsRelationship = [
     name: "관계",
   },
   {
-    value: "",
+    value: "본인",
     name: "본인",
   },
   {
-    value: "",
+    value: "배우자",
     name: "배우자",
   },
   {
-    value: "",
+    value: "자녀",
     name: "자녀",
   },
   {
-    value: "",
+    value: "형제",
     name: "형제",
   },
   {
-    value: "",
+    value: "부모",
     name: "부모",
   },
   {
-    value: "",
+    value: "기타",
     name: "기타",
   },
 ];
@@ -85,37 +85,65 @@ const optionsRelationship = [
 /** 자격증 select box 옵션 */
 const optionsLicense = [
   { value: "none", name: "자격증을 선택해 주세요." },
-  { value: "", name: "1급" },
-  { value: "", name: "2급" },
-  { value: "", name: "예비 언어 재활사" },
+  { value: "1급", name: "1급" },
+  { value: "2급", name: "2급" },
+  { value: "예비 언어 재활사", name: "예비 언어 재활사" },
 ];
 
 /** 학력 select box 옵션 */
 const optionsEducation = [
   { value: "none", name: "학력을 선택해 주세요." },
-  { value: "", name: "전문학사" },
-  { value: "", name: "학사" },
-  { value: "", name: "석사 이상" },
+  { value: "전문학사", name: "전문학사" },
+  { value: "학사", name: "학사" },
+  { value: "석사 이상", name: "석사 이상" },
 ];
 
 export default function SignIn() {
   const { type } = useParams();
   const navigate = useNavigate();
 
-  const [userName, setUserName] = useState();
-  const [userGender, setUserGender] = useState();
-  const [userYear, setUserYear] = useState();
-  const [userMonth, setUserMonth] = useState();
+  const inputUserName = useRef();
+  const inputUserGender = useRef();
+  const inputUserYear = useRef();
+  const inputUserMonth = useRef();
+  const inputUserDay = useRef();
+  const inputUserId = useRef();
+  const inputUserPwd = useRef();
+  const inputUserPwdChk = useRef();
+  const inputUserEmailId = useRef();
+  const inputUserEmailHost = useRef();
+  const inputUserPhone = useRef();
+  const inputUserFirstResponder = useRef();
+  const inputUserFirstResponderRelationship = useRef();
+  const inputUserSecondResponder = useRef();
+  const inputUserSecondResponderRelationship = useRef();
+  const inputUserLicense = useRef();
+  const inputUserEducation = useRef();
+  const inputUserTos = useRef();
+
+  const [isIdValid, SetIsIdValid] = useState(false);
+  const [isPwdValid, SetIsPwdValid] = useState(false);
+  const [isPwdChkValid, SetIsPwdChkValid] = useState(false);
+
+  const [userName, setUserName] = useState("");
+  const [userGender, setUserGender] = useState("none");
+  const [userYear, setUserYear] = useState("none");
+  const [userMonth, setUserMonth] = useState("none");
   const [userDay, setUserDay] = useState();
-  const [userPwd, setUserPwd] = useState();
-  const [userPwdChk, setUserPwdChk] = useState();
-  const [userEmailId, setUserEmailId] = useState();
-  const [userEmailHost, setUserEmailHost] = useState();
-  const [userPhone, setUserPhone] = useState();
-  const [userFirstResponder, setUserFirstResponder] = useState();
-  const [userSecondResponder, setUserSecondResponder] = useState();
-  const [userLicense, setUserLicense] = useState();
-  const [userEducation, setUserEducation] = useState();
+  const [userId, setUserId] = useState("");
+  const [userPwd, setUserPwd] = useState("");
+  const [userPwdChk, setUserPwdChk] = useState("");
+  const [userEmailId, setUserEmailId] = useState("");
+  const [userEmailHost, setUserEmailHost] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+  const [userFirstResponder, setUserFirstResponder] = useState("");
+  const [userFirstResponderRelationship, setUserFirstResponderRelationship] =
+    useState("none");
+  const [userSecondResponder, setUserSecondResponder] = useState("");
+  const [userSecondResponderRelationship, setUserSecondResponderRelationship] =
+    useState("none");
+  const [userLicense, setUserLicense] = useState("none");
+  const [userEducation, setUserEducation] = useState("none");
   const [userTos, setUserTos] = useState(false);
 
   const [isReadOnly, setIsReadOnly] = useState(false);
@@ -137,13 +165,81 @@ export default function SignIn() {
       userEmailHost: userEmailHost,
       userPhone: userPhone,
       userFirstResponder: userFirstResponder,
+      userFirstResponderRelationship: userFirstResponderRelationship,
       userSecondResponder: userSecondResponder,
+      userSecondResponderRelationship: userSecondResponderRelationship,
       userLicense: userLicense,
       userEducation: userEducation,
       userTos: userTos,
     });
-    navigate("/");
+    console.log(inputUserGender);
+
+    if (userName === "" || userName === null) {
+      alert("이름을 입력해주세요.");
+      inputUserName.current.focus();
+    } else if (userGender === "none" || userGender === null) {
+      alert("성별을 선택해주세요.");
+      inputUserGender.current.focus();
+    } else if (userYear === "none" || userYear === null) {
+      alert("생년월일을 선택해주세요.");
+      inputUserYear.current.focus();
+    } else if (userId) {
+      alert("아이디가 유효하지 않습니다.");
+      inputUserId.current.focus();
+    } else if (userId) {
+      alert("아이디 중복확인을 해주세요.");
+      inputUserId.current.focus();
+    } else if (userPwd) {
+      alert("비밀번호가 유효하지 않습니다.");
+      inputUserPwd.current.focus();
+    } else if (userPwdChk) {
+      alert("비밀번호가 일치하지 않습니다.");
+      inputUserPwdChk.current.focus();
+    } else if (userEmailId) {
+      alert("이메일을 입력해주세요.");
+      inputUserEmailId.current.focus();
+    } else if (userEmailId) {
+      alert("이메일을 입력해주세요.");
+      inputUserEmailHost.current.focus();
+    } else if (userPhone) {
+      alert("연락처를 입력해주세요.");
+      inputUserPhone.current.focus();
+    } else if (userFirstResponder) {
+      alert("비상 연락처를 입력해주세요.");
+      inputUserFirstResponder.current.focus();
+    } else if (userFirstResponder) {
+      alert("비상 연락처를 입력해주세요.");
+      inputUserFirstResponderRelationship.current.focus();
+    } else if (userLicense) {
+      alert("자격증을 선택해주세요.");
+      inputUserLicense.current.focus();
+    } else if (userEducation) {
+      alert("최종학력을 선택해주세요.");
+      inputUserEducation.current.focus();
+    } else {
+      navigate("/");
+    }
   };
+
+  /** 비밀번호 체크하는 함수*/
+  // function checkPwd() {
+  //   let pw = password;
+  //   let num = 0;
+  //   let eng = 0;
+  //   let special = 0;
+  //   for (let i = 0; i < pw.length; i++) {
+  //     if (0 <= pw.charAt(i) && pw.charAt(i) <= 9) {
+  //       num++;
+  //     } else if (
+  //       (65 <= pw.charCodeAt(i) && pw.charCodeAt(i) <= 90) ||
+  //       (97 <= pw.charCodeAt(i) && pw.charCodeAt(i) <= 122)
+  //     ) {
+  //       eng++;
+  //     } else special++;
+  //   }
+  //   if (!num || !eng || !special) return false;
+  //   else return true;
+  // }
 
   /** 이메일 호스트 select box를 선택했을 때 실행되는 함수 */
   const selectEmailHost = (x) => {
@@ -171,185 +267,291 @@ export default function SignIn() {
 
   return (
     <div className={style.user_box}>
-      <div className={style.sub_title}>
-        {type === "normal" ? (
-          <>언어재활 대상자/보호자</>
-        ) : (
-          <>언어재활사 선생님</>
-        )}
-      </div>
-      {type === "normal" && (
-        <div className={style.information}>
-          상담을 미리 진행하신 분은
-          <br />
-          <span className={style.highlight}>카카오톡</span>으로 제공받은
-          <br />
-          <span className={style.highlight}>대상자 정보</span>를 작성해주세요!
+      <div className={style.inner_container}>
+        <div className={style.sub_title}>
+          {type === "normal" ? (
+            <>언어재활 대상자/보호자</>
+          ) : (
+            <>언어재활사 선생님</>
+          )}
         </div>
-      )}
-      {/* 성명 & 성별 */}
-      <div className={style.input_div}>
-        <label className={style.input_label} htmlFor="user_name">
-          대상자 성명
-        </label>
-        <input
-          className={style.input_middle}
-          onChange={(e) => {
-            setUserName(e.target.value);
-          }}
-          value={userName}
-          type="text"
-          id="user_name"
-        />
-        <SelectBox options={optionsGender} onChange={(x) => setUserGender(x)} />
-      </div>
-      {/* 생년월일 */}
-      <div className={style.input_div}>
-        <label className={style.input_label}>대상자 생년월일</label>
-        <div
-          style={{
-            width: "412px",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <SelectBox
-            options={optionsYear}
-            onChange={(x) => setUserYear(x)}
-            width="191px"
-          />
-          <SelectBox options={optionsMonth} onChange={(x) => setUserMonth(x)} />
-          <SelectBox options={optionsDay} onChange={(x) => setUserDay(x)} />
-        </div>
-      </div>
-      {/* 아이디 */}
-      <div className={style.input_div}>
-        <label className={style.input_label} htmlFor="user_id">
-          아이디
-        </label>
-        <input className={style.input_middle} type="text" id="user_id" />
-        <button className={style.chk_id_btn}>중복확인</button>
-        <div className={`${style.sub_information}`}>
-          유효성 검사 메시지 들어가는 곳
-        </div>
-      </div>
-      {/* 비밀번호 */}
-      <div className={style.input_div}>
-        <label className={style.input_label} htmlFor="user_pwd">
-          비밀번호
-        </label>
-        <input className={style.input_long} type="password" id="user_pwd" />
-        <div className={`${style.sub_information}`}>
-          유효성 검사 메시지 들어가는 곳
-        </div>
-      </div>
-      {/* 비밀번호 확인 */}
-      <div className={style.input_div}>
-        <label className={style.input_label} htmlFor="user_pwd_chk">
-          비밀번호 확인
-        </label>
-        <input className={style.input_long} type="password" id="user_pwd_chk" />
-        <div className={`${style.sub_information}`}>
-          유효성 검사 메시지 들어가는 곳
-        </div>
-      </div>
-      {/* 이메일 */}
-      <div className={style.input_div}>
-        <label className={style.input_label} htmlFor="user_email_id">
-          이메일
-        </label>
-        <input
-          className={`${style.input_email_id}`}
-          type="text"
-          id="user_email_id"
-        />
-        <span className={style.at}>@</span>
-
-        <input
-          className={style.input_email_host}
-          type="text"
-          id="input_email_host"
-          readOnly={isReadOnly}
-          value={userEmailHost === "none" ? "" : userEmailHost}
-        />
-        <SelectBox options={optionHost} onChange={(x) => selectEmailHost(x)} />
-      </div>
-      {/* (주) 연락처 */}
-      <div className={style.input_div}>
-        <label className={style.input_label} htmlFor="user_phone">
-          {type === "normal" ? <>주 연락처</> : <>연락처</>}
-        </label>
-        <input
-          className={`${style.input_number} ${style.input_long}`}
-          type="text"
-          id="user_phone"
-          placeholder="'-'를 제외한 숫자만 입력해 주세요."
-        />
-      </div>
-      {/* 비상 연락처 or 자격증, 최종학력 */}
-      {type === "normal" ? (
-        <>
-          <div className={style.input_div}>
-            <label className={style.input_label} htmlFor="user_first_responder">
-              비상 연락처 1
-            </label>
-            <input
-              className={`${style.input_number} ${style.input_middle}`}
-              type="text"
-              id="user_first_responder"
-              placeholder="'-'를 제외한 숫자만 입력해 주세요."
-            />
-            <SelectBox options={optionsRelationship} />
-            <div className={`${style.sub_information}`}>
-              참관 링크 메시지가 발송되는 연락처입니다.
+        {type === "normal" && (
+          <div className={style.information}>
+            <div>
+              상담을 미리 진행하신 분은
+              <br />
+              <span className={style.highlight}>카카오톡</span>으로 제공받은
+              <br />
+              <span className={style.highlight}>대상자 정보</span>를
+              작성해주세요!
             </div>
           </div>
-          <div className={style.input_div}>
-            <label
-              className={style.input_label}
-              htmlFor="user_second_responder"
-            >
-              비상 연락처 2 (선택)
-            </label>
-            <input
-              className={`${style.input_number} ${style.input_middle}`}
-              type="text"
-              id="user_second_responder"
-              placeholder="'-'를 제외한 숫자만 입력해 주세요."
+        )}
+        {/* 성명 & 성별 */}
+        <div className={style.input_div}>
+          <label className={style.input_label} htmlFor="user_name">
+            대상자 성명
+          </label>
+          <input
+            className={style.input_middle}
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+            value={userName}
+            type="text"
+            id="user_name"
+            ref={inputUserName}
+          />
+          <SelectBox
+            options={optionsGender}
+            onChange={(x) => setUserGender(x)}
+            ref={inputUserGender}
+          />
+        </div>
+        {/* 생년월일 */}
+        <div className={style.input_div}>
+          <label className={style.input_label}>대상자 생년월일</label>
+          <div
+            style={{
+              width: "412px",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <SelectBox
+              options={optionsYear}
+              onChange={(x) => setUserYear(x)}
+              width="191px"
+              ref={inputUserYear}
             />
-            <SelectBox options={optionsRelationship} />
+            <SelectBox
+              options={optionsMonth}
+              onChange={(x) => setUserMonth(x)}
+              ref={inputUserMonth}
+            />
+            <SelectBox
+              options={optionsDay}
+              onChange={(x) => setUserDay(x)}
+              ref={inputUserDay}
+            />
           </div>
-        </>
-      ) : (
-        <>
-          <div className={style.input_div}>
-            <label className={style.input_label} htmlFor="">
-              자격증
-            </label>
-            <SelectBox options={optionsLicense} width="412px" />
+        </div>
+        {/* 아이디 */}
+        <div className={style.input_div}>
+          <label className={style.input_label} htmlFor="user_id">
+            아이디
+          </label>
+          <input
+            className={style.input_middle}
+            type="text"
+            id="user_id"
+            value={userId}
+            onChange={(e) => {
+              setUserId(e.target.value);
+            }}
+            ref={inputUserId}
+          />
+          <button className={style.chk_id_btn}>중복확인</button>
+          <div className={`${style.sub_information}`}>
+            유효성 검사 메시지 들어가는 곳
           </div>
-          <div className={style.input_div}>
-            <label className={style.input_label} htmlFor="">
-              최종학력
-            </label>
-            <SelectBox options={optionsEducation} width="412px" />
+        </div>
+        {/* 비밀번호 */}
+        <div className={style.input_div}>
+          <label className={style.input_label} htmlFor="user_pwd">
+            비밀번호
+          </label>
+          <input
+            className={style.input_long}
+            type="password"
+            id="user_pwd"
+            value={userPwd}
+            onChange={(e) => {
+              setUserPwd(e.target.value);
+            }}
+            ref={inputUserPwd}
+          />
+          <div className={`${style.sub_information}`}>
+            유효성 검사 메시지 들어가는 곳
           </div>
-        </>
-      )}
-      {/* 이용약관 동의 */}
-      <div className={style.input_div}>
-        <input
-          className={`${style.input_check_box} ${style.inline}`}
-          type="checkbox"
-          id="tos"
-        />
-        <label className={`${style.input_label} ${style.inline}`} htmlFor="tos">
-          이용약관 및 개인정보 처리방침 (필수)
-        </label>
+        </div>
+        {/* 비밀번호 확인 */}
+        <div className={style.input_div}>
+          <label className={style.input_label} htmlFor="user_pwd_chk">
+            비밀번호 확인
+          </label>
+          <input
+            className={style.input_long}
+            type="password"
+            id="user_pwd_chk"
+            value={userPwdChk}
+            onChange={(e) => {
+              setUserPwdChk(e.target.value);
+            }}
+            ref={inputUserPwdChk}
+          />
+          <div className={`${style.sub_information}`}>
+            유효성 검사 메시지 들어가는 곳
+          </div>
+        </div>
+        {/* 이메일 */}
+        <div className={style.input_div}>
+          <label className={style.input_label} htmlFor="user_email_id">
+            이메일
+          </label>
+          <input
+            className={`${style.input_email_id}`}
+            type="text"
+            id="user_email_id"
+            value={userEmailId}
+            onChange={(e) => {
+              setUserEmailId(e.target.value);
+            }}
+            ref={inputUserEmailId}
+          />
+          <span className={style.at}>@</span>
+
+          <input
+            className={style.input_email_host}
+            type="text"
+            id="input_email_host"
+            readOnly={isReadOnly}
+            value={userEmailHost === "none" ? "" : userEmailHost}
+            onChange={(e) => setUserEmailHost(e.target.value)}
+            ref={inputUserEmailHost}
+          />
+          <SelectBox
+            options={optionHost}
+            onChange={(x) => selectEmailHost(x)}
+          />
+        </div>
+        {/* (주) 연락처 */}
+        <div className={style.input_div}>
+          <label className={style.input_label} htmlFor="user_phone">
+            {type === "normal" ? <>주 연락처</> : <>연락처</>}
+          </label>
+          <input
+            className={`${style.input_number} ${style.input_long}`}
+            type="text"
+            id="user_phone"
+            placeholder="'-'를 제외한 숫자만 입력해 주세요."
+            value={userPhone}
+            onChange={(e) => {
+              setUserPhone(e.target.value);
+            }}
+            ref={inputUserPhone}
+          />
+        </div>
+        {/* 비상 연락처 or 자격증, 최종학력 */}
+        {type === "normal" ? (
+          <>
+            <div className={style.input_div}>
+              <label
+                className={style.input_label}
+                htmlFor="user_first_responder"
+              >
+                비상 연락처 1
+              </label>
+              <input
+                className={`${style.input_number} ${style.input_middle}`}
+                type="text"
+                id="user_first_responder"
+                placeholder="'-'를 제외한 숫자만 입력해 주세요."
+                value={userFirstResponder}
+                onChange={(e) => {
+                  setUserFirstResponder(e.target.value);
+                }}
+                ref={inputUserFirstResponder}
+              />
+              <SelectBox
+                options={optionsRelationship}
+                onChange={(x) => {
+                  setUserFirstResponderRelationship(x);
+                }}
+                ref={inputUserFirstResponderRelationship}
+              />
+              <div className={`${style.sub_information}`}>
+                참관 링크 메시지가 발송되는 연락처입니다.
+              </div>
+            </div>
+            <div className={style.input_div}>
+              <label
+                className={style.input_label}
+                htmlFor="user_second_responder"
+              >
+                비상 연락처 2 (선택)
+              </label>
+              <input
+                className={`${style.input_number} ${style.input_middle}`}
+                type="text"
+                id="user_second_responder"
+                placeholder="'-'를 제외한 숫자만 입력해 주세요."
+                value={userSecondResponder}
+                onChange={(e) => {
+                  setUserSecondResponder(e.target.value);
+                }}
+                ref={inputUserSecondResponder}
+              />
+              <SelectBox
+                options={optionsRelationship}
+                onChange={(x) => setUserSecondResponderRelationship(x)}
+                ref={inputUserSecondResponderRelationship}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={style.input_div}>
+              <label className={style.input_label} htmlFor="">
+                자격증
+              </label>
+              <SelectBox
+                options={optionsLicense}
+                width="412px"
+                onChange={(x) => {
+                  setUserLicense(x);
+                }}
+                ref={inputUserLicense}
+              />
+            </div>
+            <div className={style.input_div}>
+              <label className={style.input_label} htmlFor="">
+                최종학력
+              </label>
+              <SelectBox
+                options={optionsEducation}
+                width="412px"
+                onChange={(x) => {
+                  setUserEducation(x);
+                }}
+                ref={inputUserEducation}
+              />
+            </div>
+          </>
+        )}
+        {/* 이용약관 동의 */}
+        <div className={style.input_div + " " + style.tos}>
+          <input
+            className={`${style.input_check_box} ${style.inline}`}
+            type="checkbox"
+            id="tos"
+            value={userTos}
+            onChange={(e) => {
+              setUserTos(e.target.checked);
+            }}
+            ref={inputUserTos}
+          />
+          <label
+            className={`${style.input_label} ${style.inline}`}
+            htmlFor="tos"
+          >
+            이용약관 및 개인정보 처리방침 (필수)
+          </label>
+        </div>
+        <button className={style.sign_up_btn} onClick={signUp}>
+          회원가입
+        </button>
       </div>
-      <button className={style.sign_up_btn} onClick={signUp}>
-        회원가입
-      </button>
     </div>
   );
 }
