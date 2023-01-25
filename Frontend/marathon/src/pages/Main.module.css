@@ -1,4 +1,17 @@
-.mainBanner {
+h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.main_banner {
   background: linear-gradient(
       to left,
       rgba(39, 81, 111, 0) 50%,
@@ -7,12 +20,199 @@
       rgba(39, 81, 111, 1) 100%
     ),
     url(../../public/img/mainBanner.png.png);
-  background-color: black;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: right;
   height: 400px;
   width: 100%;
   max-width: 1600px;
-  margin: 0 auto;
+  margin-top: 3px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 0;
+}
+
+.main_banner_words {
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  color: rgb(231, 230, 230);
+}
+
+.main_banner_words h2 {
+  margin-bottom: 30px;
+}
+
+.main_color_board {
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 5%;
+  background-color: #ebfffe;
+  text-align: center;
+}
+
+.main_color_board h3 {
+  margin-bottom: 40px;
+}
+
+.page_card {
+  width: 48%;
+  min-width: 338px;
+  padding: 40px;
+  margin-top: 0px;
+  position: relative;
+  margin-bottom: 30px;
+  border: 1px solid gray;
+  box-shadow: 3px 3px 2px 2px rgb(112, 112, 110);
+}
+
+.page_card p {
+  font-size: 0.9em;
+  color: rgb(160, 160, 160);
+}
+
+.card {
+  display: block;
+  width: 90%;
+  min-width: 200px;
+  border: 1px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+.main_img_board {
+  width: 100%;
+  margin-bottom: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  padding: 5%;
+}
+
+.card2 {
+  display: block;
+  height: 100%;
+  width: 45%;
+  margin-bottom: 20px;
+  font-size: 0.9em;
+}
+
+.card3 {
+  display: block;
+  height: 100%;
+  width: 55%;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 0.9em;
+}
+
+.quoto_left {
+  display: inline-block;
+  width: 30%;
+  height: auto;
+  margin-top: 5%;
+  vertical-align: top;
+  font-size: 50px;
+  color: rgb(211, 211, 211);
+}
+
+.quoto_center {
+  display: inline-block;
+  margin-top: 15%;
+  vertical-align: top;
+  width: 40%;
+}
+
+.quoto_right {
+  display: inline-block;
+  width: 30%;
+  margin-top: 25%;
+  height: auto;
+  vertical-align: bottom;
+  font-size: 50px;
+  color: rgb(211, 211, 211);
+}
+
+.last_box {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.button {
+  position: relative;
+  border: none;
+  display: inline-block;
+  padding: 15px 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  background-color: rgb(240, 243, 245);
+  color: #112529;
+}
+
+.button:hover {
+  background-color: rgb(209, 211, 212);
+  color: #4a666a;
+}
+
+@media screen and (max-width: 992px) {
+  .page_card h3 {
+    font-size: 1.2em;
+  }
+
+  .page_card,
+  .card2,
+  .card3 {
+    font-size: 0.7em;
+  }
+
+  .main_banner_words h2 {
+    font-size: 1.4em;
+  }
+
+  .main_banner_words h4 {
+    font-size: 1.2em;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .fr {
+    float: none;
+  }
+
+  .fl {
+    float: none;
+  }
+
+  .page_card h3 {
+    font-size: 1.4em;
+  }
+
+  .page_card,
+  .card2,
+  .card3 {
+    width: 100%;
+    font-size: 1em;
+  }
+
+  .inner_board {
+    font-size: 0.85em;
+  }
+
+  .main_banner_words h2 {
+    font-size: 1.2em;
+  }
+
+  .main_banner_words h4 {
+    font-size: 1em;
+  }
+
+  .main_color_board {
+    font-size: 0.7em;
+  }
 }
