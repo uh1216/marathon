@@ -3,8 +3,11 @@ h3 {
   margin: 0px;
 }
 
+/* 아래 cotainer를 먼저 페이지에 선언하고 그 아래에 inner_container를 생성하고 거기서 내용물을 작성합시다 */
+
 .container {
   max-width: 1600px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   font-size: 1em;
