@@ -6,9 +6,14 @@
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
 
   margin: 0 auto;
-
+  display: flex;
+  justify-content: center;
+}
+.inner_box {
   display: flex;
   flex-flow: column;
+  align-items: center;
+  width: 345px;
 }
 
 /* 환영합니다 제목 */
@@ -30,6 +35,8 @@
   border: 0 solid black;
   background-color: #f4f2f2;
   border-radius: 10px;
+
+  margin-bottom: 12px;
 }
 
 .input_text:focus {
@@ -50,6 +57,11 @@
 .find {
   color: #857f7f;
   font-size: 0.94em;
+  align-self: flex-end;
+}
+
+.find_txt {
+  margin-left: 20px;
 }
 
 /* 아이디 기억하기 */
@@ -60,7 +72,6 @@ input[type="checkbox"].memorize_id_box {
   display: inline-block;
   width: 20px;
   height: 20px;
-  box-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 input[type="checkbox"].memorize_id_box:checked {
   content: "✔";
@@ -70,9 +81,15 @@ input[type="checkbox"].memorize_id_box:checked {
   background-color: white;
   text-align: center;
 }
+.memorize_id {
+  display: flex;
+  align-self: flex-start;
+  margin-bottom: 18px;
+}
 .memorize_id_txt {
   color: #948ddf;
   font-size: 0.94em;
+  margin-left: 6px;
 }
 
 /* 로그인 버튼 */
@@ -80,6 +97,8 @@ input[type="checkbox"].memorize_id_box:checked {
   width: 345px;
   height: 50px;
   border-radius: 10px;
+
+  margin-bottom: 12px;
 }
 .btn:active {
   background-color: #857f7f;
