@@ -1,9 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import style from "./NoticeUpdate.module.css";
 
 export default function NoticeUpdate() {
   const navigate = useNavigate();
+  const num = useParams();
+  console.log(num);
 
   return (
     <>
@@ -19,6 +21,12 @@ export default function NoticeUpdate() {
                   className={style.right_menu + " " + style.notice_button}
                 >
                   등록
+                </button>
+                <button
+                  className={style.right_menu + " " + style.notice_button}
+                  onClick={() => navigate(-1)}
+                >
+                  뒤로가기
                 </button>
                 <button
                   className={style.right_menu + " " + style.notice_button}
