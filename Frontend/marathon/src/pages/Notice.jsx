@@ -13,8 +13,8 @@ export default function Notice() {
       <Routes>
         <Route path="/" element={<NoticeBoard />} />
         <Route path="notice-create" element={<NoticeCreate />} />
-        <Route path="notice-detail" element={<NoticeDetail />} />
-        <Route path="notice-update" element={<NoticeUpdate />} />
+        <Route path=":num" element={<NoticeDetail />} />
+        <Route path=":num/update" element={<NoticeUpdate />} />
       </Routes>
     </div>
   );

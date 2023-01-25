@@ -5,11 +5,35 @@ import style from "./NoticeBoard.module.css";
 export default function NoticeBoard() {
   const navigate = useNavigate();
   // 공지사항 데이터 객체로 저장(임시 더미데이터 추가 상태)
-  const [noticeList, setNoticeList] = useState([
-    { num: 4, title: "4번글", content: "4번글 내용입니다.", count: 9999 },
-    { num: 3, title: "3번글", content: "3번글 내용입니다.", count: 9999 },
-    { num: 2, title: "2번글", content: "2번글 내용입니다.", count: 9999 },
-    { num: 1, title: "1번글", content: "1번글 내용입니다.", count: 9999 },
+  const [noticeLists, setNoticeLists] = useState([
+    {
+      num: 4,
+      title: "4번글 제목입니다.",
+      content: "4번글 내용입니다.",
+      date: "2022.12.30",
+      count: 44444,
+    },
+    {
+      num: 3,
+      title: "3번글 제목입니다.",
+      content: "3번글 내용입니다.",
+      date: "2022.12.25",
+      count: 33333,
+    },
+    {
+      num: 2,
+      title: "2번글 제목입니다.",
+      content: "2번글 내용입니다.",
+      date: "2022.12.17",
+      count: 22222,
+    },
+    {
+      num: 1,
+      title: "1번글 제목입니다.",
+      content: "1번글 내용입니다.",
+      date: "2022.11.15",
+      count: 11111,
+    },
   ]);
 
   return (
@@ -54,36 +78,33 @@ export default function NoticeBoard() {
               <div>등록일</div>
               <div>조회수</div>
             </div>
-            {/** 앞으로 데이터를 받아오면 map으로 표현될 부분 */}
-            <div className={style.notice_header_item}>
-              <div>4</div>
-              <div>
-                <Link to="/notice/notice-detail" className={style.notice_link}>
-                  만 6-8세 자녀를 둔 학부모님께 추천하는 "온라인 사회성 캠프"
-                  참여자 모집
-                </Link>
-              </div>
-              <div>2023.01.12</div>
-              <div>9999</div>
-            </div>
-            <div className={style.notice_header_item}>
-              <div>3</div>
-              <div>3번 글에 대한 제목입니다</div>
-              <div>2023.01.12</div>
-              <div>9999</div>
-            </div>
-            <div className={style.notice_header_item}>
-              <div>2</div>
-              <div>2번 글에 대한 제목입니다</div>
-              <div>2023.01.12</div>
-              <div>9999</div>
-            </div>
-            <div className={style.notice_header_item}>
-              <div>1</div>
-              <div>1번 글에 대한 제목입니다</div>
-              <div>2023.01.12</div>
-              <div>9999</div>
-            </div>
+            {/** 현재는 더미데이터, 백엔드와 연결 후 서버에서 값 가져와서 출력 */}
+            {noticeLists.map((list) => {
+              return (
+                <>
+                  <div className={style.notice_header_item}>
+                    <div>{list.num}</div>
+                    <div>
+                      <Link
+                        to={`${list.num}`}
+                        state={{
+                          num: list.num,
+                          title: list.title,
+                          content: list.content,
+                          date: list.date,
+                          count: list.count,
+                        }}
+                        className={style.notice_link}
+                      >
+                        {list.title}
+                      </Link>
+                    </div>
+                    <div>{list.date}</div>
+                    <div>{list.count}</div>
+                  </div>
+                </>
+              );
+            })}
           </div>
           <div className={style.notice_pagination}>1 2 3 4 5 6 7 8 9</div>
         </div>
