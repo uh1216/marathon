@@ -102,13 +102,13 @@
 
 @media screen and (max-width: 1300px) {
   .content_box_opened {
-    height: 110px;
+    height: 120px;
   }
 }
 
 @media screen and (max-width: 1120px) {
   .content_box_opened {
-    height: 120px;
+    height: 130px;
   }
 }
 
@@ -126,7 +126,7 @@
   }
 
   .content_box_opened {
-    height: 130px;
+    height: 165px;
   }
 }
 
@@ -169,7 +169,7 @@
   }
 
   .content_box_opened {
-    height: 140px;
+    height: 170px;
   }
 }
 
@@ -183,13 +183,13 @@
   }
 
   .content_box_opened {
-    height: 150px;
+    height: 180px;
   }
 }
 
 @media screen and (max-width: 550px) {
   .content_box_opened {
-    height: 180px;
+    height: 190px;
   }
 }
 
