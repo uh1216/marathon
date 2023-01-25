@@ -3,7 +3,6 @@
   height: 900px;
   margin-left: auto;
   margin-right: auto;
-
   font-size: 1em;
 }
 
@@ -14,9 +13,20 @@
 }
 
 .notice_body {
-  height: 700px;
+  margin-bottom: 50px;
 }
 
+.notice_link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/** 
+  .notice_top_interface
+  공지사항 메인페이지 상단 그리드를 위한 css
+  .notice_header_containerd
+  앞으로 쓰게 될 게시글에도 동일한 그리드 적용
+*/
 .notice_top_interface {
   display: flex;
   justify-content: space-between;
@@ -51,7 +61,9 @@
 .right_menu {
   margin-left: 15px;
 }
-
+/** 
+  input 타입의 태그들을 각 페이지별로 css를 차별하기 위해서 클래스로 따로 구분
+*/
 .notice_button {
   width: 101px;
   height: 45px;
@@ -64,13 +76,13 @@
 .notice_select {
   width: 129px;
   height: 40px;
-  border-color: #d2cfcf;
+  border: solid 1px #d2cfcf;
   border-radius: 10px;
 }
 
 .notice_text {
   width: 345px;
   height: 40px;
-  border-color: #d2cfcf;
+  border: solid 1px #d2cfcf;
   border-radius: 10px;
 }
