@@ -1,11 +1,16 @@
-.board {
+p,
+h3 {
+  margin: 0px;
+}
+
+.container {
   max-width: 1600px;
   margin-left: auto;
   margin-right: auto;
   font-size: 1em;
 }
 
-.inner_board {
+.inner_container {
   margin-left: auto;
   margin-right: auto;
   width: 90%;
