@@ -27,8 +27,8 @@ export default function Main() {
           </button>
         </div>
       </div>
-      <div className="board">
-        <div className="inner_board" style={{ fontSize: "1.2em" }}>
+      <div className="container">
+        <div className="inner_container" style={{ fontSize: "1.2em" }}>
           <div className={style.main_color_board}>
             <h3>
               왜 <span style={{ color: "#52A068" }}>말</span>아톤 일까요?

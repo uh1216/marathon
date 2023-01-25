@@ -342,39 +342,62 @@ export default function Header() {
                 if (isToggled) setIsToggled(!isToggled);
               }}
             >
-              도형 위치 맞추기
-            </dl>
-          </div>
-        </li>
-        <li
-          onClick={() => {
-            if (isToggled) setIsToggled(!isToggled);
-          }}
-        >
-          수업 예약
-        </li>
-      </ul>
+              스스로 학습
+            </span>
+            <div className="sub_menu">
+              <dl
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                }}
+              >
+                색깔 위치 맞추기
+              </dl>
+              <dl
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                }}
+              >
+                그림 카드 맞추기
+              </dl>
+              <dl
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                }}
+              >
+                도형 위치 맞추기
+              </dl>
+            </div>
+          </li>
+          <li
+            onClick={() => {
+              if (isToggled) setIsToggled(!isToggled);
+            }}
+          >
+            수업 예약
+          </li>
+        </ul>
 
-      <div className="header_eatspace"></div>
+        <div className="header_eatspace"></div>
 
-      <ul className="header__right">
-        <li
-          onClick={() => {
-            if (isUserToggled) setIsUserToggled(!isUserToggled);
-            navigate("/user/login");
-          }}
-        >
-          로그인
-        </li>
-        <li
-          onClick={() => {
-            if (isUserToggled) setIsUserToggled(!isUserToggled);
-            navigate("/user/sign-up-type");
-          }}
-        >
-          회원가입
-        </li>
-      </ul>
-    </Header>
+        <ul className="header__right">
+          <li
+            onClick={() => {
+              if (isUserToggled) setIsUserToggled(!isUserToggled);
+              navigate("/user/login");
+            }}
+          >
+            로그인
+          </li>
+          <li
+            onClick={() => {
+              if (isUserToggled) setIsUserToggled(!isUserToggled);
+              navigate("/user/sign-up-type");
+            }}
+          >
+            회원가입
+          </li>
+        </ul>
+      </Header>
+    </div>
   );
 }

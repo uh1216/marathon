@@ -1,8 +1,3 @@
-h3 {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
 .fr {
   float: right;
 }
@@ -52,7 +47,18 @@ h3 {
   text-align: center;
 }
 
+.page_card h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.last_box h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
 .main_color_board h3 {
+  font-weight: bold;
   margin-bottom: 40px;
 }
 
@@ -171,6 +177,11 @@ h3 {
     font-size: 0.7em;
   }
 
+  .page_card {
+    width: 48%;
+    min-width: auto;
+  }
+
   .main_banner_words h2 {
     font-size: 1.4em;
   }
@@ -193,15 +204,16 @@ h3 {
     font-size: 1.4em;
   }
 
-  .page_card,
   .card2,
-  .card3 {
+  .card3,
+  .page_card {
     width: 100%;
     font-size: 1em;
   }
 
-  .inner_board {
-    font-size: 0.85em;
+  .card2,
+  .card3 {
+    font-size: 0.7em;
   }
 
   .main_banner_words h2 {

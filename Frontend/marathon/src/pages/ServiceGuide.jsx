@@ -11,9 +11,9 @@ export default function ServiceGuide() {
 
   return (
     <>
-      <div className="board">
+      <div className="container">
         <div
-          className="inner_board"
+          className="inner_container"
           style={{
             marginTop: "20px",
             marginBottom: "20px",
