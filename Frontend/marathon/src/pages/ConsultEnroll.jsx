@@ -88,7 +88,6 @@ export default function ConsultEnroll() {
     },
   ];
 
-  const { type } = useParams();
   const navigate = useNavigate();
 
   const inputUserName = useRef();
@@ -104,6 +103,11 @@ export default function ConsultEnroll() {
   const inputUserSecondResponder = useRef();
   const inputUserSecondResponderRelationship = useRef();
   const inputUserTos = useRef();
+  const inputDiseaseTos = useRef();
+  const inputDiseaseYear = useRef();
+  const inputDiseaseMonth = useRef();
+  const inputDiseaseDay = useRef();
+  const inputDesTextarea = useRef();
 
   const [userName, setUserName] = useState("");
   const [userGender, setUserGender] = useState("none");
@@ -120,9 +124,11 @@ export default function ConsultEnroll() {
   const [userSecondResponderRelationship, setUserSecondResponderRelationship] =
     useState("none");
   const [userTos, setUserTos] = useState(false);
+  const [diseaseTos, setDiseaseTos] = useState(false);
   const [diseaseYear, setDiseaseYear] = useState("none");
   const [diseaseMonth, setDiseaseMonth] = useState("none");
   const [diseaseDay, setDiseaseDay] = useState("none");
+  const [desTextarea, setDesTextarea] = useState("");
 
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [optionsDay, setOptionsDay] = useState([{ value: "none", name: "일" }]);
@@ -195,10 +201,11 @@ export default function ConsultEnroll() {
           </div>
         </div>
       </div>
-      <div className="inner_container" style={{ width: "80%" }}>
-        <label className={style.input_label}>상담 희망날짜</label>
-        <div>----------달력 컴포넌트----------</div>
+      <div className="inner_container" style={{ width: "90%" }}>
         <div className={style.inner_container}>
+          <label className={style.input_label}>상담 희망날짜</label>
+          <div>----------달력 컴포넌트----------</div>
+
           {/* 성명 & 성별 */}
           <div className={style.input_div}>
             <label className={style.input_label} htmlFor="user_name">
@@ -220,6 +227,7 @@ export default function ConsultEnroll() {
               ref={inputUserGender}
             />
           </div>
+
           {/* 생년월일 */}
           <div className={style.input_div}>
             <label className={style.input_label}>대상자 생년월일</label>
@@ -248,6 +256,7 @@ export default function ConsultEnroll() {
               />
             </div>
           </div>
+
           {/* 이메일 */}
           <div className={style.input_div}>
             <label className={style.input_label} htmlFor="user_email_id">
@@ -279,10 +288,11 @@ export default function ConsultEnroll() {
               onChange={(x) => selectEmailHost(x)}
             />
           </div>
+
           {/* (주) 연락처 */}
           <div className={style.input_div}>
             <label className={style.input_label} htmlFor="user_phone">
-              {type === "normal" ? <>주 연락처</> : <>연락처</>}
+              <>주 연락처</>
             </label>
             <input
               className={`${style.input_number} ${style.input_long}`}
@@ -296,6 +306,7 @@ export default function ConsultEnroll() {
               ref={inputUserPhone}
             />
           </div>
+
           {/* 비상 연락처 */}
           <div className={style.input_div}>
             <label className={style.input_label} htmlFor="user_first_responder">
@@ -352,6 +363,24 @@ export default function ConsultEnroll() {
           <div className={style.input_div}>
             <label className={style.input_label}>
               대상자의 뇌손상 발병시기
+              <div style={{ display: "inline-block", marginLeft: "140px" }}>
+                <input
+                  className={style.input_check_box2 + " " + style.inline}
+                  type="checkbox"
+                  id="tos2"
+                  value={diseaseTos}
+                  onChange={(e) => {
+                    setDiseaseTos(e.target.checked);
+                  }}
+                  ref={inputDiseaseTos}
+                />
+                <label
+                  className={`${style.input_label} ${style.inline}`}
+                  htmlFor="tos2"
+                >
+                  해당사항 없음
+                </label>
+              </div>
             </label>
             <div
               style={{
@@ -364,46 +393,87 @@ export default function ConsultEnroll() {
                 options={optionsYear}
                 onChange={(x) => setDiseaseYear(x)}
                 width="191px"
-                ref={inputUserYear}
+                ref={inputDiseaseYear}
               />
               <SelectBox
                 options={optionsMonth}
                 onChange={(x) => setDiseaseMonth(x)}
-                ref={inputUserMonth}
+                ref={inputDiseaseMonth}
               />
               <SelectBox
                 options={optionsDay2}
                 onChange={(x) => setDiseaseDay(x)}
-                ref={inputUserDay}
+                ref={inputDiseaseDay}
               />
             </div>
           </div>
 
-          {/* 이용약관 동의 */}
-          <div
-            className={style.input_div + " " + style.tos}
-            style={{ display: "inline-block" }}
-          >
-            <input
-              className={`${style.input_check_box} ${style.inline}`}
-              type="checkbox"
-              id="tos"
-              value={userTos}
-              onChange={(e) => {
-                setUserTos(e.target.checked);
-              }}
-              ref={inputUserTos}
-            />
-            <label
-              className={`${style.input_label} ${style.inline}`}
-              htmlFor="tos"
-            >
-              해당사항 없음
+          {/* 재활에 어려운 점 */}
+          <div style={{ marginTop: "30px" }}>
+            <label className={style.input_label} htmlFor="des_textarea">
+              의사소통에서 어려움을 느끼는 부분을 말해주세요!
             </label>
+            <textarea
+              className={style.input_textarea}
+              onChange={(e) => {
+                setDesTextarea(e.target.value);
+              }}
+              value={desTextarea}
+              id="des_textarea"
+              ref={inputDesTextarea}
+              maxLength="174"
+            />
           </div>
-
-          <button className={style.sign_up_btn}>회원가입</button>
         </div>
+
+        <div className={style.private_info_box}>
+          <h5>개인정보 처리 관련 내용</h5>
+          <p>1. 수집하는 개인정보 항목: 성명, 연령, 이메일, 전화번호</p>
+          <br />
+          <p>
+            2. 개인정보의 수집 및 이용 목적: 제공하신 정보는 언어발전소의
+            언어재활 상담과 예약을 위해 사용합니다.
+          </p>
+          <p>
+            (1) 본인 확인 식별(동명이인 등) 절차에 이용 (성명, 연령, 이메일,
+            전화번호)
+          </p>
+          <p>(2) 의사소통 및 정보 전달 등에 이용 (성명, 이메일, 전화번호)</p>
+          <br />
+          <p>3. 개인정보의 보유 및 이용</p>
+          <p>
+            기간: 수집된 개인정보의 보유 기간은 언어재활 상담 종료 후 1년간이며
+            삭제 요청시 즉시 파기합니다.
+          </p>
+          <p>
+            귀하는 이에 대한 동의를 거부할 수 있습니다만, 동의가 없을 시 무료
+            언어재활 상담이 불가능할 수 있음을 알려드립니다.
+          </p>
+        </div>
+
+        {/* 이용약관 동의 */}
+        <div className={style.info_check_box}>
+          <input
+            className={style.input_check_box + " " + style.inline}
+            type="checkbox"
+            id="tos"
+            value={userTos}
+            onChange={(e) => {
+              setUserTos(e.target.checked);
+            }}
+            ref={inputUserTos}
+          />
+          <label
+            className={`${style.input_label} ${style.inline}`}
+            style={{ marginLeft: "10px" }}
+            htmlFor="tos"
+          >
+            <span style={{ color: "blue" }}>개인정보 수집 및 이용</span>에
+            동의합니다.
+          </label>
+        </div>
+
+        <button className={style.enroll_btn}>신청하기</button>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ export default function Main() {
             className={style.button}
             style={{ marginTop: "20px" }}
             onClick={() => {
-              navigate("/");
+              navigate("/consult-enroll");
             }}
           >
             무료 상담 신청하기
@@ -103,7 +103,8 @@ export default function Main() {
               className={style.button}
               style={{ marginTop: "20px" }}
               onClick={() => {
-                navigate("/");
+                navigate("/consult-enroll");
+                window.scrollTo(0, 0);
               }}
             >
               무료 상담 신청하기

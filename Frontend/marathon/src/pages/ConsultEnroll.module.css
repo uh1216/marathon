@@ -41,12 +41,13 @@
 
 /* 제목 */
 .inner_container {
-  width: 415px;
-
+  min-width: 415px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* 제목 */
@@ -121,6 +122,15 @@
   width: 20px;
   height: 20px;
   border-radius: 5px;
+  vertical-align: middle;
+}
+
+.input_check_box2 {
+  width: 17px;
+  height: 17px;
+  margin-right: 2px;
+  border-radius: 5px;
+  vertical-align: middle;
 }
 
 /* input 이메일 */
@@ -155,17 +165,18 @@
   display: inline;
 }
 
-/* 회원가입 버튼 */
-.sign_up_btn {
-  width: 144px;
-  height: 55px;
+/* 상담신청 버튼 */
+.enroll_btn {
+  display: inline-block;
+  width: 50%;
+  height: 52px;
   border-radius: 10px;
   background-color: #989cff;
   color: white;
   border: none;
   font-size: 1.25em;
-
-  align-self: center;
+  margin-left: 25%;
+  margin-right: 25%;
 }
 
 /* 중복확인 버튼 */
@@ -197,4 +208,56 @@ input[type="password"] {
   display: flex;
   align-self: flex-start;
   margin-bottom: 30px;
+}
+
+.input_textarea {
+  padding: 8px;
+  width: 417px;
+  height: 187px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+  resize: none;
+}
+
+.private_info_box {
+  width: 80%;
+  min-width: 417px;
+  padding: 5%;
+  margin-top: 40px;
+  border-radius: 5px;
+  border: 1px solid rgb(150, 150, 150);
+  font-size: 0.8em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.info_check_box {
+  display: block;
+  text-align: center;
+  margin: 30px 0;
+}
+
+@media screen and (max-width: 992px) {
+  .color_box h4 {
+    font-size: 1.1em;
+  }
+
+  .color_box h5 {
+    font-size: 1em;
+  }
+
+  .icon_box {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .icon_contain_box {
+    flex-direction: column;
+  }
+
+  .color_box h5 {
+    margin-bottom: 40px;
+  }
 }
