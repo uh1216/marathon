@@ -6,6 +6,9 @@
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
 
   margin: 0 auto;
+
+  display: flex;
+  flex-flow: column;
 }
 
 /* 환영합니다 제목 */
