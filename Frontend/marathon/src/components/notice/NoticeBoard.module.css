@@ -17,7 +17,7 @@
   height: 700px;
 }
 
-.notice_button {
+.notice_top_interface {
   display: flex;
   justify-content: space-between;
   margin-top: 45px;
@@ -52,7 +52,7 @@
   margin-left: 15px;
 }
 
-button {
+.notice_button {
   width: 101px;
   height: 45px;
   border: 0;
@@ -61,14 +61,14 @@ button {
   border-radius: 10px;
 }
 
-select {
+.notice_select {
   width: 129px;
   height: 40px;
   border-color: #d2cfcf;
   border-radius: 10px;
 }
 
-input[type="text"] {
+.notice_text {
   width: 345px;
   height: 40px;
   border-color: #d2cfcf;

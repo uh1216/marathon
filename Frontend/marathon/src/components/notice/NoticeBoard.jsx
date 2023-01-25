@@ -10,25 +10,35 @@ export default function NoticeBoard() {
       <div className={style.container}>
         <div className={style.inner_container}>
           <div className={style.notice_body}>
-            <div className={style.notice_button}>
+            <div className={style.notice_top_interface}>
               <div>
                 <button
                   type="button"
+                  className={style.notice_button}
                   onClick={() => navigate("/notice/notice-create")}
                 >
                   글쓰기
                 </button>
               </div>
               <div>
-                <select className={style.right_menu}>
+                <select
+                  className={style.right_menu + " " + style.notice_select}
+                >
                   <option value="title" defaultChecked>
                     제목
                   </option>
                   <option value="content">내용</option>
                   <option value="titleAndContent">제목 + 내용</option>
                 </select>
-                <input type="text" className={style.right_menu}></input>
-                <button className={style.right_menu}>검색</button>
+                <input
+                  type="text"
+                  className={style.right_menu + " " + style.notice_text}
+                ></input>
+                <button
+                  className={style.right_menu + " " + style.notice_button}
+                >
+                  검색
+                </button>
               </div>
             </div>
             <div className={style.notice_header_container}>
