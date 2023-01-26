@@ -1,0 +1,80 @@
+/* 하얀색 박스 */
+.user_box {
+  width: 700px;
+  height: 450px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.select_box {
+  display: flex;
+}
+
+/* 제목 */
+.title {
+  font-family: "GmarketBold";
+  color: #a38aec;
+  font-size: 1.875em;
+  padding: 67px 0 6px 0;
+  border-bottom: 1px solid #c0afaf;
+  margin-bottom: 40px;
+  text-align: center;
+  width: 345px;
+}
+
+/* 아이콘 이미지 & 글귀 */
+.img {
+  width: 100px;
+}
+
+.txt {
+  font-size: 0.94em;
+  margin-top: 20px;
+}
+
+.box {
+  width: 280px;
+  height: 220px;
+  border-radius: 5px;
+  border: 1px solid #ededed;
+  float: left;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 15px;
+}
+
+/* 미디어 쿼리 */
+@media (max-width: 710px) {
+  .user_box {
+    width: auto;
+    padding: 0 50px;
+    height: 650px;
+    position: absolute;
+    top: 100px;
+
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  .select_box {
+    flex-direction: column;
+  }
+
+  .user_box:last-child:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -100px;
+    width: 100px;
+    height: 100px;
+  }
+}

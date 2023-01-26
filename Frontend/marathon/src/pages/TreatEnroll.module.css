@@ -1,0 +1,26 @@
+.container {
+  max-width: 1600px;
+  height: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1em;
+}
+
+.inner_container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  width: 80%;
+}
+
+.main_title {
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 7px #5f615f;
+}
+
+.main_content {
+  text-align: center;
+  font-size: 1.4em;
+}
