@@ -78,7 +78,7 @@ export default function NoticeBoard() {
                   onChange={(e) => {
                     setSearchOption(e);
                   }}
-                  width="120px"
+                  width="90%"
                 />
               </div>
               <div className={style.notice_top_interface_item3}>
