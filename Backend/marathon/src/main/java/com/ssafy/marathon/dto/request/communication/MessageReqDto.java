@@ -1,4 +1,4 @@
-package com.ssafy.marathon.dto.response;
+package com.ssafy.marathon.dto.request.communication;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -14,12 +14,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
-public class CommunicationResDto {
+public class MessageReqDto {
 
-    private Long seq;
     private Long senderSeq;
-    private Long reciverSeq;
+    private Long receiverSeq;
     private LocalDateTime date;
-    private boolean check;
-
+    private String content;
+    private Long root;
 }

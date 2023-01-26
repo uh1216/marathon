@@ -1,4 +1,4 @@
-package com.ssafy.marathon.dto.response;
+package com.ssafy.marathon.dto.response.game;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;

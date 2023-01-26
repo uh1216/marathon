@@ -1,4 +1,4 @@
-package com.ssafy.marathon.dto.request;
+package com.ssafy.marathon.dto.request.user;
 
 import java.util.Date;
 import lombok.AllArgsConstructor;

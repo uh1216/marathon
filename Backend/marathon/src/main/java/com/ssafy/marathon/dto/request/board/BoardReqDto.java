@@ -1,20 +1,24 @@
-package com.ssafy.marathon.dto.response;
+package com.ssafy.marathon.dto.request.board;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
+@Builder
 @ToString
-public class SignInResDto extends SignUpResDto {
+public class BoardReqDto {
 
-    private String accessToken;
+    private String title;
+    private String content;
+    private LocalDate registDate;
+    private String viewCnt;
+
 }
