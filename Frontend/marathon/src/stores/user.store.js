@@ -1,5 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export let {} = nowSideNav.actions;
-export {};
-z;
+const loginUser = createSlice({
+  name: "loginUser",
+  initialState: null,
+  reducers: {
+    userLogin(state) {
+      // 등급, 이미지url, 이름을 세션에서 가져옴
+      state = {
+        userName: "홍길동",
+        userProfile:
+          "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
+        userRole: "normal",
+      };
+      console.log(state);
+    },
+    userLogout(state) {
+      state = null;
+    },
+  },
+});
+
+export const { userLogin, userLogout } = loginUser.actions;
+export { loginUser };
