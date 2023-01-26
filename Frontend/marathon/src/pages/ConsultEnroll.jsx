@@ -6,8 +6,10 @@ import {
   faCalendarCheck,
 } from "@fortawesome/free-regular-svg-icons";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SelectBox from "components/common/SelectBox";
+import Calendar from "react-calendar";
+import "Calendar.css";
 
 export default function ConsultEnroll() {
   /** 성별 select box 옵션 */
@@ -88,6 +90,7 @@ export default function ConsultEnroll() {
     },
   ];
 
+  const [calenderDay, setCalenderDay] = useState(new Date());
   const navigate = useNavigate();
 
   const inputUserName = useRef();
@@ -136,6 +139,98 @@ export default function ConsultEnroll() {
     { value: "none", name: "일" },
   ]);
 
+  /** 신청하기 버튼을 누를 때 실행되는 함수 */
+  const checkUp = () => {
+    if (userName === "" || userName === null) {
+      alert("이름을 입력해주세요.");
+      inputUserName.current.focus();
+    } else if (userGender === "none" || userGender === null) {
+      alert("성별을 선택해주세요.");
+      inputUserGender.current.focus();
+    } else if (userYear === "none" || userYear === null) {
+      alert("생년월일을 선택해주세요.");
+      inputUserYear.current.focus();
+    } else if (userMonth === "none" || userMonth === null) {
+      alert("생년월일을 선택해주세요.");
+      inputUserMonth.current.focus();
+    } else if (userDay === "none" || userDay === null) {
+      alert("생년월일을 선택해주세요.");
+      inputUserDay.current.focus();
+    } else if (userEmailId === "" || userEmailId === null) {
+      alert("이메일을 입력해주세요.");
+      inputUserEmailId.current.focus();
+    } else if (userEmailHost === "" || userEmailHost === null) {
+      alert("이메일을 입력해주세요.");
+      inputUserEmailHost.current.focus();
+    } else if (userPhone === "" || userPhone === null) {
+      alert("연락처를 입력해주세요.");
+      inputUserPhone.current.focus();
+    } else if (!chkPhone(userPhone)) {
+      alert("연락처가 유효하지 않습니다.");
+      inputUserPhone.current.focus();
+    } else if (userFirstResponder === "" || userFirstResponder === null) {
+      alert("비상 연락처 1을 입력해주세요.");
+      inputUserFirstResponder.current.focus();
+    } else if (!chkPhone(userFirstResponder)) {
+      alert("연락처가 유효하지 않습니다.");
+      inputUserFirstResponder.current.focus();
+    } else if (
+      userFirstResponderRelationship === "none" ||
+      userFirstResponderRelationship === null
+    ) {
+      alert("비상 연락처 1의 관계를 입력해주세요.");
+      inputUserFirstResponderRelationship.current.focus();
+    } else if (
+      userSecondResponderRelationship !== "none" &&
+      userSecondResponderRelationship !== null &&
+      (userSecondResponder === "" || userSecondResponder === null)
+    ) {
+      alert("비상 연락처 2를 입력해주세요.");
+      inputUserSecondResponder.current.focus();
+    } else if (
+      userSecondResponder.length > 0 &&
+      !chkPhone(userSecondResponder)
+    ) {
+      alert("연락처가 유효하지 않습니다.");
+      inputUserSecondResponder.current.focus();
+    } else if (
+      userSecondResponder.length > 0 &&
+      (userSecondResponderRelationship === "none" ||
+        userSecondResponderRelationship === null)
+    ) {
+      alert("비상 연락처 2의 관계를 입력해주세요.");
+      inputUserSecondResponderRelationship.current.focus();
+    } else if (!diseaseTos) {
+      if (diseaseYear === "none" || diseaseYear === null) {
+        alert("발병일을 선택해주세요.");
+        inputDiseaseYear.current.focus();
+      } else if (diseaseMonth === "none" || diseaseMonth === null) {
+        alert("발병일을 선택해주세요.");
+        inputDiseaseMonth.current.focus();
+      } else if (diseaseDay === "none" || diseaseDay === null) {
+        alert("발병일을 선택해주세요.");
+        inputDiseaseDay.current.focus();
+      }
+    } else if (desTextarea === "") {
+      alert("소통에 어려움 점을 입력해 주세요.");
+      inputDesTextarea.current.focue();
+    } else if (!userTos) {
+      alert("이용약관 및 개인정보 처리방침에 동의해주세요.");
+      inputUserTos.current.focue();
+    } else {
+      navigate("/");
+    }
+  };
+
+  /** 연락처가 유효한지 체크하는 함수 */
+  const chkPhone = (phone) => {
+    if (phone.length < 9) return false;
+    for (let i = 0; i < phone.length; i++) {
+      if ("0" > phone[i] || "9" < phone[i]) return false;
+    }
+    return true;
+  };
+
   const selectEmailHost = (x) => {
     if (x !== "none") {
       setIsReadOnly(true);
@@ -173,6 +268,21 @@ export default function ConsultEnroll() {
     }
   }, [diseaseYear, diseaseMonth]);
 
+  useEffect(() => {
+    let today_day = new Date().getDate();
+    let today_month = new Date().getMonth();
+    let today_year = new Date().getFullYear();
+    if (
+      calenderDay.getFullYear() < today_year ||
+      calenderDay.getMonth() < today_month ||
+      (calenderDay.getMonth() === today_month &&
+        calenderDay.getDate() < today_day)
+    ) {
+      alert("유효한 날짜가 아닙니다.");
+      setCalenderDay(new Date());
+    }
+  }, [calenderDay]);
+
   return (
     <div className="container">
       <div className="inner_container" style={{ paddingBottom: "10px" }}>
@@ -203,8 +313,11 @@ export default function ConsultEnroll() {
       </div>
       <div className="inner_container" style={{ width: "90%" }}>
         <div className={style.inner_container}>
-          <label className={style.input_label}>상담 희망날짜</label>
-          <div>----------달력 컴포넌트----------</div>
+          <div>
+            <p style={{ marginBottom: "1px" }}>상담 희망날짜</p>
+            {/* 달력 컴포넌트 */}
+            <Calendar onChange={setCalenderDay} value={calenderDay} />
+          </div>
 
           {/* 성명 & 성별 */}
           <div className={style.input_div}>
@@ -473,7 +586,14 @@ export default function ConsultEnroll() {
           </label>
         </div>
 
-        <button className={style.enroll_btn}>신청하기</button>
+        <button
+          className={style.enroll_btn}
+          onClick={() => {
+            checkUp();
+          }}
+        >
+          신청하기
+        </button>
       </div>
     </div>
   );

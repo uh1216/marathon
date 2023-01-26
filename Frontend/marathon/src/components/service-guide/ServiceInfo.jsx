@@ -11,14 +11,14 @@ export default function ServiceInfo() {
   const [isHidden2, setIsHidden2] = useState(true);
   const [isHidden3, setIsHidden3] = useState(true);
   const [isHidden4, setIsHidden4] = useState(true);
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
 
   /** 처음 해당 컴포넌트를 불러올 때 단 한번만 NowSideNav를 업데이트 한다.
    *  이를 통해서 설령 onClick이 아닌 직접 url로 접속하더라도 옳바르게 nowSideNav가
    *  강조되서 표시되도록 만들 수 있다.
    */
   useEffect(() => {
-    dispath(changeNowSideNav("서비스 정보"));
+    dispatch(changeNowSideNav("서비스 정보"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
