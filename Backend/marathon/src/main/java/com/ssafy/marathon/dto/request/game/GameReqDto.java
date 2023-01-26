@@ -1,4 +1,4 @@
-package com.ssafy.marathon.dto.request;
+package com.ssafy.marathon.dto.request.game;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

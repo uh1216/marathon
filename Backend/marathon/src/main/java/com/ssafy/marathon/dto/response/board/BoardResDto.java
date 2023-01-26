@@ -1,6 +1,6 @@
-package com.ssafy.marathon.dto.request;
+package com.ssafy.marathon.dto.response.board;
 
-import java.util.Date;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,11 +14,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @ToString
-public class BoardReqDto {
+public class BoardResDto {
 
+    private Long seq;
     private String title;
     private String content;
-    private Date registDate;
+    private LocalDate registDate;
     private String viewCnt;
 
 }
