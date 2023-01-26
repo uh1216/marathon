@@ -22,7 +22,7 @@ public class Communication {
 
     @Id
     @GeneratedValue
-    private Long communicationSeq;
+    private Long seq;
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "sender_user_seq")
@@ -38,7 +38,7 @@ public class Communication {
         문자열 형식이 "2008-12-30 12:30:20" 와 같은 형태의 데이터에 특화해서 사용하는데에 적합.
         연월일시분초등의 요소를 따로 따로 분리하지 않고 하나의 정보로서 다룬다.
     */
-    private LocalDateTime communicationDate;
+    private LocalDateTime date;
 
     private Boolean checked;
 }
