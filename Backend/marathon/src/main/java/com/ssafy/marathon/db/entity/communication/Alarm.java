@@ -13,14 +13,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "alarm")
 public class Alarm extends Communication {
+    private String title;
 
-//    @Id
-//    @GeneratedValue
-//    @Column(name = "alarm_seq")
-//    private Long alarmSeq;
-
-    private String alarmTitle;
-
-    private String alarmLink;
+    private String link;
 
 }

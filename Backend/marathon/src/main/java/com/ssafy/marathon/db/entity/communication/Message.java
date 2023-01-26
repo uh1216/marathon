@@ -14,11 +14,7 @@ import javax.persistence.*;
 @Table(name = "message")
 public class Message extends Communication {
 
-//    @Id
-//    @GeneratedValue
-//    private Long messageSeq;
+    private Long root;
 
-    private Long messageRoot;
-
-    private String messageContent;
+    private String content;
 }
