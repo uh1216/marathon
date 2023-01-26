@@ -380,6 +380,7 @@ export default function Header() {
           <li
             onClick={() => {
               if (isToggled) setIsToggled(!isToggled);
+              navigate("/treat-enroll");
             }}
           >
             수업 예약

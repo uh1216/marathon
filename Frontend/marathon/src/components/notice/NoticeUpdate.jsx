@@ -1,11 +1,22 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import style from "./NoticeUpdate.module.css";
 
 export default function NoticeUpdate() {
   const navigate = useNavigate();
   const num = useParams();
-  console.log(num);
+  const location = useLocation();
+
+  const [title, setTitle] = useState(location.state.title);
+  const [content, setContent] = useState(location.state.content);
+
+  const onChangeTitle = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const onChangeContent = (e) => {
+    setContent(e.target.value);
+  };
 
   return (
     <>
@@ -37,18 +48,17 @@ export default function NoticeUpdate() {
               </div>
             </div>
             <div className={style.notice_create_body}>
-              <div className={style.notice_create_inner_body}>
-                <input
-                  className={style.notice_create_title}
-                  type="text"
-                  placeholder="제목을 입력해 주세요."
-                />
-                <textarea
-                  className={style.notice_create_content}
-                  type="text"
-                  placeholder="내용을 입력해주세요."
-                />
-              </div>
+              <input
+                className={style.notice_create_title}
+                type="text"
+                value={title}
+                onChange={onChangeTitle}
+              />
+              <textarea
+                className={style.notice_create_content}
+                value={content}
+                onChange={onChangeContent}
+              />
             </div>
           </div>
         </div>

@@ -9,7 +9,9 @@ import style from "./Notice.module.css";
 export default function Notice() {
   return (
     <div>
-      <div className={style.banner}></div>
+      <div className={style.banner}>
+        <p className={style.title}>공지사항</p>
+      </div>
       <Routes>
         <Route path="/" element={<NoticeBoard />} />
         <Route path="notice-create" element={<NoticeCreate />} />

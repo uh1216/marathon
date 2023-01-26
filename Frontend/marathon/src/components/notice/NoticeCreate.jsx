@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./NoticeCreate.module.css";
 
 export default function NoticeCreate() {
   const navigate = useNavigate();
+  //제목, 내용 값 변수에 저장
+  const [title, setTitle] = useState();
+  const [content, setContent] = useState();
+
+  // useState 대응 함수
+  const onTitle = (title) => {
+    setTitle(title);
+  };
+
+  const onContent = (content) => {
+    setContent(content);
+  };
 
   return (
     <>
@@ -29,18 +41,22 @@ export default function NoticeCreate() {
               </div>
             </div>
             <div className={style.notice_create_body}>
-              <div className={style.notice_create_inner_body}>
-                <input
-                  className={style.notice_create_title}
-                  type="text"
-                  placeholder="제목을 입력해 주세요."
-                />
-                <textarea
-                  className={style.notice_create_content}
-                  type="text"
-                  placeholder="내용을 입력해주세요."
-                />
-              </div>
+              <input
+                className={style.notice_create_title}
+                type="text"
+                placeholder="제목을 입력해 주세요."
+                onChange={(e) => {
+                  onTitle(e.target.value);
+                }}
+              />
+              <textarea
+                className={style.notice_create_content}
+                type="text"
+                placeholder="내용을 입력해주세요."
+                onChange={(e) => {
+                  onContent(e.target.value);
+                }}
+              />
             </div>
           </div>
         </div>
