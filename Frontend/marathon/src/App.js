@@ -8,6 +8,7 @@ import ConsultEnroll from "pages/ConsultEnroll";
 import ServiceGuide from "pages/ServiceGuide";
 import Notice from "pages/Notice";
 import User from "pages/User";
+import MyPage from "pages/MyPage";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route path="/self-study/*" element={<div>스스로 학습</div>} />
           <Route path="/schedule-manage" element={<div>일정관리(선생)</div>} />
           <Route path="/treat-enroll" element={<div>수업예약(환자)</div>} />
-          <Route path="/mypage/*" element={<div>마이페이지</div>} />
+          <Route path="/mypage/*" element={<MyPage />} />
         </Route>
         <Route element={<HeaderPage />}>
           <Route path="/user/*" element={<User />} />

@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import style from "./Login.module.css";
 import Kakao_login_medium_wide from "img/button/kakao_login_medium_wide.png";
-import ModalFindId from "./ModalFindId";
-import ModalFindPwd from "./ModalFindPwd";
+import Modal from "components/common/Modal";
+import FindId from "./FindId";
+import FindPwd from "./FindPwd";
+import { useDispatch } from "react-redux";
+import { userLogin } from "stores/user.store";
+import { useNavigate } from "react-router-dom";
 
 export default function Main() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   // 모달창 노출 여부 state
   const [isModalFindIdOpen, setIsModalFindIdOpen] = useState(false);
   const [isModalFindPwdOpen, setIsModalFindPwdOpen] = useState(false);
@@ -15,6 +21,12 @@ export default function Main() {
   };
   const showModalFindPwd = () => {
     setIsModalFindPwdOpen(true);
+  };
+
+  /** 로그인 버튼 클릭 시 실행되는 함수 */
+  const login = () => {
+    dispatch(userLogin());
+    navigate("/");
   };
 
   return (
@@ -40,7 +52,9 @@ export default function Main() {
         </div>
         {/* 로그인 버튼 */}
         <div>
-          <button className={`${style.btn} ${style.login}`}>로그인</button>
+          <button className={`${style.btn} ${style.login}`} onClick={login}>
+            로그인
+          </button>
           <img
             className={style.btn}
             src={Kakao_login_medium_wide}
@@ -62,13 +76,17 @@ export default function Main() {
           >
             비밀번호 찾기
           </div>
-          {isModalFindIdOpen && (
-            <ModalFindId setModalOpen={setIsModalFindIdOpen} />
-          )}
-          {isModalFindPwdOpen && (
-            <ModalFindPwd setModalOpen={setIsModalFindPwdOpen} />
-          )}
         </div>
+        {isModalFindIdOpen && (
+          <Modal setModalOpen={setIsModalFindIdOpen}>
+            <FindId setModalOpen={setIsModalFindIdOpen} />
+          </Modal>
+        )}
+        {isModalFindPwdOpen && (
+          <Modal setModalOpen={setIsModalFindPwdOpen}>
+            <FindPwd setModalOpen={setIsModalFindPwdOpen} />
+          </Modal>
+        )}
       </div>
     </div>
   );
