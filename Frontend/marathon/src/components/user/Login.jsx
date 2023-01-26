@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import style from "./Login.module.css";
 import Kakao_login_medium_wide from "img/button/kakao_login_medium_wide.png";
-import ModalFindId from "./ModalFindId";
-import ModalFindPwd from "./ModalFindPwd";
+import Modal from "components/common/Modal";
+import FindId from "./FindId";
+import FindPwd from "./FindPwd";
 
 export default function Main() {
   // 모달창 노출 여부 state
@@ -62,13 +63,17 @@ export default function Main() {
           >
             비밀번호 찾기
           </div>
-          {isModalFindIdOpen && (
-            <ModalFindId setModalOpen={setIsModalFindIdOpen} />
-          )}
-          {isModalFindPwdOpen && (
-            <ModalFindPwd setModalOpen={setIsModalFindPwdOpen} />
-          )}
         </div>
+        {isModalFindIdOpen && (
+          <Modal setModalOpen={setIsModalFindIdOpen}>
+            <FindId setModalOpen={setIsModalFindIdOpen} />
+          </Modal>
+        )}
+        {isModalFindPwdOpen && (
+          <Modal setModalOpen={setIsModalFindPwdOpen}>
+            <FindPwd setModalOpen={setIsModalFindPwdOpen} />
+          </Modal>
+        )}
       </div>
     </div>
   );

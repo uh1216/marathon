@@ -1,8 +1,8 @@
 /* 모달창을 화면 중앙. 최상단에 노출 */
 .container {
   /* 모달창 크기 */
-  width: 572px;
-  height: 298px;
+  width: auto;
+  height: auto;
 
   /* 최상단 위치 */
   z-index: 999;
@@ -21,9 +21,38 @@
   box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 25%);
 }
 
+/* 검은 뒷 배경 */
+.background {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 998;
+  background-color: rgb(0, 0, 0, 50%);
+  top: 0;
+  left: 0;
+}
+
 /* 모달창 내부 X버튼 */
 .close {
   position: absolute;
   right: 10px;
   top: 10px;
+  width: 25px;
+  height: 25px;
+  z-index: 1000;
+}
+.close:hover {
+  color: rgb(161, 161, 161);
+}
+
+/* 주입되는 내부 내용 */
+.content {
+  position: relative;
+  width: auto;
+  height: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
