@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import style from "./NoticeDetail.module.css";
 
@@ -6,7 +6,10 @@ export default function NoticeDetail() {
   let { num } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(num, location);
+
+  // 게시글 관련 변수
+  const [title, setTitle] = useState(location.state.title);
+  const [content, setContent] = useState(location.state.content);
 
   return (
     <>
@@ -17,11 +20,18 @@ export default function NoticeDetail() {
               <div>
                 <button
                   className={style.right_menu + " " + style.notice_button}
-                  onClick={() => navigate("./update")}
+                  onClick={() =>
+                    navigate("./update", {
+                      state: {
+                        title: title,
+                        content: content,
+                      },
+                    })
+                  }
                 >
                   수정하기
                 </button>
-                <button className={style.notice_button}>삭제하기</button>
+                <button className={style.notice_button_delete}>삭제하기</button>
               </div>
               <div>
                 <button
@@ -34,25 +44,27 @@ export default function NoticeDetail() {
             </div>
             <div className={style.notice_detail_body}>
               <div className={style.notice_detail_body_header_grid}>
+                {/** 제목이 들어가는 태그 */}
                 <div className={style.notice_detail_body_header_item1}>
-                  <h3>{location.state.title}</h3>
+                  <h3>{title}</h3>
                 </div>
                 <div className={style.notice_detail_body_header_item2}>
-                  <p>
-                    작성일 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{location.state.date}
+                  <p className={style.font_gray}>
+                    작성일 &nbsp;&nbsp;&nbsp;{location.state.date}
                   </p>
                 </div>
                 <div className={style.notice_detail_body_header_item3}></div>
                 <div className={style.notice_detail_body_header_item4}>
-                  <p>
-                    조회수 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{location.state.count}
+                  <p className={style.font_gray}>
+                    조회수 &nbsp;&nbsp;&nbsp;{location.state.count}
                   </p>
                 </div>
                 <div className={style.notice_detail_body_header_item5}></div>
               </div>
               <hr />
+              {/** 내용이 들어가는 태그 */}
               <div className={style.notice_detail_body_content}>
-                <p>{location.state.content}</p>
+                <p>{content}</p>
               </div>
             </div>
           </div>

@@ -8,7 +8,7 @@ import ConsultEnroll from "pages/ConsultEnroll";
 import ServiceGuide from "pages/ServiceGuide";
 import Notice from "pages/Notice";
 import User from "pages/User";
-import MyPage from "pages/MyPage";
+import TreatEnroll from "pages/TreatEnroll";
 
 function App() {
   return (
@@ -21,8 +21,8 @@ function App() {
           <Route path="/notice/*" element={<Notice />} />
           <Route path="/self-study/*" element={<div>스스로 학습</div>} />
           <Route path="/schedule-manage" element={<div>일정관리(선생)</div>} />
-          <Route path="/treat-enroll" element={<div>수업예약(환자)</div>} />
-          <Route path="/mypage/*" element={<MyPage />} />
+          <Route path="/treat-enroll" element={<TreatEnroll />} />
+          <Route path="/mypage/*" element={<div>마이페이지</div>} />
         </Route>
         <Route element={<HeaderPage />}>
           <Route path="/user/*" element={<User />} />

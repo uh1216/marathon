@@ -27,9 +27,9 @@
   .notice_header_containerd
   앞으로 쓰게 될 게시글에도 동일한 그리드 적용
 */
-.notice_top_interface {
-  display: flex;
-  justify-content: space-between;
+.notice_top_interface_grid {
+  display: grid;
+  grid-template-columns: 52% 12% 28% 8%;
   margin-top: 45px;
   margin-bottom: 15px;
 }
@@ -58,9 +58,6 @@
   text-align: center;
 }
 
-.right_menu {
-  margin-left: 15px;
-}
 /** 
   input 타입의 태그들을 각 페이지별로 css를 차별하기 위해서 클래스로 따로 구분
 */
@@ -73,16 +70,45 @@
   border-radius: 10px;
 }
 
-.notice_select {
-  width: 129px;
+.notice_text {
+  width: 300px;
   height: 40px;
   border: solid 1px #d2cfcf;
   border-radius: 10px;
 }
 
-.notice_text {
-  width: 345px;
-  height: 40px;
-  border: solid 1px #d2cfcf;
-  border-radius: 10px;
+@media screen and (max-width: 1400px) {
+  .notice_top_interface_grid {
+    display: grid;
+    grid-template-columns: 0;
+    grid-template-rows: 40px 40px 40px 40px;
+    margin-top: 45px;
+    margin-bottom: 15px;
+  }
+}
+
+@media screen and (max-width: 1060px) {
+  .count_hidden {
+    visibility: hidden;
+  }
+
+  .notice_header_container {
+    background-color: #d1d0ff;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 10% 60% 30%;
+    text-align: center;
+    align-items: center;
+    font-size: 1.2em;
+  }
+
+  .notice_header_item {
+    height: 50px;
+    display: grid;
+    grid-template-columns: 10% 60% 30%;
+    text-align: center;
+    align-items: center;
+    border-bottom-style: inset;
+    font-size: 1em;
+  }
 }
