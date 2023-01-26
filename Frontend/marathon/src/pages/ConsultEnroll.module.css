@@ -1,0 +1,263 @@
+.color_box {
+  width: 100%;
+  padding: 3%;
+  background-color: #ebfffe;
+  border-radius: 30px;
+}
+
+.title_box {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 25px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: 500;
+  background-color: #bdd7d5;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.icon_contain_box {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  text-align: center;
+}
+
+.icon_box {
+  background: white;
+  color: #454242;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  padding: 30px;
+  box-shadow: 2px 2px 2px 2px rgb(12, 12, 12, 50%);
+  margin-bottom: 10px;
+}
+
+/* 제목 */
+.inner_container {
+  min-width: 415px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 제목 */
+.sub_title {
+  font-family: "GmarketBold";
+  font-size: 0.94em;
+  align-self: flex-start;
+  margin-bottom: 10px;
+}
+
+/* 상단 안내문구 */
+.information {
+  width: 409px;
+  height: 84px;
+  border-radius: 10px;
+  background-color: #dff4ff;
+
+  font-size: 0.88em;
+
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.highlight {
+  color: #097aff;
+}
+
+/* input div */
+.input_div {
+  margin-top: 30px;
+}
+
+/* input label */
+.input_label {
+  display: block;
+  font-size: 0.94em;
+}
+
+/* input */
+.input_middle {
+  padding: 0 13px;
+  width: 307px;
+  height: 40px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+  margin-right: 10px;
+}
+
+.input_long {
+  padding: 0 13px;
+  width: 412px;
+  height: 40px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+}
+
+.input_number::placeholder {
+  color: #858585;
+  font-family: "GmarketLight";
+  font-size: 0.75em;
+}
+
+.input_number::-webkit-outer-spin-button,
+.input_number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input_check_box {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  vertical-align: middle;
+}
+
+.input_check_box2 {
+  width: 17px;
+  height: 17px;
+  margin-right: 2px;
+  border-radius: 5px;
+  vertical-align: middle;
+}
+
+/* input 이메일 */
+.input_email_id {
+  padding: 0 13px;
+  width: 114px;
+  height: 40px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+  margin-right: 10px;
+}
+
+.input_email_host {
+  padding: 0 13px;
+  width: 153px;
+  height: 40px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+  margin-right: 10px;
+}
+
+.input_email_host:read-only {
+  background-color: #e6e6e6;
+}
+
+.at {
+  margin-right: 11px;
+}
+
+/* display: inline */
+.inline {
+  display: inline;
+}
+
+/* 상담신청 버튼 */
+.enroll_btn {
+  display: inline-block;
+  width: 50%;
+  height: 52px;
+  border-radius: 10px;
+  background-color: #989cff;
+  color: white;
+  border: none;
+  font-size: 1.25em;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+/* 중복확인 버튼 */
+.chk_id_btn {
+  width: 98px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #989cff;
+  color: white;
+  border: none;
+  font-size: 0.94em;
+}
+
+/* input password 스타일 */
+input[type="password"] {
+  color: #606060;
+}
+
+/* input 하단에 뜨는 안내 문구 */
+.sub_information {
+  color: #858585;
+  font-family: "GmarketLight";
+  font-size: 0.78em;
+  margin-top: 7px;
+}
+
+/* tos(이용약관) */
+.tos {
+  display: flex;
+  align-self: flex-start;
+  margin-bottom: 30px;
+}
+
+.input_textarea {
+  padding: 8px;
+  width: 417px;
+  height: 187px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+  resize: none;
+}
+
+.private_info_box {
+  width: 80%;
+  min-width: 417px;
+  padding: 5%;
+  margin-top: 40px;
+  border-radius: 5px;
+  border: 1px solid rgb(150, 150, 150);
+  font-size: 0.8em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.info_check_box {
+  display: block;
+  text-align: center;
+  margin: 30px 0;
+}
+
+@media screen and (max-width: 992px) {
+  .color_box h4 {
+    font-size: 1.1em;
+  }
+
+  .color_box h5 {
+    font-size: 1em;
+  }
+
+  .icon_box {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .icon_contain_box {
+    flex-direction: column;
+  }
+
+  .color_box h5 {
+    margin-bottom: 40px;
+  }
+}

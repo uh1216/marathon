@@ -1,0 +1,56 @@
+.side_board {
+  width: 15%;
+  min-width: 188px;
+  height: auto;
+  font-size: 1.1em;
+}
+
+.side_board hr {
+  margin: 0;
+  background: black;
+  height: 3px;
+  border: 0;
+}
+
+.side_board p,
+.side_board h4 {
+  margin: 20px 0px 15px 20px;
+}
+
+.side_board p {
+  cursor: pointer;
+}
+
+.side_board p:hover {
+  color: rgb(123, 123, 123);
+}
+
+.side_board h4 {
+  font-weight: bold;
+}
+
+.now {
+  font-weight: bold;
+  text-shadow: 1px 1px 1px gray;
+  position: relative;
+  left: -22px;
+}
+
+@media screen and (max-width: 992px) {
+  .side_board {
+    min-width: 171px;
+  }
+
+  .side_board h4 {
+    font-size: 1.1em;
+  }
+  .side_board p {
+    font-size: 0.9em;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .side_board {
+    display: none;
+  }
+}

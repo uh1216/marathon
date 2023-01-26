@@ -1,0 +1,95 @@
+.container {
+  max-width: 1600px;
+  height: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1em;
+}
+
+.inner_container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.notice_body {
+  height: 700px;
+}
+
+/** 
+  .notice_top_interface
+  공지사항 글쓰기 상단 그리드를 위한 css
+*/
+.notice_top_interface {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 45px;
+  margin-bottom: 15px;
+}
+
+.right_menu {
+  margin-left: 15px;
+}
+/** 
+  input 타입의 태그들을 각 페이지별로 css를 차별하기 위해서 클래스로 따로 구분
+*/
+.notice_button {
+  width: 101px;
+  height: 45px;
+  border: 0;
+  color: white;
+  background-color: #a38aec;
+  border-radius: 10px;
+}
+.notice_create_body {
+  border: solid 1px;
+  border-radius: 20px;
+  height: 750px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 5px 1px 0.5px rgba(0, 0, 0, 0.1);
+}
+
+.notice_create_title {
+  width: 95%;
+  height: 50px;
+  margin: 30px 30px 15px 20px;
+  padding: 10px;
+  border: solid 1px #d2cfcf;
+  border-radius: 10px;
+}
+
+.notice_create_content {
+  width: 95%;
+  height: 600px;
+  margin: 0px 0px 50px 20px;
+  padding: 10px;
+  border: solid 1px #d2cfcf;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .notice_body {
+    margin-top: 20px;
+  }
+
+  .notice_top_interface {
+    display: inline;
+  }
+
+  .notice_create_body {
+    margin-top: 20px;
+  }
+
+  .notice_create_title {
+    width: 90%;
+  }
+
+  .notice_create_content {
+    width: 90%;
+  }
+
+  .right_menu {
+    margin-left: 5px;
+  }
+}

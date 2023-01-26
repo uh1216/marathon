@@ -1,0 +1,7 @@
+/* 박스 틀 */
+.side_right_board {
+  width: 85%;
+  height: 100%;
+  padding-left: 40px;
+  font-size: 1em;
+}

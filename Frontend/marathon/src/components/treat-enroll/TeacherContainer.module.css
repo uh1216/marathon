@@ -1,0 +1,19 @@
+.container {
+  max-width: 1600px;
+  height: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1em;
+}
+
+.inner_container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 300px;
+}
