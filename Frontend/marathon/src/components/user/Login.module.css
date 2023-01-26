@@ -62,6 +62,7 @@
 
 .find_txt {
   margin-left: 20px;
+  cursor: pointer;
 }
 
 /* 아이디 기억하기 */
@@ -99,6 +100,7 @@ input[type="checkbox"].memorize_id_box:checked {
   border-radius: 10px;
 
   margin-bottom: 12px;
+  cursor: pointer;
 }
 .btn:active {
   background-color: #857f7f;
