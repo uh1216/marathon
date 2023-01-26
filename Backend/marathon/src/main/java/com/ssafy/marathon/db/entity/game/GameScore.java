@@ -27,9 +27,9 @@ public class GameScore {
     @JoinColumn(name = "game_category_seq")
     private GameCategory gameCategory;
 
-    private int difficulity;
+    private int difficulty;
 
-    private float accuarcy;
+    private float accuracy;
 
     private LocalDateTime date;
 }

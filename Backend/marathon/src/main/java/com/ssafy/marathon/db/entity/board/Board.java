@@ -1,6 +1,5 @@
 package com.ssafy.marathon.db.entity.board;
 
-import com.ssafy.marathon.db.entity.user.Admin;
 import java.time.LocalDateTime;
 import lombok.*;
 
@@ -22,8 +21,4 @@ public class Board {
     private String content;
     private LocalDateTime registDate;
     private int viewCnt;
-
-    @ManyToOne
-    @JoinColumn(name = "admin_seq")
-    private Admin admin;
 }

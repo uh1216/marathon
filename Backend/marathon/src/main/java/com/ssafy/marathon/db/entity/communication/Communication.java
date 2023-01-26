@@ -30,7 +30,7 @@ public class Communication {
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "reciver_user_seq")
-    private User reciver;
+    private User receiver;
 
     /*
         java.sql.Date는 JDBC등을 이용해서 데이터베이스에 격납된 날짜나 시각정보를
