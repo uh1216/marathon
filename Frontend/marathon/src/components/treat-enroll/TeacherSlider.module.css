@@ -1,0 +1,67 @@
+.span {
+  font-size: 0.7em;
+  color: gray;
+}
+
+.total {
+  border: 1px solid #c0c0c0;
+  border-radius: 5%;
+}
+
+.info {
+  margin-top: 30px;
+  display: flex;
+}
+
+.teacher_img {
+  width: 70px;
+  height: 80px;
+  border-radius: 100%;
+}
+
+.title {
+  font-size: 1.5em;
+  margin-top: 30px;
+}
+
+.button {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.button_design {
+  width: 90%;
+  height: 45px;
+  border: 0;
+  color: white;
+  background-color: #4d88fb;
+  border-radius: 10px;
+  transition: all ease-in-out 0.5s;
+}
+
+.button_design:disabled {
+  width: 90%;
+  height: 45px;
+  border: 0;
+  color: white;
+  background-color: #cedeff;
+  border-radius: 10px;
+  transition: all ease-in-out 0.5s;
+}
+
+.content {
+  height: 150px;
+  padding: 20px;
+  background-color: #dce7fc;
+  border-radius: 0 0 7% 7%;
+  font-family: "GmarketLight";
+}

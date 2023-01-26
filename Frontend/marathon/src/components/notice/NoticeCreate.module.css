@@ -67,3 +67,14 @@
   border: solid 1px #d2cfcf;
   border-radius: 10px;
 }
+
+@media screen and (max-width: 768px) {
+  .notice_top_interface {
+    display: inline;
+    margin-bottom: 15px;
+  }
+
+  .notice_top_interface_title {
+    margin-top: 20px;
+  }
+}
