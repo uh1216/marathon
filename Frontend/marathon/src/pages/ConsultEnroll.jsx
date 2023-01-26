@@ -159,7 +159,11 @@ export default function ConsultEnroll() {
     } else if (userEmailId === "" || userEmailId === null) {
       alert("이메일을 입력해주세요.");
       inputUserEmailId.current.focus();
-    } else if (userEmailHost === "" || userEmailHost === null) {
+    } else if (
+      userEmailHost === "" ||
+      userEmailHost === null ||
+      userEmailHost === "none"
+    ) {
       alert("이메일을 입력해주세요.");
       inputUserEmailHost.current.focus();
     } else if (userPhone === "" || userPhone === null) {

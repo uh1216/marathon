@@ -1,5 +1,242 @@
+/* 박스 틀 */
+.side_right_board {
+  width: 85%;
+  height: 100%;
+  padding-left: 40px;
+  font-size: 1em;
+}
+
 .information_box {
   width: 927px;
   height: 747px;
-  border: solid 1px black;
+  border: solid 1px #858585;
+  border-radius: 10px;
+  padding: 40px 0;
+  display: flex;
+}
+.left_box {
+  height: 100%;
+  width: 24vw;
+
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.center_line {
+  height: 666px;
+  border: 1px solid #d7d7d7;
+  margin-right: 85px;
+}
+.right_box {
+  height: 100%;
+}
+
+/* 프로필 사진 */
+.profile_img {
+  max-width: 210px;
+  max-height: 210px;
+  width: 25vw;
+  height: 25vw;
+  border-radius: 100%;
+  box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 25%);
+  margin-bottom: 22px;
+}
+/* 프로필 사진이 없을 때 */
+.profile_initial {
+  background-color: #dae6f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 6.25em;
+  color: #35546a;
+}
+
+/* 이름 */
+.user_name {
+  text-align: center;
+  font-size: 1.5em;
+}
+/* 환영합니다. */
+.welcome {
+  text-align: center;
+  color: #939393;
+}
+/* 버튼*/
+.btn_upload {
+  width: 100px;
+  height: 38px;
+  border: 1px solid #3e3e3e;
+  border-radius: 5px;
+  font-size: 0.94em;
+  background-color: white;
+  margin-top: 20px;
+}
+.btn_unregister {
+  width: 90px;
+  height: 38px;
+  border-radius: 5px;
+  background-color: #ff0000;
+  color: white;
+  border: 0;
+}
+.btn_modify {
+  width: 90px;
+  height: 38px;
+  border-radius: 5px;
+  background-color: white;
+  border: #3e3e3e solid 1px;
+  margin-left: 10px;
+}
+.btns {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+  margin-top: 40px;
+}
+/* 좌측 박스 가운데 선 */
+.left_center_line {
+  width: 210px;
+  border: 1px solid #d7d7d7;
+  margin: 30px 0;
+}
+/* 좌측 아이디 & 가입날짜 */
+.sub_title {
+  color: #939393;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.sub_content {
+  text-align: center;
+  margin-bottom: 38px;
+}
+
+/* ------------------------------------------------- 회원가입 css에서 복붙해온 코드 * /
+/* input div */
+.input_div {
+  margin-top: 25px;
+}
+
+/* input label */
+.input_label {
+  display: block;
+  font-size: 0.94em;
+}
+
+/* input */
+
+.input_long {
+  padding: 0 13px;
+  width: 412px;
+  height: 40px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+}
+
+.input_number::placeholder {
+  color: #858585;
+  font-family: "GmarketLight";
+  font-size: 0.75em;
+}
+
+.input_number::-webkit-outer-spin-button,
+.input_number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* input 이메일 */
+.input_email_id {
+  padding: 0 13px;
+  width: 114px;
+  height: 40px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+  margin-right: 10px;
+}
+
+.input_email_host {
+  padding: 0 13px;
+  width: 153px;
+  height: 40px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+  margin-right: 10px;
+}
+
+.input_email_host:read-only {
+  background-color: #e6e6e6;
+}
+
+.at {
+  margin-right: 11px;
+}
+
+/* display: inline */
+.inline {
+  display: inline;
+}
+
+/* input password 스타일 */
+input[type="password"] {
+  color: #606060;
+}
+
+/* input 하단에 뜨는 안내 문구 */
+.sub_information {
+  color: #858585;
+  font-family: "GmarketLight";
+  font-size: 0.78em;
+  margin-top: 7px;
+}
+
+/* 맨 밑에 수도 박스(?) */
+.user_box:last-child:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -100px;
+  width: 100px;
+  height: 100px;
+}
+
+.input_textarea {
+  padding: 8px;
+  width: 417px;
+  height: 118px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+  resize: none;
+}
+
+.input_textarea::placeholder {
+  color: #858585;
+  font-family: "GmarketLight";
+  font-size: 0.75em;
+}
+
+@media (max-width: 768px) {
+  .information_box {
+    width: 95%;
+  }
+  .input_textarea {
+    width: 100%;
+  }
+
+  .input_long {
+    width: 100%;
+  }
+
+  .center_line {
+    display: none;
+  }
+  .information_box {
+    flex-flow: column;
+    height: auto;
+    padding: 10%;
+  }
+  .side_right_board {
+    width: 100%;
+    min-width: 420px;
+    padding: 0;
+  }
 }

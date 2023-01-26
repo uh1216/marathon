@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import UserInformation from "components/my-page/UserInformation";
 import SideNav from "components/common/SideNav";
+import style from "./MyPage.module.css";
 
 export default function MyPage() {
   const sideNavContent = [
@@ -10,10 +11,10 @@ export default function MyPage() {
     "스스로 학습 통계",
     "로그아웃",
   ];
-  const urls = ["", "", "", "", ""];
+  const urls = ["information", "communication", "", "", ""];
 
   return (
-    <div>
+    <div className="container">
       <div
         className="inner_container"
         style={{
@@ -27,15 +28,17 @@ export default function MyPage() {
           sideNavContent={sideNavContent}
           urls={urls}
         />
-        <Routes>
-          <Route path="information" element={<UserInformation />}></Route>
-          <Route path="" element={<div />}></Route>
-          <Route path="" element={<div />}></Route>
-          <Route path="" element={<div />}></Route>
-          <Route path="" element={<div />}></Route>
-          <Route path="" element={<div />}></Route>
-          <Route path="" element={<div />}></Route>
-        </Routes>
+        <div className={style.side_right_board}>
+          <Routes>
+            <Route path="information" element={<UserInformation />}></Route>
+            <Route path="communication" element={<div />}></Route>
+            <Route path="" element={<div />}></Route>
+            <Route path="" element={<div />}></Route>
+            <Route path="" element={<div />}></Route>
+            <Route path="" element={<div />}></Route>
+            <Route path="" element={<div />}></Route>
+          </Routes>
+        </div>
       </div>
     </div>
   );

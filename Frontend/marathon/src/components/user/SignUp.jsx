@@ -39,7 +39,7 @@ const optionsMonth = [
 ];
 
 /** 이메일 호스트 select box 옵션 */
-const optionHost = [
+const optionEmailHost = [
   { value: "none", name: "직접 입력" },
   { value: "daum.net", name: "daum.net" },
   { value: "gmail.com", name: "gmail.com" },
@@ -216,7 +216,11 @@ export default function SignIn() {
     } else if (userEmailId === "" || userEmailId === null) {
       alert("이메일을 입력해주세요.");
       inputUserEmailId.current.focus();
-    } else if (userEmailHost === "" || userEmailHost === null) {
+    } else if (
+      userEmailHost === "" ||
+      userEmailHost === null ||
+      userEmailHost === "none"
+    ) {
       alert("이메일을 입력해주세요.");
       inputUserEmailHost.current.focus();
     } else if (userPhone === "" || userPhone === null) {
@@ -578,7 +582,7 @@ export default function SignIn() {
             ref={inputUserEmailHost}
           />
           <SelectBox
-            options={optionHost}
+            options={optionEmailHost}
             onChange={(x) => selectEmailHost(x)}
           />
         </div>
