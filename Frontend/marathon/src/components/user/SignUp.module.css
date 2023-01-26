@@ -173,3 +173,13 @@ input[type="password"] {
   align-self: flex-start;
   margin-bottom: 30px;
 }
+
+/* 맨 밑에 수도 박스(?) */
+.user_box:last-child:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -100px;
+  width: 100px;
+  height: 100px;
+}

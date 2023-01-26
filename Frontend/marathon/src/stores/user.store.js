@@ -12,6 +12,7 @@ const loginUser = createSlice({
           "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
         userRole: "normal",
       };
+      // 이거 나중에 삭제하기
       console.log(state);
     },
     userLogout(state) {
