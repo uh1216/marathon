@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "doctor")
 public class Doctor extends User {
 
-    private String lisense;
+    private String license;
 
     private String degree;
 
