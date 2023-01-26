@@ -16,7 +16,7 @@ public class GameCategory {
 
     @Id
     @GeneratedValue
-    private Long CategorySeq;
+    private Long seq;
 
-    private String categoryName;
+    private String name;
 }

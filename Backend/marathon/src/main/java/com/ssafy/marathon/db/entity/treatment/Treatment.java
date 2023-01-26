@@ -1,5 +1,9 @@
 package com.ssafy.marathon.db.entity.treatment;
 
+import com.ssafy.marathon.db.entity.user.Doctor;
+import com.ssafy.marathon.db.entity.user.Patient;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -21,6 +25,10 @@ public class Treatment {
     private Long seq;
     private String date;
     private String time;
-//    private Docter docter;
-//    private Patient patient;
+    @ManyToOne
+    @JoinColumn(name = "doctor_seq")
+    private Doctor doctor;
+    @ManyToOne
+    @JoinColumn(name = "patient_seq")
+    private Patient patient;
 }

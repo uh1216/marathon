@@ -1,5 +1,6 @@
 package com.ssafy.marathon.db.entity.game;
 
+import com.ssafy.marathon.db.entity.user.Patient;
 import java.time.LocalDateTime;
 import lombok.*;
 
@@ -16,15 +17,15 @@ public class GameScore {
 
     @Id
     @GeneratedValue
-    private Long gameScoreSeq;
+    private Long seq;
 
-//    @ManyToOne(targetEntity = Patient.class)
-//    @JoinColumn(name = "patient_seq")
-//    Patient patient;
+    @ManyToOne(targetEntity = Patient.class)
+    @JoinColumn(name = "patient_seq")
+    private Patient patient;
 
-//    @ManyToOne(targetEntity = GameCategory.class)
-//    @JoinColumn(name = "game_category_seq")
-//    private GameCategory gameCategory;
+    @ManyToOne(targetEntity = GameCategory.class)
+    @JoinColumn(name = "game_category_seq")
+    private GameCategory gameCategory;
 
     private int difficulity;
 

@@ -1,5 +1,6 @@
 package com.ssafy.marathon.db.entity.communication;
 
+import com.ssafy.marathon.db.entity.user.User;
 import java.time.LocalDateTime;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -23,13 +24,13 @@ public class Communication {
     @GeneratedValue
     private Long communicationSeq;
 
-//    @ManyToOne(targetEntity = User.class)
-//    @JoinColumn(name = "sender_user_seq")
-//    private User Sender;
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "sender_user_seq")
+    private User sender;
 
-//    @ManyToOne(targetEntity = User.class)
-//    @JoinColumn(name = "reciver_user_seq")
-//    private User Reciver;
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "reciver_user_seq")
+    private User reciver;
 
     /*
         java.sql.Date는 JDBC등을 이용해서 데이터베이스에 격납된 날짜나 시각정보를
