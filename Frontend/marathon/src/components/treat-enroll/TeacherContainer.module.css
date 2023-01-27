@@ -7,6 +7,7 @@
 }
 
 .inner_container {
+  position: relative;
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -16,4 +17,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 200px;
+}
+
+.TeacherContainer {
 }

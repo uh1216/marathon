@@ -2,9 +2,13 @@ import styled from "styled-components";
 import style from "./TeacherSlider.module.css";
 
 const NowSlider = styled.div`
-  width: ${(props) => (props.check === "now" ? "20%" : "18%")};
+  width: ${(props) =>
+    (props.check === "now" && "30%") ||
+    (props.check === "next" && "25%") ||
+    (props.check === "prev" && "25%") ||
+    (props.check.includes("hidden") && "25%")};
   height: ${(props) => (props.check === "now" ? "450px" : "400px")};
-  top: ${(props) => (props.check === "now" ? "55%" : "55%")};
+  top: ${(props) => (props.check === "now" ? "90px" : "85px")};
   visibility: ${(props) =>
     props.check.includes("hidden") ? "hidden" : "visible"};
   opacity: ${(props) => (props.check.includes("hidden") ? "0" : "1")};
@@ -28,8 +32,8 @@ const NowSlider = styled.div`
 
   left: ${(props) =>
     (props.check === "now" && "50%") ||
-    (props.check === "next" && "72%") ||
-    (props.check === "prev" && "28%") ||
+    (props.check === "next" && "80%") ||
+    (props.check === "prev" && "20%") ||
     (props.check === "hidden_next" && "95%") ||
     (props.check === "hidden_prev" && "5%")};
 `;
