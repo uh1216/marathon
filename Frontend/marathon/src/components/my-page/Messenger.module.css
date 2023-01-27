@@ -1,0 +1,60 @@
+.message_box {
+  max-width: 750px;
+  min-width: 550px;
+  width: 100%;
+  height: auto;
+
+  padding: 20px;
+
+  border-radius: 30px;
+  border: 1px solid black;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon {
+  font-size: 3em;
+  margin-right: 25px;
+}
+
+.icon_x {
+  font-size: 20px;
+}
+
+.message_content {
+}
+
+.sub_content_box {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.content_box {
+  width: 80%;
+  min-width: 350px;
+}
+.btn_box {
+  min-width: 100px;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: end;
+  width: 10%;
+}
+
+.btn {
+  border: #696969 1px solid;
+  border-radius: 30px;
+  padding: 7px 10px;
+  background-color: white;
+}
+
+.sub_content {
+  color: #8c8c8c;
+  font-size: 0.88em;
+}
+
+@media (max-width: 900px) {
+}
