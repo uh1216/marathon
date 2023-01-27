@@ -3,12 +3,8 @@
   color: gray;
 }
 
-.total {
-  border: 1px solid #c0c0c0;
-  border-radius: 5%;
-}
-
 .info {
+  padding-left: 15px;
   margin-top: 30px;
   display: flex;
 }
@@ -22,6 +18,7 @@
 .title {
   font-size: 1.5em;
   margin-top: 30px;
+  padding-left: 15px;
 }
 
 .button {
@@ -53,7 +50,7 @@
   height: 45px;
   border: 0;
   color: white;
-  background-color: #cedeff;
+  background-color: #ced4e1;
   border-radius: 10px;
   transition: all ease-in-out 0.5s;
 }
@@ -61,7 +58,9 @@
 .content {
   height: 150px;
   padding: 20px;
-  background-color: #dce7fc;
-  border-radius: 0 0 7% 7%;
   font-family: "GmarketLight";
+}
+
+.introduce_title {
+  font-size: 1.2em;
 }
