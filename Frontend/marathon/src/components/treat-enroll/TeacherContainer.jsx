@@ -79,6 +79,10 @@ export default function TeacherList() {
       return "prev";
     } else if (id - 1 === currentIndex) {
       return "next";
+    } else if (id + 2 === currentIndex) {
+      return "hidden_prev";
+    } else if (id - 2 === currentIndex) {
+      return "hidden_next";
     } else if (id === currentIndex) {
       return "now";
     } else {
