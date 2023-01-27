@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "game_category")
+@Table(name = "game_score")
 public class GameScore {
 
     @Id
