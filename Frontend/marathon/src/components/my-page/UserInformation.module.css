@@ -16,7 +16,8 @@
 }
 .left_box {
   height: 100%;
-  width: 24vw;
+  width: 100%;
+  max-width: 338px;
 
   display: flex;
   flex-flow: column;
@@ -214,7 +215,7 @@ input[type="password"] {
   font-size: 0.75em;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .information_box {
     width: 95%;
   }

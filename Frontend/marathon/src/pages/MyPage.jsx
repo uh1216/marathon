@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import UserInformation from "components/my-page/UserInformation";
 import SideNav from "components/common/SideNav";
 import style from "./MyPage.module.css";
+import Messenger from "components/my-page/Messenger";
 
 export default function MyPage() {
   const sideNavContent = [
@@ -11,7 +12,7 @@ export default function MyPage() {
     "스스로 학습 통계",
     "로그아웃",
   ];
-  const urls = ["information", "communication", "", "", ""];
+  const urls = ["information", "messenger", "", "", ""];
 
   return (
     <div className="container">
@@ -31,7 +32,7 @@ export default function MyPage() {
         <div className={style.side_right_board}>
           <Routes>
             <Route path="information" element={<UserInformation />}></Route>
-            <Route path="communication" element={<div />}></Route>
+            <Route path="messenger" element={<Messenger />}></Route>
             <Route path="" element={<div />}></Route>
             <Route path="" element={<div />}></Route>
             <Route path="" element={<div />}></Route>
