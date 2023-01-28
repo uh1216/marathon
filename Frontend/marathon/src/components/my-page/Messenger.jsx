@@ -2,8 +2,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "./Messenger.module.css";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { changeNowSideNav } from "stores/toggle.store";
 
 export default function Messenger() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // 사이드 Nav 초기화
+    dispatch(changeNowSideNav("알림 / 메시지"));
+  }, []);
+
   return (
     <div className="container">
       <div className={style.message_box}>

@@ -122,7 +122,7 @@ export default function UserInformation() {
     setUserSecondResponderRelationship("배우자");
     setUserSelfIntroduce("안녕하세요~");
 
-    // 사이드 나브 초기화
+    // 사이드 Nav 초기화
     dispatch(changeNowSideNav("회원 정보 관리"));
   }, []);
 

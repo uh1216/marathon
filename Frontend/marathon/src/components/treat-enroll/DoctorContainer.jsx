@@ -97,7 +97,7 @@ export default function DoctorContainer() {
         <div className={style.inner_container}>
           <div className={style.content}>
             <button onClick={goPrev}>앞</button>
-            <div className={style.doctorContainer}>
+            <div className={style.DoctorContainer}>
               {doctors.map((val) => {
                 return (
                   <DoctorSlider

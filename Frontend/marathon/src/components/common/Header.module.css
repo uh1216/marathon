@@ -49,6 +49,13 @@
   cursor: auto;
 }
 
+.sub_menu_common {
+  bottom: -250px;
+}
+.sub_menu_admin {
+  bottom: -210px;
+}
+
 .sub_menu:before {
   border-top: 0px solid transparent;
   border-left: 10px solid transparent;
@@ -74,12 +81,22 @@
   display: flex;
 }
 
-.header__right {
+.header__right_not_mobile {
   list-style: none;
   display: flex;
   margin-right: 2em;
   font-size: 1em;
   margin-bottom: 0px;
+  position: relative;
+  z-index: 1;
+}
+
+.header__right {
+  list-style: none;
+  margin-right: 2em;
+  font-size: 1em;
+  margin-bottom: 0px;
+  display: none;
   z-index: 1;
 }
 
@@ -92,13 +109,15 @@
 .header span:hover {
   color: rgb(182, 181, 181);
   text-shadow: 1px 1px 1px rgb(182, 181, 181);
-  cursor: pointer;
-  overflow: visible;
 }
 
 .header li:hover .sub_menu {
   visibility: visible;
   opacity: 1;
+}
+
+.header__right_not_mobile li:hover {
+  text-shadow: 1px 1px 1px rgb(182, 181, 181);
 }
 
 .toggle {
@@ -111,6 +130,27 @@
   display: none;
   font-size: 1.5em;
   padding: 1em 1em;
+  position: relative;
+}
+
+.profile {
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  position: absolute;
+  top: 3px;
+  left: 14px;
+}
+
+.profile_header {
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  cursor: pointer;
+  position: absolute;
+  top: -10px;
+  left: 0px;
 }
 
 .header_eatspace {
@@ -127,9 +167,17 @@
   }
 
   .sub_menu {
-    top: 60px;
+    top: auto;
     left: 6px;
     width: 142px;
+  }
+
+  .sub_menu_common {
+    bottom: -238px;
+  }
+
+  .sub_menu_admin {
+    bottom: -198px;
   }
 
   .header li {
@@ -147,6 +195,17 @@
   .logo img {
     display: block;
     height: 50px;
+  }
+
+  .profile_header {
+    width: 35px;
+    height: 35px;
+    top: -8px;
+    left: 0px;
+  }
+
+  .header__right_not_mobile {
+    margin-right: 1em;
   }
 }
 
@@ -186,15 +245,19 @@
     margin-top: 0px;
     margin-right: 0px;
     position: absolute;
-    transition: 0.3s;
+    transition: 0.2s;
     box-shadow: 0px 3px 4px 1px rgb(67, 67, 65);
     z-index: 2;
     overflow: hidden;
   }
 
   .header_right_on {
-    top: -160%;
+    top: -300%;
     z-index: -1;
+  }
+
+  .header__right_not_mobile {
+    display: none;
   }
 
   .header__menulist li,
@@ -233,16 +296,10 @@
     opacity: 1;
     height: 85px;
     font-weight: normal;
+    padding-bottom: 100px;
   }
 
   .sub_menu dl:before {
     content: "- ";
-  }
-}
-
-@keyframes rightBox {
-  0% {
-  }
-  100% {
   }
 }
