@@ -63,15 +63,6 @@
   color: #939393;
 }
 /* 버튼*/
-.btn_upload {
-  width: 100px;
-  height: 38px;
-  border: 1px solid #3e3e3e;
-  border-radius: 5px;
-  font-size: 0.94em;
-  background-color: white;
-  margin-top: 20px;
-}
 .btn_unregister {
   width: 90px;
   height: 38px;
@@ -94,6 +85,26 @@
   align-self: flex-end;
   margin-top: 40px;
 }
+/* 파일 업로드 버튼 */
+label.btn_upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 38px;
+  border: 1px solid #3e3e3e;
+  border-radius: 5px;
+  font-size: 0.94em;
+  background-color: white;
+  margin-top: 20px;
+}
+label.btn_upload:hover {
+  cursor: pointer;
+}
+.btn_upload[type="file"] {
+  display: none;
+}
+
 /* 좌측 박스 가운데 선 */
 .left_center_line {
   width: 210px;

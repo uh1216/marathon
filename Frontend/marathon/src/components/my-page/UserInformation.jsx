@@ -291,7 +291,11 @@ export default function UserInformation() {
           )}
           <div className={style.user_name}>{userName} 님</div>
           <div className={style.welcome}>환영합니다.</div>
-          <button className={style.btn_upload}>사진 업로드</button>
+          <label htmlFor="file" className={style.btn_upload}>
+            사진 업로드
+          </label>
+          <input className={style.btn_upload} type="file" id="file" />
+
           <hr className={style.left_center_line} />
           <div className={style.sub_title}>아이디</div>
           <div className={style.sub_content}>{userId}</div>
