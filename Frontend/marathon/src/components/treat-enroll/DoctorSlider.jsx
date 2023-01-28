@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import style from "./TeacherSlider.module.css";
+import style from "./DoctorSlider.module.css";
 
 const NowSlider = styled.div`
   width: ${(props) =>
@@ -38,13 +38,13 @@ const NowSlider = styled.div`
     (props.check === "hidden_prev" && "5%")};
 `;
 
-export default function TeacherSlider({ check, name, content, bg }) {
+export default function DoctorSlider({ check, name, content, bg }) {
   return (
     <>
       <NowSlider check={check}>
         <div className={style.total}>
           <div className={style.info}>
-            <img src={bg} alt="" className={style.teacher_img}></img>
+            <img src={bg} alt="" className={style.doctor_img}></img>
             <h3 className={style.title}>
               {name}&nbsp;
               <span className={style.span}>재활사</span>
