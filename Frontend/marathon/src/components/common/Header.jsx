@@ -86,6 +86,7 @@ export default function Header() {
           <li
             onClick={() => {
               if (isToggled) setIsToggled(!isToggled);
+              if (isUserToggled) setIsUserToggled(!isUserToggled);
               navigate("/consult-enroll");
             }}
           >
@@ -95,6 +96,7 @@ export default function Header() {
             <span
               onClick={() => {
                 if (isToggled) setIsToggled(!isToggled);
+                if (isUserToggled) setIsUserToggled(!isUserToggled);
                 dispatch(changeNowSideNav("서비스 정보"));
                 navigate("/guide");
               }}
@@ -105,6 +107,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                   dispatch(changeNowSideNav("서비스 정보"));
                   navigate("/guide");
                 }}
@@ -114,6 +117,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                   dispatch(changeNowSideNav("파트너 재활사 소개"));
                   navigate("/guide/partners");
                 }}
@@ -123,6 +127,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                 }}
               >
                 지정병원 소개
@@ -132,6 +137,7 @@ export default function Header() {
           <li
             onClick={() => {
               if (isToggled) setIsToggled(!isToggled);
+              if (isUserToggled) setIsUserToggled(!isUserToggled);
               navigate("/notice");
             }}
           >
@@ -141,6 +147,7 @@ export default function Header() {
             <span
               onClick={() => {
                 if (isToggled) setIsToggled(!isToggled);
+                if (isUserToggled) setIsUserToggled(!isUserToggled);
               }}
             >
               스스로 학습
@@ -149,6 +156,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                 }}
               >
                 색깔 위치 맞추기
@@ -156,6 +164,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                 }}
               >
                 그림 카드 맞추기
@@ -163,6 +172,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                 }}
               >
                 도형 위치 맞추기
@@ -173,6 +183,7 @@ export default function Header() {
             <li
               onClick={() => {
                 if (isToggled) setIsToggled(!isToggled);
+                if (isUserToggled) setIsUserToggled(!isUserToggled);
                 navigate("/treat-enroll");
               }}
             >
@@ -183,6 +194,7 @@ export default function Header() {
             <li
               onClick={() => {
                 if (isToggled) setIsToggled(!isToggled);
+                if (isUserToggled) setIsUserToggled(!isUserToggled);
                 navigate("/");
               }}
             >
@@ -197,6 +209,7 @@ export default function Header() {
             <>
               <li
                 onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
                   navigate("/user/login");
                 }}
@@ -205,6 +218,7 @@ export default function Header() {
               </li>
               <li
                 onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
                   navigate("/user/sign-up-type");
                 }}
@@ -266,6 +280,8 @@ export default function Header() {
                     <dl
                       onClick={() => {
                         dispatch(userLogout());
+                        setIsToggled(false);
+                        setIsUserToggled(false);
                         navigate("/");
                       }}
                     >
@@ -306,6 +322,8 @@ export default function Header() {
                     <dl
                       onClick={() => {
                         dispatch(userLogout());
+                        setIsToggled(false);
+                        setIsUserToggled(false);
                         navigate("/");
                       }}
                     >
@@ -339,6 +357,8 @@ export default function Header() {
                     <dl
                       onClick={() => {
                         dispatch(userLogout());
+                        setIsToggled(false);
+                        setIsUserToggled(false);
                         navigate("/");
                       }}
                     >
@@ -362,6 +382,7 @@ export default function Header() {
             <>
               <li
                 onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
                   navigate("/user/login");
                 }}
@@ -370,6 +391,7 @@ export default function Header() {
               </li>
               <li
                 onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
                   navigate("/user/sign-up-type");
                 }}
@@ -382,6 +404,7 @@ export default function Header() {
             <>
               <li
                 onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
                   navigate("/mypage/information");
                 }}
@@ -390,6 +413,7 @@ export default function Header() {
               </li>
               <li
                 onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
                   navigate("/mypage/messenger");
                 }}
@@ -400,6 +424,7 @@ export default function Header() {
               {state.loginUser.userRole !== "admin" && (
                 <li
                   onClick={() => {
+                    if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
                     navigate("/");
                   }}
@@ -411,6 +436,7 @@ export default function Header() {
               {state.loginUser.userRole === "admin" && (
                 <li
                   onClick={() => {
+                    if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
                     navigate("/");
                   }}
@@ -422,6 +448,7 @@ export default function Header() {
               {state.loginUser.userRole === "patient" && (
                 <li
                   onClick={() => {
+                    if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
                     navigate("/");
                   }}
@@ -432,6 +459,7 @@ export default function Header() {
               {state.loginUser.userRole === "doctor" && (
                 <li
                   onClick={() => {
+                    if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
                     navigate("/");
                   }}
@@ -441,7 +469,8 @@ export default function Header() {
               )}
               <li
                 onClick={() => {
-                  if (isUserToggled) setIsUserToggled(!isUserToggled);
+                  setIsToggled(false);
+                  setIsUserToggled(false);
                   dispatch(userLogout());
                   navigate("/");
                 }}
