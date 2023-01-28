@@ -89,6 +89,7 @@ export default function DoctorContainer() {
     } else if (currentIndex === -1) {
       setCurrentIndex(total - 1);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
 
   return (

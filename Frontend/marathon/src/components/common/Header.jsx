@@ -51,11 +51,20 @@ export default function Header() {
         >
           <div style={{ width: "30px" }}>
             {!isUserToggled && state.loginUser.userProfileImg !== "" && (
-              <img
-                className={style.profile}
-                src={state.loginUser.userProfileImg}
-                alt=""
-              />
+              <>
+                <img
+                  className={style.profile}
+                  src={state.loginUser.userProfileImg}
+                  alt=""
+                />
+                <div
+                  className={
+                    !state.loginUser.unReadMsgNum ? style.nobadge : style.badge
+                  }
+                >
+                  <span>{state.loginUser.unReadMsgNum}</span>
+                </div>
+              </>
             )}
             {!isUserToggled && !state.loginUser.userProfileImg && (
               <FontAwesomeIcon className={style.clickable} icon={faUser} />
@@ -209,8 +218,18 @@ export default function Header() {
               <img
                 src={state.loginUser.userProfileImg}
                 className={style.profile_header}
+                onClick={() => navigate("/mypage/messenger")}
                 alt=""
               />
+              <div
+                className={
+                  !state.loginUser.unReadMsgNum ? style.nobadge : style.badge
+                }
+              >
+                <span onClick={() => navigate("/mypage/messenger")}>
+                  {state.loginUser.unReadMsgNum}
+                </span>
+              </div>
               <li>
                 {state.loginUser.userName}
                 <span style={{ color: "gray" }}>님 환영합니다</span>

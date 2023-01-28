@@ -124,6 +124,7 @@ export default function UserInformation() {
 
     // 사이드 Nav 초기화
     dispatch(changeNowSideNav("회원 정보 관리"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** 비밀번호 유효성 체크 */

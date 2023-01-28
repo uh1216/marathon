@@ -12,6 +12,7 @@ export default function Messenger() {
   useEffect(() => {
     // 사이드 Nav 초기화
     dispatch(changeNowSideNav("알림 / 메시지"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
