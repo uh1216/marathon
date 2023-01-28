@@ -10,11 +10,12 @@
 
   display: flex;
   justify-content: space-between;
+
+  position: relative;
 }
 
 .icon {
   font-size: 3em;
-  margin-right: 25px;
 }
 
 .content_box {
@@ -24,16 +25,19 @@
 .btn_box {
   display: flex;
   flex-flow: column;
-  justify-content: space-between;
+  justify-content: end;
   align-items: end;
   width: 15%;
 }
 
-/* 답장 쓰기, 수업 입장 버튼*/
+/* X 아이콘 */
 .icon_x {
   font-size: 20px;
+  position: absolute;
+  right: 22px;
 }
 
+/* 답장 쓰기, 수업 입장 버튼*/
 .btn {
   border: #696969 1px solid;
   border-radius: 30px;
@@ -88,6 +92,7 @@
 
   .content_box {
     width: 100%;
+    margin-bottom: 10px;
   }
 
   .btn_box {

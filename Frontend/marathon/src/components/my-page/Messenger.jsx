@@ -98,6 +98,9 @@ export default function Messenger() {
 
       {list.map((item) => (
         <div className={style.message_box}>
+          {item.type === "message" && (
+            <FontAwesomeIcon icon={faXmark} className={style.icon_x} />
+          )}
           <FontAwesomeIcon
             icon={item.type === "message" ? faPaperPlane : faBell}
             className={style.icon}
@@ -114,7 +117,6 @@ export default function Messenger() {
           <div className={style.btn_box}>
             {item.type === "message" ? (
               <>
-                <FontAwesomeIcon icon={faXmark} className={style.icon_x} />
                 <button className={style.btn}>답장 쓰기</button>
               </>
             ) : (
