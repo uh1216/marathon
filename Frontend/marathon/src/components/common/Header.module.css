@@ -83,10 +83,6 @@
   z-index: 1;
 }
 
-.header__right div {
-  margin: 0 1em;
-}
-
 .header li {
   padding: 0 1em;
   cursor: pointer;
@@ -177,6 +173,7 @@
 
   .menulist_on {
     left: -50%;
+    visibility: hidden;
   }
 
   .header__right {
@@ -189,14 +186,15 @@
     margin-top: 0px;
     margin-right: 0px;
     position: absolute;
-    overflow: hidden;
     transition: 0.3s;
     box-shadow: 0px 3px 4px 1px rgb(67, 67, 65);
     z-index: 2;
+    overflow: hidden;
   }
 
   .header_right_on {
-    right: -50%;
+    top: -160%;
+    z-index: -1;
   }
 
   .header__menulist li,
@@ -239,5 +237,12 @@
 
   .sub_menu dl:before {
     content: "- ";
+  }
+}
+
+@keyframes rightBox {
+  0% {
+  }
+  100% {
   }
 }
