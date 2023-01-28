@@ -465,7 +465,7 @@ export default function UserInformation() {
                   />
                 </div>
               </>
-            ) : userRole === "teacher" ? (
+            ) : userRole === "doctor" ? (
               <>
                 <div className={style.input_div}>
                   <label

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import style from "./TeacherContainer.module.css";
+import style from "./DoctorContainer.module.css";
 import Doctor1 from "img/doctor_1.jpg";
 import Doctor2 from "img/doctor_2.jpg";
 import Doctor3 from "img/doctor_3.jpg";
 import Doctor4 from "img/person_1.jpg";
-import TeacherSlider from "./TeacherSlider";
+import DoctorSlider from "./DoctorSlider";
 
-export default function TeacherList() {
+export default function DoctorContainer() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const teachers = [
+  const doctors = [
     {
       id: 0,
       name: "이연학",
@@ -66,7 +66,7 @@ export default function TeacherList() {
       img_url: Doctor4,
     },
   ];
-  const total = teachers.length;
+  const total = doctors.length;
 
   const goNext = () => {
     if (currentIndex + 1 < total) setCurrentIndex((val) => val + 1);
@@ -92,10 +92,10 @@ export default function TeacherList() {
         <div className={style.inner_container}>
           <div className={style.content}>
             <button onClick={goPrev}>앞</button>
-            <div className={style.TeacherContainer}>
-              {teachers.map((val) => {
+            <div className={style.doctorContainer}>
+              {doctors.map((val) => {
                 return (
-                  <TeacherSlider
+                  <DoctorSlider
                     key={val.id}
                     check={check(val.id)}
                     name={val.name}
