@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import style from "./NoticeBoard.module.css";
 import SelectBox from "components/common/SelectBox";
+import Pagination from "components/common/Pagination";
 
 export default function NoticeBoard() {
   const navigate = useNavigate();
-  // selectbox 옵션
+
+  /** selectbox 옵션 */
   const optionSearch = [
     { value: "title", name: "제목" },
     { value: "conetent", name: "내용" },
@@ -13,49 +15,31 @@ export default function NoticeBoard() {
   ];
   const [searchOption, setSearchOption] = useState("none");
 
-  // 공지사항 데이터 객체로 저장(임시 더미데이터 추가 상태)
-  const [noticeLists, setNoticeLists] = useState([
-    {
-      num: 4,
-      title: "4번글 제목입니다.",
-      content:
-        "4번글 내용입니다.\n\
-      4번글 내용입니다.\n\
-      4번글 내용입니다.",
+  /** 공지사항 데이터 객체로 저장(임시 더미데이터 추가 상태) */
+  let contentList = [];
+  for (let i = 1; i <= 50; i++) {
+    const newContents = {
+      num: i,
+      title: `${i}번글 제목입니다.`,
+      content: `${i}번글 내용입니다. 내용을 채우기 위한 의미없는 글 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`,
       date: "2022.12.30",
-      count: 44444,
-    },
-    {
-      num: 3,
-      title: "3번글 제목입니다.",
-      content:
-        "3번글 내용입니다.\n\
-      3번글 내용입니다.\n\
-      3번글 내용입니다.",
-      date: "2022.12.25",
-      count: 33333,
-    },
-    {
-      num: 2,
-      title: "2번글 제목입니다.",
-      content:
-        "2번글 내용입니다.\n\
-      2번글 내용입니다.\n\
-      2번글 내용입니다.",
-      date: "2022.12.17",
-      count: 22222,
-    },
-    {
-      num: 1,
-      title: "1번글 제목입니다.",
-      content:
-        "1번글 내용입니다.\n\
-      1번글 내용입니다.\n\
-      1번글 내용입니다.",
-      date: "2022.11.15",
-      count: 11111,
-    },
-  ]);
+      count: i * 1000,
+    };
+    contentList = [newContents, ...contentList];
+  }
+  /** 페이지 별로 일정 개수만큼 게시글을 출력하기 위해 사용되는 변수 */
+  const pages = Math.ceil(contentList.length / 10);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
+
+  /** 페이지 컴포넌트 사용 시 작성해야 할 함수
+   * 초기에 x가 undefined로 인식이 되기 때문에 초기값을 1로 설정
+   * 그대로 복붙해서 사용해도 지장없음*/
+  const nowPage = (x) => {
+    if (x === undefined || x === "undefined") setPage(1);
+    else setPage(x);
+  };
 
   return (
     <>
@@ -88,42 +72,47 @@ export default function NoticeBoard() {
                 <button className={style.notice_button}>검색</button>
               </div>
             </div>
-            <div className={style.notice_header_container}>
-              <div>No.</div>
-              <div>제목</div>
-              <div>등록일</div>
-              <div className={style.count_hidden}>조회수</div>
-            </div>
-            {/** 현재는 더미데이터, 백엔드와 연결 후 서버에서 값 가져와서 출력 */}
-            {noticeLists.map((list) => {
-              return (
-                <>
-                  <div className={style.notice_header_item}>
-                    <div>{list.num}</div>
-                    <div>
-                      <Link
-                        to={`${list.num}`}
-                        state={{
-                          num: list.num,
-                          title: list.title,
-                          content: list.content,
-                          date: list.date,
-                          count: list.count,
-                        }}
-                        className={style.notice_link}
-                      >
-                        {list.title}
-                      </Link>
+            {/** 보드 div입니다. 상단 버튼을 제외한 부분이며 다른 페이지에서 사용 시 해당 div영역과 style.css를 참고해 활용하면 됩니다.
+             * grid 비율과 개수가 다를 수 있으니 수정 시 주의해주세요.
+             */}
+            <div>
+              <div className={style.notice_header_container}>
+                <div>No.</div>
+                <div>제목</div>
+                <div>등록일</div>
+                <div className={style.count_hidden}>조회수</div>
+              </div>
+              {/** 현재는 더미데이터, 백엔드와 연결 후 서버에서 값 가져와서 출력 */}
+              {contentList.slice(offset, offset + limit).map((content) => {
+                return (
+                  <>
+                    <div className={style.notice_header_item}>
+                      <div>{content.num}</div>
+                      <div>
+                        <Link
+                          to={`../detail/${content.num}`}
+                          state={{
+                            num: content.num,
+                            title: content.title,
+                            content: content.content,
+                            date: content.date,
+                            count: content.count,
+                          }}
+                          className={style.notice_link}
+                        >
+                          {content.title}
+                        </Link>
+                      </div>
+                      <div>{content.date}</div>
+                      <div className={style.count_hidden}>{content.count}</div>
                     </div>
-                    <div>{list.date}</div>
-                    <div className={style.count_hidden}>{list.count}</div>
-                  </div>
-                </>
-              );
-            })}
+                  </>
+                );
+              })}
+            </div>
           </div>
-          {/** 추후 서버를 통해 게시글을 조회받으면 일정 수 만큼 잘라서 pagination */}
-          <div className={style.notice_pagination}>1 2 3 4 5 6 7 8 9</div>
+          {/** pagination 컴포넌트 활용 */}
+          <Pagination contentList={contentList} nowPage={nowPage} />
         </div>
       </div>
     </>
