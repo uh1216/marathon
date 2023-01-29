@@ -112,7 +112,7 @@ export default function NoticeBoard() {
             </div>
           </div>
           {/** pagination 컴포넌트 활용 */}
-          <Pagination contentList={contentList} nowPage={nowPage} />
+          <Pagination contentList={contentList} nowPage={nowPage} num={10} />
         </div>
       </div>
     </>
