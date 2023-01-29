@@ -1,0 +1,13 @@
+.notice_pagination {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.page_number {
+  margin-left: 5px;
+  margin-right: 5px;
+  text-decoration: none;
+  color: inherit;
+}

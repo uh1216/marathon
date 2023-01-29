@@ -23,9 +23,12 @@
 
 /** 
   .notice_top_interface
-  공지사항 메인페이지 상단 그리드를 위한 css
-  .notice_header_containerd
-  앞으로 쓰게 될 게시글에도 동일한 그리드 적용
+  공지사항 메인페이지 상단 버튼 그리드를 위한 css
+  .notice_header_container
+  보드의 각 항목의 column 기준이 되는 부분(최상단)
+  .notice_header_item
+  보드의 각각의 row가 되는 부분
+  grid 값은 column 개수에 따라 다르게 수정
 */
 .notice_top_interface_grid {
   display: grid;
@@ -55,7 +58,17 @@
 }
 
 .notice_pagination {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.page_number {
+  margin-left: 5px;
+  margin-right: 5px;
+  text-decoration: none;
+  color: inherit;
 }
 
 /** 

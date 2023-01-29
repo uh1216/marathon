@@ -138,7 +138,7 @@ export default function Header() {
             onClick={() => {
               if (isToggled) setIsToggled(!isToggled);
               if (isUserToggled) setIsUserToggled(!isUserToggled);
-              navigate("/notice");
+              navigate(`/notice/${1}`);
             }}
           >
             <span>공지사항</span>
