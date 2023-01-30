@@ -3,11 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const gameState = createSlice({
   name: "gameState",
   initialState: {
+    type: 0,
     mode: "",
     stageNow: 0,
     record: [],
   },
   reducers: {
+    setType: (state, action) => {
+      state.type = action.payload;
+    },
     setMode: (state, action) => {
       state.mode = action.payload;
     },
@@ -27,6 +31,6 @@ const gameState = createSlice({
   },
 });
 
-export let { setMode, setStageNow, addRecord, resetRecord, resetAll } =
+export let { setType, setMode, setStageNow, addRecord, resetRecord, resetAll } =
   gameState.actions;
 export { gameState };
