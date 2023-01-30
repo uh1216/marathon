@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import style from "./SelfStudyLayout.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setStageNow } from "stores/game.store";
+import { setStageNow, setType } from "stores/game.store";
+import { useEffect } from "react";
 
-export default function SelfStudyLayout({ type, btn, children }) {
+export default function SelfStudyLayout({ type, children }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -14,6 +15,10 @@ export default function SelfStudyLayout({ type, btn, children }) {
     { title: "그림 카드 맞추기" },
     { title: "도형 위치 맞추기" },
   ];
+
+  useEffect(() => {
+    dispatch(setType(type));
+  }, []);
 
   return (
     <div className={style.main_container}>
