@@ -1,0 +1,68 @@
+.container {
+  max-width: 1600px;
+  height: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1em;
+}
+
+.inner_container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.title {
+  margin-top: 30px;
+}
+
+.title_name {
+  font-size: 1.2em;
+}
+
+.title_schedule {
+  font-size: 1.2em;
+  margin-left: 5px;
+  color: #3080f8;
+}
+
+.date_header {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  border: 0;
+  border-radius: 5px;
+}
+
+.date_text {
+  margin: 0 20px;
+  font-size: 1.3em;
+  font-family: "GmarketBold";
+}
+
+.monday_item {
+  width: 1500px;
+}
+
+.button1 {
+  width: 500px;
+  height: 80px;
+  margin-left: 50px;
+  background-color: none;
+}
+
+.button2 {
+  width: 500px;
+  height: 80px;
+  margin-left: 50px;
+  background-color: #4d88fb;
+}
+
+.button3 {
+  width: 500px;
+  height: 80px;
+  margin-left: 50px;
+  background-color: #535353;
+}

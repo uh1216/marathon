@@ -19,6 +19,7 @@ export default function NoticeBoard() {
   let contentList = [];
   for (let i = 1; i <= 50; i++) {
     const newContents = {
+      id: i,
       num: i,
       title: `${i}번글 제목입니다.`,
       content: `${i}번글 내용입니다. 내용을 채우기 위한 의미없는 글 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`,
@@ -85,7 +86,7 @@ export default function NoticeBoard() {
               {/** 현재는 더미데이터, 백엔드와 연결 후 서버에서 값 가져와서 출력 */}
               {contentList.slice(offset, offset + limit).map((content) => {
                 return (
-                  <>
+                  <div key={content.id}>
                     <div className={style.notice_header_item}>
                       <div>{content.num}</div>
                       <div>
@@ -106,7 +107,7 @@ export default function NoticeBoard() {
                       <div>{content.date}</div>
                       <div className={style.count_hidden}>{content.count}</div>
                     </div>
-                  </>
+                  </div>
                 );
               })}
             </div>
