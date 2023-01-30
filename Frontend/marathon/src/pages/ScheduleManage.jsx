@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import style from "./ScheduleManage.module.css";
 
 export default function ScheduleManage() {
@@ -20,13 +20,11 @@ export default function ScheduleManage() {
   let SundayDate = thisSunday.getDate();
   if (SundayDate < 10) SundayDate = "0" + SundayDate;
 
-  const mondayItem = useRef();
-
   /** 수업 스케쥴 더미데이터 */
   const teacherSchedule = [
     {
       date: "2023-01-30",
-      timeTable: "00001000",
+      timeTable: "00021000",
     },
     {
       date: "2023-01-31",
@@ -34,15 +32,15 @@ export default function ScheduleManage() {
     },
     {
       date: "2023-02-01",
-      timeTable: "10000000",
+      timeTable: "10020000",
     },
     {
       date: "2023-02-02",
-      timeTable: "01000010",
+      timeTable: "01002010",
     },
     {
       date: "2023-02-03",
-      timeTable: "00200000",
+      timeTable: "00200010",
     },
   ];
 
@@ -52,13 +50,19 @@ export default function ScheduleManage() {
 
     const timeLlist = [];
     for (let i = 0; i < thisTimeTable.length; i++) {
-      const hour = i + 8;
-      if (thisTimeTable[0] === 0) {
-        if (i < 10) {
-          timeLlist.push(<button className={style.button1}>0{i}</button>);
-        }
+      if (thisTimeTable[i] === "0") {
+        timeLlist.push(<button className={style.button1}>0{i} : 00</button>);
+      } else if (thisTimeTable[i] === "1") {
+        timeLlist.push(<button className={style.button2}>0{i} : 00</button>);
+      } else {
+        timeLlist.push(
+          <button className={style.button3} disabled>
+            0{i} : 00
+          </button>
+        );
       }
     }
+    return timeLlist;
   };
 
   return (
@@ -79,9 +83,7 @@ export default function ScheduleManage() {
           <div className={style.monday}>
             <div className={style.monday_header}>{MondayDate}&#40;월&#41;</div>
           </div>
-          <div className={style.monday_item} ref={mondayItem}>
-            {checkSchedule(thisMonday)}
-          </div>
+          <div className={style.monday_item}>{checkSchedule(thisMonday)}</div>
         </div>
       </div>
     </div>
