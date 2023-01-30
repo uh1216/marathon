@@ -19,6 +19,7 @@ export default function Pagination({ nowPage, contentList, num }) {
     for (let i = 1; i <= pages; i++) {
       pageList.push(
         <Link
+          key={i}
           to={`../${i}`}
           className={style.page_number}
           onClick={() => {
