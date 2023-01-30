@@ -19,5 +19,12 @@
   margin-top: 200px;
 }
 
-.TeacherContainer {
+.arrow {
+  background-color: white;
+  border: 1px white;
+}
+
+.arrow_img {
+  width: 50px;
+  z-index: 1;
 }

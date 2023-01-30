@@ -1,15 +1,17 @@
-import { React, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./Header.module.css";
 import logo from "img/logoMain.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { changeNowSideNav } from "stores/toggle.store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogout } from "stores/user.store";
 
 export default function Header() {
   const [isToggled, setIsToggled] = useState(false);
   const [isUserToggled, setIsUserToggled] = useState(false);
+  const state = useSelector((state) => state);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -48,10 +50,29 @@ export default function Header() {
           }}
         >
           <div style={{ width: "30px" }}>
-            <FontAwesomeIcon
-              className={style.clickable}
-              icon={!isUserToggled ? faUser : faTimes}
-            />
+            {!isUserToggled && state.loginUser.userProfileImg !== "" && (
+              <>
+                <img
+                  className={style.profile}
+                  src={state.loginUser.userProfileImg}
+                  alt=""
+                />
+                <div
+                  className={
+                    !state.loginUser.unReadMsgNum ? style.nobadge : style.badge
+                  }
+                >
+                  <span>{state.loginUser.unReadMsgNum}</span>
+                </div>
+              </>
+            )}
+            {!isUserToggled && !state.loginUser.userProfileImg && (
+              <FontAwesomeIcon className={style.clickable} icon={faUser} />
+            )}
+
+            {isUserToggled && (
+              <FontAwesomeIcon className={style.clickable} icon={faTimes} />
+            )}
           </div>
         </div>
 
@@ -65,6 +86,7 @@ export default function Header() {
           <li
             onClick={() => {
               if (isToggled) setIsToggled(!isToggled);
+              if (isUserToggled) setIsUserToggled(!isUserToggled);
               navigate("/consult-enroll");
             }}
           >
@@ -74,6 +96,7 @@ export default function Header() {
             <span
               onClick={() => {
                 if (isToggled) setIsToggled(!isToggled);
+                if (isUserToggled) setIsUserToggled(!isUserToggled);
                 dispatch(changeNowSideNav("서비스 정보"));
                 navigate("/guide");
               }}
@@ -84,6 +107,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                   dispatch(changeNowSideNav("서비스 정보"));
                   navigate("/guide");
                 }}
@@ -93,6 +117,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                   dispatch(changeNowSideNav("파트너 재활사 소개"));
                   navigate("/guide/partners");
                 }}
@@ -102,6 +127,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                 }}
               >
                 지정병원 소개
@@ -111,7 +137,8 @@ export default function Header() {
           <li
             onClick={() => {
               if (isToggled) setIsToggled(!isToggled);
-              navigate("/notice");
+              if (isUserToggled) setIsUserToggled(!isUserToggled);
+              navigate(`/notice/${1}`);
             }}
           >
             <span>공지사항</span>
@@ -120,6 +147,7 @@ export default function Header() {
             <span
               onClick={() => {
                 if (isToggled) setIsToggled(!isToggled);
+                if (isUserToggled) setIsUserToggled(!isUserToggled);
               }}
             >
               스스로 학습
@@ -128,6 +156,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                 }}
               >
                 색깔 위치 맞추기
@@ -135,6 +164,7 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                 }}
               >
                 그림 카드 맞추기
@@ -142,23 +172,205 @@ export default function Header() {
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
                 }}
               >
                 도형 위치 맞추기
               </dl>
             </div>
           </li>
-          <li
-            onClick={() => {
-              if (isToggled) setIsToggled(!isToggled);
-              navigate("/treat-enroll");
-            }}
-          >
-            <span>수업 예약</span>
-          </li>
+          {state.loginUser.userRole === "patient" && (
+            <li
+              onClick={() => {
+                if (isToggled) setIsToggled(!isToggled);
+                if (isUserToggled) setIsUserToggled(!isUserToggled);
+                navigate("/treat-enroll");
+              }}
+            >
+              <span>수업 예약</span>
+            </li>
+          )}
+          {state.loginUser.userRole === "doctor" && (
+            <li
+              onClick={() => {
+                if (isToggled) setIsToggled(!isToggled);
+                if (isUserToggled) setIsUserToggled(!isUserToggled);
+                navigate("/");
+              }}
+            >
+              <span>일정 관리</span>
+            </li>
+          )}
         </ul>
 
         <div className={style.header_eatspace}></div>
+        <ul className={style.header__right_not_mobile}>
+          {!state.loginUser.userRole && (
+            <>
+              <li
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
+                  navigate("/user/login");
+                }}
+              >
+                <span>로그인</span>
+              </li>
+              <li
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
+                  navigate("/user/sign-up-type");
+                }}
+              >
+                <span>회원가입</span>
+              </li>
+            </>
+          )}
+          {state.loginUser.userRole !== "" && (
+            <>
+              <img
+                src={state.loginUser.userProfileImg}
+                className={style.profile_header}
+                onClick={() => navigate("/mypage/messenger")}
+                alt=""
+              />
+              <div
+                className={
+                  !state.loginUser.unReadMsgNum ? style.nobadge : style.badge
+                }
+              >
+                <span onClick={() => navigate("/mypage/messenger")}>
+                  {state.loginUser.unReadMsgNum}
+                </span>
+              </div>
+              <li>
+                {state.loginUser.userName}
+                <span style={{ color: "gray" }}>님 환영합니다</span>
+                {state.loginUser.userRole === "patient" && (
+                  <div className={style.sub_menu + " " + style.sub_menu_common}>
+                    <dl
+                      onClick={() => {
+                        navigate("/mypage/information");
+                      }}
+                    >
+                      회원 정보 관리
+                    </dl>
+                    <dl
+                      onClick={() => {
+                        navigate("/mypage/messenger");
+                      }}
+                    >
+                      알림 / 메시지
+                    </dl>
+                    <dl
+                      onClick={() => {
+                        navigate("/");
+                      }}
+                    >
+                      재활 일정
+                    </dl>
+                    <dl
+                      onClick={() => {
+                        navigate("/");
+                      }}
+                    >
+                      스스로 학습 통계
+                    </dl>
+                    <dl
+                      onClick={() => {
+                        dispatch(userLogout());
+                        setIsToggled(false);
+                        setIsUserToggled(false);
+                        navigate("/");
+                      }}
+                    >
+                      로그아웃
+                    </dl>
+                  </div>
+                )}
+                {state.loginUser.userRole === "doctor" && (
+                  <div className={style.sub_menu + " " + style.sub_menu_common}>
+                    <dl
+                      onClick={() => {
+                        navigate("/mypage/information");
+                      }}
+                    >
+                      회원 정보 관리
+                    </dl>
+                    <dl
+                      onClick={() => {
+                        navigate("/mypage/messenger");
+                      }}
+                    >
+                      알림 / 메시지
+                    </dl>
+                    <dl
+                      onClick={() => {
+                        navigate("/");
+                      }}
+                    >
+                      재활 일정
+                    </dl>
+                    <dl
+                      onClick={() => {
+                        navigate("/");
+                      }}
+                    >
+                      수업 기록
+                    </dl>
+                    <dl
+                      onClick={() => {
+                        dispatch(userLogout());
+                        setIsToggled(false);
+                        setIsUserToggled(false);
+                        navigate("/");
+                      }}
+                    >
+                      로그아웃
+                    </dl>
+                  </div>
+                )}
+                {state.loginUser.userRole === "admin" && (
+                  <div className={style.sub_menu + " " + style.sub_menu_admin}>
+                    <dl
+                      onClick={() => {
+                        navigate("/mypage/information");
+                      }}
+                    >
+                      회원 정보 관리
+                    </dl>
+                    <dl
+                      onClick={() => {
+                        navigate("/mypage/messenger");
+                      }}
+                    >
+                      알림 / 메시지
+                    </dl>
+                    <dl
+                      onClick={() => {
+                        navigate("/");
+                      }}
+                    >
+                      상담 관리
+                    </dl>
+                    <dl
+                      onClick={() => {
+                        dispatch(userLogout());
+                        setIsToggled(false);
+                        setIsUserToggled(false);
+                        navigate("/");
+                      }}
+                    >
+                      로그아웃
+                    </dl>
+                  </div>
+                )}
+              </li>
+            </>
+          )}
+        </ul>
+
         <ul
           className={
             isUserToggled
@@ -166,22 +378,107 @@ export default function Header() {
               : style.header__right + " " + style.header_right_on
           }
         >
-          <li
-            onClick={() => {
-              if (isUserToggled) setIsUserToggled(!isUserToggled);
-              navigate("/user/login");
-            }}
-          >
-            <span>로그인</span>
-          </li>
-          <li
-            onClick={() => {
-              if (isUserToggled) setIsUserToggled(!isUserToggled);
-              navigate("/user/sign-up-type");
-            }}
-          >
-            <span>회원가입</span>
-          </li>
+          {!state.loginUser.userRole && (
+            <>
+              <li
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
+                  navigate("/user/login");
+                }}
+              >
+                <span>로그인</span>
+              </li>
+              <li
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
+                  navigate("/user/sign-up-type");
+                }}
+              >
+                <span>회원가입</span>
+              </li>
+            </>
+          )}
+          {state.loginUser.userRole && (
+            <>
+              <li
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
+                  navigate("/mypage/information");
+                }}
+              >
+                <span>회원 정보 관리</span>
+              </li>
+              <li
+                onClick={() => {
+                  if (isToggled) setIsToggled(!isToggled);
+                  if (isUserToggled) setIsUserToggled(!isUserToggled);
+                  navigate("/mypage/messenger");
+                }}
+              >
+                <span>알림 / 메시지</span>
+              </li>
+
+              {state.loginUser.userRole !== "admin" && (
+                <li
+                  onClick={() => {
+                    if (isToggled) setIsToggled(!isToggled);
+                    if (isUserToggled) setIsUserToggled(!isUserToggled);
+                    navigate("/");
+                  }}
+                >
+                  <span>재활 일정</span>
+                </li>
+              )}
+
+              {state.loginUser.userRole === "admin" && (
+                <li
+                  onClick={() => {
+                    if (isToggled) setIsToggled(!isToggled);
+                    if (isUserToggled) setIsUserToggled(!isUserToggled);
+                    navigate("/");
+                  }}
+                >
+                  <span>상담 관리</span>
+                </li>
+              )}
+
+              {state.loginUser.userRole === "patient" && (
+                <li
+                  onClick={() => {
+                    if (isToggled) setIsToggled(!isToggled);
+                    if (isUserToggled) setIsUserToggled(!isUserToggled);
+                    navigate("/");
+                  }}
+                >
+                  <span>스스로 학습 통계</span>
+                </li>
+              )}
+              {state.loginUser.userRole === "doctor" && (
+                <li
+                  onClick={() => {
+                    if (isToggled) setIsToggled(!isToggled);
+                    if (isUserToggled) setIsUserToggled(!isUserToggled);
+                    navigate("/");
+                  }}
+                >
+                  <span>수업 기록</span>
+                </li>
+              )}
+              <li
+                onClick={() => {
+                  setIsToggled(false);
+                  setIsUserToggled(false);
+                  dispatch(userLogout());
+                  navigate("/");
+                }}
+              >
+                <span>로그아웃</span>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>

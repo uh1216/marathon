@@ -44,7 +44,7 @@ export default function NoticeCreate() {
                 </button>
                 <button
                   className={style.right_menu + " " + style.notice_button}
-                  onClick={() => navigate("/notice/")}
+                  onClick={() => navigate(`../${1}`)}
                   style={{ margin: "15px" }}
                 >
                   목록으로

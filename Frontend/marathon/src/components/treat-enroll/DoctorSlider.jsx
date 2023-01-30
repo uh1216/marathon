@@ -19,16 +19,8 @@ const NowSlider = styled.div`
       ? "linear-gradient(to bottom, white 40%, #F3F7FF 40%)"
       : "linear-gradient(to bottom, white 45%, #F3F7FF 45%)"};
   transform: translate(-50%, -50%);
-  transition: ${(props) =>
-    (props.check === "now" && "all ease-in-out 0.5s") ||
-    (props.check === "next" && "all ease-in-out 0.5s") ||
-    (props.check === "prev" && "all ease-in-out 0.5s") ||
-    (props.check === "hidden_next" && "all ease-in-out 0.5s") ||
-    (props.check === "hidden_prev" && "all ease-in-out 0.5s")};
-  position: absolute;
 
-  animation: ${(props) =>
-    props.check.includes("hidden") ? "fadeout 0.5s" : "fadein 0.5s"};
+  position: absolute;
 
   left: ${(props) =>
     (props.check === "now" && "50%") ||
@@ -38,10 +30,10 @@ const NowSlider = styled.div`
     (props.check === "hidden_prev" && "5%")};
 `;
 
-export default function DoctorSlider({ check, name, content, bg }) {
+export default function DoctorSlider({ check, name, content, bg, animation }) {
   return (
     <>
-      <NowSlider check={check}>
+      <NowSlider check={check} style={{ transition: animation }}>
         <div className={style.total}>
           <div className={style.info}>
             <img src={bg} alt="" className={style.doctor_img}></img>

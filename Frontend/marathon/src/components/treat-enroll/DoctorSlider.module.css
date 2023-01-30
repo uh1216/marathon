@@ -42,7 +42,6 @@
   color: white;
   background-color: #4d88fb;
   border-radius: 10px;
-  transition: all ease-in-out 0.5s;
 }
 
 .button_design:disabled {
@@ -52,7 +51,6 @@
   color: white;
   background-color: #ced4e1;
   border-radius: 10px;
-  transition: all ease-in-out 0.5s;
 }
 
 .content {
