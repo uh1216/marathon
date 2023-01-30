@@ -1,0 +1,59 @@
+.side_right_board {
+  width: 85%;
+  height: 100%;
+  padding-left: 40px;
+  font-size: 1em;
+}
+
+.side_inner_div {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.button {
+  position: relative;
+  border: none;
+  display: inline-block;
+  padding: 8px 10px;
+  border-radius: 15px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  background-color: rgb(240, 243, 245);
+  color: #112529;
+}
+
+.button:hover {
+  background-color: rgb(209, 211, 212);
+  color: #4a666a;
+}
+
+.arrow_div {
+  display: inline-block;
+}
+
+.middle_box {
+  display: flex;
+}
+
+.calender_div {
+  display: flex;
+  flex-direction: column;
+  width: 14.28%;
+  height: 350px;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.calender_top_div {
+  text-align: center;
+  background-color: #ececff;
+  padding: 5px 5px;
+  border-bottom: 1px solid black;
+}
+
+.calender_bottom_div {
+  border-right: 0.5px solid gray;
+  flex-grow: 1;
+}

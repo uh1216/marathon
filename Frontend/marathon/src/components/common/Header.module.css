@@ -36,7 +36,7 @@
 .sub_menu {
   color: black;
   border-radius: 10px;
-  background-color: rgb(243, 243, 243);
+  background-color: rgb(251, 251, 251);
   width: 165px;
   text-shadow: none;
   box-shadow: 0px 3px 4px 1px rgb(67, 67, 67, 0.5);
@@ -60,7 +60,7 @@
   border-top: 0px solid transparent;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 15px solid rgb(243, 243, 243);
+  border-bottom: 15px solid rgb(251, 251, 251);
   content: "";
   position: absolute;
   top: -12px;
