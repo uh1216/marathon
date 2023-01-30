@@ -12,6 +12,7 @@ import TreatEnroll from "pages/TreatEnroll";
 import MyPage from "pages/MyPage";
 import SelfStudyList from "pages/SelfStudyList";
 import ScheduleManage from "pages/ScheduleManage";
+import SelfStudy from "pages/SelfStudy";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         </Route>
         <Route element={<HeaderPage />}>
           <Route path="/user/*" element={<User />} />
+          <Route path="/self-study/*" element={<SelfStudy />} />
         </Route>
       </Routes>
     </>
