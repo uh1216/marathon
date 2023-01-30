@@ -1,5 +1,8 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import style from "./DoctorSlider.module.css";
+import Modal from "components/common/Modal";
+import SelectSchedule from "./SelectSchedule";
 
 const NowSlider = styled.div`
   width: ${(props) =>
@@ -31,6 +34,12 @@ const NowSlider = styled.div`
 `;
 
 export default function DoctorSlider({ check, name, content, bg, animation }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  /** 모달창 오픈 함수 */
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <NowSlider check={check} style={{ transition: animation }}>
@@ -46,6 +55,7 @@ export default function DoctorSlider({ check, name, content, bg, animation }) {
             <button
               className={style.button_design}
               disabled={check === "now" ? false : true}
+              onClick={showModal}
             >
               예약하기
             </button>
@@ -56,6 +66,11 @@ export default function DoctorSlider({ check, name, content, bg, animation }) {
           </div>
         </div>
       </NowSlider>
+      {isModalOpen && (
+        <Modal setModalOpen={setIsModalOpen}>
+          <SelectSchedule setModalOpen={setIsModalOpen} name={name} />
+        </Modal>
+      )}
     </>
   );
 }

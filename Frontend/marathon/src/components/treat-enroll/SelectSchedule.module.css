@@ -1,0 +1,25 @@
+.container {
+  width: 1200px;
+  height: 780px;
+  display: flex;
+}
+
+.inner_container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 85%;
+}
+
+.title {
+  margin-top: 30px;
+}
+
+.title_name {
+  font-size: 1.2em;
+}
+
+.title_schedule {
+  font-size: 1.2em;
+  margin-left: 5px;
+  color: #3080f8;
+}
