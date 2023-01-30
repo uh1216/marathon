@@ -3,16 +3,34 @@ import UserInformation from "components/my-page/UserInformation";
 import SideNav from "components/common/SideNav";
 import style from "./MyPage.module.css";
 import Messenger from "components/my-page/Messenger";
+import { useSelector } from "react-redux";
 
 export default function MyPage() {
-  const sideNavContent = [
+  const state = useSelector((state) => state);
+
+  const sideNavContentPatient = [
     "회원 정보 관리",
     "알림 / 메시지",
     "재활 일정",
     "스스로 학습 통계",
     "로그아웃",
   ];
-  const urls = ["information", "messenger", "", "", ""];
+  const sideNavContentDoctor = [
+    "회원 정보 관리",
+    "알림 / 메시지",
+    "재활 일정",
+    "수업 기록",
+    "로그아웃",
+  ];
+  const sideNavContentAdmin = [
+    "회원 정보 관리",
+    "알림 / 메시지",
+    "상담 관리",
+    "로그아웃",
+  ];
+  const urlsPatient = ["information", "messenger", "", ""];
+  const urlsDoctor = ["information", "messenger", "", ""];
+  const urlsAdmin = ["information", "messenger", ""];
 
   return (
     <div className="container">
@@ -26,8 +44,20 @@ export default function MyPage() {
       >
         <SideNav
           sideNavTitle="마이페이지"
-          sideNavContent={sideNavContent}
-          urls={urls}
+          sideNavContent={
+            state.loginUser.userRole === "patient"
+              ? sideNavContentPatient
+              : state.loginUser.userRole === "doctor"
+              ? sideNavContentDoctor
+              : sideNavContentAdmin
+          }
+          urls={
+            state.loginUser.userRole === "patient"
+              ? urlsPatient
+              : state.loginUser.userRole === "doctor"
+              ? urlsDoctor
+              : urlsAdmin
+          }
         />
         <div className={style.side_right_board}>
           <Routes>
