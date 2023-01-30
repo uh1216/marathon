@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { changeNowSideNav } from "stores/toggle.store";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout } from "stores/user.store";
+import { userLogin, userLogout } from "stores/user.store";
 
 export default function Header() {
   const [isToggled, setIsToggled] = useState(false);
@@ -14,6 +14,11 @@ export default function Header() {
   const state = useSelector((state) => state);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  /** 컴포넌트를 불러올 때 마다 JWT토큰이 있다면 해독해서 store의 유저state를 최신화 */
+  useState(() => {
+    dispatch(userLogin());
+  }, []);
 
   return (
     <div
@@ -148,6 +153,7 @@ export default function Header() {
               onClick={() => {
                 if (isToggled) setIsToggled(!isToggled);
                 if (isUserToggled) setIsUserToggled(!isUserToggled);
+                navigate("/self-study-list");
               }}
             >
               스스로 학습
@@ -195,7 +201,7 @@ export default function Header() {
               onClick={() => {
                 if (isToggled) setIsToggled(!isToggled);
                 if (isUserToggled) setIsUserToggled(!isUserToggled);
-                navigate("/");
+                navigate("/schedule-manage");
               }}
             >
               <span>일정 관리</span>
@@ -265,7 +271,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/");
+                        navigate("/mypage/schedule");
                       }}
                     >
                       재활 일정
@@ -307,7 +313,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/");
+                        navigate("/mypage/schedule");
                       }}
                     >
                       재활 일정
@@ -426,7 +432,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/");
+                    navigate("/mypage/schedule");
                   }}
                 >
                   <span>재활 일정</span>
