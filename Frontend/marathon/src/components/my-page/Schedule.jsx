@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
 import style from "./Schedule.module.css";
 
 export default function Schedule() {
   const dispatch = useDispatch();
+  const state = useSelector((state) => state);
   const data = {
     firstDateInfo: "1675061240413",
     reservation: [
@@ -16,18 +17,25 @@ export default function Schedule() {
         time: "9",
       },
       {
+        seq: "14",
+        name: "김오순",
+        date: "2023-01-30",
+        dayOfWeek: "월",
+        time: "15",
+      },
+      {
         seq: "13",
         name: "김사순",
-        date: "2023-02-01",
-        dayOfWeek: "수",
+        date: "2023-01-30",
+        dayOfWeek: "월",
         time: "16",
       },
       {
-        seq: "14",
-        name: "김오순",
-        date: "2023-02-08",
-        dayOfWeek: "수",
-        time: "15",
+        seq: "18",
+        name: "김하순",
+        date: "2023-02-11",
+        dayOfWeek: "토",
+        time: "11",
       },
       {
         seq: "15",
@@ -39,6 +47,13 @@ export default function Schedule() {
     ],
   };
   const [nowPage, setNowPage] = useState(0);
+
+  // 날짜의 연산을 도와준다. 하루가 지나면 day + 1을 주입한다.
+  const calDate = (day) => {
+    return new Date(
+      Number(data.firstDateInfo) + (nowPage * 7 + day) * 86400000
+    );
+  };
 
   useEffect(() => {
     // 사이드 Nav 업데이트
@@ -52,40 +67,28 @@ export default function Schedule() {
           <div style={{ flexGrow: "1" }} />
           <div className={style.arrow_div}>
             <button
-              className={style.button}
-              style={{ marginRight: "10px" }}
+              className={
+                nowPage !== 0
+                  ? style.button
+                  : style.button + " " + style.noButton
+              }
+              style={{ marginRight: "10px", paddingRight: "10px" }}
               onClick={() => {
                 nowPage > 0 ? setNowPage(nowPage - 1) : setNowPage(nowPage);
               }}
             >
               ◁이전
             </button>
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7
-            ).getFullYear()}
-            .
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7
-            ).getMonth() + 1}
-            .
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7
-            ).getDate()}{" "}
-            ~{" "}
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7 + 86400000 * 6
-            ).getFullYear()}
-            .
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7 + 86400000 * 6
-            ).getMonth() + 1}
-            .
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7 + 86400000 * 6
-            ).getDate()}
+            {calDate(0).getFullYear()}.{calDate(0).getMonth() + 1}.
+            {calDate(0).getDate()} ~ {calDate(6).getFullYear()}.
+            {calDate(6).getMonth() + 1}.{calDate(6).getDate()}
             <button
-              className={style.button}
-              style={{ marginLeft: "10px" }}
+              className={
+                nowPage !== 2
+                  ? style.button
+                  : style.button + " " + style.noButton
+              }
+              style={{ marginLeft: "10px", paddingLeft: "10px" }}
               onClick={() => {
                 nowPage < 2 ? setNowPage(nowPage + 1) : setNowPage(nowPage);
               }}
@@ -99,23 +102,24 @@ export default function Schedule() {
       <div className={style.middle_box}>
         <div className={style.calender_div}>
           <div className={style.calender_top_div}>
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7
-            ).getDate()}
-            일 (월)
+            {calDate(0).getDate()}일 (월)
           </div>
           <div className={style.calender_bottom_div}>
-            {data.reservation.map((reservedDay, idx) => {
+            {data.reservation.map((reservedDay) => {
               if (
-                new Date(reservedDay.date).getDate() ===
-                new Date(
-                  Number(data.firstDateInfo) + nowPage * 86400000 * 7
-                ).getDate()
+                new Date(reservedDay.date).getDate() === calDate(0).getDate()
               ) {
                 return (
-                  <span key={idx}>
-                    {reservedDay.name} 선생님 {reservedDay.time}시
-                  </span>
+                  <div key={reservedDay.seq} className={style.reserve_info}>
+                    <div className={style.green_circle}></div>
+                    <div className={style.sentence}>
+                      {reservedDay.name}
+                      {state.loginUser.userRole === "patient"
+                        ? " 선생님 "
+                        : " 님 "}
+                      {reservedDay.time}시
+                    </div>
+                  </div>
                 );
               }
             })}
@@ -123,60 +127,157 @@ export default function Schedule() {
         </div>
         <div className={style.calender_div}>
           <div className={style.calender_top_div}>
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7 + 86400000 * 1
-            ).getDate()}
-            일 (화)
+            {calDate(1).getDate()}일 (화)
           </div>
-          <div className={style.calender_bottom_div}></div>
+          <div className={style.calender_bottom_div}>
+            {data.reservation.map((reservedDay) => {
+              if (
+                new Date(reservedDay.date).getDate() === calDate(1).getDate()
+              ) {
+                return (
+                  <div key={reservedDay.seq} className={style.reserve_info}>
+                    <div className={style.green_circle}></div>
+                    <div className={style.sentence}>
+                      {reservedDay.name}
+                      {state.loginUser.userRole === "patient"
+                        ? " 선생님 "
+                        : " 님 "}
+                      {reservedDay.time}시
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
         </div>
         <div className={style.calender_div}>
           <div className={style.calender_top_div}>
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7 + 86400000 * 2
-            ).getDate()}
-            일 (수)
+            {calDate(2).getDate()}일 (수)
           </div>
-          <div className={style.calender_bottom_div}></div>
+          <div className={style.calender_bottom_div}>
+            {data.reservation.map((reservedDay) => {
+              if (
+                new Date(reservedDay.date).getDate() === calDate(2).getDate()
+              ) {
+                return (
+                  <div key={reservedDay.seq} className={style.reserve_info}>
+                    <div className={style.green_circle}></div>
+                    <div className={style.sentence}>
+                      {reservedDay.name}
+                      {state.loginUser.userRole === "patient"
+                        ? " 선생님 "
+                        : " 님 "}
+                      {reservedDay.time}시
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
         </div>
         <div className={style.calender_div}>
           <div className={style.calender_top_div}>
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7 + 86400000 * 3
-            ).getDate()}
-            일 (목)
+            {calDate(3).getDate()}일 (목)
           </div>
-          <div className={style.calender_bottom_div}></div>
+          <div className={style.calender_bottom_div}>
+            {data.reservation.map((reservedDay) => {
+              if (
+                new Date(reservedDay.date).getDate() === calDate(3).getDate()
+              ) {
+                return (
+                  <div key={reservedDay.seq} className={style.reserve_info}>
+                    <div className={style.green_circle}></div>
+                    <div className={style.sentence}>
+                      {reservedDay.name}
+                      {state.loginUser.userRole === "patient"
+                        ? " 선생님 "
+                        : " 님 "}
+                      {reservedDay.time}시
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
         </div>
         <div className={style.calender_div}>
           <div className={style.calender_top_div}>
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7 + 86400000 * 4
-            ).getDate()}
-            일 (금)
+            {calDate(4).getDate()}일 (금)
           </div>
-          <div className={style.calender_bottom_div}></div>
+          <div className={style.calender_bottom_div}>
+            {data.reservation.map((reservedDay) => {
+              if (
+                new Date(reservedDay.date).getDate() === calDate(4).getDate()
+              ) {
+                return (
+                  <div key={reservedDay.seq} className={style.reserve_info}>
+                    <div className={style.green_circle}></div>
+                    <div className={style.sentence}>
+                      {reservedDay.name}
+                      {state.loginUser.userRole === "patient"
+                        ? " 선생님 "
+                        : " 님 "}
+                      {reservedDay.time}시
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
         </div>
         <div className={style.calender_div}>
-          <div className={style.calender_top_div}>
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7 + 86400000 * 5
-            ).getDate()}
-            일 (토)
+          <div className={style.calender_top_div} style={{ color: "blue" }}>
+            {calDate(5).getDate()}일 (토)
           </div>
-          <div className={style.calender_bottom_div}></div>
+          <div className={style.calender_bottom_div}>
+            {data.reservation.map((reservedDay) => {
+              if (
+                new Date(reservedDay.date).getDate() === calDate(5).getDate()
+              ) {
+                return (
+                  <div key={reservedDay.seq} className={style.reserve_info}>
+                    <div className={style.green_circle}></div>
+                    <div className={style.sentence}>
+                      {reservedDay.name}
+                      {state.loginUser.userRole === "patient"
+                        ? " 선생님 "
+                        : " 님 "}
+                      {reservedDay.time}시
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
         </div>
         <div className={style.calender_div}>
-          <div className={style.calender_top_div}>
-            {new Date(
-              Number(data.firstDateInfo) + nowPage * 86400000 * 7 + 86400000 * 6
-            ).getDate()}
-            일 (일)
+          <div className={style.calender_top_div} style={{ color: "red" }}>
+            {calDate(6).getDate()}일 (일)
           </div>
           <div
             className={style.calender_bottom_div}
             style={{ borderRight: "none" }}
-          ></div>
+          >
+            {" "}
+            {data.reservation.map((reservedDay) => {
+              if (
+                new Date(reservedDay.date).getDate() === calDate(6).getDate()
+              ) {
+                return (
+                  <div key={reservedDay.seq} className={style.reserve_info}>
+                    <div className={style.green_circle}></div>
+                    <div className={style.sentence}>
+                      {reservedDay.name}
+                      {state.loginUser.userRole === "patient"
+                        ? " 선생님 "
+                        : " 님 "}
+                      {reservedDay.time}시
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
         </div>
       </div>
     </>

@@ -13,23 +13,23 @@ export default function SelfStudy1() {
         <Route
           path="easy/intro"
           element={<SelfStudyIntro type={1} mode={"easy"} />}
-        ></Route>
-        <Route path="easy/:stage" element={<EasyMode1 />}></Route>
+        />
+        <Route path="easy/:stage" element={<EasyMode1 />} />
 
         <Route
           path="normal/intro"
           element={<SelfStudyIntro type={1} mode={"normal"} />}
-        ></Route>
-        <Route path="normal/:stage" element={<NormalMode1 />}></Route>
+        />
+        <Route path="normal/:stage" element={<NormalMode1 />} />
 
         <Route
           path="hard/intro"
           element={<SelfStudyIntro type={1} mode={"hard"} />}
-        ></Route>
-        <Route path="hard/:stage" element={<HardMode1 />}></Route>
+        />
+        <Route path="hard/:stage" element={<HardMode1 />} />
 
         {/* 게임 결과 화면 */}
-        <Route path="result" element={<SelfStudyResult type={1} />}></Route>
+        <Route path="result" element={<SelfStudyResult type={1} />} />
       </Routes>
     </SelfStudyLayout>
   );
