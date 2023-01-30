@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 
 export default function SelfStudyResult() {
   const gameState = useSelector((state) => state).gameState;
-  console.log(gameState.record);
 
   return (
     <>

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { addRecord, resetRecord } from "stores/game.store";
+import commonStyle from "./Game.module.css";
 
 export default function EasyMode1() {
   /** 10단계 중 몇 번째 단계 게임을 하고 있는지 */
@@ -22,5 +23,15 @@ export default function EasyMode1() {
     // dispatch(addRecord(false));
   }, [stage]);
 
-  return <>~~~~ {stage} 단계 게임하는 중 ~~~~</>;
+  return (
+    <>
+      <div className={commonStyle.stage}>{stage} / 10</div>
+      <div className={commonStyle.title}>
+        -------여기에 가이드 문구를 입력해주세요-------
+      </div>
+      <div>
+        {/* --------------여기에 게임을 구현해주세요----------------- */}
+      </div>
+    </>
+  );
 }
