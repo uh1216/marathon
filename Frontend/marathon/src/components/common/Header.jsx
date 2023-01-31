@@ -255,7 +255,14 @@ export default function Header() {
               </div>
               <li>
                 {state.loginUser.userName}
-                <span style={{ color: "gray" }}>님 환영합니다</span>
+                <span
+                  style={{ color: "gray" }}
+                  onClick={() => {
+                    navigate("/mypage/information");
+                  }}
+                >
+                  님 환영합니다
+                </span>
                 {state.loginUser.userRole === "patient" && (
                   <div className={style.sub_menu + " " + style.sub_menu_common}>
                     <dl
@@ -281,7 +288,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/");
+                        navigate("/mypage/statistics");
                       }}
                     >
                       스스로 학습 통계
@@ -459,7 +466,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/");
+                    navigate("/mypage/statistics");
                   }}
                 >
                   <span>스스로 학습 통계</span>

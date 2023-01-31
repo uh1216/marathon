@@ -1,122 +1,126 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import style from "./ScheduleManage.module.css";
 import { useSelector } from "react-redux";
 
 export default function ScheduleManage() {
   /** 수업 스케쥴 더미데이터 */
-  const data = [
-    {
-      id: 0,
-      date: "2023-01-30",
-      timeTable: "00021000",
-    },
-    {
-      id: 1,
-      date: "2023-01-31",
-      timeTable: "00000210",
-    },
-    {
-      id: 2,
-      date: "2023-02-01",
-      timeTable: "10020000",
-    },
-    {
-      id: 3,
-      date: "2023-02-02",
-      timeTable: "01002010",
-    },
-    {
-      id: 4,
-      date: "2023-02-03",
-      timeTable: "00200010",
-    },
-    {
-      id: 5,
-      date: "2023-02-04",
-      timeTable: "00200011",
-    },
-    {
-      id: 6,
-      date: "2023-02-05",
-      timeTable: "20000001",
-    },
-    {
-      id: 7,
-      date: "2023-02-06",
-      timeTable: "00001000",
-    },
-    {
-      id: 8,
-      date: "2023-02-07",
-      timeTable: "00001110",
-    },
-    {
-      id: 9,
-      date: "2023-02-08",
-      timeTable: "02220000",
-    },
-    {
-      id: 10,
-      date: "2023-02-09",
-      timeTable: "01000010",
-    },
-    {
-      id: 11,
-      date: "2023-02-10",
-      timeTable: "00100020",
-    },
-    {
-      id: 12,
-      date: "2023-02-11",
-      timeTable: "00000001",
-    },
-    {
-      id: 13,
-      date: "2023-02-12",
-      timeTable: "00000000",
-    },
-    {
-      id: 14,
-      date: "2023-02-13",
-      timeTable: "02000000",
-    },
-    {
-      id: 15,
-      date: "2023-02-14",
-      timeTable: "01000110",
-    },
-    {
-      id: 16,
-      date: "2023-02-15",
-      timeTable: "10000002",
-    },
-    {
-      id: 17,
-      date: "2023-02-16",
-      timeTable: "01002012",
-    },
-    {
-      id: 18,
-      date: "2023-02-17",
-      timeTable: "01000010",
-    },
-    {
-      id: 19,
-      date: "2023-02-18",
-      timeTable: "11000001",
-    },
-    {
-      id: 20,
-      date: "2023-02-19",
-      timeTable: "22000001",
-    },
-  ];
+  const data = {
+    firstDateInfo: "1675036800000",
+    list: [
+      {
+        reservationSeq: 0,
+        localDate: "2023-01-30",
+        timeTable: "00021000",
+      },
+      {
+        reservationSeq: 1,
+        localDate: "2023-01-31",
+        timeTable: "00000210",
+      },
+      {
+        reservationSeq: 2,
+        localDate: "2023-02-01",
+        timeTable: "10020000",
+      },
+      {
+        reservationSeq: 3,
+        localDate: "2023-02-02",
+        timeTable: "01002010",
+      },
+      {
+        reservationSeq: 4,
+        localDate: "2023-02-03",
+        timeTable: "00200010",
+      },
+      {
+        reservationSeq: 5,
+        localDate: "2023-02-04",
+        timeTable: "00200011",
+      },
+      {
+        reservationSeq: 6,
+        localDate: "2023-02-05",
+        timeTable: "20000001",
+      },
+      {
+        reservationSeq: 7,
+        localDate: "2023-02-06",
+        timeTable: "00001000",
+      },
+      {
+        reservationSeq: 8,
+        localDate: "2023-02-07",
+        timeTable: "00001110",
+      },
+      {
+        reservationSeq: 9,
+        localDate: "2023-02-08",
+        timeTable: "02220000",
+      },
+      {
+        reservationSeq: 10,
+        localDate: "2023-02-09",
+        timeTable: "01000010",
+      },
+      {
+        reservationSeq: 11,
+        localDate: "2023-02-10",
+        timeTable: "00100020",
+      },
+      {
+        reservationSeq: 12,
+        localDate: "2023-02-11",
+        timeTable: "00000001",
+      },
+      {
+        reservationSeq: 13,
+        localDate: "2023-02-12",
+        timeTable: "00000000",
+      },
+      {
+        reservationSeq: 14,
+        localDate: "2023-02-13",
+        timeTable: "02000000",
+      },
+      {
+        reservationSeq: 15,
+        localDate: "2023-02-14",
+        timeTable: "01000110",
+      },
+      {
+        reservationSeq: 16,
+        localDate: "2023-02-15",
+        timeTable: "10000002",
+      },
+      {
+        reservationSeq: 17,
+        localDate: "2023-02-16",
+        timeTable: "01002012",
+      },
+      {
+        reservationSeq: 18,
+        localDate: "2023-02-17",
+        timeTable: "01000010",
+      },
+      {
+        reservationSeq: 19,
+        localDate: "2023-02-18",
+        timeTable: "11000001",
+      },
+      {
+        reservationSeq: 20,
+        localDate: "2023-02-19",
+        timeTable: "22000001",
+      },
+    ],
+  };
 
   const state = useSelector((state) => state);
 
-  const thisDateNum = "1675061240413";
+  const thisDateNum = data.firstDateInfo;
   const [cnt, setCnt] = useState(0);
-  const [teacherSchedule, setTeacherSchedule] = useState(data);
+  const [teacherSchedule, setTeacherSchedule] = useState(data.list);
+
   /** 날짜 구하기
    * num = 0 : 월요일 ~ num = 6 : 일요일
    */
@@ -152,7 +156,7 @@ export default function ScheduleManage() {
   };
 
   const checkSchedule = (thisDay) => {
-    const found = teacherSchedule.find((e) => e.date === thisDay);
+    const found = teacherSchedule.find((e) => e.localDate === thisDay);
     const thisTimeTable = found.timeTable;
 
     const timeLlist = [];
@@ -168,7 +172,8 @@ export default function ScheduleManage() {
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2)
             }
-            value={thisTimeTable[i]}
+            name={thisDay}
+            value={i + thisTimeTable[i]}
             onClick={onChange}
             disabled={thisTimeTable[i] === "2" ? true : false}
           >
@@ -184,7 +189,8 @@ export default function ScheduleManage() {
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2)
             }
-            value={thisTimeTable[i]}
+            name={thisDay}
+            value={i + thisTimeTable[i]}
             onClick={onChange}
             disabled={thisTimeTable[i] === "2" ? true : false}
           >
@@ -200,7 +206,8 @@ export default function ScheduleManage() {
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2)
             }
-            value={thisTimeTable[i]}
+            name={thisDay}
+            value={i + thisTimeTable[i]}
             onClick={onChange}
             disabled={thisTimeTable[i] === "2" ? true : false}
           >
@@ -213,7 +220,28 @@ export default function ScheduleManage() {
   };
 
   /** 일정 예약 가능 여부 변경 함수 */
-  const onChange = (e) => {};
+  const onChange = (e) => {
+    /** e.target.value[0] : 시간대 index, e.target.value[2] : 예약 여부 */
+    let reserve = "";
+    if (e.target.value[1] === "0") {
+      reserve = "1";
+    } else if (e.target.value[1] === "1") {
+      reserve = "0";
+    }
+
+    let findItem = teacherSchedule.find((t) => t.localDate === e.target.name);
+    let newTimeTable = [];
+    for (let i = 0; i < 8; i++) {
+      i.toString() === e.target.value[0]
+        ? newTimeTable.push(reserve)
+        : newTimeTable.push(findItem.timeTable[i]);
+    }
+    newTimeTable = newTimeTable.join("");
+    let newSchedule = [...teacherSchedule];
+    let findorigin = newSchedule.find((t) => t.localDate === e.target.name);
+    findorigin.timeTable = newTimeTable;
+    setTeacherSchedule(newSchedule);
+  };
 
   /** 다음 일정 확인 */
   const nextWeek = () => {
@@ -227,6 +255,11 @@ export default function ScheduleManage() {
     if (cnt > 0) {
       setCnt(cnt - 1);
     }
+  };
+
+  const onSubmit = () => {
+    alert("제출되었습니다");
+    console.log(teacherSchedule);
   };
 
   return (
@@ -299,7 +332,9 @@ export default function ScheduleManage() {
             </div>
           </div>
           <div className={style.save_button_div}>
-            <button className={style.save_button}>저장</button>
+            <button className={style.save_button} onClick={onSubmit}>
+              저장
+            </button>
           </div>
         </div>
       </div>
