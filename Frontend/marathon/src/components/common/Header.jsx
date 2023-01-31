@@ -274,7 +274,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/mypage/schedule");
+                        navigate("/mypage/schedule/1");
                       }}
                     >
                       재활 일정
@@ -316,7 +316,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/mypage/schedule");
+                        navigate("/mypage/schedule/1");
                       }}
                     >
                       재활 일정
@@ -435,7 +435,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/mypage/schedule");
+                    navigate("/mypage/schedule/1");
                   }}
                 >
                   <span>재활 일정</span>

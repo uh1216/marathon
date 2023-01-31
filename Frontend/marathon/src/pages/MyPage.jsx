@@ -30,8 +30,8 @@ export default function MyPage() {
     "상담 관리",
     "로그아웃",
   ];
-  const urlsPatient = ["information", "messenger", "schedule", "statistics"];
-  const urlsDoctor = ["information", "messenger", "schedule", ""];
+  const urlsPatient = ["information", "messenger", "schedule/1", ""];
+  const urlsDoctor = ["information", "messenger", "schedule/1", ""];
   const urlsAdmin = ["information", "messenger", ""];
 
   return (

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
+import Board from "components/common/Board";
+import Pagination from "components/common/Pagination";
 import style from "./Schedule.module.css";
 
 export default function Schedule() {
@@ -46,7 +48,24 @@ export default function Schedule() {
       },
     ],
   };
+
+  let dumy = [];
+  for (let i = 1; i <= 5; i++) {
+    const newContents = {
+      historySeq: i,
+      doctorName: "김덕배",
+      dateTime: "2023-02-03",
+      day: "금",
+    };
+    dumy = [newContents, ...dumy];
+  }
+
+  // 달력에 사용하는 페이지 데이터이다.
   const [nowPage, setNowPage] = useState(0);
+  const headRow =
+    state.loginUser.userRole === "patient"
+      ? ["수업일", "선생님", "수업상세"]
+      : ["수업일", "환자", "수업상세"];
 
   // 날짜의 연산을 도와준다. 하루가 지나면 day + 1을 주입한다.
   const calDate = (day) => {
@@ -279,6 +298,22 @@ export default function Schedule() {
             })}
           </div>
         </div>
+      </div>
+
+      <div className={style.side_inner_div}>
+        <h3 style={{ marginTop: "35px", fontWeight: "bold" }}>
+          {state.loginUser.userRole === "patient"
+            ? "지난 수업 내역"
+            : "피드백 미작성 내역"}
+        </h3>
+        <Board headRow={headRow} grid={"40% 30% 30%"} data={dumy}></Board>
+        <Pagination
+          number={11}
+          first={false}
+          last={false}
+          totalPages={17}
+          url={"www.naver.com"}
+        ></Pagination>
       </div>
     </>
   );

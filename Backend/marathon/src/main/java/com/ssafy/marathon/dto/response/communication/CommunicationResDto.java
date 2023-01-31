@@ -16,10 +16,10 @@ import lombok.ToString;
 @ToString
 public class CommunicationResDto {
 
-    private Long seq;
+    private Long commuSeq;
     private Long senderSeq;
-    private Long reciverSeq;
+    private Long receiverSeq;
     private LocalDateTime date;
-    private boolean check;
+    private boolean checked;
 
 }
