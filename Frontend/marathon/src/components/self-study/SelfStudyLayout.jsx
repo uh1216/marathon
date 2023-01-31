@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import style from "./SelfStudyLayout.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setStageNow, setType } from "stores/game.store";
+import { setStageNow, setType, setIsReady } from "stores/game.store";
 import { useEffect } from "react";
 
 export default function SelfStudyLayout({ type, children }) {
@@ -27,21 +27,33 @@ export default function SelfStudyLayout({ type, children }) {
         <div className={style.btns_container}>
           <div>
             <button
-              className={style.btn_difficulty}
+              className={
+                gameState.mode === "easy"
+                  ? style.btn_selected + " " + style.btn_difficulty
+                  : style.btn_difficulty
+              }
               style={{ backgroundColor: "#63F282" }}
               onClick={() => navigate(`/self-study/${type}/easy/intro`)}
             >
               초급
             </button>
             <button
-              className={style.btn_difficulty}
+              className={
+                gameState.mode === "normal"
+                  ? style.btn_selected + " " + style.btn_difficulty
+                  : style.btn_difficulty
+              }
               style={{ backgroundColor: "#FBDB35" }}
               onClick={() => navigate(`/self-study/${type}/normal/intro`)}
             >
               중급
             </button>
             <button
-              className={style.btn_difficulty}
+              className={
+                gameState.mode === "hard"
+                  ? style.btn_selected + " " + style.btn_difficulty
+                  : style.btn_difficulty
+              }
               style={{ backgroundColor: "#FF4218" }}
               onClick={() => navigate(`/self-study/${type}/hard/intro`)}
             >
@@ -55,7 +67,10 @@ export default function SelfStudyLayout({ type, children }) {
             >
               목록보기
             </button>
-            <button className={style.btn_etc} onClick={() => navigate("/")}>
+            <button
+              className={style.btn_etc}
+              onClick={() => navigate("/mypage/statistics")}
+            >
               기록보기
             </button>
           </div>
@@ -73,7 +88,16 @@ export default function SelfStudyLayout({ type, children }) {
           >
             시 작
           </button>
-        ) : gameState.stageNow < 10 ? (
+        ) : gameState.stageNow <= 10 && gameState.isReady ? (
+          <button
+            className={style.btn_main}
+            onClick={() => {
+              dispatch(setIsReady(false));
+            }}
+          >
+            도 전
+          </button>
+        ) : gameState.stageNow < 10 && !gameState.isReady ? (
           <button
             className={style.btn_main}
             onClick={() => {
@@ -83,11 +107,12 @@ export default function SelfStudyLayout({ type, children }) {
                 }`
               );
               dispatch(setStageNow(Number(gameState.stageNow) + 1));
+              dispatch(setIsReady(true));
             }}
           >
             다 음
           </button>
-        ) : gameState.stageNow === 10 ? (
+        ) : gameState.stageNow === 10 && !gameState.isReady ? (
           <button
             className={style.btn_main}
             onClick={() => {

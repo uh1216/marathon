@@ -44,6 +44,11 @@
   margin: 2px;
 }
 
+.btn_selected {
+  background-color: #6d6d6d !important;
+  box-shadow: 4px 4px 4px rgb(0, 0, 0, 50%) inset;
+}
+
 /* 목록보기 기록보기 버튼 */
 .btn_etc {
   width: 110px;
