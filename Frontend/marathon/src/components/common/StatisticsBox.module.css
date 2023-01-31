@@ -1,0 +1,110 @@
+.main_container {
+  width: 850px;
+  height: 223px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 30px 22px;
+  display: flex;
+  justify-content: space-between;
+}
+.line {
+  width: 1px;
+  height: 100%;
+  border: 1px solid #c3c3c3;
+}
+
+/* 첫 번째 칸 */
+.container_1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.title_1 {
+  font-size: 1.25em;
+  margin-bottom: 20px;
+}
+.sub_title_1 {
+  font-size: 0.75em;
+  color: #909090;
+}
+.sub_content_1 {
+  font-size: 0.75em;
+}
+.sub_container_1 {
+  display: flex;
+}
+.sub_container_1 > div {
+  margin-right: 28px;
+}
+
+/* 두 번째 칸 */
+.container_2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.title_2 {
+  font-size: 0.95em;
+}
+.sub_title_2 {
+  font-size: 0.75em;
+}
+.progress {
+  width: 193px;
+  height: 11px;
+  border-radius: 11px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 20px;
+}
+
+.progress::-webkit-progress-bar {
+  background-color: #f0f0f0;
+  border-radius: 20px;
+}
+.progress::-webkit-progress-value {
+  border-radius: 20px;
+}
+.green::-webkit-progress-value {
+  background-color: #63f282;
+}
+.yellow::-webkit-progress-value {
+  background-color: #fbdb35;
+}
+.red::-webkit-progress-value {
+  background-color: #ff0000;
+}
+
+/* 세 번째 칸 */
+.container_3 {
+}
+.title_3 {
+  font-size: 0.95em;
+}
+.container_3 input {
+  display: none;
+}
+.container_3 label > button {
+  border: #9d9d9d solid 1px;
+  background-color: white;
+  width: 47px;
+  height: 21px;
+  font-size: 0.8em;
+  border-radius: 5px;
+}
+.container_3 label > button:focus {
+  background-color: #a38aec;
+  border: none;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 4px inset;
+
+  /* width: 48px;
+  height: 22px; */
+}
+
+.sub_container_3 {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+}

@@ -5,6 +5,7 @@ import SideNav from "components/common/SideNav";
 import style from "./MyPage.module.css";
 import Messenger from "components/my-page/Messenger";
 import Schedule from "components/my-page/Schedule";
+import Statistics from "components/my-page/Statistics";
 
 export default function MyPage() {
   const state = useSelector((state) => state);
@@ -64,8 +65,8 @@ export default function MyPage() {
           <Routes>
             <Route path="information" element={<UserInformation />}></Route>
             <Route path="messenger" element={<Messenger />}></Route>
-            <Route path="schedule/:pageNum" element={<Schedule />}></Route>
-            <Route path="" element={<div />}></Route>
+            <Route path="schedule" element={<Schedule />}></Route>
+            <Route path="statistics" element={<Statistics />}></Route>
             <Route path="" element={<div />}></Route>
             <Route path="" element={<div />}></Route>
             <Route path="" element={<div />}></Route>
