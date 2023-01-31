@@ -281,7 +281,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/");
+                        navigate("/mypage/statistics");
                       }}
                     >
                       스스로 학습 통계
@@ -459,7 +459,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/");
+                    navigate("/mypage/statistics");
                   }}
                 >
                   <span>스스로 학습 통계</span>

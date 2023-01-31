@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
 import Board from "components/common/Board";
 import Pagination from "components/common/Pagination";
+import Modal from "components/common/Modal";
 import style from "./Schedule.module.css";
+import ScheduleModal from "./ScheduleModal";
 
 export default function Schedule() {
   const dispatch = useDispatch();
@@ -15,6 +17,7 @@ export default function Schedule() {
         seq: "12",
         name: "김삼순",
         date: "2023-01-30",
+        url: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
         dayOfWeek: "월",
         time: "9",
       },
@@ -22,6 +25,7 @@ export default function Schedule() {
         seq: "14",
         name: "김오순",
         date: "2023-01-30",
+        url: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
         dayOfWeek: "월",
         time: "15",
       },
@@ -29,6 +33,7 @@ export default function Schedule() {
         seq: "13",
         name: "김사순",
         date: "2023-01-30",
+        url: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
         dayOfWeek: "월",
         time: "16",
       },
@@ -36,6 +41,7 @@ export default function Schedule() {
         seq: "18",
         name: "김하순",
         date: "2023-02-11",
+        url: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
         dayOfWeek: "토",
         time: "11",
       },
@@ -43,6 +49,7 @@ export default function Schedule() {
         seq: "15",
         name: "김육순",
         date: "2023-02-17",
+        url: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
         dayOfWeek: "금",
         time: "11",
       },
@@ -60,12 +67,18 @@ export default function Schedule() {
     dumy = [newContents, ...dumy];
   }
 
-  // 달력에 사용하는 페이지 데이터이다.
+  // 달력에 사용하는 페이지 데이터.
   const [nowPage, setNowPage] = useState(0);
   const headRow =
     state.loginUser.userRole === "patient"
       ? ["수업일", "선생님", "수업상세"]
       : ["수업일", "환자", "수업상세"];
+
+  // 모달창에 들어갈 프로필 // 수업 정보
+  const [modalData, setModalData] = useState();
+
+  // 모달창 노출 여부 state
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 날짜의 연산을 도와준다. 하루가 지나면 day + 1을 주입한다.
   const calDate = (day) => {
@@ -129,7 +142,14 @@ export default function Schedule() {
                 new Date(reservedDay.date).getDate() === calDate(0).getDate()
               ) {
                 return (
-                  <div key={reservedDay.seq} className={style.reserve_info}>
+                  <div
+                    key={reservedDay.seq}
+                    className={style.reserve_info}
+                    onClick={() => {
+                      setModalData(reservedDay);
+                      setIsModalOpen(true);
+                    }}
+                  >
                     <div className={style.green_circle}></div>
                     <div className={style.sentence}>
                       {reservedDay.name}
@@ -140,7 +160,7 @@ export default function Schedule() {
                     </div>
                   </div>
                 );
-              }
+              } else return null;
             })}
           </div>
         </div>
@@ -154,7 +174,14 @@ export default function Schedule() {
                 new Date(reservedDay.date).getDate() === calDate(1).getDate()
               ) {
                 return (
-                  <div key={reservedDay.seq} className={style.reserve_info}>
+                  <div
+                    key={reservedDay.seq}
+                    className={style.reserve_info}
+                    onClick={() => {
+                      setModalData(reservedDay);
+                      setIsModalOpen(true);
+                    }}
+                  >
                     <div className={style.green_circle}></div>
                     <div className={style.sentence}>
                       {reservedDay.name}
@@ -165,7 +192,7 @@ export default function Schedule() {
                     </div>
                   </div>
                 );
-              }
+              } else return null;
             })}
           </div>
         </div>
@@ -179,7 +206,14 @@ export default function Schedule() {
                 new Date(reservedDay.date).getDate() === calDate(2).getDate()
               ) {
                 return (
-                  <div key={reservedDay.seq} className={style.reserve_info}>
+                  <div
+                    key={reservedDay.seq}
+                    className={style.reserve_info}
+                    onClick={() => {
+                      setModalData(reservedDay);
+                      setIsModalOpen(true);
+                    }}
+                  >
                     <div className={style.green_circle}></div>
                     <div className={style.sentence}>
                       {reservedDay.name}
@@ -190,7 +224,7 @@ export default function Schedule() {
                     </div>
                   </div>
                 );
-              }
+              } else return null;
             })}
           </div>
         </div>
@@ -204,7 +238,14 @@ export default function Schedule() {
                 new Date(reservedDay.date).getDate() === calDate(3).getDate()
               ) {
                 return (
-                  <div key={reservedDay.seq} className={style.reserve_info}>
+                  <div
+                    key={reservedDay.seq}
+                    className={style.reserve_info}
+                    onClick={() => {
+                      setModalData(reservedDay);
+                      setIsModalOpen(true);
+                    }}
+                  >
                     <div className={style.green_circle}></div>
                     <div className={style.sentence}>
                       {reservedDay.name}
@@ -215,7 +256,7 @@ export default function Schedule() {
                     </div>
                   </div>
                 );
-              }
+              } else return null;
             })}
           </div>
         </div>
@@ -229,7 +270,14 @@ export default function Schedule() {
                 new Date(reservedDay.date).getDate() === calDate(4).getDate()
               ) {
                 return (
-                  <div key={reservedDay.seq} className={style.reserve_info}>
+                  <div
+                    key={reservedDay.seq}
+                    className={style.reserve_info}
+                    onClick={() => {
+                      setModalData(reservedDay);
+                      setIsModalOpen(true);
+                    }}
+                  >
                     <div className={style.green_circle}></div>
                     <div className={style.sentence}>
                       {reservedDay.name}
@@ -240,7 +288,7 @@ export default function Schedule() {
                     </div>
                   </div>
                 );
-              }
+              } else return null;
             })}
           </div>
         </div>
@@ -254,7 +302,14 @@ export default function Schedule() {
                 new Date(reservedDay.date).getDate() === calDate(5).getDate()
               ) {
                 return (
-                  <div key={reservedDay.seq} className={style.reserve_info}>
+                  <div
+                    key={reservedDay.seq}
+                    className={style.reserve_info}
+                    onClick={() => {
+                      setModalData(reservedDay);
+                      setIsModalOpen(true);
+                    }}
+                  >
                     <div className={style.green_circle}></div>
                     <div className={style.sentence}>
                       {reservedDay.name}
@@ -265,7 +320,7 @@ export default function Schedule() {
                     </div>
                   </div>
                 );
-              }
+              } else return null;
             })}
           </div>
         </div>
@@ -283,7 +338,14 @@ export default function Schedule() {
                 new Date(reservedDay.date).getDate() === calDate(6).getDate()
               ) {
                 return (
-                  <div key={reservedDay.seq} className={style.reserve_info}>
+                  <div
+                    key={reservedDay.seq}
+                    className={style.reserve_info}
+                    onClick={() => {
+                      setModalData(reservedDay);
+                      setIsModalOpen(true);
+                    }}
+                  >
                     <div className={style.green_circle}></div>
                     <div className={style.sentence}>
                       {reservedDay.name}
@@ -294,7 +356,7 @@ export default function Schedule() {
                     </div>
                   </div>
                 );
-              }
+              } else return null;
             })}
           </div>
         </div>
@@ -306,7 +368,13 @@ export default function Schedule() {
             ? "지난 수업 내역"
             : "피드백 미작성 내역"}
         </h3>
-        <Board headRow={headRow} grid={"40% 30% 30%"} data={dumy}></Board>
+        <Board
+          headRow={headRow}
+          grid={"40% 30% 30%"}
+          data={dumy}
+          type={"mypageSchedule"}
+          setIsModalOpen={setIsModalOpen}
+        ></Board>
         <Pagination
           number={11}
           first={false}
@@ -315,6 +383,11 @@ export default function Schedule() {
           url={"www.naver.com"}
         ></Pagination>
       </div>
+      {isModalOpen && (
+        <Modal setModalOpen={setIsModalOpen}>
+          <ScheduleModal modalData={modalData} />
+        </Modal>
+      )}
     </>
   );
 }

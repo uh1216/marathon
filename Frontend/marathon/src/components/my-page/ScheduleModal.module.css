@@ -1,0 +1,33 @@
+.modal_container {
+  width: 700px;
+  height: 300px;
+  padding: 30px 50px;
+  display: flex;
+}
+
+.modal_left_box {
+  flex-grow: 0.5;
+}
+
+.modal_right_box {
+  flex-grow: 2;
+}
+
+.modal_right_box h4 {
+  display: inline-block;
+  font-size: 1.3em;
+  margin-left: 5px;
+  color: gray;
+}
+
+.modal_right_box hr {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.modal_profile {
+  height: 230px;
+  width: 230px;
+  border-radius: 100%;
+  box-shadow: 1px 1px 2px 2px rgb(0, 0, 0, 0.4);
+}
