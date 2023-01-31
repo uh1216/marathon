@@ -24,10 +24,10 @@ export default function Schedule() {
       {
         seq: "14",
         name: "김오순",
-        date: "2023-01-30",
+        date: "2023-01-31",
         url: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
-        dayOfWeek: "월",
-        time: "15",
+        dayOfWeek: "화",
+        time: "17",
       },
       {
         seq: "13",
@@ -104,7 +104,7 @@ export default function Schedule() {
                   ? style.button
                   : style.button + " " + style.noButton
               }
-              style={{ marginRight: "10px", paddingRight: "10px" }}
+              style={{ marginRight: "10px", paddingRight: "12px" }}
               onClick={() => {
                 nowPage > 0 ? setNowPage(nowPage - 1) : setNowPage(nowPage);
               }}
@@ -120,7 +120,7 @@ export default function Schedule() {
                   ? style.button
                   : style.button + " " + style.noButton
               }
-              style={{ marginLeft: "10px", paddingLeft: "10px" }}
+              style={{ marginLeft: "10px", paddingLeft: "12px" }}
               onClick={() => {
                 nowPage < 2 ? setNowPage(nowPage + 1) : setNowPage(nowPage);
               }}
@@ -146,7 +146,8 @@ export default function Schedule() {
                     key={reservedDay.seq}
                     className={style.reserve_info}
                     onClick={() => {
-                      setModalData(reservedDay);
+                      let tempData = { reservedDay, dayOfWeek: "월" };
+                      setModalData(tempData);
                       setIsModalOpen(true);
                     }}
                   >
@@ -178,7 +179,8 @@ export default function Schedule() {
                     key={reservedDay.seq}
                     className={style.reserve_info}
                     onClick={() => {
-                      setModalData(reservedDay);
+                      let tempData = { reservedDay, dayOfWeek: "화" };
+                      setModalData(tempData);
                       setIsModalOpen(true);
                     }}
                   >
@@ -210,7 +212,8 @@ export default function Schedule() {
                     key={reservedDay.seq}
                     className={style.reserve_info}
                     onClick={() => {
-                      setModalData(reservedDay);
+                      let tempData = { reservedDay, dayOfWeek: "수" };
+                      setModalData(tempData);
                       setIsModalOpen(true);
                     }}
                   >
@@ -242,7 +245,8 @@ export default function Schedule() {
                     key={reservedDay.seq}
                     className={style.reserve_info}
                     onClick={() => {
-                      setModalData(reservedDay);
+                      let tempData = { reservedDay, dayOfWeek: "목" };
+                      setModalData(tempData);
                       setIsModalOpen(true);
                     }}
                   >
@@ -274,7 +278,8 @@ export default function Schedule() {
                     key={reservedDay.seq}
                     className={style.reserve_info}
                     onClick={() => {
-                      setModalData(reservedDay);
+                      let tempData = { reservedDay, dayOfWeek: "금" };
+                      setModalData(tempData);
                       setIsModalOpen(true);
                     }}
                   >
@@ -306,7 +311,8 @@ export default function Schedule() {
                     key={reservedDay.seq}
                     className={style.reserve_info}
                     onClick={() => {
-                      setModalData(reservedDay);
+                      let tempData = { reservedDay, dayOfWeek: "토" };
+                      setModalData(tempData);
                       setIsModalOpen(true);
                     }}
                   >
@@ -342,7 +348,8 @@ export default function Schedule() {
                     key={reservedDay.seq}
                     className={style.reserve_info}
                     onClick={() => {
-                      setModalData(reservedDay);
+                      let tempData = { reservedDay, dayOfWeek: "일" };
+                      setModalData(tempData);
                       setIsModalOpen(true);
                     }}
                   >
@@ -385,7 +392,10 @@ export default function Schedule() {
       </div>
       {isModalOpen && (
         <Modal setModalOpen={setIsModalOpen}>
-          <ScheduleModal modalData={modalData} />
+          <ScheduleModal
+            modalData={modalData}
+            setIsModalOpen={setIsModalOpen}
+          />
         </Modal>
       )}
     </>
