@@ -60,7 +60,7 @@ public class JwtTokenProvider {
         LOGGER.info("[init] JwtTokenProvider 내 secretKey 초기화 완료");
     }
 
-    // JWT 토큰 생성 : id, seq, name, email, role, img
+    // JWT 토큰 생성 : id, seq, name, role, img
     public String createToken(User user) {
         LOGGER.info("[createToken] 토큰 생성 시작");
         Claims claims = Jwts.claims().setSubject(user.getId());
@@ -68,7 +68,6 @@ public class JwtTokenProvider {
         claims.put("seq", user.getSeq());
         claims.put("name", user.getName());
         claims.put("img", user.getImg());
-        claims.put("email", user.getEmail());
 
         Date now = new Date();
         String token = Jwts.builder()
@@ -100,6 +99,14 @@ public class JwtTokenProvider {
             .getSubject();
         LOGGER.info("[getUsername] 토큰 기반 회원 구별 정보 추출 완료, info : {}", info);
         return info;
+    }
+
+    public Long getUserSeq(String token) {
+        LOGGER.info("[getUserSeq] 토큰 기반 회원 seq 정보 추출");
+        Long seq = Long.parseLong(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody()
+            .get("seq").toString());
+        LOGGER.info("[getUserSeq] 토큰 기반 회원 seq 추출 완료, info : {}", seq);
+        return seq;
     }
 
 

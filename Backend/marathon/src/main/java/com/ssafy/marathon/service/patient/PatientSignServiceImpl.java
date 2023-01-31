@@ -6,6 +6,7 @@ import com.ssafy.marathon.db.repository.UserRepository;
 import com.ssafy.marathon.dto.request.user.PatientReqDto;
 import com.ssafy.marathon.dto.request.user.SignInReqDto;
 import com.ssafy.marathon.dto.request.user.UserReqDto;
+import com.ssafy.marathon.dto.response.user.PatientResDto;
 import com.ssafy.marathon.dto.response.user.SignInResDto;
 import com.ssafy.marathon.dto.response.user.SignUpResDto;
 import java.time.LocalDate;
@@ -41,6 +42,7 @@ public class PatientSignServiceImpl implements PatientSignService {
             .name(patientReqDto.getName())
             .password(passwordEncoder.encode(patientReqDto.getPassword()))
             .email(patientReqDto.getEmail())
+            .sex(patientReqDto.isSex())
             .birthDate(patientReqDto.getBirthDate())
             .registDate(LocalDate.now())
             .phone(patientReqDto.getPhone())
@@ -49,40 +51,38 @@ public class PatientSignServiceImpl implements PatientSignService {
             .subPhone(patientReqDto.getSubPhone())
             .subRelationship(patientReqDto.getSubRelationship())
             .build();
-
+        patient.setImg("default.png");
         Patient savedPatient = (Patient) patientRepository.save(patient);
         SignUpResDto signUpResDto;
 
-        LOGGER.info("[PatientSignServiceImpl.signUp] userEntity 값이 들어왔는지 확인 후 결과값 주입");
+        LOGGER.info("[signUp] userEntity 값이 들어왔는지 확인 후 결과값 주입");
         if (!savedPatient.getName().isEmpty()) {
-            LOGGER.info("[PatientSignServiceImpl.signUp] 정상 처리 완료");
+            LOGGER.info("[signUp] 정상 처리 완료");
             signUpResDto = SignUpResDto.builder().success(true).msg("회원가입 성공").build();
         } else {
-            LOGGER.info("[PatientSignServiceImpl.signUp] 실패 처리 완료");
-            signUpResDto = SignUpResDto.builder().success(true).msg("회원가입 실패").build();
+            LOGGER.info("[signUp] 실패 처리 완료");
+            signUpResDto = SignUpResDto.builder().success(false).msg("회원가입 실패").build();
         }
         return signUpResDto;
-
-
     }
 
     @Override
-    public SignInResDto signIn(SignInReqDto signInRequestDto) throws RuntimeException {
-        return null;
+    public PatientResDto getPatient(Long seq) {
+        Patient patient = patientRepository.getBySeq(seq);
+        PatientResDto loadedPatient = PatientResDto.builder()
+            .id(patient.getId())
+            .name(patient.getName())
+            .registDate(patient.getRegistDate())
+            .email(patient.getEmail())
+            .phone(patient.getPhone())
+            .img(patient.getImg())
+            .mainPhone(patient.getMainPhone())
+            .mainRelationship(patient.getMainRelationship())
+            .subPhone(patient.getSubPhone())
+            .subRelationship(patient.getSubRelationship())
+            .build();
+        return loadedPatient;
     }
 
-    @Override
-    public List<UserReqDto> getUsers() {
-        return null;
-    }
 
-    @Override
-    public List<UserReqDto> getPatients() {
-        return null;
-    }
-
-    @Override
-    public List<UserReqDto> getDoctors() {
-        return null;
-    }
 }

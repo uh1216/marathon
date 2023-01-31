@@ -37,20 +37,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             .authorizeRequests() // 리퀘스트에 대한 사용권한 체크
             //테스트 할때  ---------------------------------------------------------------
-            .antMatchers("/**").permitAll()
+//            .antMatchers("/**").permitAll()
             //실제 배포할때 -------------------------------------------------------------
-//            //로그인,회원가입은 모두 가능
+            //로그인,회원가입은 모두 가능
+            .antMatchers("/user-sign/login","/**/signup").permitAll()
 //            .antMatchers("/user-sign/login","/patient-sign/signup", "/doctor-sign/signup").permitAll()
-//            //각 권한에 맞는 설정
-//            .antMatchers("**patient**").hasRole("PATIENT")
-//            .antMatchers("**doctor**").hasRole("DOCTOR")
-//            .antMatchers("**admin**").hasRole("ADMIN")
-////            .antMatchers(HttpMethod.GET, "/join-api/user")
-////            .hasRole("ADMIN") // product로 시작하는 Get 요청은 허용
-//            //예외는 누구나 발생가능
-//            .antMatchers("**exception**").permitAll()
-//            // 그외에는 인증 필요
-//            .anyRequest().authenticated() //---------------------------------------------------------------
+            //각 권한에 맞는 설정
+            .antMatchers("/patient*/**").hasRole("PATIENT")
+            .antMatchers("/doctor*/**").hasRole("DOCTOR")
+            .antMatchers("/admin*/**").hasRole("ADMIN")
+//            .antMatchers(HttpMethod.GET, "/join-api/user")
+//            .hasRole("ADMIN") // product로 시작하는 Get 요청은 허용
+            //예외는 누구나 발생가능
+            .antMatchers("**exception**").permitAll()
+            // 그외에는 인증 필요
+            .anyRequest().authenticated() //---------------------------------------------------------------
             .and()
             //권한없을시 예외 발생
             .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())

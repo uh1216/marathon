@@ -1,25 +1,24 @@
 package com.ssafy.marathon.dto.response.user;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @SuperBuilder
-public class SignUpResDto {
+@ToString
+public class DoctorResDto extends UserResDto {
 
-    private boolean success;
 
-    private String msg;
+    private String license;
+    private String degree;
+    private String introduce;
+    private String img;
 
 }
