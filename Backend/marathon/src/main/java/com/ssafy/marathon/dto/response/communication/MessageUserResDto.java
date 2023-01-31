@@ -1,4 +1,4 @@
-package com.ssafy.marathon.dto.request.board;
+package com.ssafy.marathon.dto.response.communication;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,9 +13,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @ToString
-public class BoardReqDto {
+public class MessageUserResDto {
 
-    private String title;
-    private String content;
+    private Long UserSeq;
+    private String name;
 
 }
