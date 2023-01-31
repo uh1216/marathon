@@ -65,7 +65,7 @@ export default function MyPage() {
           <Routes>
             <Route path="information" element={<UserInformation />}></Route>
             <Route path="messenger" element={<Messenger />}></Route>
-            <Route path="schedule" element={<Schedule />}></Route>
+            <Route path="schedule/:pageNum" element={<Schedule />}></Route>
             <Route path="statistics" element={<Statistics />}></Route>
             <Route path="" element={<div />}></Route>
             <Route path="" element={<div />}></Route>

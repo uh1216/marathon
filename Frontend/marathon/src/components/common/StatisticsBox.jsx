@@ -2,32 +2,33 @@ import style from "./StatisticsBox.module.css";
 import GameChart from "./GameChart";
 import { useState } from "react";
 
-export default function StatisticsBox() {
+export default function StatisticsBox({
+  gameName,
+  recentStudy,
+  bestRecords,
+  graph,
+}) {
   /** 데이터 받아오면 여기에다 저장하면 됨 */
-  const graphData = [
-    [10, 20, 40, 80, 70],
-    [30, 50, 10, 80, 50],
-    [10, 20, 40, 60, 0],
-  ];
+  const graphData = graph;
   const colors = ["#63F282", "#FBDB35", "#FF0000"];
   const [selected, SetSelected] = useState(0);
 
   return (
     <div className={style.main_container}>
       <div className={style.container_1}>
-        <div className={style.title_1}>색깔 위치 맞추기</div>
+        <div className={style.title_1}>{gameName}</div>
         <div>
           <div className={style.sub_title_1}>최근 학습 기록</div>
-          <div className={style.sub_content_1}>2022.12.25 12:03:24</div>
+          <div className={style.sub_content_1}>{recentStudy.date}</div>
         </div>
         <div className={style.sub_container_1}>
           <div>
             <div className={style.sub_title_1}>난이도</div>
-            <div className={style.sub_content_1}>고급</div>
+            <div className={style.sub_content_1}>{recentStudy.difficulty}</div>
           </div>
           <div>
             <div className={style.sub_title_1}>정확도</div>
-            <div className={style.sub_content_1}>80%</div>
+            <div className={style.sub_content_1}>{recentStudy.accuracy}%</div>
           </div>
         </div>
       </div>
@@ -40,7 +41,7 @@ export default function StatisticsBox() {
             <progress
               className={style.progress + " " + style.green}
               max="100"
-              value="100"
+              value={bestRecords[0]}
             ></progress>
           </div>
           <div>
@@ -48,7 +49,7 @@ export default function StatisticsBox() {
             <progress
               className={style.progress + " " + style.yellow}
               max="100"
-              value="70"
+              value={bestRecords[1]}
             ></progress>
           </div>
           <div>
@@ -56,7 +57,7 @@ export default function StatisticsBox() {
             <progress
               className={style.progress + " " + style.red}
               max="100"
-              value="30"
+              value={bestRecords[2]}
             ></progress>
           </div>
         </div>
