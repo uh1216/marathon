@@ -1,6 +1,7 @@
 package com.ssafy.marathon.db.entity.treatment;
 
 import com.ssafy.marathon.db.entity.user.Doctor;
+import java.time.LocalDate;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -23,7 +24,10 @@ public class Reservation {
     @Id
     @GeneratedValue
     private Long seq;
-    private String day;
+//    private String day;
+
+    private LocalDate date;
+
     private String bitDate;
 
     @ManyToOne

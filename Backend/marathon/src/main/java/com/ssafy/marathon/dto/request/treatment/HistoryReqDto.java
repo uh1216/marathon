@@ -16,9 +16,6 @@ import lombok.ToString;
 public class HistoryReqDto {
 
     private Long historySeq;
-    private Long doctorSeq;
-    private Long userSeq;
-    private String date;
-    private String time;
+
     private String feedback;
 }

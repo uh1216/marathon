@@ -14,20 +14,13 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HistoryResDto {
-
-    //    common
-    private Long historySeq;
+public class DayOfTreatmentResDto {
+    private Long treatmentSeq;
+    private String doctorName;
+    private String patientName;
     private LocalDateTime dateTime;
     private String day;
-    private String feedback;
-    private String videoUrl;
-    //    doctor
-    private String doctorName;
-    private String doctorPhone;
     private String doctorImg;
-    //    patient
-    private String patientName;
-    private String patientPhone;
-    private String patientMainPhone;
+    private String patientImg;
+
 }
