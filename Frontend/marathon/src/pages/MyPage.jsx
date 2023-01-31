@@ -29,8 +29,8 @@ export default function MyPage() {
     "상담 관리",
     "로그아웃",
   ];
-  const urlsPatient = ["information", "messenger", "schedule", ""];
-  const urlsDoctor = ["information", "messenger", "schedule", ""];
+  const urlsPatient = ["information", "messenger", "schedule/1", ""];
+  const urlsDoctor = ["information", "messenger", "schedule/1", ""];
   const urlsAdmin = ["information", "messenger", ""];
 
   return (
@@ -64,7 +64,7 @@ export default function MyPage() {
           <Routes>
             <Route path="information" element={<UserInformation />}></Route>
             <Route path="messenger" element={<Messenger />}></Route>
-            <Route path="schedule" element={<Schedule />}></Route>
+            <Route path="schedule/:pageNum" element={<Schedule />}></Route>
             <Route path="" element={<div />}></Route>
             <Route path="" element={<div />}></Route>
             <Route path="" element={<div />}></Route>
