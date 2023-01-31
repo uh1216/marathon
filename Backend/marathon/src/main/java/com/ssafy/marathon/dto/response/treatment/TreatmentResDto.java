@@ -15,9 +15,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class TreatmentResDto {
 
-    private Long seq;
-    private String name;
-    private String date;
-    private String time;
-    private String img;
+    private int firstDateInfo;
+
+    private DayOfTreatmentResDto dayOfTreatmentResDto;
+
 }

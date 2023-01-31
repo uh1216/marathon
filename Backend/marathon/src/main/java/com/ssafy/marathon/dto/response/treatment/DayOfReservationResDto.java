@@ -1,5 +1,6 @@
-package com.ssafy.marathon.dto.request.treatment;
+package com.ssafy.marathon.dto.response.treatment;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +14,8 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HistoryReqDto {
-    private Long historySeq;
-    private String feedback;
+public class DayOfReservationResDto {
+    private Long reservationSeq;
+    private LocalDate localDate;
+    private String bitDate;
 }
