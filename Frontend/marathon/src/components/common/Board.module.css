@@ -1,0 +1,38 @@
+.header_container {
+  background-color: #d1d0ff;
+  height: 50px;
+  display: grid;
+  text-align: center;
+  align-items: center;
+  font-size: 1.2em;
+  border-top: 1px solid black;
+  border-bottom: 1px solid gray;
+}
+
+.content_container {
+  height: 50px;
+  display: grid;
+  text-align: center;
+  align-items: center;
+  font-size: 1em;
+  border-bottom: 1px solid gray;
+}
+
+.button {
+  position: relative;
+  border: none;
+  display: inline-block;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-radius: 15px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transition: 0.25s;
+  background-color: rgb(240, 243, 245);
+  color: #112529;
+}
+
+.button:hover {
+  background-color: rgb(209, 211, 212);
+  color: #4a666a;
+}

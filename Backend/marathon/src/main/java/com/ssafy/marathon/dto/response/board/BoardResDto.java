@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString
 public class BoardResDto {
 
-    private Long seq;
+    private Long boardSeq;
     private String title;
     private String content;
     private LocalDate registDate;

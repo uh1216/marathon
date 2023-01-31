@@ -18,6 +18,7 @@ import lombok.ToString;
 public class ConsultingReqDto {
 
     private String name;
+    private char sex;
     private LocalDate birthDate;
     private String email;
     private String phone1;
@@ -25,7 +26,7 @@ public class ConsultingReqDto {
     private String phone2Relationship;
     private String phone3;
     private String phone3Relationship;
-    private LocalDate getSickDate;
+    private LocalDate sickDate;
     private String description;
     private LocalDateTime hopeDate;
 }
