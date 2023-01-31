@@ -7,8 +7,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AdminBoardService {
 
@@ -18,22 +20,21 @@ public class AdminBoardService {
         Board board = Board.builder()
             .title(boardReqDto.getTitle())
             .content(boardReqDto.getContent())
-            .viewCnt(0)
             .registDate(LocalDateTime.now())
+            .viewCnt(0)
             .build();
-
         boardRepository.save(board);
     }
 
-    public void updateBoard(Long id, BoardReqDto boardReqDto) {
-        Optional<Board> findBoard = boardRepository.findById(id);
+    public void updateBoard(Long boardSeq, BoardReqDto boardReqDto) {
+        Optional<Board> findBoard = boardRepository.findById(boardSeq);
 
         Board board = findBoard.orElseThrow();
         board.setContent(boardReqDto.getContent());
         board.setTitle(boardReqDto.getTitle());
     }
 
-    public void deleteBoard(Long id) {
-        boardRepository.deleteById(id);
+    public void deleteBoard(Long boardSeq) {
+        boardRepository.deleteById(boardSeq);
     }
 }

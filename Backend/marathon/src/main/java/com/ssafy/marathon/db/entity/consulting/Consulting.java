@@ -21,7 +21,7 @@ public class Consulting {
 
     @Id
     @GeneratedValue
-    private Long seq;
+    private Long consultingSeq;
     private String name;
     private char sex;
     private LocalDate birthDate;
@@ -33,8 +33,12 @@ public class Consulting {
     private String phone3;
     @Column(name = "phone3_relationship")
     private String phone3Relationship;
-    private String sickDate;
+    private LocalDate sickDate;
     private String description;
     private LocalDateTime hopeDate;
     private boolean checked;
+
+    public void changeChecked() {
+        this.checked = true;
+    }
 }

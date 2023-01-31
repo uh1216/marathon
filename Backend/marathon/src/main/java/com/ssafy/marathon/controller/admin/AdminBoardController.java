@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin-board")
+@RequestMapping("/admin-board/notice")
 public class AdminBoardController {
 
     private final AdminBoardService adminBoardService;
 
-    @PostMapping("/notice")
+    @PostMapping("")
     public void writeBoard(@RequestBody BoardReqDto boardReqDto) {
         adminBoardService.writeBoard(boardReqDto);
     }
 
-    @PutMapping("/notice/{boardSeq}")
+    @PutMapping("/{boardSeq}")
     public void updateBoard(@PathVariable Long boardSeq, @RequestBody BoardReqDto boardReqDto) {
         adminBoardService.updateBoard(boardSeq, boardReqDto);
     }
 
-    @DeleteMapping("/notice/{boardSeq}")
+    @DeleteMapping("/{boardSeq}")
     public void deleteBoard(@PathVariable Long boardSeq) {
         adminBoardService.deleteBoard(boardSeq);
     }
