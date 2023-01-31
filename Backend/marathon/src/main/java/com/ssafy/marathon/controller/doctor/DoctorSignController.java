@@ -1,4 +1,4 @@
 package com.ssafy.marathon.controller.doctor;
 
-public class SignController {
+public class DoctorSignController {
 }
