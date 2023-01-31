@@ -51,7 +51,7 @@ export default function NoticeUpdate() {
                 </button>
                 <button
                   className={style.right_menu + " " + style.notice_button}
-                  onClick={() => navigate("/notice/")}
+                  onClick={() => navigate(`../${1}`)}
                 >
                   목록으로
                 </button>

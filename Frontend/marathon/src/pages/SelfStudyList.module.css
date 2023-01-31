@@ -1,0 +1,128 @@
+.container_games {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 배너 */
+.main_banner {
+  background: linear-gradient(
+      to left,
+      rgba(39, 81, 111, 0) 50%,
+      rgba(39, 81, 111, 0.5) 60%,
+      rgba(39, 81, 111, 0.75) 75%,
+      rgba(39, 81, 111, 1) 100%
+    ),
+    url(../../public/img/senior_game_1.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+  height: 400px;
+  width: 100%;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.main_banner_words {
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  color: rgb(231, 230, 230);
+}
+
+.main_banner_words h2 {
+  margin-bottom: 30px;
+}
+
+/* 난이도 버튼 */
+.btn_difficulty {
+  border-radius: 5px;
+  color: white;
+  border: none;
+  width: 50px;
+  height: 30px;
+  margin: 2px;
+}
+
+/* 게임 이미지 */
+.img_game {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 50%);
+
+  margin-right: 20px;
+}
+
+/* 게임 컨테이너 */
+.container_game {
+  width: 80%;
+  background-color: #f4f4f4;
+  border-radius: 100px;
+
+  display: flex;
+  justify-content: flex-end;
+
+  padding-right: 70px;
+
+  margin-top: 50px;
+}
+
+.container_game:last-child {
+  margin-bottom: 100px;
+}
+
+.reverse {
+  padding-right: 0;
+  padding-left: 70px;
+}
+
+.reverse .img_game {
+  margin-right: 0;
+  margin-left: 20px;
+}
+
+/* 게임 제목, 버튼 컨테이너 */
+.container_title {
+  display: flex;
+  justify-content: space-between;
+
+  margin: 30px 0;
+}
+
+/* title */
+.title {
+  font-size: 1.5em;
+}
+
+@media (max-width: 995px) {
+  .container_title {
+    flex-direction: column;
+  }
+  .container_game {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 30px 30px 50px 30px;
+  }
+
+  .reverse {
+    flex-direction: column-reverse;
+  }
+
+  .container_game > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .container_title {
+    align-items: center;
+  }
+  .img_game {
+    margin: 0;
+  }
+}

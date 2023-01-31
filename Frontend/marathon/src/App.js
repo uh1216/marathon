@@ -10,6 +10,9 @@ import Notice from "pages/Notice";
 import User from "pages/User";
 import TreatEnroll from "pages/TreatEnroll";
 import MyPage from "pages/MyPage";
+import SelfStudyList from "pages/SelfStudyList";
+import ScheduleManage from "pages/ScheduleManage";
+import SelfStudy from "pages/SelfStudy";
 
 function App() {
   return (
@@ -20,13 +23,14 @@ function App() {
           <Route path="/consult-enroll" element={<ConsultEnroll />} />
           <Route path="/guide/*" element={<ServiceGuide />} />
           <Route path="/notice/*" element={<Notice />} />
-          <Route path="/self-study/*" element={<div>스스로 학습</div>} />
-          <Route path="/schedule-manage" element={<div>일정관리(선생)</div>} />
+          <Route path="/self-study-list" element={<SelfStudyList />} />
+          <Route path="/schedule-manage" element={<ScheduleManage />} />
           <Route path="/treat-enroll" element={<TreatEnroll />} />
           <Route path="/mypage/*" element={<MyPage />} />
         </Route>
         <Route element={<HeaderPage />}>
           <Route path="/user/*" element={<User />} />
+          <Route path="/self-study/*" element={<SelfStudy />} />
         </Route>
       </Routes>
     </>

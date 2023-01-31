@@ -122,8 +122,9 @@ export default function UserInformation() {
     setUserSecondResponderRelationship("배우자");
     setUserSelfIntroduce("안녕하세요~");
 
-    // 사이드 나브 초기화
+    // 사이드 Nav 초기화
     dispatch(changeNowSideNav("회원 정보 관리"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** 비밀번호 유효성 체크 */
@@ -291,7 +292,11 @@ export default function UserInformation() {
           )}
           <div className={style.user_name}>{userName} 님</div>
           <div className={style.welcome}>환영합니다.</div>
-          <button className={style.btn_upload}>사진 업로드</button>
+          <label htmlFor="file" className={style.btn_upload}>
+            사진 업로드
+          </label>
+          <input className={style.btn_upload} type="file" id="file" />
+
           <hr className={style.left_center_line} />
           <div className={style.sub_title}>아이디</div>
           <div className={style.sub_content}>{userId}</div>
@@ -465,7 +470,7 @@ export default function UserInformation() {
                   />
                 </div>
               </>
-            ) : userRole === "teacher" ? (
+            ) : userRole === "doctor" ? (
               <>
                 <div className={style.input_div}>
                   <label

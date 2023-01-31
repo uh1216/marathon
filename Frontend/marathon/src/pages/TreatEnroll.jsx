@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./TreatEnroll.module.css";
-import TeacherContainer from "components/treat-enroll/TeacherContainer";
+import DoctorContainer from "components/treat-enroll/DoctorContainer";
 
 export default function TreatEnroll() {
   return (
@@ -12,7 +12,7 @@ export default function TreatEnroll() {
         </p>
       </div>
       <div>
-        <TeacherContainer />
+        <DoctorContainer />
       </div>
     </div>
   );

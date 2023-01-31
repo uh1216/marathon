@@ -23,6 +23,7 @@ public class Consulting {
     @GeneratedValue
     private Long seq;
     private String name;
+    private char sex;
     private LocalDate birthDate;
     private String email;
     private String phone1;
@@ -32,8 +33,8 @@ public class Consulting {
     private String phone3;
     @Column(name = "phone3_relationship")
     private String phone3Relationship;
-    private String getSickDate;
-    private String descriptions;
+    private String sickDate;
+    private String description;
     private LocalDateTime hopeDate;
-    private String checked;
+    private boolean checked;
 }

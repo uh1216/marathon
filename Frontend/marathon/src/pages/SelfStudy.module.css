@@ -1,0 +1,31 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+.background {
+  position: fixed;
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh; /* 스크롤 안 생기는 최대 높이로 바꿔야 됨*/
+  z-index: -1;
+  background-attachment: fixed;
+  top: 0px;
+
+  background-color: #6981a6;
+}
+
+.white_container {
+  width: 931px;
+  height: 600px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

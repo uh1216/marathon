@@ -269,13 +269,13 @@ export default function SignIn() {
       alert("비상 연락처 2의 관계를 입력해주세요.");
       inputUserSecondResponderRelationship.current.focus();
     } else if (
-      type === "teacher" &&
+      type === "doctor" &&
       (userLicense === "none" || userLicense === null)
     ) {
       alert("자격증을 선택해주세요.");
       inputUserLicense.current.focus();
     } else if (
-      type === "teacher" &&
+      type === "doctor" &&
       (userEducation === "none" || userEducation === null)
     ) {
       alert("최종학력을 선택해주세요.");

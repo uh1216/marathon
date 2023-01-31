@@ -1,6 +1,7 @@
 package com.ssafy.marathon.dto.response.consulting;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,15 +17,16 @@ import lombok.ToString;
 @AllArgsConstructor
 public class ConsultingResDto {
 
+    private Long seq;
     private String name;
+    private char sex;
     private LocalDate birthDate;
     private String email;
     private String phone1;
-    private String Phone2;
-    private String Phone2Relationship;
-    private String Phone3;
-    private String Phone3Relationship;
-    private String description;
-    private String getSickDate;
-    private String hopeDate;
+    private String phone2;
+    private String phone2Relationship;
+    private String phone3;
+    private String phone3Relationship;
+    private LocalDateTime hopeDate;
+    private boolean checked;
 }

@@ -1,5 +1,6 @@
 package com.ssafy.marathon.dto.response.treatment;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,14 +16,18 @@ import lombok.ToString;
 @AllArgsConstructor
 public class HistoryResDto {
 
+//    common
     private Long historySeq;
-    private Long doctorSeq;
-    private Long patientSeq;
+    private LocalDateTime dateTime;
+    private String day;
+    private String feedback;
+    private String videoUrl;
+//    doctor
+    private String doctorName;
+    private String doctorPhone;
+    private String doctorImg;
+//    patient
     private String patientName;
     private String patientPhone;
     private String patientMainPhone;
-    private String date;
-    private String time;
-    private String feedback;
-    private String videoUrl;
 }

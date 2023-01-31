@@ -1,0 +1,120 @@
+.message_box {
+  width: 100%;
+  height: auto;
+
+  padding: 20px;
+  margin-bottom: 34px;
+
+  border-radius: 30px;
+  border: 1px solid rgb(131, 131, 131);
+
+  display: flex;
+  justify-content: space-between;
+
+  position: relative;
+}
+
+.icon {
+  font-size: 3em;
+}
+
+.content_box {
+  width: 70%;
+}
+
+.btn_box {
+  display: flex;
+  flex-flow: column;
+  justify-content: end;
+  align-items: end;
+  width: 15%;
+}
+
+/* check한 메시지라면 */
+.message_checked {
+  color: rgb(212, 212, 212);
+  border: 1px solid rgb(212, 212, 212);
+}
+
+/* X 아이콘 */
+.icon_x {
+  font-size: 20px;
+  position: absolute;
+  right: 22px;
+}
+
+/* 답장 쓰기, 수업 입장 버튼*/
+.btn {
+  border: #696969 1px solid;
+  border-radius: 30px;
+  padding: 8px 18px;
+  background-color: white;
+}
+
+.btn:hover {
+  background-color: #e6e6e6;
+}
+
+.message_checked .btn {
+  color: rgb(212, 212, 212);
+  border: 1px solid rgb(212, 212, 212);
+}
+
+/* 새 메시지 버튼 */
+.btn_container {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  padding: 20px;
+}
+
+.btn_new_message {
+  background-color: #a4a3ee;
+  padding: 8px 13px;
+  border-radius: 30px;
+  border: 0;
+  color: white;
+  box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 25%);
+}
+
+/* 날짜, 보낸 사람 */
+.sub_content_box {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.sub_content {
+  color: #8c8c8c;
+  font-size: 0.88em;
+}
+
+.message_checked .sub_content {
+  color: rgb(212, 212, 212);
+}
+
+@media (max-width: 994px) {
+  .message_box {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+  }
+
+  .icon {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+
+  .content_box {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .btn_box {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: end;
+    width: auto;
+  }
+}

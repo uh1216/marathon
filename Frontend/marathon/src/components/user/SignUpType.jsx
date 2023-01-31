@@ -20,7 +20,7 @@ export default function SignInType() {
         </div>
         <div
           className={style.box}
-          onClick={() => navigate("/user/sign-up/teacher")}
+          onClick={() => navigate("/user/sign-up/doctor")}
         >
           <img className={style.img} src={Doctor} alt="의사 아이콘" />
           <div className={style.txt}>언어재활사 선생님</div>

@@ -1,6 +1,5 @@
 package com.ssafy.marathon.dto.request.board;
 
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +17,5 @@ public class BoardReqDto {
 
     private String title;
     private String content;
-    private LocalDate registDate;
-    private String viewCnt;
 
 }

@@ -1,0 +1,14 @@
+.stage {
+  font-family: "GmarketBold";
+  font-size: 1.4em;
+  color: #787878;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+}
+
+.title {
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 30px;
+}
