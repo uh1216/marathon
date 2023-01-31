@@ -8,7 +8,7 @@ export default function StatisticsBox({
   bestRecords,
   graph,
 }) {
-  /** 데이터 받아오면 여기에다 저장하면 됨 */
+  /** 그래프에 그려질 데이터 */
   const graphData = graph;
   const colors = ["#63F282", "#FBDB35", "#FF0000"];
   const [selected, SetSelected] = useState(0);
@@ -32,7 +32,6 @@ export default function StatisticsBox({
           </div>
         </div>
       </div>
-      <hr className={style.line} />
       <div className={style.container_2}>
         <div className={style.title_2}>난이도 별 최고 기록</div>
         <div>
@@ -67,15 +66,30 @@ export default function StatisticsBox({
           <div className={style.title_3}>일 평균 정확도</div>
           <div>
             <label htmlFor="radio_easy">
-              <button onClick={() => SetSelected(0)}>초급</button>
+              <button
+                onClick={() => SetSelected(0)}
+                className={selected == 0 ? style.selected : ""}
+              >
+                초급
+              </button>
             </label>
             <input type="radio" name="mode" id="radio_easy" />
             <label htmlFor="radio_normal">
-              <button onClick={() => SetSelected(1)}>중급</button>
+              <button
+                onClick={() => SetSelected(1)}
+                className={selected == 1 ? style.selected : ""}
+              >
+                중급
+              </button>
             </label>
             <input type="radio" name="mode" id="radio_normal" />
             <label htmlFor="radio_hard">
-              <button onClick={() => SetSelected(2)}>고급</button>
+              <button
+                onClick={() => SetSelected(2)}
+                className={selected == 2 ? style.selected : ""}
+              >
+                고급
+              </button>
             </label>
             <input type="radio" name="mode" id="radio_hard" />
           </div>
