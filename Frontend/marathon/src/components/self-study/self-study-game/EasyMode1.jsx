@@ -17,8 +17,8 @@ export default function EasyMode1() {
     }
 
     /** 정답을 맞췄다면 아래 코드 실행 */
-    dispatch(addRecord(true));
-
+    if (stage != 3) dispatch(addRecord(true));
+    else dispatch(addRecord(false));
     /** 정답을 틀렸다면 아래 코드 실행 */
     // dispatch(addRecord(false));
   }, [stage]);
