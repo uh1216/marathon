@@ -1,5 +1,6 @@
 package com.ssafy.marathon.dto.request.treatment;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,8 +16,11 @@ import lombok.ToString;
 @AllArgsConstructor
 public class ReservationReqDto {
 
-    private Long doctorSeq;
     private Long reservationSeq;
-    private String day;
+
+    private Long patientSeq;
+
+    private LocalDate localDate;
+
     private String bitDate;
 }

@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import org.hibernate.annotations.DynamicInsert;
 
 @Getter
 @Setter
@@ -18,7 +19,6 @@ import javax.persistence.Table;
 @Table(name = "patient")
 public class Patient extends User {
 
-    private boolean guardian;
     private String mainPhone;
     private String mainRelationship;
     private String subPhone;

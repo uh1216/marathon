@@ -15,7 +15,10 @@ export default function Pagination({ number, first, last, totalPages, url }) {
     const pageList = [];
 
     pageList.push(
-      <div className={!first ? style.page_number : style.noWork}>
+      <div
+        className={!first ? style.page_number : style.noWork}
+        key={"arrow-front"}
+      >
         <FontAwesomeIcon
           style={{ paddingTop: "2.5px" }}
           onClick={() => {
@@ -44,7 +47,10 @@ export default function Pagination({ number, first, last, totalPages, url }) {
     }
 
     pageList.push(
-      <div className={!last ? style.page_number : style.noWork}>
+      <div
+        className={!last ? style.page_number : style.noWork}
+        key={"arrow-back"}
+      >
         <FontAwesomeIcon
           icon={faChevronRight}
           style={{ paddingTop: "2.5px" }}

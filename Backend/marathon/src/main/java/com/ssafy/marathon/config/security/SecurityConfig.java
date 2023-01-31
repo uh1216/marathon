@@ -1,4 +1,76 @@
 package com.ssafy.marathon.config.security;
 
-public class SecurityConfig {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+/**
+ * 어플리케이션의 보안 설정
+ */
+@Configuration
+@EnableWebSecurity // //spring security filter chain에 등록
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.httpBasic().disable() // REST API는 UI를 사용하지 않으므로 기본설정을 비활성화
+
+            .csrf().disable() // REST API는 csrf 보안이 필요 없으므로 비활성화
+
+            .sessionManagement()
+            .sessionCreationPolicy(
+                SessionCreationPolicy.STATELESS) // JWT Token 인증방식으로 세션은 필요 없으므로 비활성화
+            .and()
+
+            .authorizeRequests() // 리퀘스트에 대한 사용권한 체크
+            //테스트 할때  ---------------------------------------------------------------
+            .antMatchers("/**").permitAll()
+            //실제 배포할때 -------------------------------------------------------------
+//            //로그인,회원가입은 모두 가능
+//            .antMatchers("/user-sign/login","/patient-sign/signup", "/doctor-sign/signup").permitAll()
+//            //각 권한에 맞는 설정
+//            .antMatchers("**patient**").hasRole("PATIENT")
+//            .antMatchers("**doctor**").hasRole("DOCTOR")
+//            .antMatchers("**admin**").hasRole("ADMIN")
+////            .antMatchers(HttpMethod.GET, "/join-api/user")
+////            .hasRole("ADMIN") // product로 시작하는 Get 요청은 허용
+//            //예외는 누구나 발생가능
+//            .antMatchers("**exception**").permitAll()
+//            // 그외에는 인증 필요
+//            .anyRequest().authenticated() //---------------------------------------------------------------
+            .and()
+            //권한없을시 예외 발생
+            .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+            .and()
+            //인증실패시 예외 발생
+            .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+            .and()
+            //필터 위치 설정 : JWT Token 필터를 id/password 인증 필터 이전에 추가
+            .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                UsernamePasswordAuthenticationFilter.class);
+    }
+
+    /**
+     * Swagger 페이지 접근에 대한 예외 처리
+     *
+     * @param webSecurity
+     */
+//    @Override
+//    public void configure(WebSecurity webSecurity) {
+//        webSecurity.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**",
+//            "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception");
+//    }
 }
