@@ -1,6 +1,6 @@
 package com.ssafy.marathon.dto.response.board;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +19,7 @@ public class BoardResDto {
     private Long boardSeq;
     private String title;
     private String content;
-    private LocalDate registDate;
-    private String viewCnt;
+    private LocalDateTime registDate;
+    private int viewCnt;
 
 }

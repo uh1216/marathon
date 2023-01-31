@@ -1,19 +1,21 @@
 package com.ssafy.marathon.dto.response.user;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
-@AllArgsConstructor
+// 예제 13.30
+@Data
 @NoArgsConstructor
-@SuperBuilder
+@AllArgsConstructor
 @ToString
+@SuperBuilder
 public class SignInResDto extends SignUpResDto {
 
     private String accessToken;
+
+
 }
