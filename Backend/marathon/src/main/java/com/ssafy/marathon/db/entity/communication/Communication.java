@@ -19,7 +19,6 @@ import javax.persistence.*;
 @Table(name = "communication")
 public class Communication {
 
-
     @Id
     @GeneratedValue
     private Long seq;
@@ -29,7 +28,7 @@ public class Communication {
     private User sender;
 
     @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "reciver_user_seq")
+    @JoinColumn(name = "receiver_user_seq")
     private User receiver;
 
     private LocalDateTime date;
