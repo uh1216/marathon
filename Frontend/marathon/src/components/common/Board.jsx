@@ -71,4 +71,33 @@ export default function Board({ headRow, grid, data, type }) {
       </>
     );
   }
+  if (type === "mypagestatistics") {
+    return (
+      <>
+        <div
+          className={style.header_container}
+          style={{ gridTemplateColumns: grid, maxWidth: "850px" }}
+        >
+          {headRow.map((content) => {
+            return <div key={content}>{content}</div>;
+          })}
+        </div>
+        {data.map((content) => {
+          return (
+            <div
+              key={content.historySeq}
+              className={style.content_container}
+              style={{ gridTemplateColumns: grid, maxWidth: "850px" }}
+            >
+              <div>{content.no}</div>
+              <div>{content.game}</div>
+              <div>{content.date}</div>
+              <div>{content.difficulty}</div>
+              <div>{content.accuracy}</div>
+            </div>
+          );
+        })}
+      </>
+    );
+  }
 }

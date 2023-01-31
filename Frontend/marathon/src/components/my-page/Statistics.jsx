@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import style from "./Statistics.module.css";
 import { changeNowSideNav } from "stores/toggle.store";
 import StatisticsBox from "components/common/StatisticsBox";
 import Board from "components/common/Board";
+import Pagination from "components/common/Pagination";
 
 export default function Statistics() {
   const dispatch = useDispatch();
@@ -85,8 +85,110 @@ export default function Statistics() {
       <Board
         headRow={["No.", "게임", "날짜", "난이도", "정확도"]}
         grid="1fr 5fr 5fr 2fr 2fr"
-        data={["10", "도형 위치 맞추기", "2022.12.25 12:03:24", "고급", "80%"]}
+        data={[
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+          {
+            no: 10,
+            game: "도형 위치 맞추기",
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: "80%",
+          },
+        ]}
+        type="mypagestatistics"
       />
+      <br />
+      <Pagination
+        number={11}
+        first={false}
+        last={false}
+        totalPages={17}
+        url={"www.naver.com"}
+      ></Pagination>
+      <br />
     </div>
   );
 }
