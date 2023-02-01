@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRecord, resetRecord } from "stores/game.store";
 import commonStyle from "./Game.module.css";
+import SelfStudyIntro from "../SelfStudyIntro";
+import { setStage, setIsReady, setMode } from "stores/game.store";
+import GIF from "img/gif/11.gif";
 
 export default function EasyMode1() {
   /** 10단계 중 몇 번째 단계 게임을 하고 있는지 */
@@ -11,7 +14,7 @@ export default function EasyMode1() {
 
   const preventGoBack = (e) => {
     console.log(e);
-    let isGoBack = window.confirm("종료하기를 눌러주세요 :D");
+    //let isGoBack = window.confirm("종료하기를 눌러주세요 :D");
     // if (!isGoBack) {
     //   window.history.pushState(null, "", "");
     // }
@@ -29,7 +32,7 @@ export default function EasyMode1() {
   // 브라우저에 렌더링 시 한 번만 실행하는 코드
   useEffect(() => {
     (() => {
-      window.history.pushState(null, "", "");
+      //window.history.pushState(null, "", "");
       window.addEventListener("popstate", preventGoBack);
       window.addEventListener("beforeunload", preventClose);
     })();
@@ -38,6 +41,12 @@ export default function EasyMode1() {
       window.removeEventListener("popstate", preventGoBack);
       window.removeEventListener("beforeunload", preventClose);
     };
+  }, []);
+
+  useEffect(() => {
+    dispatch(setIsReady(true));
+    dispatch(setMode("easy"));
+    dispatch(setStage(Number(0)));
   }, []);
 
   useEffect(() => {
@@ -60,7 +69,11 @@ export default function EasyMode1() {
     }
   }, [gameState.isReady]);
 
-  if (gameState.isReady) {
+  if (gameState.stage == 0) {
+    return (
+      <SelfStudyIntro mode={"easy"} title="---안내문구 easy---" gif={GIF} />
+    );
+  } else if (gameState.isReady) {
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>

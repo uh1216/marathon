@@ -27,21 +27,21 @@ export default function SelfStudyList() {
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#63F282" }}
-                    onClick={() => navigate(`/self-study/1/easy/intro`)}
+                    onClick={() => navigate(`/self-study/1/easy`)}
                   >
                     초급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FBDB35" }}
-                    onClick={() => navigate(`/self-study/1/normal/intro`)}
+                    onClick={() => navigate(`/self-study/1/normal`)}
                   >
                     중급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FF4218" }}
-                    onClick={() => navigate(`/self-study/1/hard/intro`)}
+                    onClick={() => navigate(`/self-study/1/hard`)}
                   >
                     고급
                   </button>
@@ -63,21 +63,21 @@ export default function SelfStudyList() {
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#63F282" }}
-                    onClick={() => navigate(`/self-study/2/easy/intro`)}
+                    onClick={() => navigate(`/self-study/2/easy`)}
                   >
                     초급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FBDB35" }}
-                    onClick={() => navigate(`/self-study/2/normal/intro`)}
+                    onClick={() => navigate(`/self-study/2/normal`)}
                   >
                     중급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FF4218" }}
-                    onClick={() => navigate(`/self-study/2/hard/intro`)}
+                    onClick={() => navigate(`/self-study/2/hard`)}
                   >
                     고급
                   </button>
@@ -109,21 +109,21 @@ export default function SelfStudyList() {
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#63F282" }}
-                    onClick={() => navigate(`/self-study/3/easy/intro`)}
+                    onClick={() => navigate(`/self-study/3/easy`)}
                   >
                     초급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FBDB35" }}
-                    onClick={() => navigate(`/self-study/3/normal/intro`)}
+                    onClick={() => navigate(`/self-study/3/normal`)}
                   >
                     중급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FF4218" }}
-                    onClick={() => navigate(`/self-study/3/hard/intro`)}
+                    onClick={() => navigate(`/self-study/3/hard`)}
                   >
                     고급
                   </button>
