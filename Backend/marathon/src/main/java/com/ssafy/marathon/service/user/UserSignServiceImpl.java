@@ -9,25 +9,20 @@ import com.ssafy.marathon.dto.response.user.SignInResDto;
 import com.ssafy.marathon.dto.response.user.UserResDto;
 import com.ssafy.marathon.service.patient.PatientSignServiceImpl;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserSignServiceImpl implements UserSignService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(PatientSignServiceImpl.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-
-    public UserSignServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
-        JwtTokenProvider jwtTokenProvider) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
 
 
     @Override
