@@ -117,10 +117,8 @@ export default function SelectSchedule({ name }) {
   const thisDateNum = data.firstDateInfo;
   const [cnt, setCnt] = useState(0);
   const [teacherSchedule, setTeacherSchedule] = useState(data.list);
-  const [originSchedule, setOriginSchedule] = useState(data.list);
   const [targetDate, setTargetDate] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState([]);
-  const [isClicked, setIsClicked] = useState(false);
+  const [target, setTarget] = useState();
 
   /** 날짜 구하기
    * num = 0 : 월요일 ~ num = 6 : 일요일
@@ -232,26 +230,6 @@ export default function SelectSchedule({ name }) {
     return timeLlist;
   };
 
-  const onReset = () => {
-    console.log(currentIndex);
-    let findselected = teacherSchedule.find((t) => t.timeTable.includes("3"));
-    console.log(findselected.timeTable);
-    let newTimeTable = [];
-    for (let i = 0; i < 8; i++) {
-      findselected.timeTable[i].toString() === "3"
-        ? newTimeTable.push("1")
-        : newTimeTable.push(findselected.timeTable[i]);
-    }
-    newTimeTable = newTimeTable.join("");
-    console.log(newTimeTable);
-    let newSchedule = [...teacherSchedule];
-    let findorigin = newSchedule.find((t) => t.timeTable.includes("3"));
-    findorigin.timeTable = newTimeTable;
-    setTeacherSchedule(newSchedule);
-    console.log(findorigin);
-    console.log(isClicked);
-  };
-
   /** 일정 선택 함수 */
   const onChange = (e) => {
     let reserve = "";
@@ -276,20 +254,41 @@ export default function SelectSchedule({ name }) {
     /** 선택 취소된 날짜 반영하기 위한 코드 */
     let prevItem = teacherSchedule.find((t) => t.localDate === targetDate[0]);
     if (prevItem !== undefined) {
-      let newTimeTable2 = [];
-      for (let i = 0; i < 8; i++) {
-        prevItem.timeTable[i] === "3"
-          ? newTimeTable2.push("1")
-          : newTimeTable2.push(prevItem.timeTable[i]);
+      /** 동일한 버튼 클릭시는 아래 코드 동작 X(취소만 가능하도록) */
+      if (e.target !== target) {
+        let newTimeTable2 = [];
+        for (let i = 0; i < 8; i++) {
+          /** 날짜가 다른 경우 */
+          if (targetDate[0] !== e.target.name) {
+            if (prevItem.timeTable[i] === "3") {
+              newTimeTable2.push("1");
+            } else {
+              newTimeTable2.push(prevItem.timeTable[i]);
+            }
+          } else if (targetDate[0] === e.target.name) {
+            /** 날짜가 같은 경우 */
+            if (prevItem.timeTable[i] === "3") {
+              /** 클릭한 버튼을 제외한 나머지에서 값이 3인 부분 1로 변경 */
+              if (i.toString() === targetDate[1][0]) {
+                newTimeTable2.push("1");
+              } else {
+                newTimeTable2.push(prevItem.timeTable[i]);
+              }
+            } else {
+              newTimeTable2.push(prevItem.timeTable[i]);
+            }
+          }
+        }
+        newTimeTable2 = newTimeTable2.join("");
+        let findorigin2 = newSchedule.find(
+          (t) => t.localDate === targetDate[0]
+        );
+        findorigin2.timeTable = newTimeTable2;
       }
-      newTimeTable2 = newTimeTable2.join("");
-      let findorigin2 = newSchedule.find((t) => t.localDate === targetDate[0]);
-      console.log(findorigin2);
-      findorigin2.timeTable = newTimeTable2;
     }
-    console.log(targetDate);
     setTeacherSchedule(newSchedule);
     setTargetDate([e.target.name, e.target.value]);
+    setTarget(e.target);
   };
 
   /** 다음 일정 확인 */
@@ -308,7 +307,7 @@ export default function SelectSchedule({ name }) {
 
   const onSubmit = () => {
     /** 3으로 할당된 부분 2로 수정하기 */
-    let findItem = teacherSchedule.find((t) => t.localDate === targetDate);
+    let findItem = teacherSchedule.find((t) => t.localDate === targetDate[0]);
     let newTimeTable = [];
     for (let i = 0; i < 8; i++) {
       findItem.timeTable[i] === "3"
@@ -317,7 +316,7 @@ export default function SelectSchedule({ name }) {
     }
     newTimeTable = newTimeTable.join("");
     let newSchedule = [...teacherSchedule];
-    let findorigin = newSchedule.find((t) => t.localDate === targetDate);
+    let findorigin = newSchedule.find((t) => t.localDate === targetDate[0]);
     findorigin.timeTable = newTimeTable;
     setTeacherSchedule(newSchedule);
     alert("예약 되었습니다.");
