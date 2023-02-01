@@ -1,5 +1,6 @@
 package com.ssafy.marathon.service.admin;
 
+import com.ssafy.marathon.config.security.JwtTokenProvider;
 import com.ssafy.marathon.db.entity.board.Board;
 import com.ssafy.marathon.db.repository.BoardRepository;
 import com.ssafy.marathon.dto.request.board.BoardReqDto;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdminBoardService {
 
     private final BoardRepository boardRepository;
+
 
     public void writeBoard(BoardReqDto boardReqDto) {
         Board board = Board.builder()
