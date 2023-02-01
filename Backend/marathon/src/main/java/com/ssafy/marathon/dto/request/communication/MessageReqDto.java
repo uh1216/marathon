@@ -1,6 +1,5 @@
 package com.ssafy.marathon.dto.request.communication;
 
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,8 +15,9 @@ import lombok.ToString;
 @ToString
 public class MessageReqDto {
 
-    private Long senderSeq;
+    private Long commuSeq;
     private Long receiverSeq;
+<<<<<<< HEAD
     private LocalDateTime dateTime;
     private String content;
     private Long root;
@@ -25,4 +25,8 @@ public class MessageReqDto {
     private String title;
 
     private String url;
+=======
+    private String content;
+    private boolean isNew;
+>>>>>>> 220fea88f4d053ee756363dd4ee84e5831451755
 }

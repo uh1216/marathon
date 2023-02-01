@@ -19,7 +19,7 @@ public class ConsultingResDto {
 
     private Long consultingSeq;
     private String name;
-    private char sex;
+    private boolean sex;
     private LocalDate birthDate;
     private String email;
     private String phone1;

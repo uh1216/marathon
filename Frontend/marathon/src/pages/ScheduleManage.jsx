@@ -120,10 +120,6 @@ export default function ScheduleManage() {
   const thisDateNum = data.firstDateInfo;
   const [cnt, setCnt] = useState(0);
   const [teacherSchedule, setTeacherSchedule] = useState(data.list);
-
-  /** 날짜 구하기
-   * num = 0 : 월요일 ~ num = 6 : 일요일
-   */
   const totalThisDate = (num) => {
     let today = new Date(Number(thisDateNum) + (num + cnt * 7) * 86400000);
     let todayYear = today.getFullYear();

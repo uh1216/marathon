@@ -14,7 +14,6 @@ import javax.persistence.*;
 @Table(name = "alarm")
 public class Alarm extends Communication {
     private String title;
-
     private String link;
 
 }

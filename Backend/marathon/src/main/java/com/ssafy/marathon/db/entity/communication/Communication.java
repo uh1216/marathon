@@ -2,10 +2,20 @@ package com.ssafy.marathon.db.entity.communication;
 
 import com.ssafy.marathon.db.entity.user.User;
 import java.time.LocalDateTime;
-import lombok.*;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.*;
 
 
 @Getter
@@ -34,4 +44,8 @@ public class Communication {
     private LocalDateTime dateTime;
 
     private Boolean checked;
+
+    public void changeChecked() {
+        this.checked = true;
+    }
 }
