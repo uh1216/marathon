@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TreatmentResDto {
-    private int firstDateInfo;
+    private Long firstDateInfo;
 
     private List<DayOfTreatmentResDto> list;
 

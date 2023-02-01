@@ -1,58 +1,70 @@
 package com.ssafy.marathon.service.doctor;
 
+import com.ssafy.marathon.db.entity.communication.Alarm;
+import com.ssafy.marathon.db.entity.treatment.History;
 import com.ssafy.marathon.db.entity.treatment.Reservation;
+import com.ssafy.marathon.db.entity.treatment.Treatment;
+import com.ssafy.marathon.db.entity.user.User;
+import com.ssafy.marathon.db.repository.DoctorRepository;
+import com.ssafy.marathon.db.repository.HistoryRepository;
 import com.ssafy.marathon.db.repository.ReservationRepository;
+import com.ssafy.marathon.db.repository.TreatmentRepository;
 import com.ssafy.marathon.db.repository.UserRepository;
+import com.ssafy.marathon.dto.request.communication.MessageReqDto;
+import com.ssafy.marathon.dto.request.treatment.ReservationReqDto;
 import com.ssafy.marathon.dto.response.treatment.DayOfReservationResDto;
 import com.ssafy.marathon.dto.response.treatment.DayOfTreatmentResDto;
+import com.ssafy.marathon.dto.response.treatment.HistoryResDto;
 import com.ssafy.marathon.dto.response.treatment.ReservationResDto;
 import com.ssafy.marathon.util.MilliFunc;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class TreatmentServiceImpl implements TreatmentService {
 
-    private Logger logger = LoggerFactory.getLogger(TreatmentServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(TreatmentServiceImpl.class);
+    private final ReservationRepository reservationRepository;
+    private final DoctorRepository doctorRepository;
+    private final TreatmentRepository treatmentRepository;
 
-    @Autowired
-    private ReservationRepository reservationRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     // 해당 의사의 예약이 몇개인지 반환한다.
     @Override
-    public int countRaws() { // 매개변수로 의사 넣을것
+    public int countRaws(Long doctorSeq) { // 매개변수로 의사 넣을것
         LocalDate startDate = MilliFunc.getStartDate();
         LocalDate endDate = MilliFunc.getEndDate();
 
-        return reservationRepository.countByDateBetweenAndDoctor_Seq(startDate, endDate, 1L);
+        return reservationRepository.countByDateBetweenAndDoctor_Seq(startDate, endDate, doctorSeq);
     }
 
     //    예약이 없는 경우 의사의 예약을 채운다
     @Override
-    public void makeEmptyReservation() { // 매개변수로 의사 넣을것
+    public void makeEmptyReservation(Long doctorSeq) { // 매개변수로 의사 넣을것
         Long milli = MilliFunc.startDayMilliSec();
-//        for (int i = 0; i < 21; i++) {
-//            LocalDate date = MilliFunc.makeDate(milli);
-////            logger.info("현재" + i + "번째 반복중");
-////            logger.info(reservationRepository.countReservationByDate(date) + "");
-//            if (0 == reservationRepository.countReservationByDate(date)) {
-//                Reservation rv = Reservation.builder().date(date).bitDate("00000000")
-////                    doctor받아와야함
-//                    .doctor(doctorRepository.findBySeq(1L)).build();
-////                logger.info(rv.toString());
-//                reservationRepository.save(rv);
-//            }
-//            milli += MilliFunc.DAYMILLIESEC;
-//        }
+        for (int i = 0; i < 21; i++) {
+            LocalDate date = MilliFunc.makeDate(milli);
+//            logger.info("현재" + i + "번째 반복중");
+//            logger.info(reservationRepository.countReservationByDate(date) + "");
+            if (0 == reservationRepository.countReservationByDate(date)) {
+                Reservation rv = Reservation.builder().date(date).bitDate("00000000")
+//                    doctor받아와야함
+                    .doctor(doctorRepository.getBySeq(doctorSeq)).build();
+//                logger.info(rv.toString());
+                reservationRepository.save(rv);
+            }
+            milli += MilliFunc.DAYMILLIESEC;
+        }
     }
 
     //    각 예약의 정보를 리스트로 만들어 반환한다.
@@ -76,10 +88,10 @@ public class TreatmentServiceImpl implements TreatmentService {
     }
 
     @Override
-    public ReservationResDto makeReservationResDto() {
+    public ReservationResDto makeReservationResDto(Long doctorSeq) {
 
 //        logger.info("test check 1");
-        List<DayOfReservationResDto> list = makeReservationList(1L);
+        List<DayOfReservationResDto> list = makeReservationList(doctorSeq);
 
 //        logger.info("test check 2");
 
@@ -88,6 +100,47 @@ public class TreatmentServiceImpl implements TreatmentService {
 //        logger.info("test check 3");
         return reservationResDto;
     }
+
+    @Override
+    public void updateReservation(List<ReservationReqDto> list) {
+        for (ReservationReqDto dto : list) {
+            Reservation reservation = reservationRepository.findBySeq(dto.getReservationSeq());
+//            bitDate가 같으면 continue
+            if (reservation.getBitDate().equals(dto.getBitDate())) {
+                continue;
+            }
+            logger.info("[UPDATE] 의사의 예약 가능 시간 변경 date:{}, before:{}, After:{}", dto.getLocalDate(),
+                reservation.getBitDate(), dto.getBitDate());
+            reservation.setBitDate(dto.getBitDate());
+            reservationRepository.save(reservation);
+        }
+    }
+
+    @Override
+    public List<DayOfTreatmentResDto> getTreatments(Long doctorSeq) {
+        List<Treatment> list = treatmentRepository.findByDateBetween(MilliFunc.getStartDate(),
+            MilliFunc.getEndDate());
+        List<DayOfTreatmentResDto> dtoList = new ArrayList<>();
+
+        for (Treatment treatment : list) {
+            LocalDateTime dateTime = LocalDateTime.of(treatment.getDate(),
+                treatment.getTime()); // Treatment바꾸기
+
+            DayOfTreatmentResDto dayOfTreatmentResDto = DayOfTreatmentResDto.builder()
+                .treatmentSeq(treatment.getSeq())
+                .patientName(treatment.getPatient().getName())
+                .dateTime(dateTime)
+                .day(dateTime.getDayOfWeek().toString())
+                .patientImg(treatment.getPatient().getImg())
+                .build();
+
+            dtoList.add(dayOfTreatmentResDto);
+        }
+
+        return dtoList;
+    }
+
+
 
 
 }
