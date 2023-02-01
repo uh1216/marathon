@@ -4,25 +4,25 @@ import { changeNowSideNav } from "stores/toggle.store";
 import Pagination from "components/common/Pagination";
 import Board from "components/common/Board";
 import Modal from "components/common/Modal";
+import ConsultListModal from "components/my-page/ConsultListModal";
 
 export default function ConsultList() {
   let dumy = [];
   for (let i = 1; i <= 10; i++) {
     const newContents = {
-      doctorName: "김덕배",
-      dateTime: "2023-02-03",
-      historySeq: i % 2,
-      phone: "010-4458-9480",
+      name: "김두환",
+      birth: "1972-07-16",
+      phone: "010-9292-7649",
+      email: "umigwan@hanyang.seoul",
+      des: "오랜 지병에 시달리고 있습니다. 사실은 그럴수도 아닐수도 있습니다. 나는 전설이다!",
+      done: i % 2,
     };
     dumy = [newContents, ...dumy];
   }
 
-  const dispatch = useDispatch();
   const headRow = ["성함", "희망 날짜", "연락처", "처리 여부", "내용"];
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // 모달창에 들어갈 프로필 // 수업 정보
-  const [modalData, setModalData] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // 사이드 Nav 초기화
@@ -40,17 +40,19 @@ export default function ConsultList() {
           data={dumy}
           type={"mypageConsultList"}
           setIsModalOpen={setIsModalOpen}
-        ></Board>
+        />
         <Pagination
           number={13}
           first={false}
           last={false}
           totalPages={25}
           url={"www.naver.com"}
-        ></Pagination>
+        />
       </div>
       {isModalOpen && (
-        <Modal setModalOpen={setIsModalOpen}>입력이 되는게 맞냐?!!?</Modal>
+        <Modal setModalOpen={setIsModalOpen}>
+          <ConsultListModal setIsModalOpen={setIsModalOpen} />
+        </Modal>
       )}
     </>
   );

@@ -1,4 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// export let {} = .actions;
+const nowBoardInfo = createSlice({
+  name: "nowBoardInfo",
+  initialState: "",
+  reducers: {
+    changeNowBoardInfo(state, action) {
+      return action.payload;
+    },
+  },
+});
+export let { changeNowBoardInfo } = nowBoardInfo.actions;
+export { nowBoardInfo };
 export {};
