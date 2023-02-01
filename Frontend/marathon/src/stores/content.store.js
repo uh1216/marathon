@@ -11,4 +11,3 @@ const nowBoardInfo = createSlice({
 });
 export let { changeNowBoardInfo } = nowBoardInfo.actions;
 export { nowBoardInfo };
-export {};
