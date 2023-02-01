@@ -31,7 +31,7 @@ public class Communication {
     @JoinColumn(name = "receiver_user_seq")
     private User receiver;
 
-    private LocalDateTime date;
+    private LocalDateTime dateTime;
 
     private Boolean checked;
 }

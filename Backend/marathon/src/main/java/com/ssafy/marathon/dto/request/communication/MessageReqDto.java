@@ -18,7 +18,11 @@ public class MessageReqDto {
 
     private Long senderSeq;
     private Long receiverSeq;
-    private LocalDateTime date;
+    private LocalDateTime dateTime;
     private String content;
     private Long root;
+
+    private String title;
+
+    private String url;
 }

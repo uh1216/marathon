@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
+
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     int countByDateBetweenAndDoctor_Seq(LocalDate start, LocalDate end, Long seq);
@@ -16,4 +16,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     int countReservationByDate(LocalDate date);
 
     Reservation findByDateAndDoctor_Seq(LocalDate date, Long doctorSeq);
+
+    Reservation findBySeq(Long seq);
 }
