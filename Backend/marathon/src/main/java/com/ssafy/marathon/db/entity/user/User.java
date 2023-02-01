@@ -28,7 +28,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 @Getter
 @Setter
 @Entity
@@ -51,11 +50,11 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
     private String name;
-    //남 : 0(true),  여 : 1(false)
+    //남 : 1(true),  여 : 0(false)
     private boolean sex;
     private String email;
     private String phone;
-    private String img = "defalut.jpg";
+    private String img;
     private LocalDate birthDate;
     @Column(updatable = false)
     private LocalDate registDate;

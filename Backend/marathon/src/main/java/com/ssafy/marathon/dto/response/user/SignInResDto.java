@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-// 예제 13.30
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

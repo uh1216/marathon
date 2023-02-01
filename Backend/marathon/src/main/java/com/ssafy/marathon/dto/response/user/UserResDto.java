@@ -1,9 +1,7 @@
-package com.ssafy.marathon.dto.request.user;
+package com.ssafy.marathon.dto.response.user;
 
 import java.time.LocalDate;
-import java.util.Date;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString
-public class UserReqDto {
+public class UserResDto {
 
     private Long seq;
     private String role;
