@@ -163,7 +163,7 @@ export default function Header() {
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/self-study/1/easy/intro");
+                  navigate("/self-study/1/easy");
                 }}
               >
                 색깔 위치 맞추기
@@ -172,7 +172,7 @@ export default function Header() {
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/self-study/2/easy/intro");
+                  navigate("/self-study/2/easy");
                 }}
               >
                 그림 카드 맞추기
@@ -181,7 +181,7 @@ export default function Header() {
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/self-study/3/easy/intro");
+                  navigate("/self-study/3/easy");
                 }}
               >
                 도형 위치 맞추기
@@ -325,7 +325,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/");
+                        navigate("/mypage/treatment-list");
                       }}
                     >
                       수업 기록
@@ -360,7 +360,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/");
+                        navigate("/mypage/consult-list");
                       }}
                     >
                       상담 관리
@@ -449,7 +449,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/");
+                    navigate("/mypage/consult-list");
                   }}
                 >
                   <span>상담 관리</span>
@@ -472,7 +472,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/");
+                    navigate("/mypage/treatment-list");
                   }}
                 >
                   <span>수업 기록</span>

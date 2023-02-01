@@ -1,32 +1,31 @@
 package com.ssafy.marathon.service.doctor;
 
 import com.ssafy.marathon.db.entity.user.Doctor;
+import com.ssafy.marathon.db.entity.user.Patient;
 import com.ssafy.marathon.db.repository.DoctorRepository;
 import com.ssafy.marathon.db.repository.UserRepository;
 import com.ssafy.marathon.dto.request.user.DoctorReqDto;
+import com.ssafy.marathon.dto.request.user.PatientReqDto;
 import com.ssafy.marathon.dto.response.user.DoctorResDto;
 import com.ssafy.marathon.dto.response.user.SignUpResDto;
 import com.ssafy.marathon.service.patient.PatientSignServiceImpl;
 import java.time.LocalDate;
 import java.util.Collections;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class DoctorSignServiceImpl implements DoctorSignService {
     private final Logger LOGGER = LoggerFactory.getLogger(PatientSignServiceImpl.class);
     private final UserRepository userRepository;
     private final DoctorRepository doctorRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public DoctorSignServiceImpl(UserRepository userRepository, DoctorRepository doctorRepository,
-        PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.doctorRepository = doctorRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public SignUpResDto signUp(DoctorReqDto doctorReqDto) {
@@ -72,6 +71,18 @@ public class DoctorSignServiceImpl implements DoctorSignService {
             .introduce(doctor.getIntroduce())
             .build();
         return loadedDoctor;
+    }
+
+    @Override
+    public void modifyDoctor(Long seq, DoctorReqDto doctorReqDto) {
+        LOGGER.info("[modifyPatient] 환자정보 수정 시작");
+        Doctor doctor = doctorRepository.getBySeq(seq);
+        doctor.setPassword(passwordEncoder.encode(doctorReqDto.getPassword()));
+        doctor.setEmail(doctorReqDto.getEmail());
+        doctor.setPhone(doctorReqDto.getPhone());
+        doctor.setImg(doctorReqDto.getImg());
+        doctor.setIntroduce(doctorReqDto.getIntroduce());
+        LOGGER.info("[modifyPatient] 환자정보 수정 시작");
     }
 
 

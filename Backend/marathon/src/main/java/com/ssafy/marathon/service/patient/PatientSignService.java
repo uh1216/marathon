@@ -14,5 +14,5 @@ public interface PatientSignService {
 
     PatientResDto getPatient(Long seq);
 
-
+    void modifyPatient(Long seq, PatientReqDto patientReqDto);
 }

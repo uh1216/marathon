@@ -12,12 +12,16 @@ import com.ssafy.marathon.dto.response.user.SignUpResDto;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class PatientSignServiceImpl implements PatientSignService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(PatientSignServiceImpl.class);
@@ -25,12 +29,6 @@ public class PatientSignServiceImpl implements PatientSignService {
     private final PatientRepository patientRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public PatientSignServiceImpl(UserRepository userRepository,
-        PatientRepository patientRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.patientRepository = patientRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public SignUpResDto signUp(PatientReqDto patientReqDto) {
@@ -82,6 +80,21 @@ public class PatientSignServiceImpl implements PatientSignService {
             .subRelationship(patient.getSubRelationship())
             .build();
         return loadedPatient;
+    }
+
+    @Override
+    public void modifyPatient(Long seq, PatientReqDto patientReqDto) {
+        LOGGER.info("[modifyPatient] 환자정보 수정 시작");
+        Patient patient = patientRepository.getBySeq(seq);
+        patient.setPassword(passwordEncoder.encode(patientReqDto.getPassword()));
+        patient.setEmail(patientReqDto.getEmail());
+        patient.setPhone(patientReqDto.getPhone());
+        patient.setImg(patientReqDto.getImg());
+        patient.setMainPhone(patientReqDto.getMainPhone());
+        patient.setMainRelationship(patientReqDto.getMainRelationship());
+        patient.setSubPhone(patientReqDto.getSubPhone());
+        patient.setSubRelationship(patientReqDto.getSubRelationship());
+        LOGGER.info("[modifyPatient] 환자정보 수정 시작");
     }
 
 
