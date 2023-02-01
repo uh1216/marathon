@@ -32,6 +32,24 @@ export default function Statistics() {
     [100, 60, 10],
   ];
 
+  const graphLabels = [
+    [
+      ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
+      ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
+      ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
+    ],
+    [
+      ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
+      ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
+      ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
+    ],
+    [
+      ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
+      ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
+      ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
+    ],
+  ];
+
   const graphData = [
     [
       [10, 20, 40, 80, 70],
@@ -63,6 +81,7 @@ export default function Statistics() {
         recentStudy={recentStudy[0]}
         bestRecords={bestRecords[0]}
         graph={graphData[0]}
+        label={graphLabels[0]}
       ></StatisticsBox>
       <br />
       <StatisticsBox
@@ -70,6 +89,7 @@ export default function Statistics() {
         recentStudy={recentStudy[1]}
         bestRecords={bestRecords[1]}
         graph={graphData[1]}
+        label={graphLabels[1]}
       ></StatisticsBox>
       <br />
       <StatisticsBox
@@ -77,6 +97,7 @@ export default function Statistics() {
         recentStudy={recentStudy[2]}
         bestRecords={bestRecords[2]}
         graph={graphData[2]}
+        label={graphLabels[2]}
       ></StatisticsBox>
       <br />
       <br />

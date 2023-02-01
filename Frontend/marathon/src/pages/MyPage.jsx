@@ -6,6 +6,7 @@ import style from "./MyPage.module.css";
 import Messenger from "components/my-page/Messenger";
 import Schedule from "components/my-page/Schedule";
 import Statistics from "components/my-page/Statistics";
+import TreatmentDetail from "components/my-page/TreatmentDetail";
 
 export default function MyPage() {
   const state = useSelector((state) => state);
@@ -68,7 +69,10 @@ export default function MyPage() {
             <Route path="schedule/:pageNum" element={<Schedule />}></Route>
             <Route path="statistics" element={<Statistics />}></Route>
             <Route path="" element={<div />}></Route>
-            <Route path="" element={<div />}></Route>
+            <Route
+              path="treatment-detail/:no"
+              element={<TreatmentDetail />}
+            ></Route>
             <Route path="" element={<div />}></Route>
           </Routes>
         </div>
