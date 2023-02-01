@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRecord, resetRecord } from "stores/game.store";
 import commonStyle from "./Game.module.css";
+import SelfStudyIntro from "../SelfStudyIntro";
+import { setStage, setIsReady, setMode } from "stores/game.store";
+import GIF from "img/gif/11.gif";
 import style from "./EasyMode3.module.css";
 import figure from "img/gitlab.png";
 
@@ -10,6 +13,43 @@ export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
 
   const dispatch = useDispatch();
+
+  const preventGoBack = (e) => {
+    console.log(e);
+    //let isGoBack = window.confirm("종료하기를 눌러주세요 :D");
+    // if (!isGoBack) {
+    //   window.history.pushState(null, "", "");
+    // }
+    // if (isGoBack) {
+    //   window.history.popState();
+    // }
+  };
+
+  // 새로고침 막기 변수
+  const preventClose = (e) => {
+    e.preventDefault();
+    e.returnValue = ""; // chrome에서는 설정이 필요해서 넣은 코드
+  };
+
+  // 브라우저에 렌더링 시 한 번만 실행하는 코드
+  useEffect(() => {
+    (() => {
+      //window.history.pushState(null, "", "");
+      window.addEventListener("popstate", preventGoBack);
+      window.addEventListener("beforeunload", preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener("popstate", preventGoBack);
+      window.removeEventListener("beforeunload", preventClose);
+    };
+  }, []);
+
+  useEffect(() => {
+    dispatch(setIsReady(true));
+    dispatch(setMode("easy"));
+    dispatch(setStage(Number(0)));
+  }, []);
 
   useEffect(() => {
     /** 1단계라면 점수 기록을 초기화 */
@@ -35,7 +75,11 @@ export default function EasyMode1() {
   // https://lts0606.tistory.com/602
   ///
 
-  if (gameState.isReady) {
+  if (gameState.stage == 0) {
+    return (
+      <SelfStudyIntro mode={"easy"} title="---안내문구 easy---" gif={GIF} />
+    );
+  } else if (gameState.isReady) {
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>

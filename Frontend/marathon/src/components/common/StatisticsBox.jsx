@@ -7,9 +7,11 @@ export default function StatisticsBox({
   recentStudy,
   bestRecords,
   graph,
+  label,
 }) {
   /** 그래프에 그려질 데이터 */
   const graphData = graph;
+  const graphLabel = label;
   const colors = ["#63F282", "#FBDB35", "#FF0000"];
   const [selected, SetSelected] = useState(0);
 
@@ -94,7 +96,11 @@ export default function StatisticsBox({
             <input type="radio" name="mode" id="radio_hard" />
           </div>
         </div>
-        <GameChart data={graphData[selected]} color={colors[selected]} />
+        <GameChart
+          data={graphData[selected]}
+          color={colors[selected]}
+          label={graphLabel[selected]}
+        />
       </div>
     </div>
   );

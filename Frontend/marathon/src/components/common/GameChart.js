@@ -4,7 +4,7 @@ import { Line } from "react-chartjs-2";
 
 const GameChart = (props) => {
   let data = {
-    labels: ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
+    labels: props.label,
     datasets: [
       {
         type: "line",

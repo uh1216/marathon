@@ -6,6 +6,7 @@ import style from "./MyPage.module.css";
 import Messenger from "components/my-page/Messenger";
 import Schedule from "components/my-page/Schedule";
 import Statistics from "components/my-page/Statistics";
+import TreatmentDetail from "components/my-page/TreatmentDetail";
 import TreatmentList from "components/my-page/TreatmentList";
 import ConsultList from "components/my-page/ConsultList";
 
@@ -75,7 +76,10 @@ export default function MyPage() {
             <Route path="schedule/:pageNum" element={<Schedule />}></Route>
             <Route path="statistics" element={<Statistics />}></Route>
             <Route path="treatment-list" element={<TreatmentList />}></Route>
-            <Route path="" element={<div />}></Route>
+            <Route
+              path="treatment-detail/:no"
+              element={<TreatmentDetail />}
+            ></Route>
             <Route path="consult-list" element={<ConsultList />}></Route>
           </Routes>
         </div>
