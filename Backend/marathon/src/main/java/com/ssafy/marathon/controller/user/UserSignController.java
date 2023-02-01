@@ -4,6 +4,7 @@ package com.ssafy.marathon.controller.user;
 import com.ssafy.marathon.dto.request.user.SignInReqDto;
 import com.ssafy.marathon.dto.response.user.SignInResDto;
 import com.ssafy.marathon.service.user.UserSignServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,15 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("user-sign")
 @RestController
+@RequiredArgsConstructor
 public class UserSignController {
 
     private final UserSignServiceImpl userSignService;
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserSignController.class);
-
-    public UserSignController(UserSignServiceImpl userSignService) {
-        this.userSignService = userSignService;
-    }
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> signIn(@RequestBody SignInReqDto signInRequestDto) {

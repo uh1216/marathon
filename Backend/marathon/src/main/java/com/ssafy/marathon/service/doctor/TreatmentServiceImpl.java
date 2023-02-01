@@ -40,19 +40,19 @@ public class TreatmentServiceImpl implements TreatmentService {
     @Override
     public void makeEmptyReservation() { // 매개변수로 의사 넣을것
         Long milli = MilliFunc.startDayMilliSec();
-        for (int i = 0; i < 21; i++) {
-            LocalDate date = MilliFunc.makeDate(milli);
-//            logger.info("현재" + i + "번째 반복중");
-//            logger.info(reservationRepository.countReservationByDate(date) + "");
-            if (0 == reservationRepository.countReservationByDate(date)) {
-                Reservation rv = Reservation.builder().date(date).bitDate("00000000")
-//                    doctor받아와야함
-                    .doctor(userRepository.findDoctorBySeq(1L)).build();
-//                logger.info(rv.toString());
-                reservationRepository.save(rv);
-            }
-            milli += MilliFunc.DAYMILLIESEC;
-        }
+//        for (int i = 0; i < 21; i++) {
+//            LocalDate date = MilliFunc.makeDate(milli);
+////            logger.info("현재" + i + "번째 반복중");
+////            logger.info(reservationRepository.countReservationByDate(date) + "");
+//            if (0 == reservationRepository.countReservationByDate(date)) {
+//                Reservation rv = Reservation.builder().date(date).bitDate("00000000")
+////                    doctor받아와야함
+//                    .doctor(doctorRepository.findBySeq(1L)).build();
+////                logger.info(rv.toString());
+//                reservationRepository.save(rv);
+//            }
+//            milli += MilliFunc.DAYMILLIESEC;
+//        }
     }
 
     //    각 예약의 정보를 리스트로 만들어 반환한다.
