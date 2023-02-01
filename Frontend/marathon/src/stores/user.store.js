@@ -6,7 +6,7 @@ const loginUser = createSlice({
     userName: "홍길동",
     userProfileImg:
       "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
-    userRole: "patient",
+    userRole: "admin",
 
     // 얘 수정해서 없애버릴꺼임!!!!!
     unReadMsgNum: 2,
