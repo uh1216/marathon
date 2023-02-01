@@ -1,0 +1,85 @@
+.modal_container {
+  width: 650px;
+  height: 270px;
+  padding: 30px 50px;
+  display: flex;
+}
+
+.modal_left_box {
+  flex-grow: 2;
+}
+
+.modal_right_box {
+  flex-grow: 3;
+  padding-top: 20px;
+}
+
+.modal_right_box h4 {
+  display: inline-block;
+  font-size: 1.3em;
+  margin-left: 5px;
+  color: gray;
+}
+
+.modal_right_box hr {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.modal_right_box span {
+  margin-left: 5px;
+}
+
+.modal_profile {
+  height: 180px;
+  width: 180px;
+  border-radius: 100%;
+  box-shadow: 1px 1px 2px 2px rgb(0, 0, 0, 0.4);
+}
+
+.button {
+  position: relative;
+  border: none;
+  display: inline-block;
+  padding: 6px 15px 5px;
+  border-radius: 10px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transition: 0.25s;
+  color: #112529;
+  margin-top: 15px;
+}
+
+.modal_container p {
+  font-size: 0.6em;
+  margin-top: 12px;
+  text-align: right;
+  color: rgb(82, 82, 82);
+}
+
+.button_cancel {
+  color: white;
+  background-color: #ff2c2c;
+}
+
+.button_cancel:hover {
+  color: gray;
+  background-color: #ff8987;
+}
+
+.button_create {
+  color: white;
+  background-color: #6bc5d1;
+}
+
+.button_create:hover {
+  color: gray;
+  background-color: #baf3fa;
+}
+
+.unable {
+  pointer-events: none;
+  background-color: rgb(189, 189, 189, 0.7);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  color: rgb(239, 239, 239);
+}

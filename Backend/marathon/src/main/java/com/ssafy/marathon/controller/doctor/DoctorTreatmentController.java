@@ -1,6 +1,7 @@
 package com.ssafy.marathon.controller.doctor;
 
 
+import com.ssafy.marathon.dto.response.treatment.ReservationResDto;
 import com.ssafy.marathon.service.doctor.TreatmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,14 @@ public class DoctorTreatmentController {
 
     @GetMapping("/table")
     public ResponseEntity<?> getTables() {
-        int cnt = treatmentService.countRaws();
-
-        if(cnt != 21){
+//      의사의 예약이 21개가 아니면 21개까지 생성한다
+        if (treatmentService.countRaws() != 21) {
             treatmentService.makeEmptyReservation();
         }
-
-        return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
+//        예약 정보를 가져오기
+        ReservationResDto reservationResDto = treatmentService.makeReservationResDto();
+//        반환
+        return new ResponseEntity<ReservationResDto>(reservationResDto, HttpStatus.OK);
     }
 
 }

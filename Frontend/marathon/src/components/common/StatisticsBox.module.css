@@ -1,23 +1,25 @@
 .main_container {
-  width: 850px;
-  height: 223px;
+  max-width: 850px;
+  width: auto;
+  max-height: 223px;
+  height: auto;
   border: 1px solid black;
   border-radius: 10px;
-  padding: 30px 22px;
+  padding: 30px 40px;
   display: flex;
   justify-content: space-between;
-}
-.line {
-  width: 1px;
-  height: 100%;
-  border: 1px solid #c3c3c3;
 }
 
 /* 첫 번째 칸 */
 .container_1 {
+  width: 176px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  border-right: 1px solid #c3c3c3;
+  padding-right: 20px;
+  margin-right: 20px;
 }
 .title_1 {
   font-size: 1.25em;
@@ -39,15 +41,20 @@
 
 /* 두 번째 칸 */
 .container_2 {
+  width: 190px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 0 20px;
 }
 .title_2 {
   font-size: 0.95em;
 }
 .sub_title_2 {
   font-size: 0.75em;
+}
+.container_2 > div > div {
+  width: 190px;
 }
 .progress {
   width: 193px;
@@ -57,6 +64,7 @@
   -moz-appearance: none;
   appearance: none;
   border-radius: 20px;
+  animation: progress 1s ease forwards;
 }
 
 .progress::-webkit-progress-bar {
@@ -76,8 +84,18 @@
   background-color: #ff0000;
 }
 
+@keyframes progress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 /* 세 번째 칸 */
 .container_3 {
+  width: 320px;
 }
 .title_3 {
   font-size: 0.95em;
@@ -93,18 +111,54 @@
   font-size: 0.8em;
   border-radius: 5px;
 }
-.container_3 label > button:focus {
-  background-color: #a38aec;
-  border: none;
+.selected {
+  background-color: #a38aec !important;
+  border: none !important;
   color: white;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 4px inset;
-
-  /* width: 48px;
-  height: 22px; */
 }
 
 .sub_container_3 {
   display: flex;
   justify-content: space-between;
-  padding-left: 20px;
+  padding-left: 30px;
+  padding-right: 15px;
+}
+
+@media (max-width: 1200px) {
+  .main_container {
+    flex-wrap: wrap;
+    max-height: none;
+    justify-content: center;
+  }
+  .container_3 {
+    margin-top: 50px;
+  }
+  .sub_container_3 {
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 995px) {
+  .line {
+    display: none;
+  }
+  .main_container {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .container_1 {
+    margin: 20px;
+    align-items: center;
+    justify-content: center;
+
+    border-right: none;
+    padding-right: 0px;
+    margin-right: 0px;
+  }
+  .container_2 {
+    margin: 20px;
+  }
 }

@@ -42,7 +42,7 @@ const GameChart = (props) => {
   };
 
   return (
-    <div style={{ width: "366px", height: "145px" }}>
+    <div style={{ width: "356px", height: "165px" }}>
       <Line data={data} options={options} />
     </div>
   );

@@ -5,6 +5,7 @@ import SelfStudyResult from "./SelfStudyResult";
 import EasyMode2 from "components/self-study/self-study-game/EasyMode2";
 import NormalMode2 from "components/self-study/self-study-game/NormalMode2";
 import HardMode2 from "components/self-study/self-study-game/HardMode2";
+import GIF from "img/gif/11.gif";
 
 export default function SelfStudy2() {
   return (
@@ -12,19 +13,37 @@ export default function SelfStudy2() {
       <Routes>
         <Route
           path="easy/intro"
-          element={<SelfStudyIntro type={2} mode={"easy"} />}
+          element={
+            <SelfStudyIntro
+              mode={"easy"}
+              title="---안내문구 easy---"
+              gif={GIF}
+            />
+          }
         ></Route>
         <Route path="easy/:stage" element={<EasyMode2 />}></Route>
 
         <Route
           path="normal/intro"
-          element={<SelfStudyIntro type={2} mode={"normal"} />}
+          element={
+            <SelfStudyIntro
+              mode={"normal"}
+              title="---안내문구 normal---"
+              gif={GIF}
+            />
+          }
         ></Route>
         <Route path="normal/:stage" element={<NormalMode2 />}></Route>
 
         <Route
           path="hard/intro"
-          element={<SelfStudyIntro type={2} mode={"hard"} />}
+          element={
+            <SelfStudyIntro
+              mode={"hard"}
+              title="---안내문구 hard---"
+              gif={GIF}
+            />
+          }
         ></Route>
         <Route path="hard/:stage" element={<HardMode2 />}></Route>
 
