@@ -23,13 +23,13 @@ public class AdminInit {
 
     @PostConstruct
     protected void init() {
-        LOGGER.info("[init] JwtTokenProvider 내 secretKey 초기화 시작");
+        LOGGER.info("[init] admin 유저생성 시작");
         Admin admin = Admin.builder()
             .id("ssafy").password(passwordEncoder
                 .encode("ssafy"))
             .roles(Collections.singletonList("ROLE_ADMIN")).build();
         admin.setImg("default.png");
         adminRepository.save(admin);
-        LOGGER.info("[init] JwtTokenProvider 내 secretKey 초기화 완료");
+        LOGGER.info("[init] admin 유저생성 완료 id : {}", admin.getId());
     }
 }

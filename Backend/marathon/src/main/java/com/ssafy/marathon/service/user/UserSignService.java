@@ -11,5 +11,7 @@ public interface UserSignService {
 
     SignInResDto signIn(SignInReqDto signInRequestDto);
 
+    void deleteUser(Long seq);
+
 
 }
