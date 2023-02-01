@@ -117,9 +117,8 @@ export default function SelectSchedule({ name }) {
   const thisDateNum = data.firstDateInfo;
   const [cnt, setCnt] = useState(0);
   const [teacherSchedule, setTeacherSchedule] = useState(data.list);
-  const [selectedIndex, setselectedIndex] = useState([]);
-  const [currentIndex, setCurrentindex] = useState([]);
-  const [targetDate, setTargetDate] = useState();
+  const [currentIndex, setCurrentIndex] = useState([]);
+  const [isClicked, setIsClicked] = useState();
 
   /** 날짜 구하기
    * num = 0 : 월요일 ~ num = 6 : 일요일
@@ -175,7 +174,11 @@ export default function SelectSchedule({ name }) {
             }
             name={thisDay}
             value={i + thisTimeTable[i]}
-            onClick={onChange}
+            onClick={(e) => {
+              setCurrentIndex(e.target);
+              setIsClicked(!isClicked);
+              onChange(e);
+            }}
             disabled={thisTimeTable[i] === "0" ? true : false}
           >
             0{i + 9} : 00
@@ -193,7 +196,11 @@ export default function SelectSchedule({ name }) {
             }
             name={thisDay}
             value={i + thisTimeTable[i]}
-            onClick={onChange}
+            onClick={(e) => {
+              setCurrentIndex(e.target);
+              setIsClicked(!isClicked);
+              onChange(e);
+            }}
             disabled={thisTimeTable[i] === "0" ? true : false}
           >
             {i + 9} : 00
@@ -211,7 +218,11 @@ export default function SelectSchedule({ name }) {
             }
             name={thisDay}
             value={i + thisTimeTable[i]}
-            onClick={onChange}
+            onClick={(e) => {
+              setCurrentIndex(e.target);
+              setIsClicked(!isClicked);
+              onChange(e);
+            }}
             disabled={thisTimeTable[i] === "0" ? true : false}
           >
             {i + 10} : 00
@@ -222,23 +233,30 @@ export default function SelectSchedule({ name }) {
     return timeLlist;
   };
 
+  const onReset = () => {
+    console.log(currentIndex);
+    let findselected = teacherSchedule.find((t) => t.timeTable.includes("3"));
+    console.log(findselected.timeTable);
+    let newTimeTable = [];
+    for (let i = 0; i < 8; i++) {
+      findselected.timeTable[i].toString() === "3"
+        ? newTimeTable.push("1")
+        : newTimeTable.push(findselected.timeTable[i]);
+    }
+    newTimeTable = newTimeTable.join("");
+    console.log(newTimeTable);
+    let newSchedule = [...teacherSchedule];
+    let findorigin = newSchedule.find((t) => t.timeTable.includes("3"));
+    findorigin.timeTable = newTimeTable;
+    setTeacherSchedule(newSchedule);
+    console.log(findorigin);
+    console.log(isClicked);
+  };
+
   /** 일정 선택 함수 */
   const onChange = (e) => {
     /** 최대 한번씩만 변경 가능하도록 설정 */
     /** 임시로 선택한 시간대는 string값 3으로 설정하고 예약하기 버튼 클릭 시 2로 바꿔주면서 예약이 완료됨 */
-    setCurrentindex([e.target.name, e.target.value[0]]);
-    if (selectedIndex.length === 0) {
-      setselectedIndex(currentIndex);
-    } else if (JSON.stringify(currentIndex) === JSON.stringify(selectedIndex)) {
-      setselectedIndex([]);
-    } else if (JSON.stringify(currentIndex) !== JSON.stringify(selectedIndex)) {
-      alert("최대 한개만 선택가능합니다.");
-      return;
-    }
-
-    console.log(currentIndex);
-    console.log(selectedIndex);
-    console.log(JSON.stringify(currentIndex) === JSON.stringify(selectedIndex));
 
     let reserve = "";
     if (e.target.value[1] === "1") {
@@ -259,8 +277,13 @@ export default function SelectSchedule({ name }) {
     let findorigin = newSchedule.find((t) => t.localDate === e.target.name);
     findorigin.timeTable = newTimeTable;
     setTeacherSchedule(newSchedule);
-    setTargetDate(e.target.name);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      onReset();
+    }, 500);
+  }, [isClicked]);
 
   /** 다음 일정 확인 */
   const nextWeek = () => {
@@ -277,21 +300,6 @@ export default function SelectSchedule({ name }) {
   };
 
   const onSubmit = () => {
-    /** 3으로 할당된 부분 2로 수정하기 */
-    let findItem = teacherSchedule.find((t) => t.localDate === targetDate);
-    let newTimeTable = [];
-    for (let i = 0; i < 8; i++) {
-      findItem.timeTable[i] === "3"
-        ? newTimeTable.push("2")
-        : newTimeTable.push(findItem.timeTable[i]);
-    }
-    newTimeTable = newTimeTable.join("");
-    let newSchedule = [...teacherSchedule];
-    let findorigin = newSchedule.find((t) => t.localDate === targetDate);
-    findorigin.timeTable = newTimeTable;
-    setTeacherSchedule(newSchedule);
-    alert("예약 되었습니다.");
-    console.log(teacherSchedule);
     /** 서버로 보낼 코드 작성 예정 */
   };
 
