@@ -18,7 +18,7 @@ public class UserConsultingService {
         Consulting consulting = Consulting.builder()
             .birthDate(consultingReqDto.getBirthDate())
             .name(consultingReqDto.getName())
-            .sex(consultingReqDto.getSex())
+            .sex(consultingReqDto.isSex())
             .email(consultingReqDto.getEmail())
             .phone1(consultingReqDto.getPhone1())
             .phone2(consultingReqDto.getPhone2())
