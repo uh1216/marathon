@@ -34,7 +34,7 @@ public class UserBoardService {
     }
 
     public Page<BoardResDto> getBoardPages(int pageNum) {
-        PageRequest pageRequest = PageRequest.of(pageNum, 10);
+        PageRequest pageRequest = PageRequest.of(pageNum-1, 10);
 
         Page<BoardResDto> boardResDtoPages = boardRepository.findAll(pageRequest)
             .map(board -> BoardResDto.builder()

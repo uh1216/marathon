@@ -5,7 +5,7 @@ const gameState = createSlice({
   initialState: {
     type: 0, // 3개의 게임 중, 몇 번째 게임인지 (1, 2, 3)
     mode: "", // easy, normal, hard 모드
-    stageNow: 0, // 현재 몇 번째 단계 문제를 풀고 있는지
+    stage: 1, // 현재 몇 번째 단계 문제를 풀고 있는지
     record: [], // 각 stage별 정답 여부(true, false)가 최대 10개까지 담긴다.
     isReady: true, // true이면 정답 제출 전 상태, false이면 정답 확인 상태
   },
@@ -16,8 +16,8 @@ const gameState = createSlice({
     setMode: (state, action) => {
       state.mode = action.payload;
     },
-    setStageNow: (state, action) => {
-      state.stageNow = action.payload;
+    setStage: (state, action) => {
+      state.stage = action.payload;
     },
     setIsReady: (state, action) => {
       state.isReady = action.payload;
@@ -32,7 +32,7 @@ const gameState = createSlice({
     resetAll(state) {
       return {
         type: 0,
-        stageNow: 0,
+        stage: 1,
         record: [],
         isReady: true,
       };
@@ -43,7 +43,7 @@ const gameState = createSlice({
 export let {
   setType,
   setMode,
-  setStageNow,
+  setStage,
   setIsReady,
   addRecord,
   resetRecord,

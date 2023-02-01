@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setIsReady, setMode, setStageNow } from "stores/game.store";
+import { setIsReady, setMode, setStage } from "stores/game.store";
 import style from "./SelfStudyIntro.module.css";
 
 export default function SelfStudyIntro({ mode, title, gif }) {
@@ -13,7 +13,7 @@ export default function SelfStudyIntro({ mode, title, gif }) {
   useEffect(() => {
     dispatch(setIsReady(true));
     dispatch(setMode(mode));
-    dispatch(setStageNow(Number(0)));
+    dispatch(setStage(Number(0)));
   }, [mode]);
 
   // {type}번째 게임 - {mode}모드 - 도입 화면

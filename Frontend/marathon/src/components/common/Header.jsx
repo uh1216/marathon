@@ -255,12 +255,7 @@ export default function Header() {
               </div>
               <li>
                 {state.loginUser.userName}
-                <span
-                  style={{ color: "gray" }}
-                  onClick={() => {
-                    navigate("/mypage/information");
-                  }}
-                >
+                <span style={{ color: "gray" }} onClick={() => {}}>
                   님 환영합니다
                 </span>
                 {state.loginUser.userRole === "patient" && (

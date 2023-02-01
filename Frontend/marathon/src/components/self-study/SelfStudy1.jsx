@@ -21,7 +21,7 @@ export default function SelfStudy1() {
             />
           }
         />
-        <Route path="easy/:stage" element={<EasyMode1 />} />
+        <Route path="easy/game" element={<EasyMode1 />} />
 
         <Route
           path="normal/intro"

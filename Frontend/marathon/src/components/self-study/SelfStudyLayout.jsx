@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import style from "./SelfStudyLayout.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setStageNow, setType, setIsReady } from "stores/game.store";
+import { setStage, setType, setIsReady } from "stores/game.store";
 import { useEffect } from "react";
 
 export default function SelfStudyLayout({ type, children }) {
@@ -78,17 +78,17 @@ export default function SelfStudyLayout({ type, children }) {
       </div>
       <div className={style.game_container}>{children}</div>
       <div className={style.btn_container}>
-        {gameState.stageNow < 1 ? (
+        {gameState.stage < 1 ? (
           <button
             className={style.btn_main}
             onClick={() => {
-              navigate(`/self-study/${type}/${gameState.mode}/1`);
-              dispatch(setStageNow(1));
+              navigate(`/self-study/${type}/${gameState.mode}/game`);
+              dispatch(setStage(1));
             }}
           >
             시 작
           </button>
-        ) : gameState.stageNow <= 10 && gameState.isReady ? (
+        ) : gameState.stage <= 10 && gameState.isReady ? (
           <button
             className={style.btn_main}
             onClick={() => {
@@ -97,27 +97,22 @@ export default function SelfStudyLayout({ type, children }) {
           >
             도 전
           </button>
-        ) : gameState.stageNow < 10 && !gameState.isReady ? (
+        ) : gameState.stage < 10 && !gameState.isReady ? (
           <button
             className={style.btn_main}
             onClick={() => {
-              navigate(
-                `/self-study/${type}/${gameState.mode}/${
-                  gameState.stageNow + 1
-                }`
-              );
-              dispatch(setStageNow(Number(gameState.stageNow) + 1));
+              dispatch(setStage(Number(gameState.stage) + 1));
               dispatch(setIsReady(true));
             }}
           >
             다 음
           </button>
-        ) : gameState.stageNow === 10 && !gameState.isReady ? (
+        ) : gameState.stage === 10 && !gameState.isReady ? (
           <button
             className={style.btn_main}
             onClick={() => {
               navigate(`/self-study/${type}/result`);
-              dispatch(setStageNow(Number(gameState.stageNow) + 1));
+              dispatch(setStage(Number(gameState.stage) + 1));
             }}
           >
             다 음
@@ -126,8 +121,8 @@ export default function SelfStudyLayout({ type, children }) {
           <button
             className={style.btn_main}
             onClick={() => {
-              navigate(`/self-study/${type}/${gameState.mode}/1`);
-              dispatch(setStageNow(1));
+              navigate(`/self-study/${type}/${gameState.mode}/game`);
+              dispatch(setStage(1));
             }}
           >
             다시 하기

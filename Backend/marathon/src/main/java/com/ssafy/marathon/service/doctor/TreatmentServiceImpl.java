@@ -5,6 +5,7 @@ import com.ssafy.marathon.db.entity.treatment.History;
 import com.ssafy.marathon.db.entity.treatment.Reservation;
 import com.ssafy.marathon.db.entity.treatment.Treatment;
 import com.ssafy.marathon.db.entity.user.User;
+import com.ssafy.marathon.db.repository.DoctorRepository;
 import com.ssafy.marathon.db.repository.HistoryRepository;
 import com.ssafy.marathon.db.repository.ReservationRepository;
 import com.ssafy.marathon.db.repository.TreatmentRepository;
@@ -34,7 +35,7 @@ public class TreatmentServiceImpl implements TreatmentService {
 
     private final Logger logger = LoggerFactory.getLogger(TreatmentServiceImpl.class);
     private final ReservationRepository reservationRepository;
-    private final UserRepository userRepository;
+    private final DoctorRepository doctorRepository;
     private final TreatmentRepository treatmentRepository;
 
 
@@ -58,7 +59,7 @@ public class TreatmentServiceImpl implements TreatmentService {
             if (0 == reservationRepository.countReservationByDate(date)) {
                 Reservation rv = Reservation.builder().date(date).bitDate("00000000")
 //                    doctor받아와야함
-                    .doctor(userRepository.findDoctorBySeq(doctorSeq)).build();
+                    .doctor(doctorRepository.getBySeq(doctorSeq)).build();
 //                logger.info(rv.toString());
                 reservationRepository.save(rv);
             }

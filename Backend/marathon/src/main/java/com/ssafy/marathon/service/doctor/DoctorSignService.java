@@ -15,4 +15,5 @@ public interface DoctorSignService {
 
     DoctorResDto getDoctor(Long seq);
 
+    void modifyDoctor(Long seq, DoctorReqDto doctorReqDto);
 }
