@@ -60,6 +60,9 @@ public class User implements UserDetails {
     private String imgName;
     private String imgPath;
     private LocalDate birthDate;
+
+    @Column(updatable = false, insertable = false)
+    private String dtype;
     @Column(updatable = false)
     private LocalDate registDate;
     @ElementCollection(fetch = FetchType.EAGER)

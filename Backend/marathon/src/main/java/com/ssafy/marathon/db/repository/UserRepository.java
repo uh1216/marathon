@@ -13,5 +13,5 @@ public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
     void deleteBySeq(Long seq);
     Optional<User> findByEmail(String email);
 
-    List<User> findAllByRolesNotLike(String role);
+    List<User> findAllByDtypeIsNot(String role);
 }

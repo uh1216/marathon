@@ -80,8 +80,6 @@ public class UserCommunicationService {
         MessageReqDto messageReqDto) {
         List<UserResDto> userResDtoList = new ArrayList<>();
 
-        System.out.println(userRole);
-
         if (!messageReqDto.getIsNew()) {
             Optional<Message> findMessage = communicationRepository.findById(
                 messageReqDto.getCommuSeq());
@@ -96,7 +94,7 @@ public class UserCommunicationService {
                 .id(sender.getId())
                 .build());
         } else if (userRole.equals(admin)) {
-            userResDtoList = userRepository.findAllByRolesNotLike("Admin")
+            userResDtoList = userRepository.findAllByDtypeIsNot("Admin")
                 .stream()
                 .map(user -> UserResDto.builder()
                     .img(user.getImg())
