@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class HistoryServiceImpl implements HistoryService {
+public class DoctorHistoryServiceImpl implements DoctorHistoryService {
 
     private final HistoryRepository historyRepository;
 
@@ -60,7 +60,7 @@ public class HistoryServiceImpl implements HistoryService {
                 .dateTime(LocalDateTime.of(history.getDate(), history.getTime()))
                 .day(history.getDate().getDayOfWeek().toString())
                 .build();
-            System.out.println(historyResDto.toString());
+
             HistoryResList.add(historyResDto);
         }
 
@@ -80,5 +80,24 @@ public class HistoryServiceImpl implements HistoryService {
         history.setFeedback(historyReqDto.getFeedback());
         historyRepository.save(history);
         return null;
+    }
+
+    @Override
+    public HistoryResDto getHistoryDetail(Long historySeq) {
+        History history = historyRepository.findBySeq(historySeq);
+
+        HistoryResDto historyResDto = HistoryResDto.builder()
+            .historySeq(history.getSeq())
+            .patientName(history.getPatient().getName())
+            .patientPhone(history.getPatient().getPhone())
+            .patientMainPhone(history.getPatient().getMainPhone())
+            .dateTime(LocalDateTime.of(history.getDate(), history.getTime()))
+            .day(history.getDate().getDayOfWeek().toString())
+            .videoUrl(history.getVideoUrl())
+            .feedback(history.getFeedback())
+            .build();
+
+
+        return historyResDto;
     }
 }
