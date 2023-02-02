@@ -13,7 +13,7 @@ export default function Notice() {
         <p className={style.title}>공지사항</p>
       </div>
       <Routes>
-        <Route path=":num" element={<NoticeBoard />} />
+        <Route path=":pageNum" element={<NoticeBoard />} />
         <Route path="notice-create" element={<NoticeCreate />} />
         <Route path="detail/:num" element={<NoticeDetail />} />
         <Route path="detail/:num/update" element={<NoticeUpdate />} />

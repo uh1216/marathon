@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import style from "./NoticeBoard.module.css";
 import SelectBox from "components/common/SelectBox";
 import Pagination from "components/common/Pagination";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { $ } from "util/axios";
 
 export default function NoticeBoard() {
   const navigate = useNavigate();
+  const { pageNum } = useParams();
 
   /** selectbox 옵션 */
   const optionSearch = [
@@ -17,42 +18,10 @@ export default function NoticeBoard() {
   ];
   const [searchOption, setSearchOption] = useState("none");
 
-  /** 공지사항 데이터 객체로 저장(임시 더미데이터 추가 상태) */
   const { isLoading, data, isError, error } = useQuery(
-    ["NoticeBoard"],
-    axios.get("http://localhost:9999/user-board/list?pageNum=1")
+    ["NoticeBoard", pageNum],
+    () => $.get(`/user-board/list?pageNum=${pageNum}`)
   );
-
-  let contentList = [];
-  for (let i = 1; i <= 50; i++) {
-    const newContents = {
-      id: i,
-      num: i,
-      title: `${i}번글 제목입니다.`,
-      content: `${i}번글 내용입니다.
-      내용을 채우기 위한 의미없는 글
-      내용을 채우기 위한 의미없는 글
-      내용을 채우기 위한 의미없는 글
-      내용을 채우기 위한 의미없는 글
-      내용을 채우기 위한 의미없는 글`,
-      date: "2022.12.30",
-      count: i * 1000,
-    };
-    contentList = [newContents, ...contentList];
-  }
-  /** 페이지 별로 일정 개수만큼 게시글을 출력하기 위해 사용되는 변수 */
-  const pages = Math.ceil(contentList.length / 10);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(1);
-  const offset = (page - 1) * limit;
-
-  /** 페이지 컴포넌트 사용 시 작성해야 할 함수
-   * 초기에 x가 undefined로 인식이 되기 때문에 초기값을 1로 설정
-   * 그대로 복붙해서 사용해도 지장없음*/
-  const nowPage = (x) => {
-    if (x === undefined || x === "undefined") setPage(1);
-    else setPage(x);
-  };
 
   return (
     <>
@@ -96,36 +65,44 @@ export default function NoticeBoard() {
                 <div className={style.count_hidden}>조회수</div>
               </div>
               {/** 현재는 더미데이터, 백엔드와 연결 후 서버에서 값 가져와서 출력 */}
-              {contentList.slice(offset, offset + limit).map((content) => {
-                return (
-                  <div key={content.id}>
-                    <div className={style.notice_header_item}>
-                      <div>{content.num}</div>
-                      <div>
-                        <Link
-                          to={`../detail/${content.num}`}
-                          state={{
-                            num: content.num,
-                            title: content.title,
-                            content: content.content,
-                            date: content.date,
-                            count: content.count,
-                          }}
-                          className={style.notice_link}
-                        >
-                          {content.title}
-                        </Link>
+              {!isLoading &&
+                data.data.content.map((content) => {
+                  return (
+                    <div key={content.boardSeq}>
+                      <div className={style.notice_header_item}>
+                        <div>{content.boardSeq}</div>
+                        <div>
+                          <Link
+                            to={`../detail/${content.boardSeq}`}
+                            state={{
+                              num: content.boardSeq,
+                              title: content.title,
+                              content: content.content,
+                              registDate: content.registDate,
+                              viewCnt: content.viewCnt,
+                            }}
+                            className={style.notice_link}
+                          >
+                            {content.title}
+                          </Link>
+                        </div>
+                        <div>{content.registDate}</div>
+                        <div className={style.count_hidden}>
+                          {content.viewCnt}
+                        </div>
                       </div>
-                      <div>{content.date}</div>
-                      <div className={style.count_hidden}>{content.count}</div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </div>
-          {/** pagination 컴포넌트 활용 */}
-          <Pagination contentList={contentList} nowPage={nowPage} num={10} />
+          <Pagination
+            number={!isLoading && data.data.number + 1}
+            first={!isLoading && data.data.first}
+            last={!isLoading && data.data.last}
+            totalPages={!isLoading && data.data.totalPages}
+            url={"notice/"}
+          ></Pagination>
         </div>
       </div>
     </>
