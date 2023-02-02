@@ -9,6 +9,7 @@ import com.ssafy.marathon.dto.request.communication.MessageReqDto;
 import com.ssafy.marathon.dto.response.communication.CommunicationResDto;
 import com.ssafy.marathon.dto.response.communication.UserCommuCntResDto;
 import com.ssafy.marathon.dto.response.user.UserResDto;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,10 @@ public class UserCommunicationService {
     private final UserRepository<User> userRepository;
     private final CommunicationRepository<Message> communicationRepository;
     private final TreatmentRepository treatmentRepository;
+
+    private final String admin = "[ROLE_ADMIN]";
+    private final String doctor = "[ROLE_DOCTOR]";
+    private final String patient = "[ROLE_PATIENT]";
 
     public void sendMessage(Long senderSeq, MessageReqDto messageReqDto) {
         Optional<User> findSender = userRepository.findById(senderSeq);
@@ -75,7 +80,9 @@ public class UserCommunicationService {
         MessageReqDto messageReqDto) {
         List<UserResDto> userResDtoList = new ArrayList<>();
 
-        if (!messageReqDto.isNew()) {
+        System.out.println(userRole);
+
+        if (!messageReqDto.getIsNew()) {
             Optional<Message> findMessage = communicationRepository.findById(
                 messageReqDto.getCommuSeq());
             Message beforeMessage = findMessage.orElseThrow();
@@ -88,16 +95,34 @@ public class UserCommunicationService {
                 .name(sender.getName())
                 .id(sender.getId())
                 .build());
-        } else if (userRole.equals("Admin")) {
-            userResDtoList = userRepository.findAll()
+        } else if (userRole.equals(admin)) {
+            userResDtoList = userRepository.findAllByRolesNotLike("Admin")
                 .stream()
                 .map(user -> UserResDto.builder()
                     .img(user.getImg())
                     .name(user.getName())
                     .id(user.getId())
                     .build()).collect(Collectors.toList());
+        } else if (userRole.equals(doctor)) {
+            userResDtoList = treatmentRepository.findDistinctByDoctor_SeqAndDateBetween(userSeq,
+                    LocalDate.now(), LocalDate.now().minusYears(1))
+                .stream()
+                .map(treatment -> UserResDto.builder()
+                    .img(treatment.getPatient().getImg())
+                    .name(treatment.getPatient().getName())
+                    .id(treatment.getPatient().getId())
+                    .build())
+                .collect(Collectors.toList());
         } else {
-//            treatmentRepository.findAllById();
+            userResDtoList = treatmentRepository.findDistinctByPatient_SeqAndDateBetween(userSeq,
+                    LocalDate.now(), LocalDate.now().minusYears(1))
+                .stream()
+                .map(treatment -> UserResDto.builder()
+                    .img(treatment.getDoctor().getImg())
+                    .name(treatment.getDoctor().getName())
+                    .id(treatment.getDoctor().getId())
+                    .build())
+                .collect(Collectors.toList());
         }
 
         return userResDtoList;

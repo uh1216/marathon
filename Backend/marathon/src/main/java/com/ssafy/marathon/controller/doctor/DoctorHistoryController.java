@@ -3,7 +3,7 @@ package com.ssafy.marathon.controller.doctor;
 import com.ssafy.marathon.config.security.JwtTokenProvider;
 import com.ssafy.marathon.dto.request.treatment.HistoryReqDto;
 import com.ssafy.marathon.dto.response.treatment.HistoryResDto;
-import com.ssafy.marathon.service.doctor.DoctorHistoryService;
+import com.ssafy.marathon.service.doctor.DoctorHistoryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/doctor-history")
 @RequiredArgsConstructor
-public class DcotorHistoryController {
+public class DoctorHistoryController {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    private final HistoryService historyService;
+    private final DoctorHistoryServiceImpl historyService;
 
     @GetMapping("/nf-list")
     public ResponseEntity<?> getNonFeedbackPages(@RequestHeader("Access-Token") String accessToken,

@@ -22,5 +22,5 @@ public class MessageReqDto {
     private String content;
     private Long root;
     private String title;
-    private boolean isNew;
+    private Boolean isNew;
 }

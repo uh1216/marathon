@@ -135,12 +135,4 @@ public class JwtTokenProvider {
             return false;
         }
     }
-
-    public String getUserRole(String token) {
-        LOGGER.info("[getUserSeq] 토큰 기반 회원 role 정보 추출");
-        String role = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody()
-            .get("roles").toString();
-        LOGGER.info("[getUserSeq] 토큰 기반 회원 role 추출 완료, info : {}", role);
-        return role;
-    }
 }
