@@ -7,7 +7,7 @@ const gameState = createSlice({
     mode: "", // easy, normal, hard 모드
     stage: 0, // 현재 몇 번째 단계 문제를 풀고 있는지
     record: [], // 각 stage별 정답 여부(true, false)가 최대 10개까지 담긴다.
-    isReady: true, // true이면 정답 제출 전 상태, false이면 정답 확인 상태
+    isReady: 0, // 0이면 문제 보여주기, 1이면 문제 풀기, 2이면 답 보여주기
   },
   reducers: {
     setType: (state, action) => {
@@ -34,7 +34,7 @@ const gameState = createSlice({
         type: 0,
         stage: 1,
         record: [],
-        isReady: true,
+        isReady: 0,
       };
     },
   },
