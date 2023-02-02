@@ -9,15 +9,22 @@ import com.ssafy.marathon.dto.request.user.UserReqDto;
 import com.ssafy.marathon.dto.response.user.PatientResDto;
 import com.ssafy.marathon.dto.response.user.SignInResDto;
 import com.ssafy.marathon.dto.response.user.SignUpResDto;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +35,10 @@ public class PatientSignServiceImpl implements PatientSignService {
     private final UserRepository userRepository;
     private final PatientRepository patientRepository;
     private final PasswordEncoder passwordEncoder;
+    //프로젝트 내부에 저장
+//    private static String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\image";
+    //로컬 테스트 : 바탕화면 static 폴더에 저장
+    private static String projectPath = "C:\\Users\\SSAFY\\Desktop\\static\\image";
 
 
     @Override
@@ -48,8 +59,11 @@ public class PatientSignServiceImpl implements PatientSignService {
             .mainRelationship(patientReqDto.getMainRelationship())
             .subPhone(patientReqDto.getSubPhone())
             .subRelationship(patientReqDto.getSubRelationship())
+            .img("default.PNG")
+            .imgName("default.PNG")
+            .imgPath(projectPath)
             .build();
-        patient.setImg("default.png");
+        patient.setImg("default.PNG");
         Patient savedPatient = (Patient) patientRepository.save(patient);
         SignUpResDto signUpResDto;
 
@@ -83,17 +97,41 @@ public class PatientSignServiceImpl implements PatientSignService {
     }
 
     @Override
-    public void modifyPatient(Long seq, PatientReqDto patientReqDto) {
+    public void modifyPatient(Long seq, PatientReqDto patientReqDto, MultipartFile image)
+        throws IOException {
+
         LOGGER.info("[modifyPatient] 환자정보 수정 시작");
         Patient patient = patientRepository.getBySeq(seq);
         patient.setPassword(passwordEncoder.encode(patientReqDto.getPassword()));
         patient.setEmail(patientReqDto.getEmail());
         patient.setPhone(patientReqDto.getPhone());
-        patient.setImg(patientReqDto.getImg());
         patient.setMainPhone(patientReqDto.getMainPhone());
         patient.setMainRelationship(patientReqDto.getMainRelationship());
         patient.setSubPhone(patientReqDto.getSubPhone());
         patient.setSubRelationship(patientReqDto.getSubRelationship());
+        LOGGER.info("[modifyPatient] 이미지 비교 시작");
+        //이미지 url이 다르면 파일 저장하고 유저이미지 정보 수정
+        if(patientReqDto.getImgName()!= patient.getImgName()) {
+            //저장경로 지정
+//            String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\image";
+            //랜덤식별자 생성
+            UUID uuid = UUID.randomUUID();
+            //파일이름 설정
+            String fileName = uuid + "_" + image.getOriginalFilename();
+            //파일 생성
+            File saveFile = new File(projectPath, fileName);
+            //파일 저장
+            image.transferTo(saveFile);
+            //유저정보 변경
+            patient.setImgName(fileName);
+            patient.setImg(fileName);
+            //바이트코드 생성
+//            byte[] byte1 = Files.readAllBytes(saveFile.toPath());
+//            byte[] base64 = Base64.getEncoder().encode(byte1);
+//            String str1 = Base64.getEncoder().encodeToString(byte1);
+//            patient.setImg(str1);
+        }
+        LOGGER.info("[modifyPatient] 환자정보 수정 시작");
         LOGGER.info("[modifyPatient] 환자정보 수정 시작");
     }
 

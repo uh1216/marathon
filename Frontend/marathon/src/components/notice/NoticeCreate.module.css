@@ -77,4 +77,16 @@
   .notice_top_interface_title {
     margin-top: 20px;
   }
+
+  .notice_create_body {
+    margin-top: 20px;
+  }
+
+  .notice_create_title {
+    width: 90%;
+  }
+
+  .notice_create_content {
+    width: 90%;
+  }
 }

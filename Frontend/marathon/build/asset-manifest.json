@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4277c69b.css",
+    "main.js": "/static/js/main.873bb753.js",
+    "static/media/11.gif": "/static/media/11.e6e88fc7a94dace37030.gif",
+    "static/media/GmarketSansTTFBold.ttf": "/static/media/GmarketSansTTFBold.69428064ef8eee25be33.ttf",
+    "static/media/GmarketSansTTFMedium.ttf": "/static/media/GmarketSansTTFMedium.d4bac6b182bed73c9375.ttf",
+    "static/media/GmarketSansTTFLight.ttf": "/static/media/GmarketSansTTFLight.efaa8f19ead1555b1c39.ttf",
+    "static/media/mainBanner.png.png": "/static/media/mainBanner.png.3f5c1f6b09fea4907751.png",
+    "static/media/senior_game_1.png": "/static/media/senior_game_1.8964082cafacfde8655f.png",
+    "static/media/main_2.png": "/static/media/main_2.aa56997f86d66fad6090.png",
+    "static/media/main_4.png": "/static/media/main_4.2cc10ac6998ad4cad649.png",
+    "static/media/notice.jpg": "/static/media/notice.9f966c64d443c8d7bcc7.jpg",
+    "static/media/consult_1.png": "/static/media/consult_1.d1d8326bd400be95c6bb.png",
+    "static/media/main_3.png": "/static/media/main_3.c01108e9d5b4f965a4e1.png",
+    "static/media/person_1.jpg": "/static/media/person_1.141f4a4fe4422b5dbb09.jpg",
+    "static/media/gitlab.png": "/static/media/gitlab.1c0bf23cf103426bfefd.png",
+    "static/media/jira.png": "/static/media/jira.fe44a360c721401ce023.png",
+    "static/media/marathon.png": "/static/media/marathon.d7b789de8b8fbdb44bd0.png",
+    "static/media/patient.png": "/static/media/patient.a871f0a95264c8d893ed.png",
+    "static/media/logoMain.png": "/static/media/logoMain.f4f1b7e0f25882579452.png",
+    "static/media/doctor.png": "/static/media/doctor.62187df523fd8615d5fc.png",
+    "static/media/red_x.png": "/static/media/red_x.1583723861a66fb05605.png",
+    "static/media/doctor_1.jpg": "/static/media/doctor_1.132c55e63f6becb5daa4.jpg",
+    "static/media/doctor_3.jpg": "/static/media/doctor_3.fec24ecb358849b274ea.jpg",
+    "static/media/doctor_2.jpg": "/static/media/doctor_2.3807cfd9050bf0b17908.jpg",
+    "index.html": "/index.html",
+    "main.4277c69b.css.map": "/static/css/main.4277c69b.css.map",
+    "main.873bb753.js.map": "/static/js/main.873bb753.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4277c69b.css",
+    "static/js/main.873bb753.js"
+  ]
+}

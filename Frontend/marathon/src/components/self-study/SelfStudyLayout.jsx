@@ -16,6 +16,37 @@ export default function SelfStudyLayout({ type, children }) {
     { title: "도형 위치 맞추기" },
   ];
 
+  const preventGoBack = (e) => {
+    console.log(e);
+    //let isGoBack = window.confirm("종료하기를 눌러주세요 :D");
+    // if (!isGoBack) {
+    //   window.history.pushState(null, "", "");
+    // }
+    // if (isGoBack) {
+    //   window.history.popState();
+    // }
+  };
+
+  // 새로고침 막기 변수
+  const preventClose = (e) => {
+    e.preventDefault();
+    e.returnValue = ""; // chrome에서는 설정이 필요해서 넣은 코드
+  };
+
+  // 브라우저에 렌더링 시 한 번만 실행하는 코드
+  useEffect(() => {
+    (() => {
+      //window.history.pushState(null, "", "");
+      window.addEventListener("popstate", preventGoBack);
+      window.addEventListener("beforeunload", preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener("popstate", preventGoBack);
+      window.removeEventListener("beforeunload", preventClose);
+    };
+  }, []);
+
   return (
     <div className={style.main_container}>
       <div className={style.title_container}>
@@ -78,37 +109,47 @@ export default function SelfStudyLayout({ type, children }) {
           <button
             className={style.btn_main}
             onClick={() => {
-              navigate(`/self-study/${type}/${gameState.mode}`);
+              dispatch(setIsReady(0));
               dispatch(setStage(1));
             }}
           >
             시 작
           </button>
-        ) : gameState.stage <= 10 && gameState.isReady ? (
+        ) : gameState.stage <= 10 && gameState.isReady == 0 ? (
           <button
             className={style.btn_main}
             onClick={() => {
-              dispatch(setIsReady(false));
+              dispatch(setIsReady(1));
             }}
           >
             도 전
           </button>
-        ) : gameState.stage < 10 && !gameState.isReady ? (
+        ) : gameState.stage <= 10 && gameState.isReady == 1 ? (
+          <button
+            className={style.btn_main}
+            onClick={() => {
+              dispatch(setIsReady(2));
+            }}
+          >
+            정답 보기
+          </button>
+        ) : gameState.stage < 10 && gameState.isReady == 2 ? (
           <button
             className={style.btn_main}
             onClick={() => {
               dispatch(setStage(Number(gameState.stage) + 1));
-              dispatch(setIsReady(true));
+              dispatch(setIsReady(0));
             }}
           >
             다 음
           </button>
-        ) : gameState.stage === 10 && !gameState.isReady ? (
+        ) : gameState.stage == 10 && gameState.isReady == 2 ? (
           <button
             className={style.btn_main}
             onClick={() => {
               navigate(`/self-study/${type}/result`);
               dispatch(setStage(Number(gameState.stage) + 1));
+              dispatch(setIsReady(0));
             }}
           >
             다 음
@@ -118,7 +159,8 @@ export default function SelfStudyLayout({ type, children }) {
             className={style.btn_main}
             onClick={() => {
               navigate(`/self-study/${type}/${gameState.mode}`);
-              dispatch(setStage(1));
+              dispatch(setStage(0));
+              dispatch(setIsReady(0));
             }}
           >
             다시 하기

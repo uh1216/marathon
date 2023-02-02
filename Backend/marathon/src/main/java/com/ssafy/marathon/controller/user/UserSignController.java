@@ -2,9 +2,10 @@ package com.ssafy.marathon.controller.user;
 
 
 import com.ssafy.marathon.config.security.JwtTokenProvider;
+import com.ssafy.marathon.dto.request.user.IdEmailDto;
 import com.ssafy.marathon.dto.request.user.SignInReqDto;
 import com.ssafy.marathon.dto.response.user.SignInResDto;
-import com.ssafy.marathon.service.user.EmailService;
+import com.ssafy.marathon.service.user.EmailServiceImpl;
 import com.ssafy.marathon.service.user.UserSignServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -28,7 +29,7 @@ public class UserSignController {
 
     private final UserSignServiceImpl userSignService;
     private final JwtTokenProvider jwtTokenProvider;
-    private final EmailService emailService;
+    private final EmailServiceImpl emailService;
     private final Logger LOGGER = LoggerFactory.getLogger(UserSignController.class);
 
     @PostMapping(value = "/login")
@@ -55,33 +56,31 @@ public class UserSignController {
 
     @GetMapping("/findid")
     public ResponseEntity<?> findId(@RequestParam String email) {
-        LOGGER.info("[withdraw] 이이디 찾기 시작 ");
+        LOGGER.info("[findId] 이이디 찾기 시작 ");
         try {
             emailService.sendEmailToFindId(email);
         } catch (Exception e) {
-            LOGGER.info("[withdraw] 이메일 조회 실패");
             LOGGER.info("[withdraw] 아이디 찾기 실패 ");
             e.printStackTrace();
             String msg = "해당 이메일이 존재하지 않습니다.";
             return new ResponseEntity<String>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        LOGGER.info("[withdraw] 아이디 찾기 종료 ");
+        LOGGER.info("[withdraw] 아이디 찾기 수행 완료 ");
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PutMapping("/findpw")
-    public ResponseEntity<?> findPw(@RequestBody String id, String email) {
+    public ResponseEntity<?> findPw(@RequestBody IdEmailDto idEmailDto) {
         LOGGER.info("[withdraw] 패스워드 찾기 시작 ");
         try {
-            emailService.sendEmailToFindPassword(id, email);
+            emailService.sendEmailToFindPassword(idEmailDto);
         } catch (Exception e) {
-            LOGGER.info("[withdraw] 이메일 조회 실패");
-            LOGGER.info("[withdraw] 아이디 찾기 실패 ");
+            LOGGER.info("[withdraw] 패스워드 찾기 실패 ");
             e.printStackTrace();
             String msg = "해당 이메일이 존재하지 않습니다.";
             return new ResponseEntity<String>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        LOGGER.info("[withdraw] 패스워드 찾기 종료 ");
+        LOGGER.info("[withdraw] 패스워드 찾기 수행완료 ");
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

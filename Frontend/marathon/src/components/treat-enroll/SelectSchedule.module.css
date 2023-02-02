@@ -105,6 +105,7 @@
   border: 1px solid black;
   border-radius: 20px;
   color: #000000;
+  transition: "ease-in-out 0.5s";
 }
 
 /** 이미 에약된 버튼*/
@@ -128,6 +129,7 @@
   border: none;
   border-radius: 20px;
   color: white;
+  transition: "ease-in-out 0.5s";
 }
 
 .save_button_div {

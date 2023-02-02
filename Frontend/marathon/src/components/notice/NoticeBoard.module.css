@@ -127,8 +127,8 @@
 
 @media screen and (max-width: 910px) {
   .notice_top_interface_grid {
-    grid-template-columns: 40% 30%;
-    grid-template-rows: 35% 35% 40%;
+    grid-template-columns: 35% 45% 20%;
+    grid-template-rows: 60% 40%;
   }
 
   .notice_button {
@@ -139,24 +139,25 @@
     display: flex;
     width: 130%;
     grid-row-start: 2;
-    grid-column-start: 1;
+    grid-column-start: 2;
     grid-column-end: 3;
   }
 
   .notice_top_interface_item1 {
     display: flex;
-    grid-row-start: 3;
+    grid-row-start: 1;
   }
 
   .notice_top_interface_item2 {
     display: flex;
-    grid-row-start: 1;
+    grid-row-start: 2;
     grid-column-start: 1;
     grid-column-end: 2;
   }
 
   .notice_top_interface_item4 {
     display: flex;
-    grid-column-start: 2;
+    grid-row-start: 2;
+    grid-column-start: 3;
   }
 }
