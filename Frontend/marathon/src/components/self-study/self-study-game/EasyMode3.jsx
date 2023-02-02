@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRecord, resetRecord } from "stores/game.store";
 import commonStyle from "./Game.module.css";
@@ -9,56 +9,22 @@ import style from "./EasyMode3.module.css";
 import figure from "img/gitlab.png";
 
 export default function EasyMode1() {
-  /** 10단계 중 몇 번째 단계 게임을 하고 있는지 */
   const gameState = useSelector((state) => state.gameState);
-
   const dispatch = useDispatch();
 
-  const preventGoBack = (e) => {
-    console.log(e);
-    //let isGoBack = window.confirm("종료하기를 눌러주세요 :D");
-    // if (!isGoBack) {
-    //   window.history.pushState(null, "", "");
-    // }
-    // if (isGoBack) {
-    //   window.history.popState();
-    // }
-  };
-
-  // 새로고침 막기 변수
-  const preventClose = (e) => {
-    e.preventDefault();
-    e.returnValue = ""; // chrome에서는 설정이 필요해서 넣은 코드
-  };
-
-  // 브라우저에 렌더링 시 한 번만 실행하는 코드
+  // 인트로 화면 띄울 때 세팅할 것
   useEffect(() => {
-    (() => {
-      //window.history.pushState(null, "", "");
-      window.addEventListener("popstate", preventGoBack);
-      window.addEventListener("beforeunload", preventClose);
-    })();
-
-    return () => {
-      window.removeEventListener("popstate", preventGoBack);
-      window.removeEventListener("beforeunload", preventClose);
-    };
-  }, []);
-
-  useEffect(() => {
-    dispatch(setIsReady(true));
     dispatch(setMode("easy"));
-    dispatch(setStage(Number(0)));
+    dispatch(setStage(0));
+    dispatch(setIsReady(0));
   }, []);
 
   useEffect(() => {
     /** 1단계라면 점수 기록을 초기화 */
-    if (gameState.stage == 1 && gameState.isReady) {
+    if (gameState.stage == 1 && gameState.isReady == 0) {
       dispatch(resetRecord());
     }
-  }, [gameState.stage]);
 
-  useEffect(() => {
     if (!gameState.isReady) {
       ////////////////////////////// 해당 코드 삭제하고 작업 시작해주세요
       if (gameState.stage != 3) dispatch(addRecord(true));
@@ -72,28 +38,33 @@ export default function EasyMode1() {
   }, [gameState.isReady]);
 
   ///////////////////////////// 드래그 앤 드롭 start /////////////////////////////
-  // const draggables = document.querySelectorAll(".draggable");
-  // const containers = document.querySelectorAll(".drag_container");
+  const draggables = document.querySelectorAll(".draggable");
+  const containers = document.querySelectorAll(".container");
 
-  const dragStart = (e) => {
-    console.log(e);
-    e.target.classList.add("dragging");
-  };
-  const dragEnd = (e) => {
-    e.target.classList.remove("dragging");
-  };
-  const dragOver = (e) => {
-    e.preventDefault();
-    const afterElement = getDragAfterElement(e.target, e.clientX);
-    const draggable = document.querySelector(".dragging");
-    if (afterElement === undefined) {
-      e.target.appendChild(draggable);
-    } else {
-      e.target.insertBefore(draggable, afterElement);
-    }
-  };
+  draggables.forEach((draggable) => {
+    draggable.addEventListener("dragstart", () => {
+      draggable.classList.add("dragging");
+    });
 
-  const getDragAfterElement = (container, x) => {
+    draggable.addEventListener("dragend", () => {
+      draggable.classList.remove("dragging");
+    });
+  });
+
+  containers.forEach((container) => {
+    container.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      const afterElement = getDragAfterElement(container, e.clientX);
+      const draggable = document.querySelector(".dragging");
+      if (afterElement === undefined) {
+        container.appendChild(draggable);
+      } else {
+        container.insertBefore(draggable, afterElement);
+      }
+    });
+  });
+
+  function getDragAfterElement(container, x) {
     const draggableElements = [
       ...container.querySelectorAll(".draggable:not(.dragging)"),
     ];
@@ -111,8 +82,7 @@ export default function EasyMode1() {
       },
       { offset: Number.NEGATIVE_INFINITY }
     ).element;
-  };
-
+  }
   ///////////////////////////// 드래그 앤 드롭 end /////////////////////////////
 
   /////////////////
@@ -133,7 +103,7 @@ export default function EasyMode1() {
   const renderingCol = () => {
     const result = [];
     for (let x = 0; x < col; x++) {
-      result.push(<td onDragOver={(e) => dragOver(e)} key={x}></td>);
+      result.push(<td className="container" key={x}></td>);
     }
     return result;
   };
@@ -148,6 +118,16 @@ export default function EasyMode1() {
         gif={GIF}
       />
     );
+  } else if (gameState.isReady == 0) {
+    return (
+      <>
+        <div className={commonStyle.stage}>{gameState.stage} / 10</div>
+        <div className={commonStyle.title}>
+          -------여기에 가이드 문구를 입력해주세요-------
+        </div>
+        <div>--------여기에 '문제'를 제시해주세요--------</div>
+      </>
+    );
   } else if (gameState.isReady) {
     return (
       <>
@@ -159,35 +139,20 @@ export default function EasyMode1() {
           <table className={style.table}>
             <tbody>{renderingTable()}</tbody>
           </table>
-          <div onDragOver={(e) => dragOver(e)}>
-            <div
-              onDragStart={(e) => dragStart(e)}
-              onDragEnd={(e) => dragEnd(e)}
-              draggable="true"
-            >
+          <div className={style.figure_box + " drag_container"}>
+            <button class="draggable" draggable="true">
               🦊
-            </div>
-            <div
-              onDragStart={(e) => dragStart(e)}
-              onDragEnd={(e) => dragEnd(e)}
-              draggable="true"
-            >
+            </button>
+            <button class="draggable" draggable="true">
               🐸
-            </div>
-            <div
-              onDragStart={(e) => dragStart(e)}
-              onDragEnd={(e) => dragEnd(e)}
-              draggable="true"
-            >
+            </button>
+
+            <button class="draggable" draggable="true">
               🐶
-            </div>
-            <div
-              onDragStart={(e) => dragStart(e)}
-              onDragEnd={(e) => dragEnd(e)}
-              draggable="true"
-            >
+            </button>
+            <button class="draggable" draggable="true">
               🐱
-            </div>
+            </button>
           </div>
         </div>
       </>
