@@ -7,7 +7,7 @@ import Pagination from "components/common/Pagination";
 
 export default function Statistics() {
   const dispatch = useDispatch();
-  const gameName = ["색깔 위치 맞추기", "그림 카드 맞추기", "도형 위치 맞추기"];
+  const gameName = ["색깔 위치 맞추기", "그림 카드 맞추기", "동물 위치 맞추기"];
   const recentStudy = [
     {
       date: "2022.12.25 12:03:24",
@@ -109,91 +109,91 @@ export default function Statistics() {
         data={[
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
           },
           {
             no: 10,
-            game: "도형 위치 맞추기",
+            game: "동물 위치 맞추기",
             date: "2022.12.25 12:03:24",
             difficulty: "고급",
             accuracy: "80%",
