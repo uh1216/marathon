@@ -43,7 +43,7 @@ public class DoctorSignServiceImpl implements DoctorSignService {
             .license(doctorReqDto.getLicense())
             .degree(doctorReqDto.getDegree())
             .build();
-        doctor.setImg("default.png");
+        doctor.setImg("default.PNG");
         Doctor savedDoctor = (Doctor) doctorRepository.save(doctor);
         SignUpResDto signUpResDto;
 

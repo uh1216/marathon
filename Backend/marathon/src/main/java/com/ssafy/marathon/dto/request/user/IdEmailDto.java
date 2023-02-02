@@ -1,4 +1,4 @@
-package com.ssafy.marathon.dto.response.user;
+package com.ssafy.marathon.dto.request.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,15 +7,14 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @SuperBuilder
-public class SignInResDto extends SignUpResDto {
-
-    private String accessToken;
-
+@ToString
+public class IdEmailDto {
+    private String id;
+    private String email;
 
 }

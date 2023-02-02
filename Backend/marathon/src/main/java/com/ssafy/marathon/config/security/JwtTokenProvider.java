@@ -108,6 +108,13 @@ public class JwtTokenProvider {
         LOGGER.info("[getUserSeq] 토큰 기반 회원 seq 추출 완료, info : {}", seq);
         return seq;
     }
+    public String getUserRole(String token) {
+        LOGGER.info("[getUserSeq] 토큰 기반 회원 role 정보 추출");
+        String role = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody()
+            .get("roles").toString();
+        LOGGER.info("[getUserSeq] 토큰 기반 회원 role 추출 완료, info : {}", role);
+        return role;
+    }
 
 
     //HTTP Request Header 에 설정된 토큰 값을 가져옴

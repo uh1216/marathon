@@ -6,6 +6,7 @@ import com.ssafy.marathon.dto.request.user.PatientReqDto;
 import com.ssafy.marathon.dto.response.user.PatientResDto;
 import com.ssafy.marathon.dto.response.user.SignUpResDto;
 import com.ssafy.marathon.service.patient.PatientSignServiceImpl;
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("patient-sign")
 @RestController
@@ -55,10 +58,11 @@ public class PatientSignController {
     }
 
     @PutMapping("/modify")
-    public ResponseEntity<?> modifyPatient(@RequestHeader("Access-Token") String accessToken, @RequestBody PatientReqDto patientReqDto) {
+    public ResponseEntity<?> modifyPatient(@RequestHeader("Access-Token") String accessToken, @RequestPart(name = "patient") PatientReqDto patientReqDto, @RequestPart MultipartFile image)
+        throws IOException {
         Long seq = jwtTokenProvider.getUserSeq(accessToken);
         LOGGER.info("[modifyPatient] 환자정보 수정 시작 ");
-        patientSignService.modifyPatient(seq, patientReqDto);
+        patientSignService.modifyPatient(seq, patientReqDto, image);
         LOGGER.info("[modifyPatient] 환자정보 수정 완료 ");
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
