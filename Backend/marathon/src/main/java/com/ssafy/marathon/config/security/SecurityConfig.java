@@ -45,12 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/patient*/**").hasRole("PATIENT")
             .antMatchers("/doctor*/**").hasRole("DOCTOR")
             .antMatchers("/admin*/**").hasRole("ADMIN")
-//            .antMatchers(HttpMethod.GET, "/join-api/user")
-//            .hasRole("ADMIN") // product로 시작하는 Get 요청은 허용
             //예외는 누구나 발생가능
             .antMatchers("**exception**").permitAll()
             // 그외에는 인증 필요
-            .anyRequest().authenticated() //---------------------------------------------------------------
+            .anyRequest().authenticated()
+            //---------------------------------------------------------------
             .and()
             //권한없을시 예외 발생
             .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
