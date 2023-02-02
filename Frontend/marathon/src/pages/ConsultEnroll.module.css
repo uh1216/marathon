@@ -175,8 +175,14 @@
   color: white;
   border: none;
   font-size: 1.25em;
+  transition: 0.25s;
   margin-left: 25%;
   margin-right: 25%;
+}
+
+.enroll_btn:hover {
+  background-color: #ddd0ff;
+  color: gray;
 }
 
 /* 중복확인 버튼 */

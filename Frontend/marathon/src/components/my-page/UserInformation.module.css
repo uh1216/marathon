@@ -75,6 +75,7 @@
   height: 38px;
   border-radius: 5px;
   background-color: #ff0000;
+  transition: 0.25s;
   color: white;
   border: 0;
 }
@@ -84,6 +85,7 @@
   border-radius: 5px;
   background-color: white;
   border: #3e3e3e solid 1px;
+  transition: 0.25s;
   margin-left: 10px;
 }
 .btns {
@@ -92,6 +94,19 @@
   align-self: flex-end;
   margin-top: 40px;
 }
+
+.btn_unregister:hover {
+  background-color: #ff9191;
+  color: gray;
+}
+
+.btn_modify:hover,
+.btn_upload:hover {
+  background-color: #e1e1e1;
+  color: rgb(255, 255, 255);
+  border: none;
+}
+
 /* 파일 업로드 버튼 */
 label.btn_upload {
   display: flex;
@@ -100,11 +115,13 @@ label.btn_upload {
   width: 100px;
   height: 38px;
   border: 1px solid #3e3e3e;
+  transition: 0.25s;
   border-radius: 5px;
   font-size: 0.94em;
   background-color: white;
   margin-top: 20px;
 }
+
 label.btn_upload:hover {
   cursor: pointer;
 }

@@ -48,11 +48,14 @@
   border: #696969 1px solid;
   border-radius: 30px;
   padding: 8px 18px;
+  transition: 0.25s;
   background-color: white;
 }
 
 .btn:hover {
-  background-color: #e6e6e6;
+  background-color: #e3e3e3;
+  color: rgb(255, 255, 255);
+  border: none;
 }
 
 .message_checked .btn {
@@ -73,8 +76,14 @@
   padding: 8px 13px;
   border-radius: 30px;
   border: 0;
+  transition: 0.25s;
   color: white;
   box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 25%);
+}
+
+.btn_new_message:hover {
+  background-color: #c5b7ed;
+  color: gray;
 }
 
 /* 날짜, 보낸 사람 */
