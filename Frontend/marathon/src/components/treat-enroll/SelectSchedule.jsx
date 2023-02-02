@@ -173,7 +173,7 @@ export default function SelectSchedule({ name }) {
               (thisTimeTable[i] === "3" && style.button3)
             }
             name={thisDay}
-            value={i + thisTimeTable[i]}
+            value={cnt.toString() + i.toString() + thisTimeTable[i]}
             onClick={onChange}
             disabled={
               (thisTimeTable[i] === "0" && true) ||
@@ -194,7 +194,7 @@ export default function SelectSchedule({ name }) {
               (thisTimeTable[i] === "3" && style.button3)
             }
             name={thisDay}
-            value={i + thisTimeTable[i]}
+            value={cnt.toString() + i.toString() + thisTimeTable[i]}
             onClick={onChange}
             disabled={
               (thisTimeTable[i] === "0" && true) ||
@@ -215,7 +215,7 @@ export default function SelectSchedule({ name }) {
               (thisTimeTable[i] === "3" && style.button3)
             }
             name={thisDay}
-            value={i + thisTimeTable[i]}
+            value={cnt.toString() + i.toString() + thisTimeTable[i]}
             onClick={onChange}
             disabled={
               (thisTimeTable[i] === "0" && true) ||
@@ -233,16 +233,16 @@ export default function SelectSchedule({ name }) {
   /** 일정 선택 함수 */
   const onChange = (e) => {
     let reserve = "";
-    if (e.target.value[1] === "1") {
+    if (e.target.value[2] === "1") {
       reserve = "3";
-    } else if (e.target.value[1] === "3") {
+    } else if (e.target.value[2] === "3") {
       reserve = "1";
     }
 
     let findItem = teacherSchedule.find((t) => t.localDate === e.target.name);
     let newTimeTable = [];
     for (let i = 0; i < 8; i++) {
-      i.toString() === e.target.value[0]
+      i.toString() === e.target.value[1]
         ? newTimeTable.push(reserve)
         : newTimeTable.push(findItem.timeTable[i]);
     }
@@ -252,15 +252,20 @@ export default function SelectSchedule({ name }) {
     findorigin.timeTable = newTimeTable;
 
     /** 선택 취소된 날짜 반영하기 위한 코드 */
-    let prevItem = teacherSchedule.find((t) => t.localDate === targetDate[0]);
-    if (prevItem !== undefined) {
+    let prevItem = teacherSchedule.find((t) => t.localDate === targetDate[0])
+      ? teacherSchedule.find((t) => t.localDate === targetDate[0])
+      : null;
+    console.log(prevItem);
+    if (prevItem !== null) {
+      let newTimeTable2 = [];
       /** 동일한 버튼 클릭시는 아래 코드 동작 X(취소만 가능하도록) */
       if (e.target !== target) {
-        let newTimeTable2 = [];
+        console.log("해당");
         for (let i = 0; i < 8; i++) {
           /** 날짜가 다른 경우 */
           if (targetDate[0] !== e.target.name) {
             if (prevItem.timeTable[i] === "3") {
+              /** 그외 나머지 */
               newTimeTable2.push("1");
             } else {
               newTimeTable2.push(prevItem.timeTable[i]);
@@ -269,7 +274,7 @@ export default function SelectSchedule({ name }) {
             /** 날짜가 같은 경우 */
             if (prevItem.timeTable[i] === "3") {
               /** 클릭한 버튼을 제외한 나머지에서 값이 3인 부분 1로 변경 */
-              if (i.toString() === targetDate[1][0]) {
+              if (i.toString() === targetDate[1][1]) {
                 newTimeTable2.push("1");
               } else {
                 newTimeTable2.push(prevItem.timeTable[i]);
@@ -284,6 +289,23 @@ export default function SelectSchedule({ name }) {
           (t) => t.localDate === targetDate[0]
         );
         findorigin2.timeTable = newTimeTable2;
+      } else {
+        if (e.target.value[0] !== targetDate[0]) {
+          /** 요일, 시간이 같고 주차가 다른 경우 */
+          for (let i = 0; i < 8; i++) {
+            if (prevItem.timeTable[i] === "3") {
+              newTimeTable2.push("1");
+            } else {
+              newTimeTable2.push(prevItem.timeTable[i]);
+            }
+          }
+          newTimeTable2 = newTimeTable2.join("");
+          let findorigin2 = newSchedule.find(
+            (t) => t.localDate === targetDate[0]
+          );
+          findorigin2.timeTable = newTimeTable2;
+        } else {
+        }
       }
     }
     setTeacherSchedule(newSchedule);
