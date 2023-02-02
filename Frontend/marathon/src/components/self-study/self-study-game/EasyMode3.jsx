@@ -38,51 +38,55 @@ export default function EasyMode1() {
   }, [gameState.isReady]);
 
   ///////////////////////////// 드래그 앤 드롭 start /////////////////////////////
-  const draggables = document.querySelectorAll(".draggable");
-  const containers = document.querySelectorAll(".container");
+  useEffect(() => {
+    if (gameState.isReady == 1) {
+      const draggables = document.querySelectorAll(".draggable");
+      const containers = document.querySelectorAll(".drag_container");
 
-  draggables.forEach((draggable) => {
-    draggable.addEventListener("dragstart", () => {
-      draggable.classList.add("dragging");
-    });
+      draggables.forEach((draggable) => {
+        draggable.addEventListener("dragstart", () => {
+          draggable.classList.add("dragging");
+        });
 
-    draggable.addEventListener("dragend", () => {
-      draggable.classList.remove("dragging");
-    });
-  });
+        draggable.addEventListener("dragend", () => {
+          draggable.classList.remove("dragging");
+        });
+      });
 
-  containers.forEach((container) => {
-    container.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      const afterElement = getDragAfterElement(container, e.clientX);
-      const draggable = document.querySelector(".dragging");
-      if (afterElement === undefined) {
-        container.appendChild(draggable);
-      } else {
-        container.insertBefore(draggable, afterElement);
+      containers.forEach((container) => {
+        container.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          const afterElement = getDragAfterElement(container, e.clientX);
+          const draggable = document.querySelector(".dragging");
+          if (afterElement === undefined) {
+            container.appendChild(draggable);
+          } else {
+            container.insertBefore(draggable, afterElement);
+          }
+        });
+      });
+
+      function getDragAfterElement(container, x) {
+        const draggableElements = [
+          ...container.querySelectorAll(".draggable:not(.dragging)"),
+        ];
+
+        return draggableElements.reduce(
+          (closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = x - box.left - box.width / 2;
+            // console.log(offset);
+            if (offset < 0 && offset > closest.offset) {
+              return { offset: offset, element: child };
+            } else {
+              return closest;
+            }
+          },
+          { offset: Number.NEGATIVE_INFINITY }
+        ).element;
       }
-    });
-  });
-
-  function getDragAfterElement(container, x) {
-    const draggableElements = [
-      ...container.querySelectorAll(".draggable:not(.dragging)"),
-    ];
-
-    return draggableElements.reduce(
-      (closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = x - box.left - box.width / 2;
-        // console.log(offset);
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child };
-        } else {
-          return closest;
-        }
-      },
-      { offset: Number.NEGATIVE_INFINITY }
-    ).element;
-  }
+    }
+  }, [gameState.isReady]);
   ///////////////////////////// 드래그 앤 드롭 end /////////////////////////////
 
   /////////////////
@@ -103,7 +107,7 @@ export default function EasyMode1() {
   const renderingCol = () => {
     const result = [];
     for (let x = 0; x < col; x++) {
-      result.push(<td className="container" key={x}></td>);
+      result.push(<td className="drag_container" key={x}></td>);
     }
     return result;
   };
@@ -128,7 +132,7 @@ export default function EasyMode1() {
         <div>--------여기에 '문제'를 제시해주세요--------</div>
       </>
     );
-  } else if (gameState.isReady) {
+  } else if (gameState.isReady == 1) {
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
@@ -140,17 +144,17 @@ export default function EasyMode1() {
             <tbody>{renderingTable()}</tbody>
           </table>
           <div className={style.figure_box + " drag_container"}>
-            <button class="draggable" draggable="true">
+            <button className="draggable" draggable="true">
               🦊
             </button>
-            <button class="draggable" draggable="true">
+            <button className="draggable" draggable="true">
               🐸
             </button>
 
-            <button class="draggable" draggable="true">
+            <button className="draggable" draggable="true">
               🐶
             </button>
-            <button class="draggable" draggable="true">
+            <button className="draggable" draggable="true">
               🐱
             </button>
           </div>
