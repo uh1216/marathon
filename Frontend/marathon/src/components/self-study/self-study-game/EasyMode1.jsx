@@ -10,55 +10,69 @@ import GIF from "img/gif/11.gif";
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
-  const [quiz, setQuiz] = useState([]);
-  let quizList = [];
+  const [quiz, setQuiz] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [mySelect, setMySelect] = useState([
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+  ]);
 
   // 인트로 화면 띄울 때 세팅할 것
   useEffect(() => {
     dispatch(setMode("easy"));
     dispatch(setStage(0));
     dispatch(setIsReady(0));
+    dispatch(resetRecord());
   }, []);
 
   useEffect(() => {
-    /** 1단계라면 점수 기록을 초기화 */
-    if (gameState.stage === 1 && gameState.isReady === 0) {
-      dispatch(resetRecord());
-    }
-
-    if (gameState.isReady === 2) {
-      ////////////////////////////// 해당 코드 삭제하고 작업 시작해주세요
-      if (gameState.stage !== 3) dispatch(addRecord(true));
-      else dispatch(addRecord(false));
-      ////////////////////////////// 해당 코드 삭제하고 작업 시작해주세요
-
+    if (gameState.isReady === 1) {
       ////////////////////////////// 정답을 채워주세요
-      // if (---정답 조건---) dispatch(addRecord(true));
-      // else dispatch(addRecord(false));
+      return () => {
+        console(quiz);
+        console(mySelect);
+        if (quiz === mySelect) {
+          dispatch(addRecord(true));
+        } else dispatch(addRecord(false));
+      };
     }
   }, [gameState.isReady]);
 
   /** 게임 스테이지 넘어갈때마다 새로운 문제 생성 */
   useEffect(() => {
-    craeteQuiz();
+    setQuiz(craeteQuiz());
+    setMySelect(["0", "0", "0", "0", "0", "0", "0", "0", "0"]);
   }, [gameState.stage]);
 
   /** 초기 문제 생성 위한 코드*/
   const craeteQuiz = () => {
-    quizList = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const quizList = ["0", "0", "0", "0", "0", "0", "0", "0", "0"];
     for (let i = 0; i < 5; i++) {
       while (1) {
         const rand = Math.round(Math.random() * 8);
-        if (quizList[rand] === 0) {
-          quizList[rand] = 1;
+        if (quizList[rand] === "0") {
+          quizList[rand] = "1";
           break;
         }
       }
     }
-    console.log(quizList);
+    return quizList;
+  };
+  /** 버튼 클릭 시 상태 바뀌는 함수 */
+  const onChange = (e) => {
+    let index = e.target.value;
+    let arr = [...mySelect];
+    index[1] === "0" ? (arr[index[0]] = "1") : (arr[index[0]] = "0");
+    setMySelect(arr);
   };
 
-  if (gameState.stage == 0) {
+  if (gameState.stage === 0) {
     return (
       <SelfStudyIntro
         mode={"easy"}
@@ -66,7 +80,28 @@ export default function EasyMode1() {
         gif={GIF}
       />
     );
-  } else if (gameState.isReady == 0) {
+  } else if (gameState.isReady === 0) {
+    const button_arr = [];
+    quiz.forEach((ans, index) => {
+      ans === "1"
+        ? button_arr.push(
+            <button
+              key={index}
+              className={style.button_answer}
+              value={index.toString() + ans}
+              disabled
+            ></button>
+          )
+        : button_arr.push(
+            <button
+              key={index}
+              className={style.button_blank}
+              value={index.toString() + ans}
+              disabled
+            ></button>
+          );
+    });
+
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
@@ -74,34 +109,93 @@ export default function EasyMode1() {
           다음 화면에서 색칠된 부분의 위치를 기억해주세요
         </div>
         <div className={style.content}>
-          <div className={style.board}>
-            {quizList.forEach((index) =>
-              quizList[index] === 1 ? (
-                <button className={style.button_answer}></button>
-              ) : (
-                <button className={style.button_blank}></button>
-              )
-            )}
-          </div>
+          <div className={style.board}>{button_arr}</div>
         </div>
       </>
     );
-  } else if (gameState.isReady == 1) {
+  } else if (gameState.isReady === 1) {
+    const button_arr2 = [];
+    mySelect.forEach((val, index) => {
+      val.toString() === "1"
+        ? button_arr2.push(
+            <button
+              key={index}
+              className={style.button_selected}
+              value={index.toString() + val}
+              onClick={onChange}
+            ></button>
+          )
+        : button_arr2.push(
+            <button
+              key={index}
+              className={style.button_blank}
+              value={index.toString() + val}
+              onClick={onChange}
+            ></button>
+          );
+    });
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
           기억을 토대로 색칠되었던 부분을 클릭해주세요
         </div>
-        <div>--------여기에 '문제 풀기'를 구현해주세요--------</div>
+        <div className={style.content}>
+          <div className={style.board}>{button_arr2}</div>
+        </div>
       </>
     );
   } else {
+    const button_arr3 = [];
+    quiz.forEach((ans, index) => {
+      /** 정답 칸을 클릭 안한 경우 */
+      if (quiz[index] === "1" && mySelect[index] !== quiz[index]) {
+        button_arr3.push(
+          <button
+            key={index}
+            className={style.button_incorrect}
+            value={index.toString() + 3}
+            disabled
+          ></button>
+        );
+        /** 오답 칸을 클릭 한 경우 */
+      } else if (quiz[index] !== mySelect[index]) {
+        button_arr3.push(
+          <button
+            key={index}
+            className={style.button_incorrect}
+            value={index.toString() + 3}
+            disabled
+          ></button>
+        );
+        /** 정답 칸을 클릭한 경우 */
+      } else if (mySelect[index] === "1" && quiz[index] === mySelect[index]) {
+        button_arr3.push(
+          <button
+            key={index}
+            className={style.button_correct}
+            value={index.toString() + 2}
+            disabled
+          ></button>
+        );
+      } else {
+        button_arr3.push(
+          <button
+            key={index}
+            className={style.button_blank}
+            value={index.toString() + 0}
+            disabled
+          ></button>
+        );
+      }
+    });
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>채점 결과 입니다</div>
-        <div>--------여기에 '정답'을 제시해주세요--------</div>
+        <div className={style.content}>
+          <div className={style.board}>{button_arr3}</div>
+        </div>
       </>
     );
   }
