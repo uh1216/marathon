@@ -6,11 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface HistoryService {
+public interface DoctorHistoryService {
 
     Page<HistoryResDto> getNonFeedbackPages(int page, Long doctorSeq);
 
     Page<HistoryResDto> getFeedbackPages(int i, Long doctorSeq);
 
     Void writeFeedback(HistoryReqDto historyReqDto);
+
+    HistoryResDto getHistoryDetail(Long historySeq);
 }

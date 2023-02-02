@@ -3,6 +3,7 @@ package com.ssafy.marathon.db.repository;
 import com.ssafy.marathon.db.entity.treatment.Reservation;
 import com.ssafy.marathon.dto.response.treatment.DayOfReservationResDto;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +19,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     Reservation findByDateAndDoctor_Seq(LocalDate date, Long doctorSeq);
 
     Reservation findBySeq(Long seq);
+
+    List<Reservation> findAllByDateBetweenAndDoctor_Seq(LocalDate start, LocalDate end, Long seq);
 }
