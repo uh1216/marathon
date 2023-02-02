@@ -255,12 +255,10 @@ export default function SelectSchedule({ name }) {
     let prevItem = teacherSchedule.find((t) => t.localDate === targetDate[0])
       ? teacherSchedule.find((t) => t.localDate === targetDate[0])
       : null;
-    console.log(prevItem);
     if (prevItem !== null) {
       let newTimeTable2 = [];
       /** 동일한 버튼 클릭시는 아래 코드 동작 X(취소만 가능하도록) */
       if (e.target !== target) {
-        console.log("해당");
         for (let i = 0; i < 8; i++) {
           /** 날짜가 다른 경우 */
           if (targetDate[0] !== e.target.name) {
@@ -290,7 +288,7 @@ export default function SelectSchedule({ name }) {
         );
         findorigin2.timeTable = newTimeTable2;
       } else {
-        if (e.target.value[0] !== targetDate[0]) {
+        if (e.target.value[0] !== targetDate[1][0]) {
           /** 요일, 시간이 같고 주차가 다른 경우 */
           for (let i = 0; i < 8; i++) {
             if (prevItem.timeTable[i] === "3") {
@@ -304,7 +302,6 @@ export default function SelectSchedule({ name }) {
             (t) => t.localDate === targetDate[0]
           );
           findorigin2.timeTable = newTimeTable2;
-        } else {
         }
       }
     }

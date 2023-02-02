@@ -59,7 +59,8 @@
   flex-grow: 1;
 }
 
-.reserve_info {
+.reserve_info,
+.sentenceHover {
   display: flex;
   margin-bottom: 5px;
   flex-wrap: wrap;
@@ -78,12 +79,16 @@
 
 .sentence {
   font-size: 0.8em;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin-top: 1px;
   cursor: pointer;
 }
 
-.sentence:hover {
+.sentenceHover {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.sentenceHover:hover {
   color: rgb(155, 155, 155);
 }
 
