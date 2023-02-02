@@ -23,7 +23,10 @@ export default function SideNav(props) {
 
   return (
     <>
-      <div className={style.side_board}>
+      <div
+        className={style.side_board}
+        style={{ animation: "1s ease-in-out loadEffect2" }}
+      >
         <h4>{props.sideNavTitle}</h4>
         <hr />
         {props.sideNavContent.map((data, i) => {

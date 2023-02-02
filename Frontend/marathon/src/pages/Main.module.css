@@ -63,6 +63,7 @@
 .page_card {
   width: 48%;
   min-width: 338px;
+  height: 480px;
   padding: 40px;
   margin-top: 0px;
   position: relative;
@@ -163,6 +164,12 @@
   color: #ffffff;
 }
 
+@media screen and (max-width: 1200px) {
+  .page_card {
+    height: 420px;
+  }
+}
+
 @media screen and (max-width: 992px) {
   .page_card h3 {
     font-size: 1.2em;
@@ -176,6 +183,7 @@
 
   .page_card {
     width: 48%;
+    height: auto;
     min-width: auto;
   }
 

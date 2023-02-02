@@ -291,21 +291,26 @@ export default function ConsultEnroll() {
     <div className="container">
       <div className="inner_container" style={{ paddingBottom: "10px" }}>
         <div className={style.color_box}>
-          <div className={style.title_box}>신청절차</div>
-          <h4>
+          <div
+            className={style.title_box}
+            style={{ animation: "1s ease-in-out loadEffect2" }}
+          >
+            신청절차
+          </div>
+          <h4 style={{ animation: "0.7s ease-in-out loadEffect1" }}>
             먼저 상담을 통해서 환자의 상태와 원격 재활이 가능한 지 논의해
             보세요!
           </h4>
           <div className={style.icon_contain_box}>
-            <div>
+            <div style={{ animation: "1s ease-in-out loadEffect2" }}>
               <FontAwesomeIcon className={style.icon_box} icon={faFileLines} />
               <h5>상담 신청서 제출</h5>
             </div>
-            <div>
+            <div style={{ animation: "1.4s ease-in-out loadEffect2" }}>
               <FontAwesomeIcon className={style.icon_box} icon={faCamera} />
               <h5>부담없는 화상 상담</h5>
             </div>
-            <div>
+            <div style={{ animation: "1.8s ease-in-out loadEffect2" }}>
               <FontAwesomeIcon
                 className={style.icon_box}
                 icon={faCalendarCheck}
@@ -316,7 +321,10 @@ export default function ConsultEnroll() {
         </div>
       </div>
       <div className="inner_container" style={{ width: "90%" }}>
-        <div className={style.inner_container}>
+        <div
+          className={style.inner_container}
+          style={{ animation: "0.8s ease-in-out loadEffect1" }}
+        >
           <div>
             <p style={{ marginBottom: "1px" }}>상담 희망날짜</p>
             {/* 달력 컴포넌트 */}

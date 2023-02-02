@@ -29,7 +29,10 @@ export default function Header() {
         zIndex: "1",
       }}
     >
-      <div className={style.header}>
+      <div
+        className={style.header}
+        style={{ animation: "0.6s ease-in-out loadEffect5" }}
+      >
         <div
           className={style.toggle}
           onClick={() => {

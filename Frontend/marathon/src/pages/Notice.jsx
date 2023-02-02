@@ -9,8 +9,16 @@ import style from "./Notice.module.css";
 export default function Notice() {
   return (
     <div>
-      <div className={style.banner}>
-        <p className={style.title}>공지사항</p>
+      <div
+        className={style.banner}
+        style={{ animation: "1s ease-in-out loadEffect1" }}
+      >
+        <p
+          className={style.title}
+          style={{ animation: "1s ease-in-out loadEffect2" }}
+        >
+          공지사항
+        </p>
       </div>
       <Routes>
         <Route path=":pageNum" element={<NoticeBoard />} />
