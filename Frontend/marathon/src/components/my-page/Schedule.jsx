@@ -152,13 +152,15 @@ export default function Schedule() {
                     }}
                   >
                     <div className={style.green_circle}></div>
-                    <div className={style.sentence}>{reservedDay.name}</div>
-                    <div className={style.sentence}>
-                      {state.loginUser.userRole === "patient"
-                        ? " 선생님 "
-                        : " 님 "}{" "}
+                    <div className={style.sentenceHover}>
+                      <div className={style.sentence}>{reservedDay.name}</div>
+                      <div className={style.sentence}>
+                        {state.loginUser.userRole === "patient"
+                          ? " 선생님 "
+                          : " 님 "}{" "}
+                      </div>
+                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                    <div className={style.sentence}>{reservedDay.time}시</div>
                   </div>
                 );
               } else return null;
@@ -185,13 +187,15 @@ export default function Schedule() {
                     }}
                   >
                     <div className={style.green_circle}></div>
-                    <div className={style.sentence}>{reservedDay.name}</div>
-                    <div className={style.sentence}>
-                      {state.loginUser.userRole === "patient"
-                        ? " 선생님 "
-                        : " 님 "}{" "}
+                    <div className={style.sentenceHover}>
+                      <div className={style.sentence}>{reservedDay.name}</div>
+                      <div className={style.sentence}>
+                        {state.loginUser.userRole === "patient"
+                          ? " 선생님 "
+                          : " 님 "}{" "}
+                      </div>
+                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                    <div className={style.sentence}>{reservedDay.time}시</div>
                   </div>
                 );
               } else return null;
@@ -218,13 +222,15 @@ export default function Schedule() {
                     }}
                   >
                     <div className={style.green_circle}></div>
-                    <div className={style.sentence}>{reservedDay.name}</div>
-                    <div className={style.sentence}>
-                      {state.loginUser.userRole === "patient"
-                        ? " 선생님 "
-                        : " 님 "}{" "}
+                    <div className={style.sentenceHover}>
+                      <div className={style.sentence}>{reservedDay.name}</div>
+                      <div className={style.sentence}>
+                        {state.loginUser.userRole === "patient"
+                          ? " 선생님 "
+                          : " 님 "}{" "}
+                      </div>
+                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                    <div className={style.sentence}>{reservedDay.time}시</div>
                   </div>
                 );
               } else return null;
@@ -251,13 +257,15 @@ export default function Schedule() {
                     }}
                   >
                     <div className={style.green_circle}></div>
-                    <div className={style.sentence}>{reservedDay.name}</div>
-                    <div className={style.sentence}>
-                      {state.loginUser.userRole === "patient"
-                        ? " 선생님 "
-                        : " 님 "}{" "}
+                    <div className={style.sentenceHover}>
+                      <div className={style.sentence}>{reservedDay.name}</div>
+                      <div className={style.sentence}>
+                        {state.loginUser.userRole === "patient"
+                          ? " 선생님 "
+                          : " 님 "}{" "}
+                      </div>
+                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                    <div className={style.sentence}>{reservedDay.time}시</div>
                   </div>
                 );
               } else return null;
@@ -284,13 +292,15 @@ export default function Schedule() {
                     }}
                   >
                     <div className={style.green_circle}></div>
-                    <div className={style.sentence}>{reservedDay.name}</div>
-                    <div className={style.sentence}>
-                      {state.loginUser.userRole === "patient"
-                        ? " 선생님 "
-                        : " 님 "}{" "}
+                    <div className={style.sentenceHover}>
+                      <div className={style.sentence}>{reservedDay.name}</div>
+                      <div className={style.sentence}>
+                        {state.loginUser.userRole === "patient"
+                          ? " 선생님 "
+                          : " 님 "}{" "}
+                      </div>
+                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                    <div className={style.sentence}>{reservedDay.time}시</div>
                   </div>
                 );
               } else return null;
@@ -317,13 +327,15 @@ export default function Schedule() {
                     }}
                   >
                     <div className={style.green_circle}></div>
-                    <div className={style.sentence}>{reservedDay.name}</div>
-                    <div className={style.sentence}>
-                      {state.loginUser.userRole === "patient"
-                        ? " 선생님 "
-                        : " 님 "}{" "}
+                    <div className={style.sentenceHover}>
+                      <div className={style.sentence}>{reservedDay.name}</div>
+                      <div className={style.sentence}>
+                        {state.loginUser.userRole === "patient"
+                          ? " 선생님 "
+                          : " 님 "}{" "}
+                      </div>
+                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                    <div className={style.sentence}>{reservedDay.time}시</div>
                   </div>
                 );
               } else return null;
@@ -354,13 +366,15 @@ export default function Schedule() {
                     }}
                   >
                     <div className={style.green_circle}></div>
-                    <div className={style.sentence}>{reservedDay.name}</div>
-                    <div className={style.sentence}>
-                      {state.loginUser.userRole === "patient"
-                        ? " 선생님 "
-                        : " 님 "}{" "}
+                    <div className={style.sentenceHover}>
+                      <div className={style.sentence}>{reservedDay.name}</div>
+                      <div className={style.sentence}>
+                        {state.loginUser.userRole === "patient"
+                          ? " 선생님 "
+                          : " 님 "}{" "}
+                      </div>
+                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                    <div className={style.sentence}>{reservedDay.time}시</div>
                   </div>
                 );
               } else return null;
