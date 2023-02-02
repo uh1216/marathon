@@ -47,7 +47,9 @@ export default function NoticeDetail() {
               <div className={style.notice_detail_body_header_grid}>
                 {/** 제목이 들어가는 태그 */}
                 <div className={style.notice_detail_body_header_item1}>
-                  <h3>{title}</h3>
+                  <h3 className={style.notice_detail_body_header_item1_text}>
+                    {title}
+                  </h3>
                 </div>
                 <div className={style.notice_detail_body_header_item2}>
                   <p className={style.font_gray}>
@@ -65,7 +67,9 @@ export default function NoticeDetail() {
               <hr />
               {/** 내용이 들어가는 태그 */}
               <div className={style.notice_detail_body_content}>
-                <p>{content}</p>
+                <p className={style.notice_detail_body_content_text}>
+                  {content}
+                </p>
               </div>
             </div>
           </div>
