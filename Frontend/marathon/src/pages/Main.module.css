@@ -159,8 +159,8 @@
 }
 
 .button:hover {
-  background-color: rgb(209, 211, 212);
-  color: #4a666a;
+  background-color: rgb(193, 193, 193);
+  color: #ffffff;
 }
 
 @media screen and (max-width: 992px) {

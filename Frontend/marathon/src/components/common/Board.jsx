@@ -1,6 +1,7 @@
 import style from "./Board.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNowBoardInfo } from "stores/content.store";
+import { useNavigate } from "react-router-dom";
 
 /** headRow : 맨 첫번째 row에 무엇을 넣을 것인가? 제목 내용 등등등
  *  grid : 각각의 내용들에 어느정도의 width를 할당할 것인가? 데이터 예시 ex) "40% 30% 30%"
@@ -11,6 +12,8 @@ import { changeNowBoardInfo } from "stores/content.store";
 export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
   const state = useSelector((state) => state);
   const dispath = useDispatch();
+  const navigate = useNavigate();
+
   if (type === "mypageSchedule" && state.loginUser.userRole === "patient") {
     return (
       <>
@@ -32,7 +35,12 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
               <div>{content.dateTime}</div>
               <div>{content.doctorName} 선생님</div>
               <div>
-                <button className={style.button} onClick={() => {}}>
+                <button
+                  className={style.button}
+                  onClick={() => {
+                    navigate(`treatment-detail/${content.seq}`);
+                  }}
+                >
                   수업상세
                 </button>
               </div>
@@ -63,7 +71,12 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
               <div>{content.dateTime}</div>
               <div>{content.doctorName} 님</div>
               <div>
-                <button className={style.button} onClick={() => {}}>
+                <button
+                  className={style.button}
+                  onClick={() => {
+                    navigate(`treatment-detail/${content.doctorName}`);
+                  }}
+                >
                   수업상세
                 </button>
               </div>
@@ -126,7 +139,9 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
               <div>
                 <button
                   className={style.button + " " + style.button2}
-                  onClick={() => {}}
+                  onClick={() => {
+                    navigate(`treatment-detail/${content.seq}`);
+                  }}
                 >
                   수업상세
                 </button>

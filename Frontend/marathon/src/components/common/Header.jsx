@@ -283,7 +283,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/mypage/statistics");
+                        navigate("/mypage/statistics/1");
                       }}
                     >
                       스스로 학습 통계
@@ -325,7 +325,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/mypage/treatment-list");
+                        navigate("/mypage/treatment-list/1");
                       }}
                     >
                       수업 기록
@@ -360,7 +360,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/mypage/consult-list");
+                        navigate("/mypage/consult-list/1");
                       }}
                     >
                       상담 관리
@@ -449,7 +449,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/mypage/consult-list");
+                    navigate("/mypage/consult-list/1");
                   }}
                 >
                   <span>상담 관리</span>
@@ -461,7 +461,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/mypage/statistics");
+                    navigate("/mypage/statistics/1");
                   }}
                 >
                   <span>스스로 학습 통계</span>
@@ -472,7 +472,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/mypage/treatment-list");
+                    navigate("/mypage/treatment-list/1");
                   }}
                 >
                   <span>수업 기록</span>

@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { changeNowSideNav } from "stores/toggle.store";
 import style from "./TreatmentDetail.module.css";
 
 export default function TreatmentDetail({ setIsModalOpen }) {
   const [isInput, setIsInput] = useState(false);
   const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const no = useParams();
   const toggleToInput = () => {
     setIsInput(!isInput);
@@ -28,6 +30,12 @@ export default function TreatmentDetail({ setIsModalOpen }) {
   const [content, setContent] = useState(
     "3회차 언어재활 수업을 완료했습니다.\n옥분님의 인지능력이 첫 수업 때보다 많이 개선되었음을 \n확인할 수 있습니다.\n그림을 보고 설명할 수 있는 어휘의 정보가 많아졌습니다.\n끝말잇기 수업 진행 시 새로운 단어를 떠올리기까지 시간이 상당히 단축되었습니다. \n본인의 질문에 관한 대답을 할 때 전보다 버벅거림이 많이 사라졌고\n 다양한 어휘표현을 사용할 수 있게 되셨습니다."
   );
+
+  useEffect(() => {
+    // 사이드 나브 초기화
+    if (state.loginUser.userRole === "doctor")
+      dispatch(changeNowSideNav("수업 기록"));
+  }, []);
 
   return (
     <>

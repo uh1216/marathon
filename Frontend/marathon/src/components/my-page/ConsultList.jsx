@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
+import style from "./ConsultList.module.css";
 import Pagination from "components/common/Pagination";
 import Board from "components/common/Board";
 import Modal from "components/common/Modal";
 import ConsultListModal from "components/my-page/ConsultListModal";
+import SelectBox from "components/common/SelectBox";
 
 export default function ConsultList() {
   let dumy = [];
@@ -22,6 +24,11 @@ export default function ConsultList() {
 
   const headRow = ["성함", "희망 날짜", "연락처", "처리 여부", "내용"];
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const optionSearch = [
+    { value: "all", name: "모두" },
+    { value: "unchecked", name: "미처리" },
+  ];
+  const [searchOption, setSearchOption] = useState("all");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,7 +40,23 @@ export default function ConsultList() {
   return (
     <>
       <div style={{ width: "100%" }}>
-        <h3 style={{ margin: "15px 0px", fontWeight: "bold" }}>상담 관리</h3>
+        <div className={style.flex}>
+          <h3 style={{ fontWeight: "bold", display: "inline-block" }}>
+            상담 관리
+          </h3>
+          <div style={{ display: "flex", width: "50%", justifyContent: "end" }}>
+            <SelectBox
+              options={optionSearch}
+              onChange={(e) => {
+                setSearchOption(e);
+              }}
+              width="50%"
+            />
+            <div className={style.button} onClick={() => {}}>
+              방생성
+            </div>
+          </div>
+        </div>
         <Board
           headRow={headRow}
           grid={"15% 23% 28% 17% 17%"}

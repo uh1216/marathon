@@ -33,14 +33,19 @@ export default function MyPage() {
     "상담 관리",
     "로그아웃",
   ];
-  const urlsPatient = ["information", "messenger", "schedule/1", "statistics"];
+  const urlsPatient = [
+    "information",
+    "messenger",
+    "schedule/1",
+    "statistics/1",
+  ];
   const urlsDoctor = [
     "information",
     "messenger",
     "schedule/1",
-    "treatment-list",
+    "treatment-list/1",
   ];
-  const urlsAdmin = ["information", "messenger", "consult-list"];
+  const urlsAdmin = ["information", "messenger", "consult-list/1"];
 
   return (
     <div className="container">
@@ -74,13 +79,23 @@ export default function MyPage() {
             <Route path="information" element={<UserInformation />}></Route>
             <Route path="messenger" element={<Messenger />}></Route>
             <Route path="schedule/:pageNum" element={<Schedule />}></Route>
-            <Route path="statistics" element={<Statistics />}></Route>
-            <Route path="treatment-list" element={<TreatmentList />}></Route>
+            <Route path="statistics/:pageNum" element={<Statistics />}></Route>
             <Route
-              path="treatment-detail/:no"
+              path="treatment-list/:pageNum"
+              element={<TreatmentList />}
+            ></Route>
+            <Route
+              path="schedule/:pageNum/treatment-detail/:no"
               element={<TreatmentDetail />}
             ></Route>
-            <Route path="consult-list" element={<ConsultList />}></Route>
+            <Route
+              path="treatment-list/:pageNum/treatment-detail/:no"
+              element={<TreatmentDetail />}
+            ></Route>
+            <Route
+              path="consult-list/:pageNum"
+              element={<ConsultList />}
+            ></Route>
           </Routes>
         </div>
       </div>
