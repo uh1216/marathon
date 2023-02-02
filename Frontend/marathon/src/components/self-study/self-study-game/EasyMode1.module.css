@@ -1,0 +1,56 @@
+.content {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.board {
+  width: 330px;
+  height: 330px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button_blank {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.button_answer {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: #14c4be;
+}
+
+.button_selected {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: #fcf945;
+}
+.button_corrct {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: #2d72f1;
+}
+
+.button_incorrect {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: #f35c57;
+}
