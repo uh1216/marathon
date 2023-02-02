@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import style from "./NoticeBoard.module.css";
 import SelectBox from "components/common/SelectBox";
 import Pagination from "components/common/Pagination";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export default function NoticeBoard() {
   const navigate = useNavigate();
@@ -16,6 +18,11 @@ export default function NoticeBoard() {
   const [searchOption, setSearchOption] = useState("none");
 
   /** 공지사항 데이터 객체로 저장(임시 더미데이터 추가 상태) */
+  const { isLoading, data, isError, error } = useQuery(
+    ["NoticeBoard"],
+    axios.get("http://localhost:9999/user-board/list?pageNum=1")
+  );
+
   let contentList = [];
   for (let i = 1; i <= 50; i++) {
     const newContents = {
