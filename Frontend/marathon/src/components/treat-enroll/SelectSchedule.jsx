@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import style from "./SelectSchedule.module.css";
 
 export default function SelectSchedule({ name }) {
@@ -117,8 +117,8 @@ export default function SelectSchedule({ name }) {
   const thisDateNum = data.firstDateInfo;
   const [cnt, setCnt] = useState(0);
   const [teacherSchedule, setTeacherSchedule] = useState(data.list);
-  const [currentIndex, setCurrentIndex] = useState([]);
-  const [isClicked, setIsClicked] = useState();
+  const [targetDate, setTargetDate] = useState([]);
+  const [target, setTarget] = useState();
 
   /** 날짜 구하기
    * num = 0 : 월요일 ~ num = 6 : 일요일
@@ -174,12 +174,11 @@ export default function SelectSchedule({ name }) {
             }
             name={thisDay}
             value={i + thisTimeTable[i]}
-            onClick={(e) => {
-              setCurrentIndex(e.target);
-              setIsClicked(!isClicked);
-              onChange(e);
-            }}
-            disabled={thisTimeTable[i] === "0" ? true : false}
+            onClick={onChange}
+            disabled={
+              (thisTimeTable[i] === "0" && true) ||
+              (thisTimeTable[i] === "2" && true)
+            }
           >
             0{i + 9} : 00
           </button>
@@ -196,12 +195,11 @@ export default function SelectSchedule({ name }) {
             }
             name={thisDay}
             value={i + thisTimeTable[i]}
-            onClick={(e) => {
-              setCurrentIndex(e.target);
-              setIsClicked(!isClicked);
-              onChange(e);
-            }}
-            disabled={thisTimeTable[i] === "0" ? true : false}
+            onClick={onChange}
+            disabled={
+              (thisTimeTable[i] === "0" && true) ||
+              (thisTimeTable[i] === "2" && true)
+            }
           >
             {i + 9} : 00
           </button>
@@ -218,12 +216,11 @@ export default function SelectSchedule({ name }) {
             }
             name={thisDay}
             value={i + thisTimeTable[i]}
-            onClick={(e) => {
-              setCurrentIndex(e.target);
-              setIsClicked(!isClicked);
-              onChange(e);
-            }}
-            disabled={thisTimeTable[i] === "0" ? true : false}
+            onClick={onChange}
+            disabled={
+              (thisTimeTable[i] === "0" && true) ||
+              (thisTimeTable[i] === "2" && true)
+            }
           >
             {i + 10} : 00
           </button>
@@ -233,31 +230,8 @@ export default function SelectSchedule({ name }) {
     return timeLlist;
   };
 
-  const onReset = () => {
-    console.log(currentIndex);
-    let findselected = teacherSchedule.find((t) => t.timeTable.includes("3"));
-    console.log(findselected.timeTable);
-    let newTimeTable = [];
-    for (let i = 0; i < 8; i++) {
-      findselected.timeTable[i].toString() === "3"
-        ? newTimeTable.push("1")
-        : newTimeTable.push(findselected.timeTable[i]);
-    }
-    newTimeTable = newTimeTable.join("");
-    console.log(newTimeTable);
-    let newSchedule = [...teacherSchedule];
-    let findorigin = newSchedule.find((t) => t.timeTable.includes("3"));
-    findorigin.timeTable = newTimeTable;
-    setTeacherSchedule(newSchedule);
-    console.log(findorigin);
-    console.log(isClicked);
-  };
-
   /** 일정 선택 함수 */
   const onChange = (e) => {
-    /** 최대 한번씩만 변경 가능하도록 설정 */
-    /** 임시로 선택한 시간대는 string값 3으로 설정하고 예약하기 버튼 클릭 시 2로 바꿔주면서 예약이 완료됨 */
-
     let reserve = "";
     if (e.target.value[1] === "1") {
       reserve = "3";
@@ -276,14 +250,46 @@ export default function SelectSchedule({ name }) {
     let newSchedule = [...teacherSchedule];
     let findorigin = newSchedule.find((t) => t.localDate === e.target.name);
     findorigin.timeTable = newTimeTable;
-    setTeacherSchedule(newSchedule);
-  };
 
-  useEffect(() => {
-    setTimeout(() => {
-      onReset();
-    }, 500);
-  }, [isClicked]);
+    /** 선택 취소된 날짜 반영하기 위한 코드 */
+    let prevItem = teacherSchedule.find((t) => t.localDate === targetDate[0]);
+    if (prevItem !== undefined) {
+      /** 동일한 버튼 클릭시는 아래 코드 동작 X(취소만 가능하도록) */
+      if (e.target !== target) {
+        let newTimeTable2 = [];
+        for (let i = 0; i < 8; i++) {
+          /** 날짜가 다른 경우 */
+          if (targetDate[0] !== e.target.name) {
+            if (prevItem.timeTable[i] === "3") {
+              newTimeTable2.push("1");
+            } else {
+              newTimeTable2.push(prevItem.timeTable[i]);
+            }
+          } else if (targetDate[0] === e.target.name) {
+            /** 날짜가 같은 경우 */
+            if (prevItem.timeTable[i] === "3") {
+              /** 클릭한 버튼을 제외한 나머지에서 값이 3인 부분 1로 변경 */
+              if (i.toString() === targetDate[1][0]) {
+                newTimeTable2.push("1");
+              } else {
+                newTimeTable2.push(prevItem.timeTable[i]);
+              }
+            } else {
+              newTimeTable2.push(prevItem.timeTable[i]);
+            }
+          }
+        }
+        newTimeTable2 = newTimeTable2.join("");
+        let findorigin2 = newSchedule.find(
+          (t) => t.localDate === targetDate[0]
+        );
+        findorigin2.timeTable = newTimeTable2;
+      }
+    }
+    setTeacherSchedule(newSchedule);
+    setTargetDate([e.target.name, e.target.value]);
+    setTarget(e.target);
+  };
 
   /** 다음 일정 확인 */
   const nextWeek = () => {
@@ -300,6 +306,21 @@ export default function SelectSchedule({ name }) {
   };
 
   const onSubmit = () => {
+    /** 3으로 할당된 부분 2로 수정하기 */
+    let findItem = teacherSchedule.find((t) => t.localDate === targetDate[0]);
+    let newTimeTable = [];
+    for (let i = 0; i < 8; i++) {
+      findItem.timeTable[i] === "3"
+        ? newTimeTable.push("2")
+        : newTimeTable.push(findItem.timeTable[i]);
+    }
+    newTimeTable = newTimeTable.join("");
+    let newSchedule = [...teacherSchedule];
+    let findorigin = newSchedule.find((t) => t.localDate === targetDate[0]);
+    findorigin.timeTable = newTimeTable;
+    setTeacherSchedule(newSchedule);
+    alert("예약 되었습니다.");
+    console.log(teacherSchedule);
     /** 서버로 보낼 코드 작성 예정 */
   };
 

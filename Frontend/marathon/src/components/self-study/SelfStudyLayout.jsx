@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import style from "./SelfStudyLayout.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setStage, setType, setIsReady } from "stores/game.store";
+import { setStage, setType, setIsReady, setMode } from "stores/game.store";
 import { useEffect } from "react";
 
 export default function SelfStudyLayout({ type, children }) {
@@ -16,10 +16,6 @@ export default function SelfStudyLayout({ type, children }) {
     { title: "도형 위치 맞추기" },
   ];
 
-  useEffect(() => {
-    dispatch(setType(type));
-  }, []);
-
   return (
     <div className={style.main_container}>
       <div className={style.title_container}>
@@ -33,7 +29,7 @@ export default function SelfStudyLayout({ type, children }) {
                   : style.btn_difficulty
               }
               style={{ backgroundColor: "#63F282" }}
-              onClick={() => navigate(`/self-study/${type}/easy/intro`)}
+              onClick={() => navigate(`/self-study/${type}/easy`)}
             >
               초급
             </button>
@@ -44,7 +40,7 @@ export default function SelfStudyLayout({ type, children }) {
                   : style.btn_difficulty
               }
               style={{ backgroundColor: "#FBDB35" }}
-              onClick={() => navigate(`/self-study/${type}/normal/intro`)}
+              onClick={() => navigate(`/self-study/${type}/normal`)}
             >
               중급
             </button>
@@ -55,7 +51,7 @@ export default function SelfStudyLayout({ type, children }) {
                   : style.btn_difficulty
               }
               style={{ backgroundColor: "#FF4218" }}
-              onClick={() => navigate(`/self-study/${type}/hard/intro`)}
+              onClick={() => navigate(`/self-study/${type}/hard`)}
             >
               고급
             </button>
@@ -82,7 +78,7 @@ export default function SelfStudyLayout({ type, children }) {
           <button
             className={style.btn_main}
             onClick={() => {
-              navigate(`/self-study/${type}/${gameState.mode}/game`);
+              navigate(`/self-study/${type}/${gameState.mode}`);
               dispatch(setStage(1));
             }}
           >
@@ -121,7 +117,7 @@ export default function SelfStudyLayout({ type, children }) {
           <button
             className={style.btn_main}
             onClick={() => {
-              navigate(`/self-study/${type}/${gameState.mode}/game`);
+              navigate(`/self-study/${type}/${gameState.mode}`);
               dispatch(setStage(1));
             }}
           >

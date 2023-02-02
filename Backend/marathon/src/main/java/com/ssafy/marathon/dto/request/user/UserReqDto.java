@@ -28,6 +28,8 @@ public class UserReqDto {
     private String phone;
     private LocalDate birthDate;
     private String img;
+    private String imgName;
+    private String imgPath;
     private LocalDate registDate;
 
 
