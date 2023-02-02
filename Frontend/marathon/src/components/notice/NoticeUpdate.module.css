@@ -87,6 +87,7 @@
 
   .notice_create_content {
     width: 90%;
+    white-space: pre;
   }
 
   .right_menu {
