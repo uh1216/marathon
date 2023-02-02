@@ -12,8 +12,28 @@ export default function EasyMode1() {
   const dispatch = useDispatch();
   const row = 4;
   const col = 4;
-  const [answer, setAnswer] = useState();
+  const [answer, setAnswer] = useState([]);
   const [stageResult, setStageResult] = useState();
+
+  /** (min <= 값 < max) 랜덤숫자 뽑기 */
+  const random = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
+
+  /** 정답 확인 */
+  const chkAnswer = (myAnswer) => {
+    for (let y = 0; y < row; y++) {
+      for (let x = 0; x < col; x++) {
+        if (answer[y][x] != myAnswer[y][x]) {
+          setStageResult(false);
+          dispatch(addRecord(false));
+          return;
+        }
+      }
+    }
+    setStageResult(true);
+    dispatch(addRecord(true));
+  };
 
   // 인트로 화면 띄울 때 세팅할 것
   useEffect(() => {
@@ -22,11 +42,6 @@ export default function EasyMode1() {
     dispatch(setIsReady(0));
     dispatch(resetRecord());
   }, []);
-
-  /** (min <= 값 < max) 랜덤숫자 뽑기 */
-  const random = (min, max) => {
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
 
   /** 문제 세팅 */
   useEffect(() => {
@@ -49,7 +64,7 @@ export default function EasyMode1() {
           // 이미 뽑은 좌표인지 확인하기
           let i = 0;
           for (; i < list.length; i++) {
-            if (list[i][0] == newRow && list[i][1] == newCol) {
+            if (list[i][0] === newRow && list[i][1] === newCol) {
               isDuplicated = true;
               break;
             }
@@ -59,7 +74,8 @@ export default function EasyMode1() {
 
         list.push([newRow, newCol]);
       }
-
+      console.log("list``````````");
+      console.log(list);
       // 이번 stage의 정답
       let tmp = Array.from(new Array(col), () => new Array(row).fill(0));
 
@@ -73,21 +89,6 @@ export default function EasyMode1() {
       setAnswer(tmp);
     }
   }, [gameState.stage]);
-
-  /** 정답 확인 */
-  const chkAnswer = (myAnswer) => {
-    for (let y = 0; y < row; y++) {
-      for (let x = 0; x < col; x++) {
-        if (answer[y][x] != myAnswer[y][x]) {
-          setStageResult(false);
-          dispatch(addRecord(false));
-          return;
-        }
-      }
-    }
-    setStageResult(true);
-    dispatch(addRecord(true));
-  };
 
   /** 드래그 앤 드롭 */
   useEffect(() => {
