@@ -17,6 +17,7 @@ import lombok.ToString;
 public class CommunicationResDto {
 
     private Long commuSeq;
+    private Long senderSeq;
     private String senderName;
     private String content;
     private LocalDateTime date;

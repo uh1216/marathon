@@ -4,7 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Backend.iml" filepath="$PROJECT_DIR$/.idea/Backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.ssafy.marathon.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.ssafy.marathon.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/marathon.iml" filepath="$PROJECT_DIR$/.idea/modules/marathon.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/marathon.main.iml" filepath="$PROJECT_DIR$/.idea/modules/marathon.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/marathon.test.iml" filepath="$PROJECT_DIR$/.idea/modules/marathon.test.iml" />
     </modules>
   </component>
 </project>

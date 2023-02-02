@@ -3,6 +3,7 @@ package com.ssafy.marathon.controller.user;
 import com.ssafy.marathon.config.security.JwtTokenProvider;
 import com.ssafy.marathon.dto.request.communication.MessageReqDto;
 import com.ssafy.marathon.dto.response.communication.CommunicationResDto;
+import com.ssafy.marathon.dto.response.communication.UserCommuCntResDto;
 import com.ssafy.marathon.service.user.UserCommunicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -45,7 +46,7 @@ public class UserCommunicationController {
     }
 
     @GetMapping("/count")
-    public int countUncheckedCommunication(@RequestHeader("Access-Token") String accessToken) {
+    public UserCommuCntResDto countUncheckedCommunication(@RequestHeader("Access-Token") String accessToken) {
         Long userSeq = jwtTokenProvider.getUserSeq(accessToken);
 
         return userCommunicationService.countUncheckedCommunication(userSeq);

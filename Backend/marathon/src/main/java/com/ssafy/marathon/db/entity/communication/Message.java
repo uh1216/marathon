@@ -17,6 +17,5 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "message")
 public class Message extends Communication {
 
-    private Long root;
     private String content;
 }
