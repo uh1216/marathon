@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TreatmentRepository extends JpaRepository<Treatment, Long> {
     List<Treatment> findByDateBetween(LocalDate start, LocalDate end);
+
+    List<Treatment> findAllByPatient_Seq(Long patientSeq);
 }

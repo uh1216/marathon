@@ -7,4 +7,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     Doctor getBySeq(Long seq);
 
+    Doctor findBySeq(Long seq);
+
 }

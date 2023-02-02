@@ -32,7 +32,7 @@ public class UserCommunicationService {
         Message message = Message.builder()
             .sender(sender)
             .receiver(receiver)
-            .date(LocalDateTime.now())
+            .dateTime(LocalDateTime.now())
             .checked(false)
             //새로운 메시지면 root를 0으로 지정
             .root((messageReqDto.isNew()) ? 0 : messageReqDto.getCommuSeq())
@@ -53,7 +53,7 @@ public class UserCommunicationService {
                 .commuSeq(message.getSeq())
                 .senderName(message.getSender().getName())
                 .content(message.getContent())
-                .date(message.getDate())
+                .date(message.getDateTime())
                 .checked(message.getChecked())
                 .build());
         return communicationResDtoPages;

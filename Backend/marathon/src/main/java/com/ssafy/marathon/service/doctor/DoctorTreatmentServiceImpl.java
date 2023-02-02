@@ -1,20 +1,13 @@
 package com.ssafy.marathon.service.doctor;
 
-import com.ssafy.marathon.db.entity.communication.Alarm;
-import com.ssafy.marathon.db.entity.treatment.History;
 import com.ssafy.marathon.db.entity.treatment.Reservation;
 import com.ssafy.marathon.db.entity.treatment.Treatment;
-import com.ssafy.marathon.db.entity.user.User;
 import com.ssafy.marathon.db.repository.DoctorRepository;
-import com.ssafy.marathon.db.repository.HistoryRepository;
 import com.ssafy.marathon.db.repository.ReservationRepository;
 import com.ssafy.marathon.db.repository.TreatmentRepository;
-import com.ssafy.marathon.db.repository.UserRepository;
-import com.ssafy.marathon.dto.request.communication.MessageReqDto;
 import com.ssafy.marathon.dto.request.treatment.ReservationReqDto;
 import com.ssafy.marathon.dto.response.treatment.DayOfReservationResDto;
 import com.ssafy.marathon.dto.response.treatment.DayOfTreatmentResDto;
-import com.ssafy.marathon.dto.response.treatment.HistoryResDto;
 import com.ssafy.marathon.dto.response.treatment.ReservationResDto;
 import com.ssafy.marathon.util.MilliFunc;
 import java.time.LocalDate;
@@ -24,16 +17,13 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TreatmentServiceImpl implements TreatmentService {
+public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
 
-    private final Logger logger = LoggerFactory.getLogger(TreatmentServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(DoctorTreatmentServiceImpl.class);
     private final ReservationRepository reservationRepository;
     private final DoctorRepository doctorRepository;
     private final TreatmentRepository treatmentRepository;
