@@ -23,6 +23,7 @@ export default function NoticeBoard() {
     () => $.get(`/user-board/list?pageNum=${pageNum}`)
   );
 
+  if (!isLoading) console.log();
   return (
     <>
       <div className={style.container}>
@@ -75,11 +76,7 @@ export default function NoticeBoard() {
                           <Link
                             to={`../detail/${content.boardSeq}`}
                             state={{
-                              num: content.boardSeq,
-                              title: content.title,
-                              content: content.content,
-                              registDate: content.registDate,
-                              viewCnt: content.viewCnt,
+                              boardSeq: content.boardSeq,
                             }}
                             className={style.notice_link}
                           >

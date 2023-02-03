@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import style from "./NoticeUpdate.module.css";
+import { useMutation } from "@tanstack/react-query";
 
 export default function NoticeUpdate() {
   const navigate = useNavigate();
-  const num = useParams();
-  // location 함수는 더미데이터 확인용으로 사용, 서버에서 데이터를 받아올 경우 해당 코드 삭제 예정
+
   const location = useLocation();
   const [title, setTitle] = useState(location.state.title);
   const [content, setContent] = useState(location.state.content);

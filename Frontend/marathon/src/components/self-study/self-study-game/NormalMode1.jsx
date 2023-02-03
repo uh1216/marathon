@@ -75,7 +75,10 @@ export default function EasyMode1() {
   const onChange = (e) => {
     let index = e.target.value;
     let arr = [...mySelect];
-    index[1] === "0" ? (arr[index[0]] = "1") : (arr[index[0]] = "0");
+    console.log(Number(index.slice(0, -1)));
+    index[index.length - 1] === "0"
+      ? (arr[Number(index.slice(0, -1))] = "1")
+      : (arr[Number(index.slice(0, -1))] = "0");
     setMySelect(arr);
   };
 
