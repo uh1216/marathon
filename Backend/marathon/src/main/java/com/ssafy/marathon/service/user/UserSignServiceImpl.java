@@ -55,6 +55,10 @@ public class UserSignServiceImpl implements UserSignService {
         LOGGER.info("[deleteUser] 회원정보 삭제 완료");
     }
 
-
-
+    @Override
+    public void checkId(String id) {
+        LOGGER.info("[checkId] 아이디 찾기 시작");
+        User user =userRepository.getById(id);
+        LOGGER.info("[checkId] 아이디 찾기 성공 id : {}", user.getId());
+    }
 }
