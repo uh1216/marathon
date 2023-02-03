@@ -22,7 +22,6 @@ export default function Header() {
     () => $.get(`/user-commu/count`),
     {
       onSuccess: (data) => {
-        console.log(data.data.count);
         dispatch(updateUnReadMsgNum(data.data.count));
       },
     }
