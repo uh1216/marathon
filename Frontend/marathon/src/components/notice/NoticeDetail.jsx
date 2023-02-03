@@ -9,8 +9,8 @@ export default function NoticeDetail() {
   const navigate = useNavigate();
 
   const { isLoading, data, isError, error } = useQuery(
-    ["NoticeDetail", location.state.boardSeq],
-    () => $.get(`/user-board/${location.state.boardSeq}`)
+    ["NoticeDetail", location.state.seq],
+    () => $.get(`/user-board/${location.state.seq}`)
   );
 
   return (
@@ -26,6 +26,7 @@ export default function NoticeDetail() {
                     onClick={() =>
                       navigate("./update", {
                         state: {
+                          seq: data.data.boardSeq,
                           title: data.data.title,
                           content: data.data.content,
                         },
