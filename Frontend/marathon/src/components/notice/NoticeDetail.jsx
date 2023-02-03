@@ -1,17 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import style from "./NoticeDetail.module.css";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { $ } from "util/axios";
 
 export default function NoticeDetail() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  /** API DELETE 함수 */
+  const res_delete = () =>
+    $.delete(`/admin-board/notice/${location.state.seq}`);
+
   const { isLoading, data, isError, error } = useQuery(
     ["NoticeDetail", location.state.seq],
     () => $.get(`/user-board/${location.state.seq}`)
   );
+
+  const { mutate: deleteArticle } = useMutation(res_delete, {
+    oncSuccess: () => {
+      console.log("성공");
+    },
+
+    onError: (err) => {
+      alert("실패");
+    },
+  });
 
   return (
     <>
@@ -35,7 +49,10 @@ export default function NoticeDetail() {
                   >
                     수정하기
                   </button>
-                  <button className={style.notice_button_delete}>
+                  <button
+                    className={style.notice_button_delete}
+                    onClick={deleteArticle}
+                  >
                     삭제하기
                   </button>
                 </div>

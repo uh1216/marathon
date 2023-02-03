@@ -24,9 +24,11 @@ export default function NoticeUpdate() {
     setContent(e.target.value);
   };
 
-  /** API 통신 함수 */
-  const res = () => $.put(`/admin-board/notice`, newData);
-  const { mutate: onSubmit } = useMutation(res, {
+  /** API PUT 함수 */
+  const res_put = () =>
+    $.put(`/admin-board/notice/${location.state.seq}`, newData);
+
+  const { mutate: onSubmit } = useMutation(res_put, {
     oncSuccess: () => {
       console.log("성공");
     },
@@ -44,6 +46,7 @@ export default function NoticeUpdate() {
       alert("내용을 입력해주세요");
     } else {
       onSubmit();
+      navigate(-1);
     }
   };
 

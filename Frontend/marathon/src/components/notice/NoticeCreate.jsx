@@ -23,8 +23,8 @@ export default function NoticeCreate() {
   };
 
   /** API 통신 함수 */
-  const res = () => $.post(`/admin-board/notice`, newData);
-  const { mutate: onSubmit } = useMutation(res, {});
+  const res_post = () => $.post(`/admin-board/notice`, newData);
+  const { mutate: onSubmit } = useMutation(res_post, {});
 
   // 유효성 검사
   const isValid = () => {
