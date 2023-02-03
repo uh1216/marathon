@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import style from "./Login.module.css";
 import Kakao_login_medium_wide from "img/button/kakao_login_medium_wide.png";
 import Modal from "components/common/Modal";
@@ -53,6 +53,14 @@ export default function Main() {
       });
   };
 
+  useEffect(() => {
+    let userInfo = JSON.parse(localStorage.getItem("remember-info"));
+    if (userInfo) {
+      setUserId(userInfo.userId);
+      setUserPwd(userInfo.userPwd);
+    }
+  }, []);
+
   return (
     <div className={style.user_box}>
       <div className={style.inner_box}>
@@ -64,6 +72,7 @@ export default function Main() {
           }}
           type="text"
           placeholder="아이디"
+          value={userId ? userId : null}
         />
         <input
           className={style.input_text}
@@ -72,6 +81,7 @@ export default function Main() {
           }}
           type="password"
           placeholder="비밀번호"
+          value={userPwd ? userPwd : null}
         />
         {/* 아이디 기억하기 */}
         <div className={style.memorize_id}>

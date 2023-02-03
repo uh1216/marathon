@@ -23,7 +23,6 @@ export default function NoticeBoard() {
     () => $.get(`/user-board/list?pageNum=${pageNum}`)
   );
 
-  if (!isLoading) console.log();
   return (
     <>
       <div className={style.container}>
