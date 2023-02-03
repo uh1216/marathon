@@ -7,8 +7,13 @@ import FindPwd from "./FindPwd";
 import { useDispatch } from "react-redux";
 import { userLogin } from "stores/user.store";
 import { useNavigate } from "react-router-dom";
+import { $ } from "util/axios";
 
 export default function Main() {
+  const [userId, setUserId] = useState("");
+  const [userPwd, setUserPwd] = useState("");
+  const [isRemember, setIsRemember] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // 모달창 노출 여부 state
@@ -25,18 +30,47 @@ export default function Main() {
 
   /** 로그인 버튼 클릭 시 실행되는 함수 */
   const login = () => {
-    dispatch(userLogin());
-    navigate("/");
+    $.post("/user-sign/login", {
+      id: userId,
+      password: userPwd,
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          sessionStorage.setItem("access-token", res.data.accessToken);
+          dispatch(userLogin());
+          if (isRemember) {
+            localStorage.setItem(
+              "remember-info",
+              JSON.stringify({ userId: userId, userPwd: userPwd })
+            );
+          }
+          navigate("/");
+          return;
+        }
+      })
+      .catch(() => {
+        alert("아이디/비밀번호가 일치하지 않습니다! 다시 확인해 주세요!");
+      });
   };
 
   return (
     <div className={style.user_box}>
       <div className={style.inner_box}>
         <div className={style.title}>환영합니다</div>
-        <input className={style.input_text} type="text" placeholder="아이디" />
         <input
           className={style.input_text}
+          onChange={(e) => {
+            setUserId(e.target.value);
+          }}
           type="text"
+          placeholder="아이디"
+        />
+        <input
+          className={style.input_text}
+          onChange={(e) => {
+            setUserPwd(e.target.value);
+          }}
+          type="password"
           placeholder="비밀번호"
         />
         {/* 아이디 기억하기 */}
@@ -45,6 +79,9 @@ export default function Main() {
             className={style.memorize_id_box}
             type="checkbox"
             id="memorize_id_box"
+            onClick={() => {
+              setIsRemember(!isRemember);
+            }}
           />
           <label className={style.memorize_id_txt} htmlFor="memorize_id_box">
             아이디 기억하기

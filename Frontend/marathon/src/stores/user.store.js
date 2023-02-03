@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Buffer } from "buffer";
 
 const loginUser = createSlice({
   name: "loginUser",
@@ -15,13 +16,15 @@ const loginUser = createSlice({
       //SesstionStorage에서 JWT 불러와서 데이터를 변경시켜줌 - 즉 로그인 클릭시 axios.then 토큰저장 로직을 실행후 호출
       const token = sessionStorage.getItem("access-token");
       if (token) {
-        let base64Payload = token.split(".")[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE
+        let base64Payload = token.split(".")[1];
         let payload = Buffer.from(base64Payload, "base64");
         let result = JSON.parse(payload.toString());
 
         state.userName = result.name;
         state.userProfileImg = result.url;
-        state.userRole = result.role;
+        if (result.roles[0] === "ROLE_PATIENT") {
+          state.userRole = "patient";
+        }
       }
     },
 
