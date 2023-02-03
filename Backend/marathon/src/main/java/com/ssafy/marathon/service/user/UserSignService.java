@@ -14,4 +14,5 @@ public interface UserSignService {
     void deleteUser(Long seq);
 
 
+    void checkId(String id) throws Exception;
 }
