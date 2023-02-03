@@ -3,6 +3,7 @@ import style from "./SideNav.module.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
+import { userLogout } from "stores/user.store";
 
 /**
  * 부모 컴포넌트에서는 다음과 같이 사용하기 (참고)
@@ -22,7 +23,10 @@ export default function SideNav(props) {
 
   return (
     <>
-      <div className={style.side_board}>
+      <div
+        className={style.side_board}
+        style={{ animation: "1s ease-in-out loadEffect2" }}
+      >
         <h4>{props.sideNavTitle}</h4>
         <hr />
         {props.sideNavContent.map((data, i) => {
@@ -41,7 +45,12 @@ export default function SideNav(props) {
               key={i}
               onClick={() => {
                 dispatch(changeNowSideNav(data));
-                navigate(props.urls[i]);
+                if (data === "로그아웃") {
+                  dispatch(userLogout());
+                  navigate("/");
+                } else {
+                  navigate(props.urls[i]);
+                }
               }}
             >
               {data}

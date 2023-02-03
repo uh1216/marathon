@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
 import style from "./UserInformation.module.css";
+import { useQuery } from "@tanstack/react-query";
+import { $ } from "util/axios";
 
 /** 마이페이지 - 나의 정보 */
 export default function UserInformation() {
@@ -33,7 +35,6 @@ export default function UserInformation() {
 
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
-  const [userRole, setUserRole] = useState("");
   const [userProfileImg, setUserProfileImg] = useState("");
   const [userSignUpDate, setUserSignUpDate] = useState("");
   const [userPwd, setUserPwd] = useState("");
@@ -103,28 +104,58 @@ export default function UserInformation() {
     setUserEmailHost(x);
   };
 
+  // const onSuccess = (data) => {
+  //   console.log("------");
+  //   console.log(data);
+  // };
+
+  // const onError = (data) => {
+  //   console.log("에러났다");
+  //   console.log(data);
+  // };
+
+  const { isLoading, data, isError, error } = useQuery(
+    ["getUserInformation"],
+    () => {
+      $.get(`/patient-sign/modify`);
+    },
+    {
+      onSuccess: (data) => {
+        console.log("------");
+        console.log(data);
+      },
+      onError: () => {
+        console.log("에러났다");
+        console.log(error);
+      },
+    }
+  );
+  if (isError) console.log(error);
+
   /** 맨 처음에는 유저 정보를 비동기 통신으로 받아온다. */
   useEffect(() => {
-    // state.loginUser랑 axios로 userInfo 받아오기
-    setUserRole("admin");
-    setUserProfileImg(state.loginUser.userProfileImg);
-    setUserName("홍길동");
-    setUserEmailId("abd123");
-    setUserId("dhrwk21");
-    setUserEmailHost("naver.com");
-    setUserPhone("01012341234");
-    setUserSignUpDate("2022년 10월 12일");
-    setUserFirstResponder("01012341234");
-    setUserFirstResponderRelationship("배우자");
-    setUserSecondResponder("01012341234");
-    setUserSecondResponderRelationship("배우자");
-    setUserSecondResponder("01012341234");
-    setUserSecondResponderRelationship("배우자");
-    setUserSelfIntroduce("안녕하세요~");
+    // $.get(`/patient-sign/modify`)
+    //   .then(({ data }) => {
+    //     console.log(data);
+    //     setUserProfileImg(state.loginUser.userProfileImg);
+    //     setUserName(state.name);
+    //     setUserEmailId(data.email.split("@")[0]);
+    //     setUserId(state.id);
+    //     setUserEmailHost(data.email.split("@")[1]);
+    //     setUserPhone(data.phone);
+    //     setUserSignUpDate(data.registDate);
+    //     setUserFirstResponder(data.mainPhone);
+    //     setUserFirstResponderRelationship(data.mainRelationship);
+    //     setUserSecondResponder(data.subPhone);
+    //     setUserSecondResponderRelationship(data.subRelationship);
+    //     // setUserSelfIntroduce(data.);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
 
     // 사이드 Nav 초기화
     dispatch(changeNowSideNav("회원 정보 관리"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** 비밀번호 유효성 체크 */
@@ -214,23 +245,26 @@ export default function UserInformation() {
       alert("연락처가 유효하지 않습니다.");
       inputUserPhone.current.focus();
     } else if (
-      userRole === "normal" &&
+      state.loginUser.userRole === "normal" &&
       (userFirstResponder === "" || userFirstResponder === null)
     ) {
       alert("비상 연락처 1을 입력해주세요.");
       inputUserFirstResponder.current.focus();
-    } else if (userRole === "normal" && !chkPhone(userFirstResponder)) {
+    } else if (
+      state.loginUser.userRole === "normal" &&
+      !chkPhone(userFirstResponder)
+    ) {
       alert("연락처가 유효하지 않습니다.");
       inputUserFirstResponder.current.focus();
     } else if (
-      userRole === "normal" &&
+      state.loginUser.userRole === "normal" &&
       (userFirstResponderRelationship === "none" ||
         userFirstResponderRelationship === null)
     ) {
       alert("비상 연락처 1의 관계를 입력해주세요.");
       inputUserFirstResponderRelationship.current.focus();
     } else if (
-      userRole === "normal" &&
+      state.loginUser.userRole === "normal" &&
       userSecondResponderRelationship !== "none" &&
       userSecondResponderRelationship !== null &&
       (userSecondResponder === "" || userSecondResponder === null)
@@ -238,14 +272,14 @@ export default function UserInformation() {
       alert("비상 연락처 2를 입력해주세요.");
       inputUserSecondResponder.current.focus();
     } else if (
-      userRole === "normal" &&
+      state.loginUser.userRole === "normal" &&
       userSecondResponder.length > 0 &&
       !chkPhone(userSecondResponder)
     ) {
       alert("연락처가 유효하지 않습니다.");
       inputUserSecondResponder.current.focus();
     } else if (
-      userRole === "normal" &&
+      state.loginUser.userRole === "normal" &&
       userSecondResponder.length > 0 &&
       (userSecondResponderRelationship === "none" ||
         userSecondResponderRelationship === null)
@@ -400,7 +434,11 @@ export default function UserInformation() {
             {/* (주) 연락처 */}
             <div className={style.input_div}>
               <label className={style.input_label} htmlFor="user_phone">
-                {userRole === "normal" ? <>주 연락처</> : <>연락처</>}
+                {state.loginUser.userRole === "normal" ? (
+                  <>주 연락처</>
+                ) : (
+                  <>연락처</>
+                )}
               </label>
               <input
                 className={`${style.input_number} ${style.input_long}`}
@@ -415,7 +453,7 @@ export default function UserInformation() {
               />
             </div>
             {/* userRole에 따라서 달라지는 내용 */}
-            {userRole === "normal" ? (
+            {state.loginUser.userRole === "normal" ? (
               <>
                 <div className={style.input_div}>
                   <label
@@ -470,7 +508,7 @@ export default function UserInformation() {
                   />
                 </div>
               </>
-            ) : userRole === "doctor" ? (
+            ) : state.loginUser.userRole === "doctor" ? (
               <>
                 <div className={style.input_div}>
                   <label

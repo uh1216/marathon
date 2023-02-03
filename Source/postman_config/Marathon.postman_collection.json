@@ -1,0 +1,1446 @@
+{
+	"info": {
+		"_postman_id": "b62cfaf2-0d42-49ae-8ba4-5ebd46642523",
+		"name": "Marathon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25107292"
+	},
+	"item": [
+		{
+			"name": "회원탈퇴",
+			"item": [
+				{
+					"name": "삭제될 환자 회원가입",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"zxcv\",\r\n  \"name\" : \"삭제될환자\",\r\n  \"password\": \"zxcv\",\r\n  \"email\" : \"asdf@naver.com\",\r\n  \"birthDate\" : \"1953-11-11\",\r\n  \"sex\": false,\r\n  \"phone\": \"010-4859-4892\",\r\n  \"mainPhone\" : \"010-4859-4892\",\r\n  \"mainRelationship\" : \"부\",\r\n  \"subPhone\" : \"010-4859-4892\",\r\n  \"subRelationship\" : \"모\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/patient-sign/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient-sign",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "삭제될 환자 로그인",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.environment.set(\"patientAccessToken\", pm.response.json().accessToken);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"zxcv\",\r\n  \"password\": \"zxcv\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user-sign/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user-sign",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "회원 탈퇴",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{patientAccessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user-sign/withdraw",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user-sign",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "회원가입/로그인",
+			"item": [
+				{
+					"name": "환자 회원가입",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"asdf\",\r\n  \"name\" : \"김환자\",\r\n  \"password\": \"asdf\",\r\n  \"email\" : \"dbsghtks@gmail.com\",\r\n  \"birthDate\" : \"1953-11-11\",\r\n  \"sex\": false,\r\n  \"phone\": \"010-4859-4892\",\r\n  \"mainPhone\" : \"010-4859-4892\",\r\n  \"mainRelationship\" : \"부\",\r\n  \"subPhone\" : \"010-4859-4892\",\r\n  \"subRelationship\" : \"모\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/patient-sign/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient-sign",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "의사 회원가입",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"qwer\",\r\n  \"name\" : \"최의사\",\r\n  \"password\": \"qwer\",\r\n  \"email\" : \"qwer@naver.com\",\r\n  \"birthDate\" : \"1977-10-21\",\r\n  \"sex\": true,\r\n  \"phone\": \"010-4859-4892\",\r\n  \"degree\" : \"박사\",\r\n  \"license\" : \"1234-324-34\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/doctor-sign/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"doctor-sign",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "환자 로그인",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.environment.set(\"patientAccessToken\", pm.response.json().accessToken);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"asdf\",\r\n  \"password\": \"asdf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user-sign/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user-sign",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "의사 로그인",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.environment.set(\"doctorAccessToken\", pm.response.json().accessToken);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"qwer\",\r\n  \"password\": \"qwer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user-sign/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user-sign",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "관리자 로그인",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.environment.set(\"adminAccessToken\", pm.response.json().accessToken);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"ssafy\",\r\n  \"password\": \"ssafy\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user-sign/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user-sign",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "회원정보 수정",
+			"item": [
+				{
+					"name": "환자 정보 로드",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{patientAccessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/patient-sign/modify",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient-sign",
+								"modify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "의사 정보 로드",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{doctorAccessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/doctor-sign/modify",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"doctor-sign",
+								"modify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "환자 정보 수정",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{patientAccessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "fX20XKseW/newjeans.png"
+								},
+								{
+									"key": "patient",
+									"value": "{\n    \"seq\": null,\n    \"role\": null,\n    \"id\": \"asdf\",\n    \"password\": \"asdf\",\n    \"name\": \"김환자\",\n    \"sex\": false,\n    \"email\": \"dbsghtks@gmail.com\",\n    \"phone\": \"010-4859-4892\",\n    \"birthDate\": null,\n    \"img\": \"default.png\",\n    \"registDate\": \"2023-02-01\",\n    \"mainPhone\": \"010-4859-4892\",\n    \"mainRelationship\": \"부\",\n    \"subPhone\": \"010-4859-4892\",\n    \"subRelationship\": \"모\"\n}",
+									"contentType": "application/json",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/patient-sign/modify",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient-sign",
+								"modify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "의사 정보 수정",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "{{doctorAccessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"qwer\",\r\n    \"password\": \"qwer\",\r\n    \"name\": \"최의사\",\r\n    \"email\": \"qwer@ssafy.com\",\r\n    \"phone\": \"010-4859-4892\",\r\n    \"img\": \"default.png\",\r\n    \"license\": null,\r\n    \"introduce\": \"i'm Choi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/doctor-sign/modify",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"doctor-sign",
+								"modify"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "아이디/패스워드 찾기",
+			"item": [
+				{
+					"name": "아이디 메일발송",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/user-sign/findid?email=dbsghtks@gmail.com",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user-sign",
+								"findid"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "dbsghtks@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "임시 비밀번호 메일발송",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"asdf\",\r\n  \"email\": \"dbsghtks@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user-sign/findpw",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user-sign",
+								"findpw"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "공지사항",
+			"item": [
+				{
+					"name": "관리자",
+					"item": [
+						{
+							"name": "공지사항 작성",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\" : \"test\",\r\n    \"content\" : \"hihi\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/admin-board/notice",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin-board",
+										"notice"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "공지사항 수정",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\" : \"test2\",\r\n    \"content\" : \"bye\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/admin-board/notice/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin-board",
+										"notice",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "공지사항 삭제",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin-board/notice/3",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin-board",
+										"notice",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "유저",
+					"item": [
+						{
+							"name": "공지사항 목록 보기",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/user-board/list?pageNum=1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user-board",
+										"list"
+									],
+									"query": [
+										{
+											"key": "pageNum",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "공지사항 상세보기",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/user-board/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user-board",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "예약기능",
+			"item": [
+				{
+					"name": "재활사",
+					"item": [
+						{
+							"name": "예약 설정을 위해 타임 테이블 불러오기",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{doctorAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/doctor-treatment/table",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"doctor-treatment",
+										"table"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "예약 타임 테이블 수정",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{doctorAccessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"list\": [\r\n        {\r\n            \"reservationSeq\": 4,\r\n            \"localDate\": \"2023-01-30\",\r\n            \"bitDate\": \"11111111\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 5,\r\n            \"localDate\": \"2023-01-31\",\r\n            \"bitDate\": \"11110000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 6,\r\n            \"localDate\": \"2023-02-01\",\r\n            \"bitDate\": \"01001010\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 7,\r\n            \"localDate\": \"2023-02-02\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 8,\r\n            \"localDate\": \"2023-02-03\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 9,\r\n            \"localDate\": \"2023-02-04\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 10,\r\n            \"localDate\": \"2023-02-05\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 11,\r\n            \"localDate\": \"2023-02-06\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 12,\r\n            \"localDate\": \"2023-02-07\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 13,\r\n            \"localDate\": \"2023-02-08\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 14,\r\n            \"localDate\": \"2023-02-09\",\r\n            \"bitDate\": \"01000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 15,\r\n            \"localDate\": \"2023-02-10\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 16,\r\n            \"localDate\": \"2023-02-11\",\r\n            \"bitDate\": \"00001100\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 17,\r\n            \"localDate\": \"2023-02-12\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 18,\r\n            \"localDate\": \"2023-02-13\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 19,\r\n            \"localDate\": \"2023-02-14\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 20,\r\n            \"localDate\": \"2023-02-15\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 21,\r\n            \"localDate\": \"2023-02-16\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 22,\r\n            \"localDate\": \"2023-02-17\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 23,\r\n            \"localDate\": \"2023-02-18\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 24,\r\n            \"localDate\": \"2023-02-19\",\r\n            \"bitDate\": \"00000000\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/doctor-treatment/table",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"doctor-treatment",
+										"table"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "캘린더에서 예약된 수업 확인",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{doctorAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/doctor-treatment/calendar",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"doctor-treatment",
+										"calendar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "환자",
+					"item": [
+						{
+							"name": "환자가 재활사 목록 불러오기(전체)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{patientAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/patient-treatment/list",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"patient-treatment",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "환자가 선택한 재활사의 예약 가능 시간 불러오기(테이블",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{patientAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/patient-treatment/book/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"patient-treatment",
+										"book",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "환자의 재활 예약",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{patientAccessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"list\": [\r\n        {\r\n            \"reservationSeq\": 4,\r\n            \"localDate\": \"2023-01-30\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 5,\r\n            \"localDate\": \"2023-01-31\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 6,\r\n            \"localDate\": \"2023-02-01\",\r\n            \"bitDate\": \"01000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 7,\r\n            \"localDate\": \"2023-02-02\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 8,\r\n            \"localDate\": \"2023-02-03\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 9,\r\n            \"localDate\": \"2023-02-04\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 10,\r\n            \"localDate\": \"2023-02-05\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 11,\r\n            \"localDate\": \"2023-02-06\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 12,\r\n            \"localDate\": \"2023-02-07\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 13,\r\n            \"localDate\": \"2023-02-08\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 14,\r\n            \"localDate\": \"2023-02-09\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 15,\r\n            \"localDate\": \"2023-02-10\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 16,\r\n            \"localDate\": \"2023-02-11\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 17,\r\n            \"localDate\": \"2023-02-12\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 18,\r\n            \"localDate\": \"2023-02-13\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 19,\r\n            \"localDate\": \"2023-02-14\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 20,\r\n            \"localDate\": \"2023-02-15\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 21,\r\n            \"localDate\": \"2023-02-16\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 22,\r\n            \"localDate\": \"2023-02-17\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 23,\r\n            \"localDate\": \"2023-02-18\",\r\n            \"bitDate\": \"00000000\"\r\n        },\r\n        {\r\n            \"reservationSeq\": 24,\r\n            \"localDate\": \"2023-02-19\",\r\n            \"bitDate\": \"00000000\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/patient-treatment/book/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"patient-treatment",
+										"book",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "환자가 캘린더에서 자신의 예약 일정을 봄",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{patientAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/patient-treatment/calendar",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"patient-treatment",
+										"calendar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "피드백",
+			"item": [
+				{
+					"name": "재활사",
+					"item": [
+						{
+							"name": "피드백 미작성 페이지네이션",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{doctorAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/doctor-history/nf-list?page=1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"doctor-history",
+										"nf-list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "피드백 전체 페이지네이션",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{doctorAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/doctor-history/list?page=1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"doctor-history",
+										"list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "피드백 작성 / 수정",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{doctorAccessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"historySeq\" : \"2\",\r\n\"feedback\" : \"난 짬뽕이오\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/doctor-history/feedback",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"doctor-history",
+										"feedback"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "수업기록(피드백) 상세보기",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{doctorAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/doctor-history/detail/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"doctor-history",
+										"detail",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "환자",
+					"item": [
+						{
+							"name": "자신의 피드백 보기(5개씩 페이지네이션)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{patientAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/patient-history/list?page=1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"patient-history",
+										"list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "자신의 피드백 상세보기",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{patientAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/patient-history/detail/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"patient-history",
+										"detail",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "상담",
+			"item": [
+				{
+					"name": "관리자",
+					"item": [
+						{
+							"name": "상담 상세보기",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin-consult/detail/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin-consult",
+										"detail",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "상담 목록 보기",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "상담 체크",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/admin-consult/detail/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"admin-consult",
+										"detail",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "유저",
+					"item": [
+						{
+							"name": "상담 신청",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"1\",\r\n    \"sex\" : \"m\",\r\n    \"email\" : \"qwe\",\r\n    \"phone1\" : \"qwe\",\r\n    \"phone2\" : \"qwe\",\r\n    \"phone2Relationship\" : \"qwe\",\r\n    \"phone3\" : \"qwe\",\r\n    \"phone3Relationship\" : \"qwe\",\r\n    \"description\" : \"aaaaaaa\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user-consult/apply",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user-consult",
+										"apply"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "환자",
+					"item": [
+						{
+							"name": "상담 신청 폼 불러오기",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{patientAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/patient-consult/form",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"patient-consult",
+										"form"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "알람 / 메시지",
+			"item": [
+				{
+					"name": "유저",
+					"item": [
+						{
+							"name": "메시지 보내기",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{patientAccessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"commuSeq\" : \"1\",\r\n    \"receiverSeq\" : \"3\",\r\n    \"content\" : \"test\",\r\n    \"isNew\" : false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user-commu/message",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user-commu",
+										"message"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "메시지 / 알람 목록 보기",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{doctorAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/user-commu/list?pageNum=1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user-commu",
+										"list"
+									],
+									"query": [
+										{
+											"key": "pageNum",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "메시지 / 알람 확인",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{patientAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/user-commu/message/6",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user-commu",
+										"message",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "읽지 않은 메시지 / 알람 갯수",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{doctorAccessToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/user-commu/count",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user-commu",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "메시지 보낼 수 있는 유저 목록",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{adminAccessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"isNew\" : \"true\",\r\n    \"commuSeq\" : \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user-commu/message",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user-commu",
+										"message"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "의사",
+					"item": [
+						{
+							"name": "알람 보내기",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Access-Token",
+										"value": "{{doctorAccessToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"treatmentSeq\" : \"\",\r\n    \"link\" : \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/doctor-commu/alarm",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"doctor-commu",
+										"alarm"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,14 +1,25 @@
 import React, { useState } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import style from "./NoticeUpdate.module.css";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { $ } from "util/axios";
 
 export default function NoticeUpdate() {
   const navigate = useNavigate();
-  const num = useParams();
-  // location 함수는 더미데이터 확인용으로 사용, 서버에서 데이터를 받아올 경우 해당 코드 삭제 예정
   const location = useLocation();
+  const queryClient = useQueryClient();
+
   const [title, setTitle] = useState(location.state.title);
   const [content, setContent] = useState(location.state.content);
+
+  const newData = {
+    title: title,
+    content: content,
+  };
+  // console.log(newData);
+  /** API 통신 함수 */
+  const res = (newData) =>
+    $.put(`/admin-board/notice/${location.state.seq}`, newData);
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -16,6 +27,41 @@ export default function NoticeUpdate() {
   const onChangeContent = (e) => {
     setContent(e.target.value);
   };
+
+  /** PUT 요청을 위한 쿼리 함수 */
+  const { mutate: onSubmit } = useMutation({
+    mutationFn: res(newData),
+    onMutate: async (newData) => {
+      console.log(">>>>" + newData);
+      console.log(
+        queryClient.getQueryData(["NoticeDetail", location.state.seq])
+      );
+      await queryClient.cancelQueries(
+        queryClient.getQueryData(["NoticeDetail", location.state.seq])
+      );
+      const oldQueryData = queryClient.getQueryData([
+        "NoticeDetail",
+        location.state.seq,
+      ]);
+
+      queryClient.setQueriesData(oldQueryData, (oldQueryData) => {
+        return {
+          ...oldQueryData.data,
+          data: [...oldQueryData.data, { ...newData }],
+        };
+      });
+      return { oldQueryData };
+    },
+
+    oncSuccess: () => {
+      console.log("성공");
+    },
+
+    onError: (err) => {
+      alert("실패");
+    },
+  });
+
   // 유효성 검사
   const isValid = () => {
     if (title === "") {
@@ -23,7 +69,7 @@ export default function NoticeUpdate() {
     } else if (content === "") {
       alert("내용을 입력해주세요");
     } else {
-      alert("작성되었습니다.");
+      onSubmit();
     }
   };
 

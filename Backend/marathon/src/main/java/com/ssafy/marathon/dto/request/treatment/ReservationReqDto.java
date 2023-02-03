@@ -16,7 +16,6 @@ import lombok.ToString;
 @AllArgsConstructor
 public class ReservationReqDto {
 
-    //    private Long doctorSeq;
     private Long reservationSeq;
 
     private Long patientSeq;

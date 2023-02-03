@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import SelectBox from "components/common/SelectBox";
 import style from "./SignUp.module.css";
 import { useState } from "react";
+import { $ } from "util/axios";
 
 /** 성별 select box 옵션 */
 const optionsGender = [
@@ -24,15 +25,15 @@ for (let i = 0; i < 101; i++) {
 /** 태어난 월 select box 옵션 */
 const optionsMonth = [
   { value: "none", name: "월" },
-  { value: "1", name: "1월" },
-  { value: "2", name: "2월" },
-  { value: "3", name: "3월" },
-  { value: "4", name: "4월" },
-  { value: "5", name: "5월" },
-  { value: "6", name: "6월" },
-  { value: "7", name: "7월" },
-  { value: "8", name: "8월" },
-  { value: "9", name: "9월" },
+  { value: "01", name: "1월" },
+  { value: "02", name: "2월" },
+  { value: "03", name: "3월" },
+  { value: "04", name: "4월" },
+  { value: "05", name: "5월" },
+  { value: "06", name: "6월" },
+  { value: "07", name: "7월" },
+  { value: "08", name: "8월" },
+  { value: "09", name: "9월" },
   { value: "10", name: "10월" },
   { value: "11", name: "11월" },
   { value: "12", name: "12월" },
@@ -163,29 +164,6 @@ export default function SignIn() {
 
   /** 회원가입 버튼을 누를 때 실행되는 함수 */
   const signUp = () => {
-    // 회원가입 폼에 입력한 정보를 일단은 console에 찍는다. (나중에 삭제)
-    console.log({
-      userType: type,
-      userName: userName,
-      userGender: userGender,
-      userYear: userYear,
-      userMonth: userMonth,
-      userDay: userDay,
-      userPwd: userPwd,
-      userPwdChk: userPwdChk,
-      userEmailId: userEmailId,
-      userEmailHost: userEmailHost,
-      userPhone: userPhone,
-      userFirstResponder: userFirstResponder,
-      userFirstResponderRelationship: userFirstResponderRelationship,
-      userSecondResponder: userSecondResponder,
-      userSecondResponderRelationship: userSecondResponderRelationship,
-      userLicense: userLicense,
-      userEducation: userEducation,
-      userTos: userTos,
-    });
-    console.log(inputUserGender);
-
     if (userName === "" || userName === null) {
       alert("이름을 입력해주세요.");
       inputUserName.current.focus();
@@ -284,7 +262,49 @@ export default function SignIn() {
       alert("이용약관 및 개인정보 처리방침에 동의해주세요.");
       inputUserTos.current.focue();
     } else {
-      navigate("/");
+      if (type === "normal") {
+        $.post(`/patient-sign/signup`, {
+          id: userId,
+          name: userName,
+          password: userPwd,
+          email: userEmailId + "@" + userEmailHost,
+          birthDate: userYear + "-" + userMonth + "-" + userDay,
+          sex: userGender === "male" ? true : false,
+          phone: userPhone,
+          mainPhone: userFirstResponder,
+          mainRelationship: userFirstResponderRelationship,
+          subPhone: userSecondResponder,
+          subRelationship: userSecondResponderRelationship,
+        })
+          .then(() => {
+            alert("회원가입에 성공하였습니다.");
+            navigate("/");
+          })
+          .catch((error) => {
+            alert("회원가입에 실패하였습니다.");
+            console.log(error);
+          });
+      } else if (type === "doctor") {
+        $.post(`/doctor-sign/signup`, {
+          id: userId,
+          name: userName,
+          password: userPwd,
+          email: userEmailId + "@" + userEmailHost,
+          birthDate: userYear + "-" + userMonth + "-" + userDay,
+          sex: userGender === "male" ? true : false,
+          phone: userPhone,
+          degree: userEducation,
+          license: userLicense,
+        })
+          .then(() => {
+            alert("회원가입에 성공하였습니다.");
+            navigate("/");
+          })
+          .catch((error) => {
+            alert("회원가입에 실패하였습니다.");
+            console.log(error);
+          });
+      }
     }
   };
 
@@ -309,8 +329,16 @@ export default function SignIn() {
 
   /** 아이디 중복 체크 (axios 연결 필요함) */
   const chkIdDuplicated = () => {
-    setIsNotIdDuplicated(true);
-    alert("사용 가능한 아이디입니다.");
+    $.get(`/user-sign/checkid/${userId}`)
+      .then(() => {
+        setIsNotIdDuplicated(true);
+        alert("사용 가능한 아이디입니다.");
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsNotIdDuplicated(false);
+        alert("이미 존재하는 아이디입니다.");
+      });
   };
 
   /** year와 month가 선택되고 난 뒤 day 일 수를 결정 */
@@ -320,7 +348,8 @@ export default function SignIn() {
       const day = new Date(userYear, userMonth, 0).getDate();
 
       for (let i = 1; i <= day; i++) {
-        days.push({ value: `${i}`, name: `${i}일` });
+        if (i < 10) days.push({ value: `0${i}`, name: `${i}일` });
+        else days.push({ value: `${i}`, name: `${i}일` });
       }
 
       setOptionsDay(days);

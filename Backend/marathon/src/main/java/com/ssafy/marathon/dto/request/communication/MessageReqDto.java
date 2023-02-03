@@ -16,9 +16,11 @@ import lombok.ToString;
 @ToString
 public class MessageReqDto {
 
-    private Long senderSeq;
+    private Long CommuSeq;
     private Long receiverSeq;
     private LocalDateTime date;
     private String content;
     private Long root;
+    private String title;
+    private Boolean isNew;
 }

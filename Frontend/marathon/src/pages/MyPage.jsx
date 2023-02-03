@@ -5,6 +5,10 @@ import SideNav from "components/common/SideNav";
 import style from "./MyPage.module.css";
 import Messenger from "components/my-page/Messenger";
 import Schedule from "components/my-page/Schedule";
+import Statistics from "components/my-page/Statistics";
+import TreatmentDetail from "components/my-page/TreatmentDetail";
+import TreatmentList from "components/my-page/TreatmentList";
+import ConsultList from "components/my-page/ConsultList";
 
 export default function MyPage() {
   const state = useSelector((state) => state);
@@ -29,9 +33,19 @@ export default function MyPage() {
     "상담 관리",
     "로그아웃",
   ];
-  const urlsPatient = ["information", "messenger", "schedule", ""];
-  const urlsDoctor = ["information", "messenger", "schedule", ""];
-  const urlsAdmin = ["information", "messenger", ""];
+  const urlsPatient = [
+    "information",
+    "messenger",
+    "schedule/1",
+    "statistics/1",
+  ];
+  const urlsDoctor = [
+    "information",
+    "messenger",
+    "schedule/1",
+    "treatment-list/1",
+  ];
+  const urlsAdmin = ["information", "messenger", "consult-list/1"];
 
   return (
     <div className="container">
@@ -64,11 +78,24 @@ export default function MyPage() {
           <Routes>
             <Route path="information" element={<UserInformation />}></Route>
             <Route path="messenger" element={<Messenger />}></Route>
-            <Route path="schedule" element={<Schedule />}></Route>
-            <Route path="" element={<div />}></Route>
-            <Route path="" element={<div />}></Route>
-            <Route path="" element={<div />}></Route>
-            <Route path="" element={<div />}></Route>
+            <Route path="schedule/:pageNum" element={<Schedule />}></Route>
+            <Route path="statistics/:pageNum" element={<Statistics />}></Route>
+            <Route
+              path="treatment-list/:pageNum"
+              element={<TreatmentList />}
+            ></Route>
+            <Route
+              path="schedule/:pageNum/treatment-detail/:no"
+              element={<TreatmentDetail />}
+            ></Route>
+            <Route
+              path="treatment-list/:pageNum/treatment-detail/:no"
+              element={<TreatmentDetail />}
+            ></Route>
+            <Route
+              path="consult-list/:pageNum"
+              element={<ConsultList />}
+            ></Route>
           </Routes>
         </div>
       </div>

@@ -1,5 +1,6 @@
 package com.ssafy.marathon.dto.response.treatment;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,9 +15,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TreatmentResDto {
+    private Long firstDateInfo;
 
-    private int firstDateInfo;
-
-    private DayOfTreatmentResDto dayOfTreatmentResDto;
+    private List<DayOfTreatmentResDto> list;
 
 }

@@ -1,0 +1,137 @@
+.modal_container {
+  width: 850px;
+  height: 550px;
+  padding: 30px 50px;
+}
+
+.modal_container h3 {
+  display: inline-block;
+  margin: 10px 0px 25px;
+  font-weight: 700;
+}
+
+.table {
+  border-collapse: collapse;
+  border-radius: 5px;
+  border-style: hidden;
+  box-shadow: 0 0 0 1px rgb(0, 0, 0);
+  margin-left: auto;
+  margin-right: auto;
+  height: 70%;
+  width: 97%;
+}
+
+.table_tr {
+  height: 12%;
+}
+
+.table_td1 {
+  width: 17%;
+  background-color: #ececff;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.table_td2 {
+  width: 33%;
+  border-bottom: 1px solid black;
+}
+
+.table span {
+  margin-left: 8px;
+  font-size: 0.9em;
+}
+
+.table p {
+  margin-left: 8px;
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 0.9em;
+}
+
+.button {
+  position: relative;
+  border: none;
+  display: inline-block;
+  padding: 12px 45px 11px;
+  border-radius: 20px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  background-color: #54aa52;
+  color: white;
+  text-decoration: none;
+  transition: 0.25s;
+  font-size: 18px;
+  margin-top: 25px;
+  cursor: pointer;
+}
+
+.button:hover {
+  color: gray;
+  background-color: #8ec68d;
+}
+
+.button_cancel {
+  color: white;
+  background-color: rgb(179, 179, 179);
+}
+
+.button_cancel:hover {
+  color: gray;
+  background-color: #d0d0d0;
+}
+
+@media screen and (max-width: 950px) {
+  .modal_container {
+    width: 650px;
+    height: 450px;
+  }
+
+  .table span {
+    font-size: 0.7em;
+    margin-left: 6px;
+  }
+
+  .table p {
+    font-size: 0.7em;
+    margin-left: 6px;
+  }
+
+  .button {
+    padding: 9px 30px 8px;
+    font-size: 14px;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .modal_container {
+    width: 450px;
+    height: 450px;
+    padding: 10px 20px;
+  }
+
+  .table {
+    height: 70%;
+    width: 100%;
+  }
+
+  .modal_container h3 {
+    margin: 15px 0px 15px;
+    font-weight: 400;
+  }
+
+  .table_d3 {
+    width: 21%;
+  }
+
+  .table span {
+    font-size: 0.6em;
+    margin-left: 2px;
+  }
+
+  .table p {
+    font-size: 0.6em;
+    margin-left: 2px;
+  }
+}
