@@ -90,38 +90,9 @@
   border-radius: 10px;
 }
 
-@media screen and (max-width: 1400px) {
-  .notice_top_interface_grid {
-    display: grid;
-    grid-template-columns: 15% 15% 25% 10%;
-    margin-top: 45px;
-    margin-bottom: 15px;
-  }
-}
-
 @media screen and (max-width: 1060px) {
   .count_hidden {
     display: none;
-  }
-
-  .notice_header_container {
-    background-color: #d1d0ff;
-    height: 50px;
-    display: grid;
-    grid-template-columns: 10% 60% 30%;
-    text-align: center;
-    align-items: center;
-    font-size: 1.2em;
-  }
-
-  .notice_header_item {
-    height: 50px;
-    display: grid;
-    grid-template-columns: 10% 60% 30%;
-    text-align: center;
-    align-items: center;
-    border-bottom-style: inset;
-    font-size: 1em;
   }
 }
 
