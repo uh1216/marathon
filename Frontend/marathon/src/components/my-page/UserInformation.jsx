@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
 import style from "./UserInformation.module.css";
+import { $ } from "util/axios";
 
 /** 마이페이지 - 나의 정보 */
 export default function UserInformation() {
@@ -106,6 +107,14 @@ export default function UserInformation() {
   /** 맨 처음에는 유저 정보를 비동기 통신으로 받아온다. */
   useEffect(() => {
     // state.loginUser랑 axios로 userInfo 받아오기
+
+    $.get(`/patient-sign/modify`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     setUserRole("admin");
     setUserProfileImg(state.loginUser.userProfileImg);
     setUserName("홍길동");

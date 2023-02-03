@@ -329,8 +329,16 @@ export default function SignIn() {
 
   /** 아이디 중복 체크 (axios 연결 필요함) */
   const chkIdDuplicated = () => {
-    setIsNotIdDuplicated(true);
-    alert("사용 가능한 아이디입니다.");
+    $.get(`/user-sign/checkid/${userId}`)
+      .then(() => {
+        setIsNotIdDuplicated(true);
+        alert("사용 가능한 아이디입니다.");
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsNotIdDuplicated(false);
+        alert("이미 존재하는 아이디입니다.");
+      });
   };
 
   /** year와 month가 선택되고 난 뒤 day 일 수를 결정 */
