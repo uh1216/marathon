@@ -18,9 +18,11 @@ export default function ServicePartner() {
   return (
     <>
       <div className={style.side_right_board}>
-        <h4 style={{ fontWeight: "bold" }}>파트너 재활사 소개</h4>
+        <h4 style={{ fontWeight: "bold", animation: "1s loadEffect1" }}>
+          파트너 재활사 소개
+        </h4>
         <hr />
-        <div className={style.card_box}>
+        <div className={style.card_box} style={{ animation: "1s loadEffect3" }}>
           <div className={style.card_img + " " + style.fl}>
             <img src={Doctor1} alt="" />
           </div>
@@ -36,7 +38,7 @@ export default function ServicePartner() {
           <div style={{ clear: "both" }} />
           <hr />
         </div>
-        <div className={style.card_box}>
+        <div className={style.card_box} style={{ animation: "1s loadEffect2" }}>
           <div className={style.card_img + " " + style.fr}>
             <img src={Doctor2} style={{ left: "15px" }} alt="" />
           </div>
@@ -52,7 +54,7 @@ export default function ServicePartner() {
           <div style={{ clear: "both" }} />
           <hr />
         </div>
-        <div className={style.card_box}>
+        <div className={style.card_box} style={{ animation: "1s loadEffect3" }}>
           <div className={style.card_img + " " + style.fl}>
             <img src={Doctor3} alt="" />
           </div>
