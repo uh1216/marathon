@@ -6,6 +6,8 @@ import com.ssafy.marathon.db.repository.UserRepository;
 import com.ssafy.marathon.dto.request.user.SignInReqDto;
 import com.ssafy.marathon.dto.response.user.SignInResDto;
 import com.ssafy.marathon.service.patient.PatientSignServiceImpl;
+import java.util.Optional;
+import javassist.bytecode.stackmap.BasicBlock.Catch;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,9 +58,12 @@ public class UserSignServiceImpl implements UserSignService {
     }
 
     @Override
-    public void checkId(String id) {
-        LOGGER.info("[checkId] 아이디 찾기 시작");
-        User user =userRepository.getById(id);
-        LOGGER.info("[checkId] 아이디 찾기 성공 id : {}", user.getId());
+    public void checkId(String id) throws Exception {
+        LOGGER.info("[checkId] 아이디 사용 확인");
+        Optional<User> user =userRepository.findById(id);
+        if (user.isPresent()) {
+            LOGGER.info("[checkId] 아이디 사용 불가 id : {}", user.get().getId());
+            throw new Exception();
+        }
     }
 }
