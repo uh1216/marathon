@@ -30,5 +30,5 @@ public class ConsultingReqDto {
     @Nullable
     private LocalDate sickDate;
     private String description;
-    private LocalDateTime hopeDate;
+    private LocalDate hopeDate;
 }

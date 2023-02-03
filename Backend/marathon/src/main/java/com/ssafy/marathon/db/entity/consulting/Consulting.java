@@ -37,7 +37,7 @@ public class Consulting {
     @Nullable
     private LocalDate sickDate;
     private String description;
-    private LocalDateTime hopeDate;
+    private LocalDate hopeDate;
     private boolean checked;
 
     public void changeChecked() {

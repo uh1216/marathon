@@ -32,7 +32,7 @@ public class AdminConsultingService {
             .phone3(consulting.getPhone3())
             .sickDate(LocalDate.now())
             .description(consulting.getDescription())
-            .hopeDate(LocalDateTime.now())
+            .hopeDate(LocalDate.now())
             .build();
         return consultingResDto;
     }
