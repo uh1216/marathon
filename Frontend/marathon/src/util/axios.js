@@ -9,6 +9,6 @@ export const $ = axios.create({
 });
 
 $.interceptors.request.use((config) => {
-  config.headers["access-token"] = sessionStorage.getItem("access-token");
+  config.headers["Access-Token"] = sessionStorage.getItem("access-token");
   return config;
 });
