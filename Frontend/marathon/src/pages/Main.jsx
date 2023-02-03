@@ -32,7 +32,7 @@ export default function Main() {
       </div>
       <div
         className="container"
-        style={{ animation: "0.7s ease-in-out loadEffect1" }}
+        style={{ animation: "1.2s ease-in-out loadEffect1" }}
       >
         <div className="inner_container" style={{ fontSize: "1.2em" }}>
           <div className={style.main_color_board}>

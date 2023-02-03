@@ -149,7 +149,7 @@ export default function ServiceInfo() {
           증상으로 이는 실어증과 마비말장애를 함께 동반될 수 있습니다.
         </div>
       </div>
-      <div style={{ animation: "1.9s loadEffect4" }}>
+      <div style={{ animation: "1.7s loadEffect4" }}>
         <hr />
         <div className={style.exp_box}>
           <div>
