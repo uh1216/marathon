@@ -68,16 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 UsernamePasswordAuthenticationFilter.class);
     }
 
-    /**
-     * Swagger 페이지 접근에 대한 예외 처리
-     *
-     * @param webSecurity
-     */
-//    @Override
-//    public void configure(WebSecurity webSecurity) {
-//        webSecurity.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**",
-//            "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception");
-//    }
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
