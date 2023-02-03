@@ -20,9 +20,9 @@ const loginUser = createSlice({
 
         state.userName = result.name;
         // 실제로는 이걸로 바꿔야 한다
-        // state.userProfileImg = result.url;
-        state.userProfileImg =
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwX-eqkkKMB3CD4rksUziVvafltd3iiqZeHw&usqp=CAU";
+        state.userProfileImg = result.url;
+        // state.userProfileImg =
+        //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwX-eqkkKMB3CD4rksUziVvafltd3iiqZeHw&usqp=CAU";
 
         if (result.roles[0] === "ROLE_PATIENT") {
           state.userRole = "patient";

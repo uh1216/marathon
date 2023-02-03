@@ -5,11 +5,14 @@ import { changeNowSideNav } from "stores/toggle.store";
 import style from "./UserInformation.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { $ } from "util/axios";
+import { useNavigate } from "react-router-dom";
+import { userLogout } from "stores/user.store";
 
 /** 마이페이지 - 나의 정보 */
 export default function UserInformation() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const inputUserPwd = useRef();
   const inputUserPwdChk = useRef();
@@ -105,30 +108,6 @@ export default function UserInformation() {
     setUserEmailHost(x);
   };
 
-  /** 회원정보 불러오기 */
-  const { data } = useQuery(
-    ["getUserInformation"],
-    () => {
-      return $.get(`/patient-sign/modify`);
-    },
-    {
-      onSuccess: ({ data }) => {
-        setUserProfileImg(state.loginUser.userProfileImg);
-        setUserName(state.loginUser.userName);
-        setUserEmailId(data.email.split("@")[0]);
-        setUserId(data.id);
-        setUserEmailHost(data.email.split("@")[1]);
-        setUserPhone(Number(data.phone.replaceAll("-", "")));
-        setUserSignUpDate(data.registDate);
-        setUserFirstResponder(data.mainPhone);
-        setUserFirstResponderRelationship(data.mainRelationship);
-        setUserSecondResponder(data.subPhone);
-        setUserSecondResponderRelationship(data.subRelationship);
-        // setUserSelfIntroduce(data.);
-      },
-    }
-  );
-
   /** 사이드 Nav 초기화 */
   useEffect(() => {
     dispatch(changeNowSideNav("회원 정보 관리"));
@@ -193,8 +172,43 @@ export default function UserInformation() {
     return true;
   };
 
+  /** 회원정보 불러오기 */
+  const { data: userInfo } = useQuery(
+    ["getUserInformation"],
+    () => {
+      return $.get(`/patient-sign/modify`);
+    },
+    {
+      onSuccess: ({ data }) => {
+        setUserProfileImg(state.loginUser.userProfileImg);
+        setUserName(state.loginUser.userName);
+        setUserEmailId(data.email.split("@")[0]);
+        setUserEmailHost(data.email.split("@")[1]);
+        setUserPhone(Number(data.phone.replaceAll("-", "")));
+        setUserSignUpDate(data.registDate);
+        setUserFirstResponder(data.mainPhone);
+        setUserFirstResponderRelationship(data.mainRelationship);
+        setUserSecondResponder(data.subPhone);
+        setUserSecondResponderRelationship(data.subRelationship);
+        setUserId(data.id);
+        //setUserSelfIntroduce(data.);
+      },
+    }
+  );
+
   /** 회원탈퇴 버튼을 누르면 실행되는 함수 */
-  const unregister = () => {};
+  const unregister = () => {
+    const check = window.confirm("정말로 탈퇴하시겠습니까?");
+    if (check) {
+      $.delete(`/user-sign/withdraw`)
+        .then(() => {
+          alert("정상적으로 회원탈퇴 되었습니다.");
+          dispatch(userLogout());
+          navigate("/");
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   /** 수정완료 버튼을 누르면 실행되는 함수 */
   const modify = () => {
@@ -263,42 +277,48 @@ export default function UserInformation() {
       alert("비상 연락처 2의 관계를 입력해주세요.");
       inputUserSecondResponderRelationship.current.focus();
     } else {
-      $.put(
-        `/patient-sign/modify`,
-        {
-          image: userProfileImg,
-          patient: {
-            seq: null,
-            role: null,
-            id: "asdf",
-            password: userPwd,
-            name: "김환자",
-            sex: false,
-            email: userEmailId + "@" + userEmailHost,
-            phone: userPhone,
-            birthDate: null,
-            img: "default.png",
-            registDate: "2023-02-01",
-            mainPhone: userFirstResponder,
-            mainRelationship: userFirstResponderRelationship,
-            subPhone: userSecondResponder,
-            subRelationship: userSecondResponderRelationship,
+      let userInfo = {
+        seq: null,
+        role: null,
+        id: "asdf",
+        password: userPwd,
+        name: "김환자",
+        sex: false,
+        email: userEmailId + "@" + userEmailHost,
+        phone: userPhone,
+        birthDate: null,
+        img: "default.png",
+        registDate: "2023-02-01",
+      };
+
+      if (state.loginUser.userRole === "patient") {
+        userInfo.mainPhone = userFirstResponder;
+        userInfo.mainRelationship = userFirstResponderRelationship;
+        userInfo.subPhone = userSecondResponder;
+        userInfo.subRelationship = userSecondResponderRelationship;
+
+        $.put(
+          `/patient-sign/modify`,
+          {
+            image: userProfileImg,
+            patient: userInfo,
           },
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-        .then(() => {
-          alert("수정 완료되었습니다.");
-          setUserPwd("");
-          setUserPwdChk("");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+          .then(() => {
+            alert("수정 완료되었습니다.");
+            setUserPwd("");
+            setUserPwdChk("");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else if (state.loginUser.userRole === "doctor") {
+      }
 
       // console.log({
       //   userSelfIntroduce: userSelfIntroduce,
