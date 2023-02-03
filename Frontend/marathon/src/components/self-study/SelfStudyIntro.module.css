@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+.gif {
+  width: 264px;
+  height: 264px;
+  object-fit: cover;
+  border-radius: 5px;
+}

@@ -16,17 +16,17 @@ import lombok.ToString;
 @AllArgsConstructor
 public class HistoryResDto {
 
-//    common
+    //    common
     private Long historySeq;
     private LocalDateTime dateTime;
     private String day;
     private String feedback;
     private String videoUrl;
-//    doctor
+    //    doctor
     private String doctorName;
     private String doctorPhone;
     private String doctorImg;
-//    patient
+    //    patient
     private String patientName;
     private String patientPhone;
     private String patientMainPhone;

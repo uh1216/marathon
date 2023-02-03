@@ -1,0 +1,39 @@
+.table {
+  border-collapse: collapse;
+  border-radius: 10px;
+  border-style: hidden;
+  box-shadow: 0 0 0 2px #000;
+}
+
+.table td {
+  width: 70px;
+  height: 70px;
+  border: 1px solid black;
+}
+
+/* 도형 */
+.figure {
+  width: 60px;
+}
+
+.gameBoard {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 40px;
+  justify-content: space-evenly;
+}
+
+.figure_box {
+  width: 280px;
+  height: 280px;
+  border-radius: 10px;
+  box-shadow: 0 0 0 2px #000;
+}
+
+.draggable {
+  border: none;
+  background-color: rgb(255, 255, 255, 0);
+  width: 60px;
+  height: 60px;
+  font-size: 40px;
+}

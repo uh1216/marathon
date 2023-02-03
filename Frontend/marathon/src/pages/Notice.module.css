@@ -23,3 +23,13 @@
   color: white;
   font-size: 3em;
 }
+
+@media screen and (max-width: 700px) {
+  .banner {
+    height: 150px;
+  }
+
+  .title {
+    line-height: 150px;
+  }
+}

@@ -99,10 +99,15 @@
 
 .notice_detail_body_content {
   margin-left: 120px;
+  margin-top: 50px;
   margin-right: 120px;
   line-height: 30px;
   text-align: left;
   font-family: "GmarketLight";
+}
+
+.notice_detail_body_content_text {
+  margin-top: 10px;
 }
 
 .font_gray {
@@ -129,9 +134,27 @@
 @media screen and (max-width: 700px) {
   .notice_detail_body_header_grid {
     margin-top: 15px;
+    margin-left: 5px;
     display: grid;
     grid-template-columns: 3% 50% 5% 40%;
     grid-template-rows: 60% 40%;
+  }
+
+  .notice_detail_body_header_item1_text {
+    font-size: 1.1em;
+  }
+
+  .notice_detail_body_content {
+    margin-top: 0;
+    margin-left: 10px;
+    line-height: 25px;
+    width: 200px;
+    text-align: left;
+  }
+
+  .notice_detail_body_content_text {
+    width: 310px;
+    white-space: pre-line;
   }
 
   .right_menu {

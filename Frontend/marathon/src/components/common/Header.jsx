@@ -6,7 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { changeNowSideNav } from "stores/toggle.store";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogin, userLogout } from "stores/user.store";
+import { userLogin, userLogout, updateUnReadMsgNum } from "stores/user.store";
+import { useQuery } from "@tanstack/react-query";
+import { $ } from "util/axios";
 
 export default function Header() {
   const [isToggled, setIsToggled] = useState(false);
@@ -14,6 +16,16 @@ export default function Header() {
   const state = useSelector((state) => state);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { data: unReadMsgNum } = useQuery(
+    ["unReadMsgNum"],
+    () => $.get(`/user-commu/count`),
+    {
+      onSuccess: (data) => {
+        dispatch(updateUnReadMsgNum(data.data.count));
+      },
+    }
+  );
 
   /** 컴포넌트를 불러올 때 마다 JWT토큰이 있다면 해독해서 store의 유저state를 최신화 */
   useState(() => {
@@ -29,7 +41,10 @@ export default function Header() {
         zIndex: "1",
       }}
     >
-      <div className={style.header}>
+      <div
+        className={style.header}
+        style={{ animation: "0.6s ease-in-out loadEffect5" }}
+      >
         <div
           className={style.toggle}
           onClick={() => {
@@ -163,7 +178,7 @@ export default function Header() {
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/self-study/1/easy/intro");
+                  navigate("/self-study/1/easy");
                 }}
               >
                 색깔 위치 맞추기
@@ -172,7 +187,7 @@ export default function Header() {
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/self-study/2/easy/intro");
+                  navigate("/self-study/2/easy");
                 }}
               >
                 그림 카드 맞추기
@@ -181,7 +196,7 @@ export default function Header() {
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/self-study/3/easy/intro");
+                  navigate("/self-study/3/easy");
                 }}
               >
                 도형 위치 맞추기
@@ -255,7 +270,9 @@ export default function Header() {
               </div>
               <li>
                 {state.loginUser.userName}
-                <span style={{ color: "gray" }}>님 환영합니다</span>
+                <span style={{ color: "gray" }} onClick={() => {}}>
+                  님 환영합니다
+                </span>
                 {state.loginUser.userRole === "patient" && (
                   <div className={style.sub_menu + " " + style.sub_menu_common}>
                     <dl
@@ -274,14 +291,14 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/mypage/schedule");
+                        navigate("/mypage/schedule/1");
                       }}
                     >
                       재활 일정
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/");
+                        navigate("/mypage/statistics/1");
                       }}
                     >
                       스스로 학습 통계
@@ -316,14 +333,14 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/mypage/schedule");
+                        navigate("/mypage/schedule/1");
                       }}
                     >
                       재활 일정
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/");
+                        navigate("/mypage/treatment-list/1");
                       }}
                     >
                       수업 기록
@@ -358,7 +375,7 @@ export default function Header() {
                     </dl>
                     <dl
                       onClick={() => {
-                        navigate("/");
+                        navigate("/mypage/consult-list/1");
                       }}
                     >
                       상담 관리
@@ -435,7 +452,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/mypage/schedule");
+                    navigate("/mypage/schedule/1");
                   }}
                 >
                   <span>재활 일정</span>
@@ -447,7 +464,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/");
+                    navigate("/mypage/consult-list/1");
                   }}
                 >
                   <span>상담 관리</span>
@@ -459,7 +476,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/");
+                    navigate("/mypage/statistics/1");
                   }}
                 >
                   <span>스스로 학습 통계</span>
@@ -470,7 +487,7 @@ export default function Header() {
                   onClick={() => {
                     if (isToggled) setIsToggled(!isToggled);
                     if (isUserToggled) setIsUserToggled(!isUserToggled);
-                    navigate("/");
+                    navigate("/mypage/treatment-list/1");
                   }}
                 >
                   <span>수업 기록</span>

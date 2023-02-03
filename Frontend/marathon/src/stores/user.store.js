@@ -1,28 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Buffer } from "buffer";
 
 const loginUser = createSlice({
   name: "loginUser",
   initialState: {
-    userName: "홍길동",
-    userProfileImg:
-      "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
-    userRole: "patient",
-
-    // 얘 수정해서 없애버릴꺼임!!!!!
-    unReadMsgNum: 2,
+    userName: "",
+    userProfileImg: "",
+    userRole: "",
+    unReadMsgNum: 0,
   },
   reducers: {
     userLogin: (state) => {
       //SesstionStorage에서 JWT 불러와서 데이터를 변경시켜줌 - 즉 로그인 클릭시 axios.then 토큰저장 로직을 실행후 호출
       const token = sessionStorage.getItem("access-token");
       if (token) {
-        let base64Payload = token.split(".")[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE
+        let base64Payload = token.split(".")[1];
         let payload = Buffer.from(base64Payload, "base64");
         let result = JSON.parse(payload.toString());
 
         state.userName = result.name;
-        state.userProfileImg = result.url;
-        state.userRole = result.role;
+        // 실제로는 이걸로 바꿔야 한다
+        // state.userProfileImg = result.url;
+        state.userProfileImg =
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwX-eqkkKMB3CD4rksUziVvafltd3iiqZeHw&usqp=CAU";
+
+        if (result.roles[0] === "ROLE_PATIENT") {
+          state.userRole = "patient";
+        }
+        if (result.roles[0] === "ROLE_DOCTOR") {
+          state.userRole = "doctor";
+        }
+        if (result.roles[0] === "ROLE_ADMIN") {
+          state.userRole = "admin";
+        }
       }
     },
 
@@ -34,8 +44,13 @@ const loginUser = createSlice({
         userRole: "",
       };
     },
+
+    updateUnReadMsgNum: (state, action) => {
+      state.unReadMsgNum = action.payload;
+    },
   },
 });
 
-export let { userLogin, userLogout, changeMsgNum } = loginUser.actions;
+export let { userLogin, userLogout, changeMsgNum, updateUnReadMsgNum } =
+  loginUser.actions;
 export { loginUser };

@@ -1,6 +1,7 @@
 package com.ssafy.marathon.db.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,10 +23,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 @Getter
 @Setter
 @Entity
@@ -48,9 +51,20 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
     private String name;
+    //남 : 1(true),  여 : 0(false)
+    private boolean sex;
     private String email;
     private String phone;
-    private LocalDate birthdate;
+    @Column(length = 10000)
+    private String img;
+    private String imgName;
+    private String imgPath;
+    private LocalDate birthDate;
+
+    @Column(updatable = false, insertable = false)
+    private String dtype;
+    @Column(updatable = false)
+    private LocalDate registDate;
     @ElementCollection(fetch = FetchType.EAGER)
     //컬렉션과 같은 형태의 데이터를 컬럼에 저장할 수 없기 때문에, 별도의 테이블을 생성하여 컬렉션을 관리해야 합니다.
     @Builder.Default

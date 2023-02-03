@@ -1,8 +1,10 @@
 import SelectBox from "components/common/SelectBox";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
 import style from "./UserInformation.module.css";
+import { useQuery } from "@tanstack/react-query";
+import { $ } from "util/axios";
 
 /** 마이페이지 - 나의 정보 */
 export default function UserInformation() {
@@ -33,7 +35,6 @@ export default function UserInformation() {
 
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
-  const [userRole, setUserRole] = useState("");
   const [userProfileImg, setUserProfileImg] = useState("");
   const [userSignUpDate, setUserSignUpDate] = useState("");
   const [userPwd, setUserPwd] = useState("");
@@ -103,28 +104,32 @@ export default function UserInformation() {
     setUserEmailHost(x);
   };
 
-  /** 맨 처음에는 유저 정보를 비동기 통신으로 받아온다. */
-  useEffect(() => {
-    // state.loginUser랑 axios로 userInfo 받아오기
-    setUserRole("admin");
-    setUserProfileImg(state.loginUser.userProfileImg);
-    setUserName("홍길동");
-    setUserEmailId("abd123");
-    setUserId("dhrwk21");
-    setUserEmailHost("naver.com");
-    setUserPhone("01012341234");
-    setUserSignUpDate("2022년 10월 12일");
-    setUserFirstResponder("01012341234");
-    setUserFirstResponderRelationship("배우자");
-    setUserSecondResponder("01012341234");
-    setUserSecondResponderRelationship("배우자");
-    setUserSecondResponder("01012341234");
-    setUserSecondResponderRelationship("배우자");
-    setUserSelfIntroduce("안녕하세요~");
+  const { data } = useQuery(
+    ["getUserInformation"],
+    () => {
+      return $.get(`/patient-sign/modify`);
+    },
+    {
+      onSuccess: ({ data }) => {
+        setUserProfileImg(state.loginUser.userProfileImg);
+        setUserName(state.loginUser.userName);
+        setUserEmailId(data.email.split("@")[0]);
+        setUserId(data.id);
+        setUserEmailHost(data.email.split("@")[1]);
+        setUserPhone(Number(data.phone.replaceAll("-", "")));
+        setUserSignUpDate(data.registDate);
+        setUserFirstResponder(data.mainPhone);
+        setUserFirstResponderRelationship(data.mainRelationship);
+        setUserSecondResponder(data.subPhone);
+        setUserSecondResponderRelationship(data.subRelationship);
+        // setUserSelfIntroduce(data.);
+      },
+    }
+  );
 
-    // 사이드 Nav 초기화
+  /** 사이드 Nav 초기화 */
+  useEffect(() => {
     dispatch(changeNowSideNav("회원 정보 관리"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** 비밀번호 유효성 체크 */
@@ -214,23 +219,26 @@ export default function UserInformation() {
       alert("연락처가 유효하지 않습니다.");
       inputUserPhone.current.focus();
     } else if (
-      userRole === "normal" &&
+      state.loginUser.userRole === "normal" &&
       (userFirstResponder === "" || userFirstResponder === null)
     ) {
       alert("비상 연락처 1을 입력해주세요.");
       inputUserFirstResponder.current.focus();
-    } else if (userRole === "normal" && !chkPhone(userFirstResponder)) {
+    } else if (
+      state.loginUser.userRole === "normal" &&
+      !chkPhone(userFirstResponder)
+    ) {
       alert("연락처가 유효하지 않습니다.");
       inputUserFirstResponder.current.focus();
     } else if (
-      userRole === "normal" &&
+      state.loginUser.userRole === "normal" &&
       (userFirstResponderRelationship === "none" ||
         userFirstResponderRelationship === null)
     ) {
       alert("비상 연락처 1의 관계를 입력해주세요.");
       inputUserFirstResponderRelationship.current.focus();
     } else if (
-      userRole === "normal" &&
+      state.loginUser.userRole === "normal" &&
       userSecondResponderRelationship !== "none" &&
       userSecondResponderRelationship !== null &&
       (userSecondResponder === "" || userSecondResponder === null)
@@ -238,14 +246,14 @@ export default function UserInformation() {
       alert("비상 연락처 2를 입력해주세요.");
       inputUserSecondResponder.current.focus();
     } else if (
-      userRole === "normal" &&
+      state.loginUser.userRole === "normal" &&
       userSecondResponder.length > 0 &&
       !chkPhone(userSecondResponder)
     ) {
       alert("연락처가 유효하지 않습니다.");
       inputUserSecondResponder.current.focus();
     } else if (
-      userRole === "normal" &&
+      state.loginUser.userRole === "normal" &&
       userSecondResponder.length > 0 &&
       (userSecondResponderRelationship === "none" ||
         userSecondResponderRelationship === null)
@@ -253,22 +261,67 @@ export default function UserInformation() {
       alert("비상 연락처 2의 관계를 입력해주세요.");
       inputUserSecondResponderRelationship.current.focus();
     } else {
-      alert("수정 완료되었습니다.");
-      setUserPwd("");
-      setUserPwdChk("");
-      console.log({
-        userPwd: userPwd,
-        userEmailId: userEmailId,
-        userEmailHost: userEmailHost,
-        userPhone: userPhone,
-        userFirstResponder: userFirstResponder,
-        userFirstResponderRelationship: userFirstResponderRelationship,
-        userSecondResponder: userSecondResponder,
-        userSecondResponderRelationship: userFirstResponderRelationship,
-        userSelfIntroduce: userSelfIntroduce,
-      });
+      $.put(
+        `/patient-sign/modify`,
+        {
+          image: userProfileImg,
+          patient: {
+            seq: null,
+            role: null,
+            id: "asdf",
+            password: userPwd,
+            name: "김환자",
+            sex: false,
+            email: userEmailId + "@" + userEmailHost,
+            phone: userPhone,
+            birthDate: null,
+            img: "default.png",
+            registDate: "2023-02-01",
+            mainPhone: userFirstResponder,
+            mainRelationship: userFirstResponderRelationship,
+            subPhone: userSecondResponder,
+            subRelationship: userSecondResponderRelationship,
+          },
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+        .then(() => {
+          alert("수정 완료되었습니다.");
+          setUserPwd("");
+          setUserPwdChk("");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // console.log({
+      //   userSelfIntroduce: userSelfIntroduce,
+      // });
     }
   };
+
+  /** file input 선택 후 실행될 함수 */
+  const onUploadImage = useCallback((e) => {
+    if (!e.target.files) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      console.log("sdsdsdsdsds");
+      console.log(e);
+    };
+    reader.onerror = (e) => {
+      console.log(e);
+    };
+    // let file = document.getElementById("fileImgInput");
+    // console.log("------------");
+    // console.log(file.value);
+    // setUserProfileImg(file.value);
+  }, []);
 
   return (
     <div className={style.side_right_board}>
@@ -292,10 +345,16 @@ export default function UserInformation() {
           )}
           <div className={style.user_name}>{userName} 님</div>
           <div className={style.welcome}>환영합니다.</div>
-          <label htmlFor="file" className={style.btn_upload}>
+          <label htmlFor="fileImgInput" className={style.btn_upload}>
             사진 업로드
           </label>
-          <input className={style.btn_upload} type="file" id="file" />
+          <input
+            className={style.btn_upload}
+            type="file"
+            id="fileImgInput"
+            accept="image/*"
+            onChange={onUploadImage}
+          />
 
           <hr className={style.left_center_line} />
           <div className={style.sub_title}>아이디</div>
@@ -400,7 +459,11 @@ export default function UserInformation() {
             {/* (주) 연락처 */}
             <div className={style.input_div}>
               <label className={style.input_label} htmlFor="user_phone">
-                {userRole === "normal" ? <>주 연락처</> : <>연락처</>}
+                {state.loginUser.userRole === "normal" ? (
+                  <>주 연락처</>
+                ) : (
+                  <>연락처</>
+                )}
               </label>
               <input
                 className={`${style.input_number} ${style.input_long}`}
@@ -415,7 +478,7 @@ export default function UserInformation() {
               />
             </div>
             {/* userRole에 따라서 달라지는 내용 */}
-            {userRole === "normal" ? (
+            {state.loginUser.userRole === "normal" ? (
               <>
                 <div className={style.input_div}>
                   <label
@@ -470,7 +533,7 @@ export default function UserInformation() {
                   />
                 </div>
               </>
-            ) : userRole === "doctor" ? (
+            ) : state.loginUser.userRole === "doctor" ? (
               <>
                 <div className={style.input_div}>
                   <label

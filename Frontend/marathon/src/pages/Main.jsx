@@ -12,7 +12,10 @@ export default function Main() {
   return (
     <>
       <div className={style.main_banner}>
-        <div className={style.main_banner_words}>
+        <div
+          className={style.main_banner_words}
+          style={{ animation: "0.7s ease-in-out loadEffect2" }}
+        >
           <h2>화상 언어재활 서비스</h2>
           <h4>국가공인 자격증을 보유한 의사소통 전문가를</h4>
           <h4>1:1 맞춤 수업으로 집에서 편하게 만나보세요</h4>
@@ -27,7 +30,10 @@ export default function Main() {
           </button>
         </div>
       </div>
-      <div className="container">
+      <div
+        className="container"
+        style={{ animation: "0.7s ease-in-out loadEffect1" }}
+      >
         <div className="inner_container" style={{ fontSize: "1.2em" }}>
           <div className={style.main_color_board}>
             <h3>

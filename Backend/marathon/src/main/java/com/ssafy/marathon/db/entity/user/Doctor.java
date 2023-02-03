@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
+import org.hibernate.annotations.DynamicInsert;
 @Getter
 @Setter
 @SuperBuilder

@@ -14,22 +14,29 @@
   padding: 40px 0;
   display: flex;
 }
+
 .left_box {
   height: 100%;
   width: 100%;
   max-width: 338px;
 
+  margin-left: auto;
+  margin-right: auto;
+
   display: flex;
   flex-flow: column;
   align-items: center;
 }
+
 .center_line {
   height: 666px;
   border: 1px solid #d7d7d7;
-  margin-right: 85px;
+  margin-right: 60px;
 }
 .right_box {
   height: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* 프로필 사진 */
@@ -68,6 +75,7 @@
   height: 38px;
   border-radius: 5px;
   background-color: #ff0000;
+  transition: 0.25s;
   color: white;
   border: 0;
 }
@@ -77,6 +85,7 @@
   border-radius: 5px;
   background-color: white;
   border: #3e3e3e solid 1px;
+  transition: 0.25s;
   margin-left: 10px;
 }
 .btns {
@@ -85,6 +94,19 @@
   align-self: flex-end;
   margin-top: 40px;
 }
+
+.btn_unregister:hover {
+  background-color: #ff9191;
+  color: gray;
+}
+
+.btn_modify:hover,
+.btn_upload:hover {
+  background-color: #e1e1e1;
+  color: rgb(255, 255, 255);
+  border: none;
+}
+
 /* 파일 업로드 버튼 */
 label.btn_upload {
   display: flex;
@@ -93,11 +115,13 @@ label.btn_upload {
   width: 100px;
   height: 38px;
   border: 1px solid #3e3e3e;
+  transition: 0.25s;
   border-radius: 5px;
   font-size: 0.94em;
   background-color: white;
   margin-top: 20px;
 }
+
 label.btn_upload:hover {
   cursor: pointer;
 }
@@ -225,10 +249,34 @@ input[type="password"] {
   font-family: "GmarketLight";
   font-size: 0.75em;
 }
+@media (max-width: 1400px) {
+  .information_box {
+    width: 800px;
+    height: 747px;
+    border: solid 1px #858585;
+    border-radius: 10px;
+    padding: 30px 0;
+    display: flex;
+  }
+
+  .center_line {
+    height: 666px;
+    border: 1px solid #d7d7d7;
+    margin-right: 30px;
+  }
+
+  .left_box {
+    width: 30%;
+  }
+}
 
 @media (max-width: 1200px) {
+  .side_right_board {
+    width: 100%;
+  }
+
   .information_box {
-    width: 95%;
+    width: 100%;
   }
   .input_textarea {
     width: 100%;

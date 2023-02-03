@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import SelectBox from "components/common/SelectBox";
 import Calendar from "react-calendar";
 import "Calendar.css";
+import { $ } from "util/axios";
 
 export default function ConsultEnroll() {
   /** 성별 select box 옵션 */
@@ -32,15 +33,15 @@ export default function ConsultEnroll() {
   /** 태어난 월 select box 옵션 */
   const optionsMonth = [
     { value: "none", name: "월" },
-    { value: "1", name: "1월" },
-    { value: "2", name: "2월" },
-    { value: "3", name: "3월" },
-    { value: "4", name: "4월" },
-    { value: "5", name: "5월" },
-    { value: "6", name: "6월" },
-    { value: "7", name: "7월" },
-    { value: "8", name: "8월" },
-    { value: "9", name: "9월" },
+    { value: "01", name: "1월" },
+    { value: "02", name: "2월" },
+    { value: "03", name: "3월" },
+    { value: "04", name: "4월" },
+    { value: "05", name: "5월" },
+    { value: "06", name: "6월" },
+    { value: "07", name: "7월" },
+    { value: "08", name: "8월" },
+    { value: "09", name: "9월" },
     { value: "10", name: "10월" },
     { value: "11", name: "11월" },
     { value: "12", name: "12월" },
@@ -90,7 +91,6 @@ export default function ConsultEnroll() {
     },
   ];
 
-  const [calenderDay, setCalenderDay] = useState(new Date());
   const navigate = useNavigate();
 
   const inputUserName = useRef();
@@ -132,6 +132,7 @@ export default function ConsultEnroll() {
   const [diseaseMonth, setDiseaseMonth] = useState("none");
   const [diseaseDay, setDiseaseDay] = useState("none");
   const [desTextarea, setDesTextarea] = useState("");
+  const [calenderDay, setCalenderDay] = useState(new Date());
 
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [optionsDay, setOptionsDay] = useState([{ value: "none", name: "일" }]);
@@ -204,25 +205,78 @@ export default function ConsultEnroll() {
     ) {
       alert("비상 연락처 2의 관계를 입력해주세요.");
       inputUserSecondResponderRelationship.current.focus();
-    } else if (!diseaseTos) {
-      if (diseaseYear === "none" || diseaseYear === null) {
-        alert("발병일을 선택해주세요.");
-        inputDiseaseYear.current.focus();
-      } else if (diseaseMonth === "none" || diseaseMonth === null) {
-        alert("발병일을 선택해주세요.");
-        inputDiseaseMonth.current.focus();
-      } else if (diseaseDay === "none" || diseaseDay === null) {
-        alert("발병일을 선택해주세요.");
-        inputDiseaseDay.current.focus();
-      }
-    } else if (desTextarea === "") {
+    } else if (
+      !diseaseTos &&
+      (diseaseYear === "none" || diseaseYear === null)
+    ) {
+      alert("발병일을 선택해주세요.");
+      inputDiseaseYear.current.focus();
+    } else if (
+      (!diseaseTos && diseaseMonth === "none") ||
+      diseaseMonth === null
+    ) {
+      alert("발병일을 선택해주세요.");
+      inputDiseaseMonth.current.focus();
+    } else if ((!diseaseTos && diseaseDay === "none") || diseaseDay === null) {
+      alert("발병일을 선택해주세요.");
+      inputDiseaseDay.current.focus();
+    } else if (!desTextarea) {
       alert("소통에 어려움 점을 입력해 주세요.");
       inputDesTextarea.current.focue();
     } else if (!userTos) {
       alert("이용약관 및 개인정보 처리방침에 동의해주세요.");
       inputUserTos.current.focue();
     } else {
-      navigate("/");
+      let hopeY = calenderDay.getFullYear();
+      let hopeM =
+        calenderDay.getMonth() < 10
+          ? `0${calenderDay.getMonth()}`
+          : calenderDay.getMonth();
+      let hopeD =
+        calenderDay.getDay() < 10
+          ? `0${calenderDay.getDay()}`
+          : calenderDay.getDay();
+      let body = {
+        name: userName,
+        sex: userGender === "male" ? true : false,
+        birthDate: userYear + "-" + userMonth + "-" + userDay,
+        email: userEmailId + "@" + userEmailHost,
+        phone1: userPhone,
+        phone2: userFirstResponder,
+        phone2Relationship: userFirstResponderRelationship,
+        phone3: userSecondResponder,
+        phone3Relationship: userSecondResponderRelationship,
+        sickDate: diseaseTos
+          ? null
+          : diseaseYear + "-" + diseaseMonth + "-" + diseaseDay,
+        description: desTextarea,
+        hopeDate: hopeY + "-" + hopeM + "-" + hopeD,
+      };
+      console.log(body);
+      $.post(`/user-consult/apply`, {
+        name: userName,
+        sex: userGender === "male" ? true : false,
+        birthDate: userYear + "-" + userMonth + "-" + userDay,
+        email: userEmailId + "@" + userEmailHost,
+        phone1: userPhone,
+        phone2: userFirstResponder,
+        phone2Relationship: userFirstResponderRelationship,
+        phone3: userSecondResponder,
+        phone3Relationship: userSecondResponderRelationship,
+        sickDate: diseaseTos
+          ? null
+          : diseaseYear + "-" + diseaseMonth + "-" + diseaseDay,
+        description: desTextarea,
+        hopeDate: hopeY + "-" + hopeM + "-" + hopeD,
+      })
+        .then(() => {
+          alert("상담신청 완료");
+          navigate("/");
+        })
+        .catch((error) => {
+          alert("에러가 발생했습니다. 다시 신청해 주세요");
+          console.log(error);
+        });
     }
   };
 
@@ -251,7 +305,8 @@ export default function ConsultEnroll() {
       const day = new Date(userYear, userMonth, 0).getDate();
 
       for (let i = 1; i <= day; i++) {
-        days.push({ value: `${i}`, name: `${i}일` });
+        if (i < 10) days.push({ value: `0${i}`, name: `${i}일` });
+        else days.push({ value: `${i}`, name: `${i}일` });
       }
 
       setOptionsDay(days);
@@ -265,7 +320,8 @@ export default function ConsultEnroll() {
       const day = new Date(diseaseYear, diseaseMonth, 0).getDate();
 
       for (let i = 1; i <= day; i++) {
-        days.push({ value: `${i}`, name: `${i}일` });
+        if (i < 10) days.push({ value: `0${i}`, name: `${i}일` });
+        else days.push({ value: `${i}`, name: `${i}일` });
       }
 
       setOptionsDay2(days);
@@ -291,21 +347,26 @@ export default function ConsultEnroll() {
     <div className="container">
       <div className="inner_container" style={{ paddingBottom: "10px" }}>
         <div className={style.color_box}>
-          <div className={style.title_box}>신청절차</div>
-          <h4>
+          <div
+            className={style.title_box}
+            style={{ animation: "1s ease-in-out loadEffect2" }}
+          >
+            신청절차
+          </div>
+          <h4 style={{ animation: "0.7s ease-in-out loadEffect1" }}>
             먼저 상담을 통해서 환자의 상태와 원격 재활이 가능한 지 논의해
             보세요!
           </h4>
           <div className={style.icon_contain_box}>
-            <div>
+            <div style={{ animation: "1s ease-in-out loadEffect2" }}>
               <FontAwesomeIcon className={style.icon_box} icon={faFileLines} />
               <h5>상담 신청서 제출</h5>
             </div>
-            <div>
+            <div style={{ animation: "1.4s ease-in-out loadEffect2" }}>
               <FontAwesomeIcon className={style.icon_box} icon={faCamera} />
               <h5>부담없는 화상 상담</h5>
             </div>
-            <div>
+            <div style={{ animation: "1.8s ease-in-out loadEffect2" }}>
               <FontAwesomeIcon
                 className={style.icon_box}
                 icon={faCalendarCheck}
@@ -316,7 +377,10 @@ export default function ConsultEnroll() {
         </div>
       </div>
       <div className="inner_container" style={{ width: "90%" }}>
-        <div className={style.inner_container}>
+        <div
+          className={style.inner_container}
+          style={{ animation: "0.8s ease-in-out loadEffect1" }}
+        >
           <div>
             <p style={{ marginBottom: "1px" }}>상담 희망날짜</p>
             {/* 달력 컴포넌트 */}
@@ -487,7 +551,7 @@ export default function ConsultEnroll() {
                   id="tos2"
                   value={diseaseTos}
                   onChange={(e) => {
-                    setDiseaseTos(e.target.checked);
+                    setDiseaseTos(!diseaseTos);
                   }}
                   ref={inputDiseaseTos}
                 />

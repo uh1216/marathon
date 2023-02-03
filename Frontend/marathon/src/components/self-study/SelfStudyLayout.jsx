@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import style from "./SelfStudyLayout.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setStageNow, setType } from "stores/game.store";
+import { setStage, setType, setIsReady, setMode } from "stores/game.store";
 import { useEffect } from "react";
 
 export default function SelfStudyLayout({ type, children }) {
@@ -13,11 +13,38 @@ export default function SelfStudyLayout({ type, children }) {
   const games = [
     { title: "색깔 위치 맞추기" },
     { title: "그림 카드 맞추기" },
-    { title: "도형 위치 맞추기" },
+    { title: "동물 위치 맞추기" },
   ];
 
+  const preventGoBack = (e) => {
+    console.log(e);
+    //let isGoBack = window.confirm("종료하기를 눌러주세요 :D");
+    // if (!isGoBack) {
+    //   window.history.pushState(null, "", "");
+    // }
+    // if (isGoBack) {
+    //   window.history.popState();
+    // }
+  };
+
+  // 새로고침 막기 변수
+  const preventClose = (e) => {
+    e.preventDefault();
+    e.returnValue = ""; // chrome에서는 설정이 필요해서 넣은 코드
+  };
+
+  // 브라우저에 렌더링 시 한 번만 실행하는 코드
   useEffect(() => {
-    dispatch(setType(type));
+    (() => {
+      //window.history.pushState(null, "", "");
+      window.addEventListener("popstate", preventGoBack);
+      window.addEventListener("beforeunload", preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener("popstate", preventGoBack);
+      window.removeEventListener("beforeunload", preventClose);
+    };
   }, []);
 
   return (
@@ -27,23 +54,35 @@ export default function SelfStudyLayout({ type, children }) {
         <div className={style.btns_container}>
           <div>
             <button
-              className={style.btn_difficulty}
+              className={
+                gameState.mode === "easy"
+                  ? style.btn_selected + " " + style.btn_difficulty
+                  : style.btn_difficulty
+              }
               style={{ backgroundColor: "#63F282" }}
-              onClick={() => navigate(`/self-study/${type}/easy/intro`)}
+              onClick={() => navigate(`/self-study/${type}/easy`)}
             >
               초급
             </button>
             <button
-              className={style.btn_difficulty}
+              className={
+                gameState.mode === "normal"
+                  ? style.btn_selected + " " + style.btn_difficulty
+                  : style.btn_difficulty
+              }
               style={{ backgroundColor: "#FBDB35" }}
-              onClick={() => navigate(`/self-study/${type}/normal/intro`)}
+              onClick={() => navigate(`/self-study/${type}/normal`)}
             >
               중급
             </button>
             <button
-              className={style.btn_difficulty}
+              className={
+                gameState.mode === "hard"
+                  ? style.btn_selected + " " + style.btn_difficulty
+                  : style.btn_difficulty
+              }
               style={{ backgroundColor: "#FF4218" }}
-              onClick={() => navigate(`/self-study/${type}/hard/intro`)}
+              onClick={() => navigate(`/self-study/${type}/hard`)}
             >
               고급
             </button>
@@ -55,7 +94,10 @@ export default function SelfStudyLayout({ type, children }) {
             >
               목록보기
             </button>
-            <button className={style.btn_etc} onClick={() => navigate("/")}>
+            <button
+              className={style.btn_etc}
+              onClick={() => navigate("/mypage/statistics")}
+            >
               기록보기
             </button>
           </div>
@@ -63,36 +105,51 @@ export default function SelfStudyLayout({ type, children }) {
       </div>
       <div className={style.game_container}>{children}</div>
       <div className={style.btn_container}>
-        {gameState.stageNow < 1 ? (
+        {gameState.stage < 1 ? (
           <button
             className={style.btn_main}
             onClick={() => {
-              navigate(`/self-study/${type}/${gameState.mode}/1`);
-              dispatch(setStageNow(1));
+              dispatch(setIsReady(0));
+              dispatch(setStage(1));
             }}
           >
             시 작
           </button>
-        ) : gameState.stageNow < 10 ? (
+        ) : gameState.stage <= 10 && gameState.isReady == 0 ? (
           <button
             className={style.btn_main}
             onClick={() => {
-              navigate(
-                `/self-study/${type}/${gameState.mode}/${
-                  gameState.stageNow + 1
-                }`
-              );
-              dispatch(setStageNow(Number(gameState.stageNow) + 1));
+              dispatch(setIsReady(1));
+            }}
+          >
+            도 전
+          </button>
+        ) : gameState.stage <= 10 && gameState.isReady == 1 ? (
+          <button
+            className={style.btn_main}
+            onClick={() => {
+              dispatch(setIsReady(2));
+            }}
+          >
+            정답 보기
+          </button>
+        ) : gameState.stage < 10 && gameState.isReady == 2 ? (
+          <button
+            className={style.btn_main}
+            onClick={() => {
+              dispatch(setStage(Number(gameState.stage) + 1));
+              dispatch(setIsReady(0));
             }}
           >
             다 음
           </button>
-        ) : gameState.stageNow === 10 ? (
+        ) : gameState.stage == 10 && gameState.isReady == 2 ? (
           <button
             className={style.btn_main}
             onClick={() => {
               navigate(`/self-study/${type}/result`);
-              dispatch(setStageNow(Number(gameState.stageNow) + 1));
+              dispatch(setStage(Number(gameState.stage) + 1));
+              dispatch(setIsReady(0));
             }}
           >
             다 음
@@ -101,8 +158,9 @@ export default function SelfStudyLayout({ type, children }) {
           <button
             className={style.btn_main}
             onClick={() => {
-              navigate(`/self-study/${type}/${gameState.mode}/1`);
-              dispatch(setStageNow(1));
+              navigate(`/self-study/${type}/${gameState.mode}`);
+              dispatch(setStage(0));
+              dispatch(setIsReady(0));
             }}
           >
             다시 하기

@@ -18,7 +18,8 @@ public class CommunicationResDto {
 
     private Long commuSeq;
     private Long senderSeq;
-    private Long receiverSeq;
+    private String senderName;
+    private String content;
     private LocalDateTime date;
     private boolean checked;
 

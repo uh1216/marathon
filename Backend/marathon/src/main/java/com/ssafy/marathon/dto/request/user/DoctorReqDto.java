@@ -7,21 +7,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @ToString
-public class DoctorReqDto {
+public class DoctorReqDto extends UserReqDto {
 
-    private Long seq;
-    private String id;
-    private String password;
-    private String name;
-    private String phone;
-    private Date birthDate;
+
     private String license;
     private String degree;
     private String introduce;

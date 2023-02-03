@@ -17,9 +17,9 @@ import lombok.ToString;
 @AllArgsConstructor
 public class ConsultingResDto {
 
-    private Long seq;
+    private Long consultingSeq;
     private String name;
-    private char sex;
+    private boolean sex;
     private LocalDate birthDate;
     private String email;
     private String phone1;
@@ -27,6 +27,8 @@ public class ConsultingResDto {
     private String phone2Relationship;
     private String phone3;
     private String phone3Relationship;
-    private LocalDateTime hopeDate;
+    private LocalDate sickDate;
+    private String description;
+    private LocalDate hopeDate;
     private boolean checked;
 }

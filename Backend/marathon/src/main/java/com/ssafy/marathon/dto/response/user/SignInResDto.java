@@ -7,13 +7,15 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @SuperBuilder
-@ToString
 public class SignInResDto extends SignUpResDto {
 
     private String accessToken;
+
+
 }

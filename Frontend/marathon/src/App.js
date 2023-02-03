@@ -13,8 +13,11 @@ import MyPage from "pages/MyPage";
 import SelfStudyList from "pages/SelfStudyList";
 import ScheduleManage from "pages/ScheduleManage";
 import SelfStudy from "pages/SelfStudy";
+import { useSelector } from "react-redux";
+import AuthRoute from "util/AuthRoute";
 
 function App() {
+  const state = useSelector((state) => state);
   return (
     <>
       <Routes>
@@ -26,7 +29,10 @@ function App() {
           <Route path="/self-study-list" element={<SelfStudyList />} />
           <Route path="/schedule-manage" element={<ScheduleManage />} />
           <Route path="/treat-enroll" element={<TreatEnroll />} />
-          <Route path="/mypage/*" element={<MyPage />} />
+          <Route
+            path="/mypage/*"
+            element={<AuthRoute render={() => <MyPage />} />}
+          />
         </Route>
         <Route element={<HeaderPage />}>
           <Route path="/user/*" element={<User />} />
