@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //권한없을시 예외 발생
             .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
             .and()
+                .cors().and()
             //인증실패시 예외 발생
             .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
             .and()
