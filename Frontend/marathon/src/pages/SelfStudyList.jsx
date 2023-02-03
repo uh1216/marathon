@@ -119,7 +119,7 @@ export default function SelfStudyList() {
             />
             <div>
               <div className={style.container_title}>
-                <div className={style.title}>도형 위치 맞추기</div>
+                <div className={style.title}>동물 위치 맞추기</div>
                 <div>
                   <button
                     className={style.btn_difficulty}

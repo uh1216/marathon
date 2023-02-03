@@ -5,13 +5,14 @@ import commonStyle from "./Game.module.css";
 import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode } from "stores/game.store";
 import GIF from "img/gif/11.gif";
-import style from "./EasyMode3.module.css";
+import style from "./Game3.module.css";
 
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
-  const row = 4;
-  const col = 4;
+  const row = 3; // 행 수
+  const col = 3; // 열 수
+  const size = 3; // 동물의 수
   const [answer, setAnswer] = useState([]);
   const [stageResult, setStageResult] = useState();
 
@@ -35,6 +36,82 @@ export default function EasyMode1() {
     dispatch(addRecord(true));
   };
 
+  /** 테이블을 그려주는 함수 */
+  const renderingTable = (idx) => {
+    if (answer.length === 0) return;
+
+    const result = [];
+    for (let y = 0; y < row; y++) {
+      result.push(<tr key={y}>{renderingCol(y, idx)}</tr>);
+    }
+    return result;
+  };
+
+  /** 테이블 안의 컬럼을 그려주는 함수 */
+  const renderingCol = (y, idx) => {
+    const result = [];
+
+    // 문제 풀기 세팅
+    if (idx === 1) {
+      for (let x = 0; x < col; x++) {
+        result.push(<td className="drag_container" y={y} x={x} key={x}></td>);
+      }
+    }
+    // 문제 세팅
+    else {
+      for (let x = 0; x < col; x++) {
+        if (answer[y][x] === 0)
+          result.push(<td className="drag_container" y={y} x={x} key={x}></td>);
+        else if (answer[y][x] === 1)
+          result.push(
+            <td
+              className={"drag_container " + style.draggable}
+              y={y}
+              x={x}
+              key={x}
+            >
+              🦊
+            </td>
+          );
+        else if (answer[y][x] === 2)
+          result.push(
+            <td
+              className={"drag_container " + style.draggable}
+              y={y}
+              x={x}
+              key={x}
+            >
+              🐸
+            </td>
+          );
+        else if (answer[y][x] === 3)
+          result.push(
+            <td
+              className={"drag_container " + style.draggable}
+              y={y}
+              x={x}
+              key={x}
+            >
+              🐶
+            </td>
+          );
+        else if (answer[y][x] === 4)
+          result.push(
+            <td
+              className={"drag_container " + style.draggable}
+              y={y}
+              x={x}
+              key={x}
+            >
+              🐱
+            </td>
+          );
+      }
+    }
+
+    return result;
+  };
+
   // 인트로 화면 띄울 때 세팅할 것
   useEffect(() => {
     dispatch(setMode("easy"));
@@ -48,13 +125,10 @@ export default function EasyMode1() {
     if (0 < gameState.stage && gameState.stage < 11) {
       // 랜덤 좌표가 들어갈 리스트
       let list = [];
-      // 뽑을 랜덤 좌표 개수
-      let size = 4;
 
       for (let i = 0; i < size; i++) {
         let newRow = -1;
         let newCol = -1;
-        let isDuplicated = false;
 
         do {
           // 랜덤 좌표 뽑기
@@ -65,17 +139,17 @@ export default function EasyMode1() {
           let i = 0;
           for (; i < list.length; i++) {
             if (list[i][0] === newRow && list[i][1] === newCol) {
-              isDuplicated = true;
               break;
             }
           }
-          if (i == list.length) isDuplicated = false;
-        } while (!isDuplicated);
+
+          // 이미 뽑은 적 없는 좌표임
+          if (i === list.length) break;
+        } while (true);
 
         list.push([newRow, newCol]);
       }
-      console.log("list``````````");
-      console.log(list);
+
       // 이번 stage의 정답
       let tmp = Array.from(new Array(col), () => new Array(row).fill(0));
 
@@ -92,7 +166,7 @@ export default function EasyMode1() {
 
   /** 드래그 앤 드롭 */
   useEffect(() => {
-    if (gameState.isReady == 1) {
+    if (gameState.isReady === 1) {
       let isFilled = Array.from(new Array(col), () => new Array(row).fill(0));
       const draggables = document.querySelectorAll(".draggable");
       const containers = document.querySelectorAll(".drag_container");
@@ -110,8 +184,15 @@ export default function EasyMode1() {
         draggable.addEventListener("dragend", () => {
           draggable.classList.remove("dragging");
           let k = Number(draggable.getAttribute("k"));
+          let pre_y = Number(draggable.getAttribute("pre_y"));
+          let pre_x = Number(draggable.getAttribute("pre_x"));
+          draggable.setAttribute("pre_y", now_y);
+          draggable.setAttribute("pre_x", now_x);
 
+          // 새로 이동한 좌표 표시
           isFilled[now_y][now_x] = k;
+          // 예전에 있던 좌표 비우기
+          if (pre_y !== -1 && pre_x !== -1) isFilled[pre_y][pre_x] = 0;
         });
       });
 
@@ -121,19 +202,20 @@ export default function EasyMode1() {
           const x = container.getAttribute("x");
 
           e.preventDefault();
+          // 해당 container에 들어있는 dragable 요소들 중, 제일 가까운 요소 말하는 듯
           const afterElement = getDragAfterElement(container, e.clientX);
           const draggable = document.querySelector(".dragging");
 
-          if (afterElement === undefined && isFilled[y][x] == 0) {
+          // 최초 container라면
+          if (!container.hasAttribute("y")) {
+            // 해당 container에 들어있는 dragable 요소의 앞에 appendChild
+            container.insertBefore(draggable, afterElement);
+          }
+          // 최초 container가 아니고, 해당 칸이 비어있다면 appendChild
+          else if (afterElement === undefined && isFilled[y][x] === 0) {
             container.appendChild(draggable);
             now_y = y;
             now_x = x;
-
-            //console.log(now_y, now_y);
-            console.log(isFilled[now_y][now_y]);
-          } else {
-            container.insertBefore(draggable, afterElement);
-            // isFilled[y][x] = 0;
           }
         });
       });
@@ -163,84 +245,7 @@ export default function EasyMode1() {
     }
   }, [gameState.isReady]);
 
-  /** 테이블을 그려주는 함수 */
-  const renderingTable = (idx) => {
-    console.log("정답");
-    console.log(answer);
-
-    const result = [];
-    for (let y = 0; y < row; y++) {
-      result.push(<tr key={y}>{renderingCol(y, idx)}</tr>);
-    }
-    return result;
-  };
-
-  /** 테이블 안의 컬럼을 그려주는 함수 */
-  const renderingCol = (y, idx) => {
-    const result = [];
-
-    // 문제 풀기 세팅
-    if (idx == 1) {
-      for (let x = 0; x < col; x++) {
-        result.push(<td className="drag_container" y={y} x={x} key={x}></td>);
-      }
-    }
-    // 문제 세팅
-    else {
-      for (let x = 0; x < col; x++) {
-        if (answer[y][x] == 0)
-          result.push(<td className="drag_container" y={y} x={x} key={x}></td>);
-        else if (answer[y][x] == 1)
-          result.push(
-            <td
-              className={"drag_container " + style.draggable}
-              y={y}
-              x={x}
-              key={x}
-            >
-              🦊
-            </td>
-          );
-        else if (answer[y][x] == 2)
-          result.push(
-            <td
-              className={"drag_container " + style.draggable}
-              y={y}
-              x={x}
-              key={x}
-            >
-              🐸
-            </td>
-          );
-        else if (answer[y][x] == 3)
-          result.push(
-            <td
-              className={"drag_container " + style.draggable}
-              y={y}
-              x={x}
-              key={x}
-            >
-              🐶
-            </td>
-          );
-        else if (answer[y][x] == 4)
-          result.push(
-            <td
-              className={"drag_container " + style.draggable}
-              y={y}
-              x={x}
-              key={x}
-            >
-              🐱
-            </td>
-          );
-      }
-    }
-
-    return result;
-  };
-
-  if (gameState.stage == 0) {
+  if (gameState.stage === 0) {
     return (
       <SelfStudyIntro
         mode={"easy"}
@@ -248,21 +253,19 @@ export default function EasyMode1() {
         gif={GIF}
       />
     );
-  } else if (gameState.isReady == 0) {
+  } else if (gameState.isReady === 0) {
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>도형의 위치를 잘 기억해두세요.</div>
-        <div>
-          <div className={style.gameBoard}>
-            <table className={style.table + " game_3_table"}>
-              <tbody>{renderingTable(0)}</tbody>
-            </table>
-          </div>
+        <div className={style.gameBoard}>
+          <table className={style.table + " game_3_table"}>
+            <tbody>{renderingTable(0)}</tbody>
+          </table>
         </div>
       </>
     );
-  } else if (gameState.isReady == 1) {
+  } else if (gameState.isReady === 1) {
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
@@ -277,28 +280,36 @@ export default function EasyMode1() {
             <button
               className={"draggable " + style.draggable}
               k="1"
-              draggable="true"
+              draggable
+              pre_y="-1"
+              pre_x="-1"
             >
               🦊
             </button>
             <button
               className={"draggable " + style.draggable}
               k="2"
-              draggable="true"
+              draggable
+              pre_y="-1"
+              pre_x="-1"
             >
               🐸
             </button>
             <button
               className={"draggable " + style.draggable}
               k="3"
-              draggable="true"
+              draggable
+              pre_y="-1"
+              pre_x="-1"
             >
               🐶
             </button>
             <button
               className={"draggable " + style.draggable}
               k="4"
-              draggable="true"
+              draggable
+              pre_y="-1"
+              pre_x="-1"
             >
               🐱
             </button>
@@ -311,10 +322,13 @@ export default function EasyMode1() {
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
-          도형의 위치를 기억해서 원래 위치로 가져다 놓으세요!
+          {stageResult ? "정답입니다😊" : "틀렸습니다😥"}
         </div>
-        <div>--------여기에 정답을 제시해주세요--------</div>
-        {stageResult ? "정답" : "오답"}
+        {/* <div className={style.gameBoard}>
+          <table className={style.table + " game_3_table"}>
+            <tbody>{renderingTable(0)}</tbody>
+          </table>
+        </div> */}
       </>
     );
   }

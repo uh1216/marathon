@@ -13,7 +13,7 @@ export default function SelfStudyLayout({ type, children }) {
   const games = [
     { title: "색깔 위치 맞추기" },
     { title: "그림 카드 맞추기" },
-    { title: "도형 위치 맞추기" },
+    { title: "동물 위치 맞추기" },
   ];
 
   const preventGoBack = (e) => {
