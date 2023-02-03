@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import org.springframework.lang.Nullable;
 
 @Getter
 @Setter
@@ -33,9 +34,10 @@ public class Consulting {
     private String phone3;
     @Column(name = "phone3_relationship")
     private String phone3Relationship;
+    @Nullable
     private LocalDate sickDate;
     private String description;
-    private LocalDateTime hopeDate;
+    private LocalDate hopeDate;
     private boolean checked;
 
     public void changeChecked() {

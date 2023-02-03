@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //            .antMatchers("/**").permitAll()
             //실제 배포할때 -------------------------------------------------------------
             //로그인,회원가입은 모두 가능
-            .antMatchers("/user*/**","/**/signup").permitAll()
+            .antMatchers("/user-sign/**","/user-board/**", "/**/signup").permitAll()
             //각 권한에 맞는 설정
             .antMatchers("/patient*/**").hasRole("PATIENT")
             .antMatchers("/doctor*/**").hasRole("DOCTOR")
@@ -61,6 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
             //인증실패시 예외 발생
             .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+            .and()
+            .cors()
             .and()
             //필터 위치 설정 : JWT Token 필터를 id/password 인증 필터 이전에 추가
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
@@ -88,4 +90,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return source;
 
     }
+
 }

@@ -7,9 +7,7 @@ const loginUser = createSlice({
     userName: "",
     userProfileImg: "",
     userRole: "",
-
-    // 얘 수정해서 없애버릴꺼임!!!!!
-    unReadMsgNum: 2,
+    unReadMsgNum: 0,
   },
   reducers: {
     userLogin: (state) => {
@@ -21,9 +19,19 @@ const loginUser = createSlice({
         let result = JSON.parse(payload.toString());
 
         state.userName = result.name;
-        state.userProfileImg = result.url;
+        // 실제로는 이걸로 바꿔야 한다
+        // state.userProfileImg = result.url;
+        state.userProfileImg =
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwX-eqkkKMB3CD4rksUziVvafltd3iiqZeHw&usqp=CAU";
+
         if (result.roles[0] === "ROLE_PATIENT") {
           state.userRole = "patient";
+        }
+        if (result.roles[0] === "ROLE_DOCTOR") {
+          state.userRole = "doctor";
+        }
+        if (result.roles[0] === "ROLE_ADMIN") {
+          state.userRole = "admin";
         }
       }
     },
@@ -36,8 +44,13 @@ const loginUser = createSlice({
         userRole: "",
       };
     },
+
+    updateUnReadMsgNum: (state, action) => {
+      state.unReadMsgNum = action.payload;
+    },
   },
 });
 
-export let { userLogin, userLogout, changeMsgNum } = loginUser.actions;
+export let { userLogin, userLogout, changeMsgNum, updateUnReadMsgNum } =
+  loginUser.actions;
 export { loginUser };

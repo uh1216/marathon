@@ -29,6 +29,6 @@ public class ConsultingResDto {
     private String phone3Relationship;
     private LocalDate sickDate;
     private String description;
-    private LocalDateTime hopeDate;
+    private LocalDate hopeDate;
     private boolean checked;
 }
