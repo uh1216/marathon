@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 
 @Getter
 @Setter
@@ -26,6 +27,7 @@ public class ConsultingReqDto {
     private String phone2Relationship;
     private String phone3;
     private String phone3Relationship;
+    @Nullable
     private LocalDate sickDate;
     private String description;
     private LocalDateTime hopeDate;
