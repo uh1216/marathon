@@ -16,10 +16,6 @@ export default function NoticeUpdate() {
     title: title,
     content: content,
   };
-  // console.log(newData);
-  /** API 통신 함수 */
-  const res = (newData) =>
-    $.put(`/admin-board/notice/${location.state.seq}`, newData);
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -28,31 +24,9 @@ export default function NoticeUpdate() {
     setContent(e.target.value);
   };
 
-  /** PUT 요청을 위한 쿼리 함수 */
-  const { mutate: onSubmit } = useMutation({
-    mutationFn: res(newData),
-    onMutate: async (newData) => {
-      console.log(">>>>" + newData);
-      console.log(
-        queryClient.getQueryData(["NoticeDetail", location.state.seq])
-      );
-      await queryClient.cancelQueries(
-        queryClient.getQueryData(["NoticeDetail", location.state.seq])
-      );
-      const oldQueryData = queryClient.getQueryData([
-        "NoticeDetail",
-        location.state.seq,
-      ]);
-
-      queryClient.setQueriesData(oldQueryData, (oldQueryData) => {
-        return {
-          ...oldQueryData.data,
-          data: [...oldQueryData.data, { ...newData }],
-        };
-      });
-      return { oldQueryData };
-    },
-
+  /** API 통신 함수 */
+  const res = () => $.put(`/admin-board/notice`, newData);
+  const { mutate: onSubmit } = useMutation(res, {
     oncSuccess: () => {
       console.log("성공");
     },
