@@ -87,7 +87,7 @@ public class UserSignController {
     }
 
     @GetMapping("/checkid/{id}")
-    public ResponseEntity<?> checkId(@PathVariable String id) {
+    public ResponseEntity<?> checkId(@PathVariable String id) throws Exception {
         userSignService.checkId(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
