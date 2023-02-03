@@ -8,22 +8,18 @@ export default function NoticeUpdate() {
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
-  console.log(
-    queryClient.getQueryData(["NoticeDetail", location.state.seq]).data
-  );
 
   const [title, setTitle] = useState(location.state.title);
   const [content, setContent] = useState(location.state.content);
 
-  const newData = [
-    {
-      title: title,
-      content: content,
-    },
-  ];
-
+  const newData = {
+    title: title,
+    content: content,
+  };
+  // console.log(newData);
   /** API 통신 함수 */
-  const res = $.put(`/admin-board/notice/${location.state.seq}`, newData);
+  const res = (newData) =>
+    $.put(`/admin-board/notice/${location.state.seq}`, newData);
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -33,27 +29,38 @@ export default function NoticeUpdate() {
   };
 
   /** PUT 요청을 위한 쿼리 함수 */
-  const { mutate: onSubmit } = useMutation(
-    res
-    //   {
-    //   onMutate: async (newData) => {
-    //     const oldQueryData = queryClient.getQueryData([
-    //       "NoticeDetail",
-    //       location.state.seq,
-    //     ]);
-    //     await queryClient.cancelQueries(oldQueryData);
-    //     // queryClient.setQueriesData(oldQueryData, ())
-    //   },
+  const { mutate: onSubmit } = useMutation({
+    mutationFn: res(newData),
+    onMutate: async (newData) => {
+      console.log(">>>>" + newData);
+      console.log(
+        queryClient.getQueryData(["NoticeDetail", location.state.seq])
+      );
+      await queryClient.cancelQueries(
+        queryClient.getQueryData(["NoticeDetail", location.state.seq])
+      );
+      const oldQueryData = queryClient.getQueryData([
+        "NoticeDetail",
+        location.state.seq,
+      ]);
 
-    //   oncSuccess: () => {
-    //     console.log("성공");
-    //   },
+      queryClient.setQueriesData(oldQueryData, (oldQueryData) => {
+        return {
+          ...oldQueryData.data,
+          data: [...oldQueryData.data, { ...newData }],
+        };
+      });
+      return { oldQueryData };
+    },
 
-    //   onError: (err) => {
-    //     alert("수정에 실패했습니다..");
-    //   },
-    // }
-  );
+    oncSuccess: () => {
+      console.log("성공");
+    },
+
+    onError: (err) => {
+      alert("실패");
+    },
+  });
 
   // 유효성 검사
   const isValid = () => {
@@ -62,6 +69,7 @@ export default function NoticeUpdate() {
     } else if (content === "") {
       alert("내용을 입력해주세요");
     } else {
+      onSubmit();
     }
   };
 
@@ -77,7 +85,7 @@ export default function NoticeUpdate() {
               <div>
                 <button
                   className={style.right_menu + " " + style.notice_button}
-                  onClick={onSubmit}
+                  onClick={isValid}
                 >
                   등록
                 </button>
