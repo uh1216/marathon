@@ -32,15 +32,11 @@ export default function EasyMode1() {
   }, []);
 
   useEffect(() => {
-    if (gameState.isReady === 1) {
-      ////////////////////////////// 정답을 채워주세요
-      return () => {
-        console(quiz);
-        console(mySelect);
-        if (quiz === mySelect) {
-          dispatch(addRecord(true));
-        } else dispatch(addRecord(false));
-      };
+    if (gameState.isReady === 2) {
+      /** 정답 채우기 */
+      if (JSON.stringify(quiz) === JSON.stringify(mySelect)) {
+        dispatch(addRecord(true));
+      } else dispatch(addRecord(false));
     }
   }, [gameState.isReady]);
 
@@ -64,11 +60,15 @@ export default function EasyMode1() {
     }
     return quizList;
   };
+
   /** 버튼 클릭 시 상태 바뀌는 함수 */
   const onChange = (e) => {
     let index = e.target.value;
     let arr = [...mySelect];
-    index[1] === "0" ? (arr[index[0]] = "1") : (arr[index[0]] = "0");
+    console.log(index[index.length - 1]);
+    index[index.length - 1] === "0"
+      ? (arr[index.length - 1] = "1")
+      : (arr[index.length - 1] = "0");
     setMySelect(arr);
   };
 
