@@ -1,5 +1,5 @@
 import SelectBox from "components/common/SelectBox";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
 import style from "./UserInformation.module.css";
@@ -36,6 +36,7 @@ export default function UserInformation() {
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [userProfileImg, setUserProfileImg] = useState("");
+  const [newProfileImg, setNewProfileImg] = useState("");
   const [userSignUpDate, setUserSignUpDate] = useState("");
   const [userPwd, setUserPwd] = useState("");
   const [userPwdChk, setUserPwdChk] = useState("");
@@ -104,6 +105,7 @@ export default function UserInformation() {
     setUserEmailHost(x);
   };
 
+  /** 회원정보 불러오기 */
   const { data } = useQuery(
     ["getUserInformation"],
     () => {
@@ -305,23 +307,16 @@ export default function UserInformation() {
   };
 
   /** file input 선택 후 실행될 함수 */
-  const onUploadImage = useCallback((e) => {
-    if (!e.target.files) {
-      return;
-    }
+  const encodeFileToBase64 = (fileBlob) => {
     const reader = new FileReader();
-    reader.onload = (e) => {
-      console.log("sdsdsdsdsds");
-      console.log(e);
-    };
-    reader.onerror = (e) => {
-      console.log(e);
-    };
-    // let file = document.getElementById("fileImgInput");
-    // console.log("------------");
-    // console.log(file.value);
-    // setUserProfileImg(file.value);
-  }, []);
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setNewProfileImg(reader.result);
+        resolve();
+      };
+    });
+  };
 
   return (
     <div className={style.side_right_board}>
@@ -330,31 +325,31 @@ export default function UserInformation() {
         {/* 왼쪽 박스 */}
         <div className={style.left_box}>
           {/* 프로필 사진 */}
-          {userProfileImg === null ||
-          userProfileImg === "" ||
-          userProfileImg === undefined ? (
+          {!userProfileImg && !newProfileImg ? (
             <div className={style.profile_img + " " + style.profile_initial}>
               A
             </div>
           ) : (
             <img
               className={style.profile_img}
-              src={userProfileImg}
+              src={newProfileImg ? newProfileImg : userProfileImg}
               alt="프로필 사진"
             />
           )}
           <div className={style.user_name}>{userName} 님</div>
           <div className={style.welcome}>환영합니다.</div>
-          <label htmlFor="fileImgInput" className={style.btn_upload}>
+          <label className={style.btn_upload}>
             사진 업로드
+            <input
+              className={style.btn_upload}
+              type="file"
+              id="fileImgInput"
+              accept="image/*"
+              onChange={(e) => {
+                encodeFileToBase64(e.target.files[0]);
+              }}
+            />
           </label>
-          <input
-            className={style.btn_upload}
-            type="file"
-            id="fileImgInput"
-            accept="image/*"
-            onChange={onUploadImage}
-          />
 
           <hr className={style.left_center_line} />
           <div className={style.sub_title}>아이디</div>
