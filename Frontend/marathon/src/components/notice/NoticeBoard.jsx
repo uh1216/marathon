@@ -75,7 +75,7 @@ export default function NoticeBoard() {
                           <Link
                             to={`../detail/${content.boardSeq}`}
                             state={{
-                              boardSeq: content.boardSeq,
+                              seq: content.boardSeq,
                             }}
                             className={style.notice_link}
                           >
