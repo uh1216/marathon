@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./NoticeCreate.module.css";
+import { useMutation } from "@tanstack/react-query";
+import { $ } from "util/axios";
 
 export default function NoticeCreate() {
   const navigate = useNavigate();
@@ -8,13 +10,22 @@ export default function NoticeCreate() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  // useState 대응 함수
-  const onTitle = (title) => {
-    setTitle(title);
+  const newData = {
+    title: title,
+    content: content,
   };
-  const onContent = (content) => {
-    setContent(content);
+
+  const onTitle = (e) => {
+    setTitle(e.target.value);
   };
+  const onContent = (e) => {
+    setContent(e.target.value);
+  };
+
+  /** API 통신 함수 */
+  const res_post = () => $.post(`/admin-board/notice`, newData);
+  const { mutate: onSubmit } = useMutation(res_post, {});
+
   // 유효성 검사
   const isValid = () => {
     if (title === "") {
@@ -22,7 +33,9 @@ export default function NoticeCreate() {
     } else if (content === "") {
       alert("내용을 입력해주세요");
     } else {
-      alert("작성되었습니다.");
+      onSubmit(newData);
+      alert("등록되었습니다.");
+      navigate(`../${1}`);
     }
   };
 
@@ -56,17 +69,13 @@ export default function NoticeCreate() {
                 className={style.notice_create_title}
                 type="text"
                 placeholder="제목을 입력해 주세요."
-                onChange={(e) => {
-                  onTitle(e.target.value);
-                }}
+                onChange={onTitle}
               />
               <textarea
                 className={style.notice_create_content}
                 type="text"
                 placeholder="내용을 입력해주세요."
-                onChange={(e) => {
-                  onContent(e.target.value);
-                }}
+                onChange={onContent}
               />
             </div>
           </div>
