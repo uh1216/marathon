@@ -12,26 +12,24 @@ export default function EasyMode1() {
 
   // 인트로 화면 띄울 때 세팅할 것
   useEffect(() => {
-    dispatch(setMode("hard"));
+    dispatch(setMode("easy"));
     dispatch(setStage(0));
     dispatch(setIsReady(0));
+    dispatch(resetRecord());
   }, []);
 
   useEffect(() => {
-    /** 1단계라면 점수 기록을 초기화 */
-    if (gameState.stage == 1 && gameState.isReady == 0) {
-      dispatch(resetRecord());
-    }
+    if (gameState.isReady == 1) {
+      return () => {
+        ////////////////////////////// 해당 코드 삭제하고 작업 시작해주세요
+        if (gameState.stage != 3) dispatch(addRecord(true));
+        else dispatch(addRecord(false));
+        ////////////////////////////// 해당 코드 삭제하고 작업 시작해주세요
 
-    if (gameState.isReady == 2) {
-      ////////////////////////////// 해당 코드 삭제하고 작업 시작해주세요
-      if (gameState.stage != 3) dispatch(addRecord(true));
-      else dispatch(addRecord(false));
-      ////////////////////////////// 해당 코드 삭제하고 작업 시작해주세요
-
-      ////////////////////////////// 정답을 채워주세요
-      // if (---정답 조건---) dispatch(addRecord(true));
-      // else dispatch(addRecord(false));
+        ////////////////////////////// 정답을 채워주세요
+        // if (---정답 조건---) dispatch(addRecord(true));
+        // else dispatch(addRecord(false));
+      };
     }
   }, [gameState.isReady]);
 

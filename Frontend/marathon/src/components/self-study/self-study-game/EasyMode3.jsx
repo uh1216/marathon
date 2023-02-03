@@ -239,7 +239,7 @@ export default function EasyMode1() {
           { offset: Number.NEGATIVE_INFINITY }
         ).element;
       }
-      return async () => {
+      return () => {
         chkAnswer(isFilled);
       };
     }

@@ -1,5 +1,5 @@
 import SelectBox from "components/common/SelectBox";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
 import style from "./UserInformation.module.css";
@@ -104,57 +104,31 @@ export default function UserInformation() {
     setUserEmailHost(x);
   };
 
-  // const onSuccess = (data) => {
-  //   console.log("------");
-  //   console.log(data);
-  // };
-
-  // const onError = (data) => {
-  //   console.log("에러났다");
-  //   console.log(data);
-  // };
-
-  const { isLoading, data, isError, error } = useQuery(
+  const { data } = useQuery(
     ["getUserInformation"],
     () => {
-      $.get(`/patient-sign/modify`);
+      return $.get(`/patient-sign/modify`);
     },
     {
-      onSuccess: (data) => {
-        console.log("------");
-        console.log(data);
-      },
-      onError: () => {
-        console.log("에러났다");
-        console.log(error);
+      onSuccess: ({ data }) => {
+        setUserProfileImg(state.loginUser.userProfileImg);
+        setUserName(state.loginUser.userName);
+        setUserEmailId(data.email.split("@")[0]);
+        setUserId(data.id);
+        setUserEmailHost(data.email.split("@")[1]);
+        setUserPhone(Number(data.phone.replaceAll("-", "")));
+        setUserSignUpDate(data.registDate);
+        setUserFirstResponder(data.mainPhone);
+        setUserFirstResponderRelationship(data.mainRelationship);
+        setUserSecondResponder(data.subPhone);
+        setUserSecondResponderRelationship(data.subRelationship);
+        // setUserSelfIntroduce(data.);
       },
     }
   );
-  if (isError) console.log(error);
 
-  /** 맨 처음에는 유저 정보를 비동기 통신으로 받아온다. */
+  /** 사이드 Nav 초기화 */
   useEffect(() => {
-    // $.get(`/patient-sign/modify`)
-    //   .then(({ data }) => {
-    //     console.log(data);
-    //     setUserProfileImg(state.loginUser.userProfileImg);
-    //     setUserName(state.name);
-    //     setUserEmailId(data.email.split("@")[0]);
-    //     setUserId(state.id);
-    //     setUserEmailHost(data.email.split("@")[1]);
-    //     setUserPhone(data.phone);
-    //     setUserSignUpDate(data.registDate);
-    //     setUserFirstResponder(data.mainPhone);
-    //     setUserFirstResponderRelationship(data.mainRelationship);
-    //     setUserSecondResponder(data.subPhone);
-    //     setUserSecondResponderRelationship(data.subRelationship);
-    //     // setUserSelfIntroduce(data.);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
-    // 사이드 Nav 초기화
     dispatch(changeNowSideNav("회원 정보 관리"));
   }, []);
 
@@ -287,22 +261,67 @@ export default function UserInformation() {
       alert("비상 연락처 2의 관계를 입력해주세요.");
       inputUserSecondResponderRelationship.current.focus();
     } else {
-      alert("수정 완료되었습니다.");
-      setUserPwd("");
-      setUserPwdChk("");
-      console.log({
-        userPwd: userPwd,
-        userEmailId: userEmailId,
-        userEmailHost: userEmailHost,
-        userPhone: userPhone,
-        userFirstResponder: userFirstResponder,
-        userFirstResponderRelationship: userFirstResponderRelationship,
-        userSecondResponder: userSecondResponder,
-        userSecondResponderRelationship: userFirstResponderRelationship,
-        userSelfIntroduce: userSelfIntroduce,
-      });
+      $.put(
+        `/patient-sign/modify`,
+        {
+          image: userProfileImg,
+          patient: {
+            seq: null,
+            role: null,
+            id: "asdf",
+            password: userPwd,
+            name: "김환자",
+            sex: false,
+            email: userEmailId + "@" + userEmailHost,
+            phone: userPhone,
+            birthDate: null,
+            img: "default.png",
+            registDate: "2023-02-01",
+            mainPhone: userFirstResponder,
+            mainRelationship: userFirstResponderRelationship,
+            subPhone: userSecondResponder,
+            subRelationship: userSecondResponderRelationship,
+          },
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+        .then(() => {
+          alert("수정 완료되었습니다.");
+          setUserPwd("");
+          setUserPwdChk("");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // console.log({
+      //   userSelfIntroduce: userSelfIntroduce,
+      // });
     }
   };
+
+  /** file input 선택 후 실행될 함수 */
+  const onUploadImage = useCallback((e) => {
+    if (!e.target.files) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      console.log("sdsdsdsdsds");
+      console.log(e);
+    };
+    reader.onerror = (e) => {
+      console.log(e);
+    };
+    // let file = document.getElementById("fileImgInput");
+    // console.log("------------");
+    // console.log(file.value);
+    // setUserProfileImg(file.value);
+  }, []);
 
   return (
     <div className={style.side_right_board}>
@@ -326,10 +345,16 @@ export default function UserInformation() {
           )}
           <div className={style.user_name}>{userName} 님</div>
           <div className={style.welcome}>환영합니다.</div>
-          <label htmlFor="file" className={style.btn_upload}>
+          <label htmlFor="fileImgInput" className={style.btn_upload}>
             사진 업로드
           </label>
-          <input className={style.btn_upload} type="file" id="file" />
+          <input
+            className={style.btn_upload}
+            type="file"
+            id="fileImgInput"
+            accept="image/*"
+            onChange={onUploadImage}
+          />
 
           <hr className={style.left_center_line} />
           <div className={style.sub_title}>아이디</div>
