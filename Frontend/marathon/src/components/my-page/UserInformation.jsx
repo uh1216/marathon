@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
 import style from "./UserInformation.module.css";
 import { useQuery } from "@tanstack/react-query";
-import { $ } from "util/axios";
+import { $ } from "util/axiosFile";
 import { useNavigate } from "react-router-dom";
 import { userLogout } from "stores/user.store";
 
@@ -38,8 +38,9 @@ export default function UserInformation() {
 
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
-  const [userProfileImg, setUserProfileImg] = useState("");
-  const [newProfileImg, setNewProfileImg] = useState("");
+  const [ImgUrl, setImgUrl] = useState("");
+  const [newImgUrl, setNewImgUrl] = useState("");
+  const [imgFile, setImgFile] = useState(null); //파일
   const [userSignUpDate, setUserSignUpDate] = useState("");
   const [userPwd, setUserPwd] = useState("");
   const [userPwdChk, setUserPwdChk] = useState("");
@@ -180,15 +181,15 @@ export default function UserInformation() {
     },
     {
       onSuccess: ({ data }) => {
-        setUserProfileImg(state.loginUser.userProfileImg);
+        setImgUrl(state.loginUser.userProfileImg);
         setUserName(state.loginUser.userName);
         setUserEmailId(data.email.split("@")[0]);
         setUserEmailHost(data.email.split("@")[1]);
         setUserPhone(Number(data.phone.replaceAll("-", "")));
         setUserSignUpDate(data.registDate);
-        setUserFirstResponder(data.mainPhone);
+        setUserFirstResponder(Number(data.mainPhone.replaceAll("-", "")));
         setUserFirstResponderRelationship(data.mainRelationship);
-        setUserSecondResponder(data.subPhone);
+        setUserSecondResponder(Number(data.mainPhone.replaceAll("-", "")));
         setUserSecondResponderRelationship(data.subRelationship);
         setUserId(data.id);
         //setUserSelfIntroduce(data.);
@@ -235,26 +236,26 @@ export default function UserInformation() {
       alert("연락처가 유효하지 않습니다.");
       inputUserPhone.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       (userFirstResponder === "" || userFirstResponder === null)
     ) {
       alert("비상 연락처 1을 입력해주세요.");
       inputUserFirstResponder.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       !chkPhone(userFirstResponder)
     ) {
       alert("연락처가 유효하지 않습니다.");
       inputUserFirstResponder.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       (userFirstResponderRelationship === "none" ||
         userFirstResponderRelationship === null)
     ) {
       alert("비상 연락처 1의 관계를 입력해주세요.");
       inputUserFirstResponderRelationship.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       userSecondResponderRelationship !== "none" &&
       userSecondResponderRelationship !== null &&
       (userSecondResponder === "" || userSecondResponder === null)
@@ -262,14 +263,14 @@ export default function UserInformation() {
       alert("비상 연락처 2를 입력해주세요.");
       inputUserSecondResponder.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       userSecondResponder.length > 0 &&
       !chkPhone(userSecondResponder)
     ) {
       alert("연락처가 유효하지 않습니다.");
       inputUserSecondResponder.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       userSecondResponder.length > 0 &&
       (userSecondResponderRelationship === "none" ||
         userSecondResponderRelationship === null)
@@ -285,30 +286,26 @@ export default function UserInformation() {
         name: "김환자",
         sex: false,
         email: userEmailId + "@" + userEmailHost,
-        phone: userPhone,
+        phone: userPhone.toString(),
         birthDate: null,
         img: "default.png",
         registDate: "2023-02-01",
       };
 
       if (state.loginUser.userRole === "patient") {
-        userInfo.mainPhone = userFirstResponder;
+        userInfo.mainPhone = userFirstResponder.toString();
         userInfo.mainRelationship = userFirstResponderRelationship;
-        userInfo.subPhone = userSecondResponder;
+        userInfo.subPhone = userSecondResponder.toString();
         userInfo.subRelationship = userSecondResponderRelationship;
 
-        $.put(
-          `/patient-sign/modify`,
-          {
-            image: userProfileImg,
-            patient: userInfo,
-          },
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
+        const formData = new FormData();
+        formData.append("image", imgFile);
+        formData.append(
+          "patient",
+          new Blob([JSON.stringify(userInfo)], { type: "application/json" })
+        );
+
+        $.put(`/patient-sign/modify`, formData)
           .then(() => {
             alert("수정 완료되었습니다.");
             setUserPwd("");
@@ -328,11 +325,12 @@ export default function UserInformation() {
 
   /** file input 선택 후 실행될 함수 */
   const encodeFileToBase64 = (fileBlob) => {
+    setImgFile(fileBlob);
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise((resolve) => {
       reader.onload = () => {
-        setNewProfileImg(reader.result);
+        setNewImgUrl(reader.result);
         resolve();
       };
     });
@@ -345,14 +343,14 @@ export default function UserInformation() {
         {/* 왼쪽 박스 */}
         <div className={style.left_box}>
           {/* 프로필 사진 */}
-          {!userProfileImg && !newProfileImg ? (
+          {!ImgUrl && !newImgUrl ? (
             <div className={style.profile_img + " " + style.profile_initial}>
               A
             </div>
           ) : (
             <img
               className={style.profile_img}
-              src={newProfileImg ? newProfileImg : userProfileImg}
+              src={newImgUrl ? newImgUrl : ImgUrl}
               alt="프로필 사진"
             />
           )}
@@ -474,7 +472,7 @@ export default function UserInformation() {
             {/* (주) 연락처 */}
             <div className={style.input_div}>
               <label className={style.input_label} htmlFor="user_phone">
-                {state.loginUser.userRole === "normal" ? (
+                {state.loginUser.userRole === "patient" ? (
                   <>주 연락처</>
                 ) : (
                   <>연락처</>
@@ -493,7 +491,7 @@ export default function UserInformation() {
               />
             </div>
             {/* userRole에 따라서 달라지는 내용 */}
-            {state.loginUser.userRole === "normal" ? (
+            {state.loginUser.userRole === "patient" ? (
               <>
                 <div className={style.input_div}>
                   <label

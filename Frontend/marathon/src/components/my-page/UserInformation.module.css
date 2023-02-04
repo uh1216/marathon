@@ -204,6 +204,15 @@ label.btn_upload:hover {
   background-color: #e6e6e6;
 }
 
+.input_middle {
+  padding: 0 13px;
+  width: 307px;
+  height: 40px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+  margin-right: 10px;
+}
+
 .at {
   margin-right: 11px;
 }
