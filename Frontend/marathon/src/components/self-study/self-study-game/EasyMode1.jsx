@@ -5,7 +5,7 @@ import commonStyle from "./Game.module.css";
 import style from "./EasyMode1.module.css";
 import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode } from "stores/game.store";
-import GIF from "img/gif/11.gif";
+import GIF from "img/gif/color_match.gif";
 
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
@@ -65,7 +65,6 @@ export default function EasyMode1() {
   const onChange = (e) => {
     let index = e.target.value;
     let arr = [...mySelect];
-    console.log(Number(index.slice(0, -1)));
     index[index.length - 1] === "0"
       ? (arr[Number(index.slice(0, -1))] = "1")
       : (arr[Number(index.slice(0, -1))] = "0");
@@ -153,7 +152,7 @@ export default function EasyMode1() {
         button_arr3.push(
           <button
             key={index}
-            className={style.button_incorrect}
+            className={style.button_answer_noselect}
             value={index.toString() + 3}
             disabled
           ></button>
@@ -189,10 +188,20 @@ export default function EasyMode1() {
         );
       }
     });
+
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
-        <div className={commonStyle.title}>채점 결과 입니다</div>
+        {JSON.stringify(quiz) === JSON.stringify(mySelect) ? (
+          <div className={commonStyle.title}>
+            <span className={style.correct_text}>정답</span> 입니다
+          </div>
+        ) : (
+          <div className={commonStyle.title}>
+            <span className={style.incorrect_text}>오답</span> 입니다
+          </div>
+        )}
+
         <div className={style.content}>
           <div className={style.board}>{button_arr3}</div>
         </div>
