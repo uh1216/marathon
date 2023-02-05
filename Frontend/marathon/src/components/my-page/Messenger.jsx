@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "./Messenger.module.css";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { faXmark, faBell } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { changeNowSideNav } from "stores/toggle.store";
 import { useDispatch } from "react-redux";
 import Modal from "components/common/Modal";
@@ -91,28 +91,74 @@ export default function Messenger() {
 
   // 모달창 노출 여부 state
   const [isModalOpen, setIsModalOpen] = useState(false);
+  let pageNum = 1;
+  let prevList = [];
+
+  /** 서버로부터 메시지 받아오는 함수
+   * 더 받아온 메시지가 있다면 true
+   * 없다면 false
+   */
+  async function getMoreMessage(prev, pageNum) {
+    console.log(2);
+    await $.get(`/user-commu/list?pageNum=${pageNum}`)
+      .then(({ data }) => {
+        console.log(3);
+        console.log([...prev, ...data.content]);
+        return [...prev, ...data.content];
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  // 무한 스크롤 관련 변수
+  const [bottom, setBottom] = useState(null);
+  const bottomObserver = useRef(null);
+  const observer = new IntersectionObserver(
+    async (entries) => {
+      // viewport에 target이 보이면
+      if (entries[0].isIntersecting) {
+        console.log(1);
+        prevList = await getMoreMessage(prevList, pageNum++);
+        console.log(4);
+        // console.log("5");
+        console.log(prevList);
+        console.log(prevList.type);
+        setList(prevList);
+      }
+    },
+    { threshold: 0.25, rootMargin: "80px" }
+  );
 
   useEffect(() => {
     // 사이드 나브 초기화
     dispatch(changeNowSideNav("알림 / 메시지"));
 
-    $.get(`/user-commu/list?pageNum=1`)
-      .then(({ data }) => {
-        setList(data.content);
-        console.log(data.content);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    bottomObserver.current = observer;
   }, []);
+
+  useEffect(() => {
+    const observer = bottomObserver.current;
+    if (bottom) {
+      observer.observe(bottom);
+    }
+    return () => {
+      if (bottom) {
+        observer.unobserve(bottom);
+      }
+    };
+  }, [bottom]);
 
   /** Date 객체를 원하는 포맷의 String으로 반환하는 함수 */
   const dateToString = (date) => {
-    let str = date.toString();
-    str = str.replace(/GMT\+0900\s\(한국 표준시\)/, "");
-    str = str.replace(/\D{4}/, "");
-    str = str.substr(0, 17);
-    return str;
+    if (date) {
+      let str = date.toString();
+      str = str.replace(/GMT\+0900\s\(한국 표준시\)/, "");
+      str = str.replace(/\D{4}/, "");
+      str = str.substr(0, 17);
+      return str;
+    }
+    return date;
   };
 
   /** 메시지를 작성하는 모달 */
@@ -150,7 +196,7 @@ export default function Messenger() {
                   ? style.message_checked + " " + style.message_box
                   : style.message_box
               }
-              key={item.commuSeq}
+              key={idx}
               onClick={() => {
                 setChecked(item.commuSeq, idx);
               }}
@@ -188,6 +234,8 @@ export default function Messenger() {
             </div>
           ))
         )}
+        {/* 이 친구가 뷰포트에 25% 보인다면, 무한 스크롤이 실행됨 */}
+        <div ref={setBottom} />
       </div>
       {isModalOpen && (
         <Modal setModalOpen={setIsModalOpen}>
