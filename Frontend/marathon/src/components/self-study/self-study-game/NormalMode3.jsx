@@ -301,7 +301,7 @@ export default function NormalMode3() {
     return (
       <SelfStudyIntro
         mode={"normal"}
-        title="도형의 위치를 기억해서 원래 위치로 가져다 놓는 게임입니다."
+        title="동물의 위치를 기억해서 원래 위치로 가져다 놓는 게임입니다."
         gif={GIF}
       />
     );
@@ -309,7 +309,7 @@ export default function NormalMode3() {
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
-        <div className={commonStyle.title}>도형의 위치를 잘 기억해두세요.</div>
+        <div className={commonStyle.title}>동물의 위치를 잘 기억해두세요.</div>
         <div className={style.gameBoard}>
           <table className={style.table + " game_3_table"}>
             <tbody>{renderingTable(0)}</tbody>
@@ -322,7 +322,7 @@ export default function NormalMode3() {
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
-          원래 위치로 도형을 가져다 놓으세요!
+          원래 위치로 동물을 가져다 놓으세요!
         </div>
         <div className={style.gameBoard}>
           <table className={style.table + " game_3_table"}>
