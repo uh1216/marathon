@@ -177,7 +177,7 @@ export default function UserInformation() {
   const { data: userInfo } = useQuery(
     ["getUserInformation"],
     () => {
-      return $.get(`/patient-sign/modify`);
+      return $.get(`/${state.loginUser.userRole}-sign/modify`);
     },
     {
       onSuccess: ({ data }) => {
@@ -185,14 +185,17 @@ export default function UserInformation() {
         setUserName(state.loginUser.userName);
         setUserEmailId(data.email.split("@")[0]);
         setUserEmailHost(data.email.split("@")[1]);
-        setUserPhone(Number(data.phone.replaceAll("-", "")));
+        setUserPhone(data.phone.replaceAll("-", ""));
         setUserSignUpDate(data.registDate);
-        setUserFirstResponder(Number(data.mainPhone.replaceAll("-", "")));
-        setUserFirstResponderRelationship(data.mainRelationship);
-        setUserSecondResponder(Number(data.mainPhone.replaceAll("-", "")));
-        setUserSecondResponderRelationship(data.subRelationship);
         setUserId(data.id);
-        //setUserSelfIntroduce(data.);
+        if (state.loginUser.userRole === "patient") {
+          setUserFirstResponder(data.mainPhone.replaceAll("-", ""));
+          setUserFirstResponderRelationship(data.mainRelationship);
+          setUserSecondResponder(data.mainPhone.replaceAll("-", ""));
+          setUserSecondResponderRelationship(data.subRelationship);
+        } else if (state.loginUser.userRole === "doctor") {
+          setUserSelfIntroduce(data.introduce ? data.introduce : "");
+        }
       },
     }
   );
@@ -286,7 +289,7 @@ export default function UserInformation() {
         name: "김환자",
         sex: false,
         email: userEmailId + "@" + userEmailHost,
-        phone: userPhone.toString(),
+        phone: userPhone,
         birthDate: null,
         img: "default.png",
         registDate: "2023-02-01",
@@ -297,25 +300,27 @@ export default function UserInformation() {
         userInfo.mainRelationship = userFirstResponderRelationship;
         userInfo.subPhone = userSecondResponder.toString();
         userInfo.subRelationship = userSecondResponderRelationship;
-
-        const formData = new FormData();
-        formData.append("image", imgFile);
-        formData.append(
-          "patient",
-          new Blob([JSON.stringify(userInfo)], { type: "application/json" })
-        );
-
-        $.put(`/patient-sign/modify`, formData)
-          .then(() => {
-            alert("수정 완료되었습니다.");
-            setUserPwd("");
-            setUserPwdChk("");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
       } else if (state.loginUser.userRole === "doctor") {
+        userInfo.introduce = userSelfIntroduce;
       }
+
+      const formData = new FormData();
+      formData.append("image", imgFile);
+      formData.append(
+        `${state.loginUser.userRole}`,
+        new Blob([JSON.stringify(userInfo)], { type: "application/json" })
+      );
+
+      $.put(`/${state.loginUser.userRole}-sign/modify`, formData)
+        .then(() => {
+          alert("수정 완료되었습니다.");
+          setUserPwd("");
+          setUserPwdChk("");
+          this.forceUpdate();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
       // console.log({
       //   userSelfIntroduce: userSelfIntroduce,
@@ -480,7 +485,7 @@ export default function UserInformation() {
               </label>
               <input
                 className={`${style.input_number} ${style.input_long}`}
-                type="number"
+                type="text"
                 id="user_phone"
                 placeholder="'-'를 제외한 숫자만 입력해 주세요."
                 value={userPhone}
@@ -502,7 +507,7 @@ export default function UserInformation() {
                   </label>
                   <input
                     className={`${style.input_number} ${style.input_middle}`}
-                    type="number"
+                    type="text"
                     id="user_first_responder"
                     placeholder="'-'를 제외한 숫자만 입력해 주세요."
                     value={userFirstResponder}
@@ -529,7 +534,7 @@ export default function UserInformation() {
                   </label>
                   <input
                     className={`${style.input_number} ${style.input_middle}`}
-                    type="number"
+                    type="text"
                     id="user_second_responder"
                     placeholder="'-'를 제외한 숫자만 입력해 주세요."
                     value={userSecondResponder}
@@ -560,12 +565,12 @@ export default function UserInformation() {
                     onChange={(e) => {
                       setUserSelfIntroduce(e.target.value);
                     }}
-                    value={userSelfIntroduce}
                     id="user_self_introduce"
                     ref={inputUserSelfIntroduce}
                     maxLength="174"
+                    value={userSelfIntroduce}
                     placeholder="이용자들에게 보여질 자기소개 글을 작성해주세요."
-                  />
+                  ></textarea>
                 </div>
               </>
             ) : null}
