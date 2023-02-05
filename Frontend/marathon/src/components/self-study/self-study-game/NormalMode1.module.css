@@ -5,8 +5,8 @@
 }
 
 .board {
-  width: 330px;
-  height: 330px;
+  width: 365px;
+  height: 275px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -14,8 +14,8 @@
 .button_blank {
   margin-right: 10px;
   margin-bottom: 10px;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   border: 0.3px solid black;
   border-radius: 5px;
   background-color: white;
@@ -25,8 +25,8 @@
 .button_answer {
   margin-right: 10px;
   margin-bottom: 10px;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   border: 0.3px solid black;
   border-radius: 5px;
   background-color: #14c4be;
@@ -36,8 +36,8 @@
 .button_selected {
   margin-right: 10px;
   margin-bottom: 10px;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   border: 0.3px solid black;
   border-radius: 5px;
   background-color: #fcf945;
@@ -46,8 +46,8 @@
 .button_correct {
   margin-right: 10px;
   margin-bottom: 10px;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   border: 0.3px solid black;
   border-radius: 5px;
   background-color: #2d72f1;
@@ -57,20 +57,27 @@
 .button_incorrect {
   margin-right: 10px;
   margin-bottom: 10px;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
   border: 0.3px solid black;
   border-radius: 5px;
   background-color: #f35c57;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
-/** 비활성화 css*/
-.button_blank:disabled {
+.button_answer_noselect {
   margin-right: 10px;
   margin-bottom: 10px;
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
+  border: 0.3px solid black;
+  border-radius: 5px;
+  background-color: #7c7a78;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+/** 비활성화 css*/
+.button_blank:disabled {
   border: 0.3px solid black;
   border-radius: 5px;
   background-color: white;
@@ -78,10 +85,6 @@
 }
 
 .button_answer:disabled {
-  margin-right: 10px;
-  margin-bottom: 10px;
-  height: 100px;
-  width: 100px;
   border: 0.3px solid black;
   border-radius: 5px;
   background-color: #14c4be;
@@ -89,20 +92,12 @@
 }
 
 .button_selected:disabled {
-  margin-right: 10px;
-  margin-bottom: 10px;
-  height: 100px;
-  width: 100px;
   border: 0.3px solid black;
   border-radius: 5px;
   background-color: #fcf945;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 .button_correct:disabled {
-  margin-right: 10px;
-  margin-bottom: 10px;
-  height: 100px;
-  width: 100px;
   border: 0.3px solid black;
   border-radius: 5px;
   background-color: #2d72f1;
@@ -110,12 +105,78 @@
 }
 
 .button_incorrect:disabled {
-  margin-right: 10px;
-  margin-bottom: 10px;
-  height: 100px;
-  width: 100px;
   border: 0.3px solid black;
   border-radius: 5px;
   background-color: #f35c57;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.correct_text {
+  color: #4183ff;
+}
+
+.incorrect_text {
+  color: #ff4e41;
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    margin-top: 20px;
+  }
+
+  .board {
+    width: 300px;
+    height: 275px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .button_blank {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 65px;
+    width: 65px;
+  }
+
+  .button_answer {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 65px;
+    width: 65px;
+  }
+
+  .button_selected {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 65px;
+    width: 65px;
+  }
+  .button_correct {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 65px;
+    width: 65px;
+  }
+
+  .button_incorrect {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 65px;
+    width: 65px;
+  }
+
+  .button_answer_noselect {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 65px;
+    width: 65px;
+  }
+
+  .correct_text {
+    font-size: 2em;
+  }
+
+  .incorrect_text {
+    font-size: 2em;
+  }
 }

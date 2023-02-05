@@ -1,12 +1,12 @@
 .content {
-  margin-top: 30px;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
 }
 
 .board {
-  width: 275px;
-  height: 275px;
+  width: 365px;
+  height: 365px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -122,6 +122,54 @@
 @media screen and (max-width: 768px) {
   .content {
     margin-top: 10px;
+  }
+
+  .board {
+    width: 280px;
+    height: 275px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .button_blank {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 60px;
+    width: 60px;
+  }
+
+  .button_answer {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 60px;
+    width: 60px;
+  }
+
+  .button_selected {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 60px;
+    width: 60px;
+  }
+  .button_correct {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 60px;
+    width: 60px;
+  }
+
+  .button_incorrect {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 60px;
+    width: 60px;
+  }
+
+  .button_answer_noselect {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 60px;
+    width: 60px;
   }
 
   .correct_text {
