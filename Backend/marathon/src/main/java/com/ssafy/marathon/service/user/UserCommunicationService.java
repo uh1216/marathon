@@ -55,7 +55,7 @@ public class UserCommunicationService {
         Optional<User> findUser = userRepository.findById(userSeq);
         User user = findUser.orElseThrow();
 
-        PageRequest pageRequest = PageRequest.of(pageNum - 1, 10);
+        PageRequest pageRequest = PageRequest.of(pageNum - 1, 5);
 
         Page<CommunicationResDto> communicationResDtoPages = communicationRepository.findAllByReceiverOrderByCheckedAscDateTimeDesc(
                 user, pageRequest)
