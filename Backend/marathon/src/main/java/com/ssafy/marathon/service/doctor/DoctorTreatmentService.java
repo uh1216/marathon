@@ -21,5 +21,5 @@ public interface DoctorTreatmentService {
 
     List<DayOfTreatmentResDto> getTreatments(Long doctorSeq);
 
-
+    void deleteTreatment(Long treatmentSeq);
 }

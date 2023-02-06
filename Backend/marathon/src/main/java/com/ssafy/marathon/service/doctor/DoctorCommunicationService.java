@@ -32,9 +32,5 @@ public class DoctorCommunicationService {
             .dateTime(LocalDateTime.now())
             .build();
         alarmRepository.save(alarm);
-
-        //TODO 화상 방 기능 만들고 history로 바로 넘길지 생각해보기
-
-        treatmentRepository.delete(treatment);
     }
 }

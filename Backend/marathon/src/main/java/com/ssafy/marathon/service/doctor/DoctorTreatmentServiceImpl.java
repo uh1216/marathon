@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,7 +134,13 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
         return dtoList;
     }
 
+    @Override
+    public void deleteTreatment(Long treatmentSeq) {
+        Optional<Treatment> findTreatment = treatmentRepository.findById(treatmentSeq);
+        Treatment treatment = findTreatment.orElseThrow();
 
+        treatmentRepository.delete(treatment);
+    }
 
 
 }
