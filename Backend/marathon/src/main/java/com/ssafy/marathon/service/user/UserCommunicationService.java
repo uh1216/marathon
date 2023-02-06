@@ -61,6 +61,7 @@ public class UserCommunicationService {
                 user, pageRequest)
             .map(message -> CommunicationResDto.builder()
                 .commuSeq(message.getSeq())
+                .senderSeq(message.getSender().getSeq())
                 .senderName(message.getSender().getName())
                 .content(message.getContent())
                 .date(message.getDateTime())
