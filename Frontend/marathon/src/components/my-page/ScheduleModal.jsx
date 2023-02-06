@@ -7,8 +7,8 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
   const [isCreatable, setIsCreatable] = useState(false);
 
   useEffect(() => {
-    let date = new Date(modalData.reservedDay.date).getTime();
-    date += (modalData.reservedDay.time - 9) * 3600000;
+    let date = new Date(modalData.reservedDay.dateTime).getTime();
+    date += (modalData.reservedDay.dateTime - 9) * 3600000;
     let nowTime = new Date();
     if (
       -3600000 <= date - nowTime.getTime() &&
@@ -24,13 +24,16 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
       <div className={style.modal_left_box}>
         <img
           className={style.modal_profile}
-          src={modalData.reservedDay.url}
+          src={
+            modalData.reservedDay.doctorImg || modalData.reservedDay.patientImg
+          }
           alt=""
         />
       </div>
       <div className={style.modal_right_box}>
         <h3 style={{ display: "inline-block" }}>
-          {modalData.reservedDay.name}{" "}
+          {modalData.reservedDay.doctorName ||
+            modalData.reservedDay.patientName}
         </h3>
         <h4>{state.loginUser.userRole === "patient" ? " 선생님 " : " 님 "}</h4>
         <hr />
@@ -47,9 +50,11 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
         >
           예약 날짜
         </span>
-        <span>{modalData.reservedDay.date}</span>
+        <span>
+          {new Date(modalData.reservedDay.dateTime).toLocaleDateString()}
+        </span>
         <span>({modalData.dayOfWeek})</span>
-        <span>{modalData.reservedDay.time}시</span>
+        <span>{new Date(modalData.reservedDay.dateTime).getHours()}시</span>
         {state.loginUser.userRole === "doctor" ? (
           <>
             <div style={{ display: "flex" }}>

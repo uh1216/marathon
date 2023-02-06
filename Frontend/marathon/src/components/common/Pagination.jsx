@@ -9,7 +9,7 @@ import {
 /** 서버로부터 도착한 페이지네이션 데이터에서 number, first, last, totalPages, url을 찾아서 주입 */
 export default function Pagination({ number, first, last, totalPages, url }) {
   const navigate = useNavigate();
-  const startNum = Math.floor((number - 1) / 10) * 10 + 1;
+  const startNum = Math.floor((Math.max(number, 1) - 1) / 10) * 10 + 1;
 
   const pageListRander = () => {
     const pageList = [];
@@ -29,11 +29,15 @@ export default function Pagination({ number, first, last, totalPages, url }) {
       </div>
     );
 
-    for (let i = startNum; i <= Math.min(totalPages, startNum + 9); i++) {
+    for (
+      let i = startNum;
+      i <= Math.min(Math.max(totalPages, 1), startNum + 9);
+      i++
+    ) {
       pageList.push(
         <div
           key={url + i}
-          className={i !== number ? style.page_number : style.nowPage}
+          className={i !== number + 1 ? style.page_number : style.nowPage}
         >
           <span
             onClick={() => {
