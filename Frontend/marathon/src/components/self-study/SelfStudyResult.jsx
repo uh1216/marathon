@@ -3,6 +3,7 @@ import style from "./SelfStudyResult.module.css";
 import O from "img/icon/green_check.png";
 import X from "img/icon/red_x.png";
 import { useEffect, useState } from "react";
+import { $ } from "util/axios.js";
 
 export default function SelfStudyResult() {
   const gameState = useSelector((state) => state).gameState;
@@ -14,6 +15,24 @@ export default function SelfStudyResult() {
     for (let i = 0; i < 10; i++) {
       if (gameState.record[i]) cnt++;
     }
+
+    console.log({
+      gameType: gameState.type,
+      difficulty: gameState.mode,
+      correct: cnt,
+    });
+
+    $.post(`patient-game/save`, {
+      gameType: gameState.type,
+      difficulty: gameState.mode,
+      correct: cnt,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setAnsCnt(cnt);
   }, []);
   // 게임 종류 : gameState.type

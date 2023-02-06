@@ -34,10 +34,9 @@ public class PatientGameController {
     ){
         Long patientSeq = jwtTokenProvider.getUserSeq(accessToken);
 
-        if(patientGameService.saveRecord(patientSeq, gameReqDto) != null){
-            return new ResponseEntity<Void>(HttpStatus.CREATED);
-        }
-        return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        patientGameService.saveRecord(patientSeq, gameReqDto);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @GetMapping("/list")
