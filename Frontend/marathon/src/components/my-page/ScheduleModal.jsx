@@ -1,10 +1,42 @@
 import style from "./ScheduleModal.module.css";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { $ } from "util/axios";
 
 export default function ScheduleModal({ modalData, setIsModalOpen }) {
   const state = useSelector((state) => state);
+  const queryClient = useQueryClient();
   const [isCreatable, setIsCreatable] = useState(false);
+
+  // const { mutate } = useMutation(
+  //   () => $.put(`/admin-consult/detail/${state.nowBoardInfo.consultingSeq}`),
+  //   {
+  //     onMutate: async () => {
+  //       await queryClient.cancelQueries(["mypageConsultingList", pageNum]);
+  //       const oldData = queryClient.getQueryData([
+  //         "mypageConsultingList",
+  //         pageNum,
+  //       ]);
+  //       queryClient.setQueryData(["mypageConsultingList", pageNum], () => {
+  //         return {
+  //           data: [updateData()],
+  //         };
+  //       });
+  //       return { oldData };
+  //     },
+  //     onError: (_error, _variables, context) => {
+  //       queryClient.setQueryData(
+  //         ["mypageConsultingList", pageNum],
+  //         context.oldData
+  //       );
+  //     },
+  //     onSettled: () => {
+  //       queryClient.invalidateQueries(["mypageConsultingList", pageNum]);
+  //     },
+  //   }
+  // );
 
   useEffect(() => {
     let date = new Date(modalData.reservedDay.dateTime).getTime();

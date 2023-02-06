@@ -407,14 +407,14 @@ export default function Schedule() {
           data={lastRecordData !== undefined && lastRecordData.data.content}
           type={"mypageSchedule"}
           setIsModalOpen={setIsModalOpen}
-        ></Board>
+        />
         <Pagination
           number={lastRecordData && lastRecordData.data.number}
           first={lastRecordData && lastRecordData.data.first}
           last={lastRecordData && lastRecordData.data.last}
           totalPages={lastRecordData && lastRecordData.data.totalPages}
           url={"mypage/schedule/"}
-        ></Pagination>
+        />
       </div>
       {isModalOpen && (
         <Modal setModalOpen={setIsModalOpen}>

@@ -160,7 +160,7 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
                     className={style.button + " " + style.button2}
                     onClick={() => {
                       setIsModalOpen(true);
-                      dispath(changeNowBoardInfo(content));
+                      dispath(changeNowBoardInfo(content.consultingSeq));
                     }}
                   >
                     상세보기
