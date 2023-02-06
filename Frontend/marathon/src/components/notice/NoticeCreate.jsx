@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./NoticeCreate.module.css";
-import { useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { $ } from "util/axios";
 
 export default function NoticeCreate() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   //제목, 내용 값 변수에 저장
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -24,7 +25,12 @@ export default function NoticeCreate() {
 
   /** API 통신 함수 */
   const res_post = () => $.post(`/admin-board/notice`, newData);
-  const { mutate: onSubmit } = useMutation(res_post, {});
+  const { mutate: onSubmit } = useMutation(res_post, {
+    onSuccess: (data) => {
+      alert("작성되었습니다.");
+      navigate(`/notice/${1}`);
+    },
+  });
 
   // 유효성 검사
   const isValid = () => {
@@ -34,8 +40,6 @@ export default function NoticeCreate() {
       alert("내용을 입력해주세요");
     } else {
       onSubmit(newData);
-      alert("등록되었습니다.");
-      navigate(`../${1}`);
     }
   };
 
