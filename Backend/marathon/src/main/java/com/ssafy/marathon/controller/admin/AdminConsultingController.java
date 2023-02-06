@@ -25,8 +25,8 @@ public class AdminConsultingController {
     }
 
     @GetMapping("/list")
-    public Page<ConsultingResDto> getConsultingPages(@RequestParam int pageNum) {
-        return adminConsultingService.getConsultingPages(pageNum);
+    public Page<ConsultingResDto> getConsultingPages(@RequestParam int pageNum, @RequestParam boolean checkedOrder) {
+        return adminConsultingService.getConsultingPages(pageNum, checkedOrder);
     }
 
     @PutMapping("/detail/{consultingSeq}")

@@ -7,5 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
 
-    Page<Consulting> findAllByOrderByCheckedAsc(Pageable pageable);
+    Page<Consulting> findAllByOrderByCheckedAscHopeDateDesc(Pageable pageable);
+
+    Page<Consulting> findAllByOrderByHopeDateDesc(Pageable pageable);
 }
