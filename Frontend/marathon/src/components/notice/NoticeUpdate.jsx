@@ -25,16 +25,20 @@ export default function NoticeUpdate() {
   };
 
   /** API PUT 함수 */
-  const res_put = () =>
-    $.put(`/admin-board/notice/${location.state.seq}`, newData);
+  const res_put = () => {
+    return $.put(`/admin-board/notice/${location.state.seq}`, newData);
+  };
 
   const { mutate: onSubmit } = useMutation(res_put, {
-    oncSuccess: () => {
-      console.log("성공");
+    onSuccess: () => {
+      queryClient.invalidateQueries(`[NoticeDetail, ${location.state.seq}]`);
+      alert("성공");
+      navigate(-1);
     },
 
     onError: (err) => {
       alert("실패");
+      navigate(-1);
     },
   });
 
@@ -46,7 +50,6 @@ export default function NoticeUpdate() {
       alert("내용을 입력해주세요");
     } else {
       onSubmit();
-      navigate(-1);
     }
   };
 

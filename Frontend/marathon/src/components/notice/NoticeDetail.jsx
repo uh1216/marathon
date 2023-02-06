@@ -14,12 +14,17 @@ export default function NoticeDetail() {
 
   const { isLoading, data, isError, error } = useQuery(
     ["NoticeDetail", location.state.seq],
-    () => $.get(`/user-board/${location.state.seq}`)
+    () => {
+      return $.get(`/user-board/${location.state.seq}`);
+    }
   );
 
   const { mutate: deleteArticle } = useMutation(res_delete, {
-    oncSuccess: () => {
-      console.log("성공");
+    onSuccess: () => {
+      if (window.confirm("삭제하시겠습니까?")) {
+        alert("삭제되었습니다.");
+        navigate(`/notice/${1}`);
+      }
     },
 
     onError: (err) => {
