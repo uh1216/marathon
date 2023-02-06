@@ -7,6 +7,9 @@ import Board from "components/common/Board";
 import Modal from "components/common/Modal";
 import ConsultListModal from "components/my-page/ConsultListModal";
 import SelectBox from "components/common/SelectBox";
+import { $ } from "util/axios";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 
 export default function ConsultList() {
   let dumy = [];
@@ -30,6 +33,12 @@ export default function ConsultList() {
   ];
   const [searchOption, setSearchOption] = useState("all");
   const dispatch = useDispatch();
+  const { pageNum } = useParams();
+
+  const { data: lastRecordData } = useQuery(
+    ["mypageConsultingList", pageNum],
+    () => $.get(`/admin-consult/list?pageNum=${pageNum}`)
+  );
 
   useEffect(() => {
     // 사이드 Nav 초기화
@@ -65,11 +74,11 @@ export default function ConsultList() {
           setIsModalOpen={setIsModalOpen}
         />
         <Pagination
-          number={13}
-          first={false}
-          last={false}
-          totalPages={25}
-          url={"www.naver.com"}
+          number={lastRecordData && lastRecordData.data.number}
+          first={lastRecordData && lastRecordData.data.first}
+          last={lastRecordData && lastRecordData.data.last}
+          totalPages={lastRecordData && lastRecordData.data.totalPages}
+          url={"admin-consult/"}
         />
       </div>
       {isModalOpen && (
