@@ -4,9 +4,10 @@ import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { faXmark, faBell } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { changeNowSideNav } from "stores/toggle.store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "components/common/Modal";
 import SendMessage from "./SendMessage";
+import { updateUnReadMsgNum } from "stores/user.store";
 import { $ } from "util/axios";
 
 export default function Messenger() {
@@ -14,84 +15,17 @@ export default function Messenger() {
   const now = new Date();
 
   const [list, setList] = useState([]);
-  // const list = [
-  //   {
-  //     type: "alarm",
-  //     content: "30분 뒤 화상 치료가 시작됩니다.",
-  //     date: now,
-  //     sender: "",
-  //     check: false,
-  //   },
-  //   {
-  //     type: "message",
-  //     content:
-  //       "안녕하세요? 그동안 잘 지내셨나요?\r\n동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.",
-  //     date: now,
-  //     sender: "홍길순",
-  //     check: false,
-  //   },
-  //   {
-  //     type: "alarm",
-  //     content: "30분 뒤 화상 치료가 시작됩니다.",
-  //     date: new Date("2023-01-27"),
-  //     sender: "",
-  //     check: true,
-  //   },
-  //   {
-  //     type: "alarm",
-  //     content: "30분 뒤 화상 치료가 시작됩니다.",
-  //     date: new Date("2023-01-27"),
-  //     sender: "",
-  //     check: true,
-  //   },
-  //   {
-  //     type: "message",
-  //     content:
-  //       "안녕하세요? 그동안 잘 지내셨나요?\n동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.",
-  //     date: new Date("2023-01-27"),
-  //     sender: "홍길순",
-  //     check: true,
-  //   },
-  //   {
-  //     type: "alarm",
-  //     content: "30분 뒤 화상 치료가 시작됩니다.",
-  //     date: new Date("2023-01-27"),
-  //     sender: "",
-  //     check: true,
-  //   },
-  //   {
-  //     type: "alarm",
-  //     content: "30분 뒤 화상 치료가 시작됩니다.",
-  //     date: new Date("2023-01-27"),
-  //     sender: "",
-  //     check: true,
-  //   },
-  //   {
-  //     type: "alarm",
-  //     content: "30분 뒤 화상 치료가 시작됩니다.",
-  //     date: new Date("2023-01-27"),
-  //     sender: "",
-  //     check: true,
-  //   },
-  //   {
-  //     type: "alarm",
-  //     content: "30분 뒤 화상 치료가 시작됩니다.",
-  //     date: new Date("2023-01-27"),
-  //     sender: "",
-  //     check: true,
-  //   },
-  //   {
-  //     type: "alarm",
-  //     content: "30분 뒤 화상 치료가 시작됩니다.",
-  //     date: new Date("2023-01-27"),
-  //     sender: "",
-  //     check: true,
-  //   },
-  // ];
+  const state = useSelector((state) => state);
 
   // 모달창 노출 여부 state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pageNum, setPageNum] = useState(1);
+
+  // 무슨 메시지에 대한 답장인지
+  const [commuSeq, setCommuSeq] = useState(0);
+  // 답장을 보낼 메시지의 sender가 누구였는지
+  const [senderSeq, setSenderSeq] = useState(0);
+  const [senderName, setSenderName] = useState("");
 
   useEffect(() => {
     // 사이드 나브 초기화
@@ -100,7 +34,6 @@ export default function Messenger() {
     $.get(`/user-commu/list?pageNum=1`)
       .then(({ data }) => {
         setList(data.content);
-        console.log(data.content);
       })
       .catch((error) => {
         console.log(error);
@@ -120,15 +53,20 @@ export default function Messenger() {
   };
 
   /** 메시지를 작성하는 모달 */
-  const showModalMessage = () => {
+  const showModalMessage = (commuSeq, senderSeq, senderName) => {
+    setSenderSeq(senderSeq);
+    setSenderName(senderName);
+    setCommuSeq(commuSeq);
     setIsModalOpen(true);
   };
 
   /** 알림/메시지 읽음 처리 */
   const setChecked = (commuSeq, idx) => {
+    if (list[idx].checked) return;
     $.put(`/user-commu/message/${commuSeq}`)
       .then(() => {
         list[idx].checked = true;
+        dispatch(updateUnReadMsgNum(state.loginUser.unReadMsgNum - 1));
         setList([...list]);
       })
       .catch((error) => {
@@ -153,12 +91,23 @@ export default function Messenger() {
     <>
       <div className="container">
         <div className={style.btn_container}>
-          <button className={style.btn_new_message} onClick={showModalMessage}>
+          <button
+            className={style.btn_new_message}
+            onClick={() => {
+              showModalMessage(0);
+            }}
+          >
             <FontAwesomeIcon icon={faPaperPlane} /> 새 메시지
           </button>
         </div>
         {list.length === 0 ? (
-          <>메시지가 존재하지 않습니다.</>
+          <div className={style.not_message}>
+            <div style={{ fontSize: "40px" }}>❌</div>
+            <div>
+              알림 / 메시지가 존재하지 않습니다.
+              <br /> 새 메시지를 작성해보세요!
+            </div>
+          </div>
         ) : (
           list.map((item, idx) => (
             <div
@@ -172,11 +121,12 @@ export default function Messenger() {
                 setChecked(item.commuSeq, idx);
               }}
             >
-              {item.type === "message" && (
+              {/* content가 null이면 알림, null이 아니면 메시지 */}
+              {item.content !== null && (
                 <FontAwesomeIcon icon={faXmark} className={style.icon_x} />
               )}
               <FontAwesomeIcon
-                icon={item.type === "message" ? faPaperPlane : faBell}
+                icon={item.content !== null ? faPaperPlane : faBell}
                 className={style.icon}
               />
               <div className={style.content_box}>
@@ -185,7 +135,7 @@ export default function Messenger() {
                   <div className={style.sub_content}>
                     {dateToString(item.date)}
                   </div>
-                  {item.type === "message" ? (
+                  {item.content !== null ? (
                     <div className={style.sub_content}>
                       from. {item.senderName} 선생님
                     </div>
@@ -193,25 +143,43 @@ export default function Messenger() {
                 </div>
               </div>
               <div className={style.btn_box}>
-                {item.type === "message" && (
-                  <button className={style.btn} onClick={showModalMessage}>
+                {item.content !== null && (
+                  <button
+                    className={style.btn}
+                    onClick={() => {
+                      showModalMessage(
+                        item.commuSeq,
+                        item.senderSeq,
+                        item.senderName
+                      );
+                    }}
+                  >
                     답장 쓰기
                   </button>
                 )}
-                {item.type === "alarm" && now - new Date(item.date) <= 30 && (
+                {item.content === null && now - new Date(item.date) <= 30 && (
                   <button className={style.btn}>수업 입장</button>
                 )}
               </div>
             </div>
           ))
         )}
-        {list.length % 10 === 0 && (
-          <button onClick={() => getMoreMessage()}>더보기</button>
+        {list.length !== 0 && list.length % 5 === 0 && (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <button className={style.btn_more} onClick={() => getMoreMessage()}>
+              ▼ 더보기
+            </button>
+          </div>
         )}
       </div>
       {isModalOpen && (
         <Modal setModalOpen={setIsModalOpen}>
-          <SendMessage setModalOpen={setIsModalOpen} />
+          <SendMessage
+            setModalOpen={setIsModalOpen}
+            commuSeq={commuSeq}
+            senderSeq={senderSeq}
+            senderName={senderName}
+          />
         </Modal>
       )}
     </>

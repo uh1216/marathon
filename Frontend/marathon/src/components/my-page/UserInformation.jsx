@@ -38,7 +38,7 @@ export default function UserInformation() {
 
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
-  const [ImgUrl, setImgUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
   const [newImgUrl, setNewImgUrl] = useState("");
   const [imgFile, setImgFile] = useState(null); //파일
   const [userSignUpDate, setUserSignUpDate] = useState("");
@@ -181,7 +181,7 @@ export default function UserInformation() {
     },
     {
       onSuccess: ({ data }) => {
-        setImgUrl(state.loginUser.userProfileImg);
+        setImgUrl(data.img);
         setUserName(state.loginUser.userName);
         setUserEmailId(data.email.split("@")[0]);
         setUserEmailHost(data.email.split("@")[1]);
@@ -348,14 +348,14 @@ export default function UserInformation() {
         {/* 왼쪽 박스 */}
         <div className={style.left_box}>
           {/* 프로필 사진 */}
-          {!ImgUrl && !newImgUrl ? (
+          {!imgUrl || !newImgUrl ? (
             <div className={style.profile_img + " " + style.profile_initial}>
-              A
+              {userId[0]}
             </div>
           ) : (
             <img
               className={style.profile_img}
-              src={newImgUrl ? newImgUrl : ImgUrl}
+              src={`/img/profile/${imgUrl}`} // 서버 올리고 나면 /home/ubuntu/static/image/asdf.png 이 경로로
               alt="프로필 사진"
             />
           )}

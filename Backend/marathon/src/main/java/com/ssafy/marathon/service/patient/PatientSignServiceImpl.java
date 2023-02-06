@@ -38,9 +38,9 @@ public class PatientSignServiceImpl implements PatientSignService {
     //프로젝트 내부에 저장
 //    private static String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\image";
     //로컬 테스트 : 바탕화면 static 폴더에 저장
-    private static String projectPath = "C:\\Users\\SSAFY\\Desktop\\static\\image";
+    //private static String projectPath = "C:\\Users\\SSAFY\\Desktop\\static\\image";
 
-
+    private static String projectPath = "C:\\Users\\SSAFY\\Desktop\\S08P12A304\\Frontend\\marathon\\public\\img\\profile";
     @Override
     public SignUpResDto signUp(PatientReqDto patientReqDto) {
 
