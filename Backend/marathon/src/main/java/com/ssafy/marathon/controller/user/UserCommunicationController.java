@@ -50,11 +50,11 @@ public class UserCommunicationController {
     @GetMapping("/message")
     public List<UserResDto> findCanSendMessageUsers(
         @RequestHeader("Access-Token") String accessToken,
-        @RequestBody MessageReqDto messageReqDto) {
+        @RequestParam boolean isNew, @RequestParam Long commuSeq) {
         Long userSeq = jwtTokenProvider.getUserSeq(accessToken);
         String userRole = jwtTokenProvider.getUserRole(accessToken);
 
-        return userCommunicationService.findCanSendMessageUsers(userSeq, userRole, messageReqDto);
+        return userCommunicationService.findCanSendMessageUsers(userSeq, userRole, isNew, commuSeq);
     }
 
     @GetMapping("/count")
