@@ -33,21 +33,37 @@ public class AdminConsultingService {
             .sickDate(LocalDate.now())
             .description(consulting.getDescription())
             .hopeDate(LocalDate.now())
+            .checked(consulting.isChecked())
             .build();
         return consultingResDto;
     }
 
-    public Page<ConsultingResDto> getConsultingPages(int pageNum) {
+    public Page<ConsultingResDto> getConsultingPages(int pageNum, boolean checkedOrder) {
         PageRequest pageRequest = PageRequest.of(pageNum-1, 10);
 
-        Page<ConsultingResDto> consultingResDtoPages = consultingRepository.findAllByOrderByCheckedAsc(pageRequest)
-            .map(consulting -> ConsultingResDto.builder()
-                .consultingSeq(consulting.getConsultingSeq())
-                .name(consulting.getName())
-                .phone1(consulting.getPhone1())
-                .hopeDate(consulting.getHopeDate())
-                .checked(consulting.isChecked())
-                .build());
+        Page<ConsultingResDto> consultingResDtoPages;
+
+        if (!checkedOrder) {
+            consultingResDtoPages = consultingRepository.findAllByOrderByHopeDateDesc(pageRequest)
+                .map(consulting -> ConsultingResDto.builder()
+                    .consultingSeq(consulting.getConsultingSeq())
+                    .name(consulting.getName())
+                    .phone1(consulting.getPhone1())
+                    .hopeDate(consulting.getHopeDate())
+                    .checked(consulting.isChecked())
+                    .build());
+        }
+        else {
+            consultingResDtoPages = consultingRepository.findAllByOrderByCheckedAscHopeDateDesc(pageRequest)
+                .map(consulting -> ConsultingResDto.builder()
+                    .consultingSeq(consulting.getConsultingSeq())
+                    .name(consulting.getName())
+                    .phone1(consulting.getPhone1())
+                    .hopeDate(consulting.getHopeDate())
+                    .checked(consulting.isChecked())
+                    .build());
+        }
+
         return consultingResDtoPages;
     }
 

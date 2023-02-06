@@ -85,11 +85,7 @@ export default function MyPage() {
               element={<TreatmentList />}
             ></Route>
             <Route
-              path="schedule/:pageNum/treatment-detail/:no"
-              element={<TreatmentDetail />}
-            ></Route>
-            <Route
-              path="treatment-list/:pageNum/treatment-detail/:no"
+              path="treatment-detail/:no"
               element={<TreatmentDetail />}
             ></Route>
             <Route

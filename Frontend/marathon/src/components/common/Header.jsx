@@ -192,7 +192,7 @@ export default function Header() {
                   navigate("/self-study/3/easy");
                 }}
               >
-                도형 위치 맞추기
+                동물 위치 맞추기
               </dl>
             </div>
           </li>

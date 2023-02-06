@@ -230,29 +230,13 @@ export default function ConsultEnroll() {
       let hopeY = calenderDay.getFullYear();
       let hopeM =
         calenderDay.getMonth() < 10
-          ? `0${calenderDay.getMonth()}`
-          : calenderDay.getMonth();
+          ? `0${calenderDay.getMonth() + 1}`
+          : calenderDay.getMonth() + 1;
       let hopeD =
         calenderDay.getDay() < 10
           ? `0${calenderDay.getDay()}`
           : calenderDay.getDay();
-      let body = {
-        name: userName,
-        sex: userGender === "male" ? true : false,
-        birthDate: userYear + "-" + userMonth + "-" + userDay,
-        email: userEmailId + "@" + userEmailHost,
-        phone1: userPhone,
-        phone2: userFirstResponder,
-        phone2Relationship: userFirstResponderRelationship,
-        phone3: userSecondResponder,
-        phone3Relationship: userSecondResponderRelationship,
-        sickDate: diseaseTos
-          ? null
-          : diseaseYear + "-" + diseaseMonth + "-" + diseaseDay,
-        description: desTextarea,
-        hopeDate: hopeY + "-" + hopeM + "-" + hopeD,
-      };
-      console.log(body);
+
       $.post(`/user-consult/apply`, {
         name: userName,
         sex: userGender === "male" ? true : false,

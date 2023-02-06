@@ -41,6 +41,6 @@ public class Consulting {
     private boolean checked;
 
     public void changeChecked() {
-        this.checked = true;
+        this.checked = !this.checked;
     }
 }

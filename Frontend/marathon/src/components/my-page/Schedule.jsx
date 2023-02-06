@@ -6,66 +6,35 @@ import Pagination from "components/common/Pagination";
 import Modal from "components/common/Modal";
 import style from "./Schedule.module.css";
 import ScheduleModal from "./ScheduleModal";
+import { $ } from "util/axios";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 
 export default function Schedule() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  const data = {
-    firstDateInfo: "1675061240413",
-    reservation: [
-      {
-        seq: "12",
-        name: "김삼순",
-        date: "2023-01-30",
-        url: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
-        dayOfWeek: "수",
-        time: "10",
-      },
-      {
-        seq: "14",
-        name: "김오순",
-        date: "2023-01-30",
-        url: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
-        dayOfWeek: "화",
-        time: "17",
-      },
-      {
-        seq: "13",
-        name: "김사순",
-        date: "2023-01-30",
-        url: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
-        dayOfWeek: "월",
-        time: "16",
-      },
-      {
-        seq: "18",
-        name: "김하순",
-        date: "2023-01-30",
-        url: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
-        dayOfWeek: "토",
-        time: "11",
-      },
-      {
-        seq: "15",
-        name: "김육순",
-        date: "2023-02-01",
-        url: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png",
-        dayOfWeek: "금",
-        time: "11",
-      },
-    ],
-  };
+  const { pageNum } = useParams();
 
-  let dumy = [];
-  for (let i = 1; i <= 5; i++) {
-    const newContents = {
-      historySeq: i,
-      doctorName: "김덕배",
-      dateTime: "2023-02-03",
-      day: "금",
-    };
-    dumy = [newContents, ...dumy];
-  }
+  const {
+    isLoading,
+    data: reservationData,
+    isError,
+    error,
+  } = useQuery(["mypageSchedule"], () =>
+    $.get(
+      state.loginUser.userRole === "doctor"
+        ? "/doctor-treatment/calendar"
+        : "/patient-treatment/calendar"
+    )
+  );
+
+  const { data: lastRecordData } = useQuery(["mypageRecordData", pageNum], () =>
+    $.get(
+      state.loginUser.userRole === "doctor"
+        ? `/doctor-history/nf-list?page=${pageNum}`
+        : `/patient-history/list?page=${pageNum}`
+    )
+  );
 
   // 달력에 사용하는 페이지 데이터.
   const [nowPage, setNowPage] = useState(0);
@@ -83,7 +52,8 @@ export default function Schedule() {
   // 날짜의 연산을 도와준다. 하루가 지나면 day + 1을 주입한다.
   const calDate = (day) => {
     return new Date(
-      Number(data.firstDateInfo) + (nowPage * 7 + day) * 86400000
+      Number(!isLoading && reservationData.data.firstDateInfo) +
+        (nowPage * 7 + day) * 86400000
     );
   };
 
@@ -137,34 +107,40 @@ export default function Schedule() {
             {calDate(0).getDate()}일 (월)
           </div>
           <div className={style.calender_bottom_div}>
-            {data.reservation.map((reservedDay) => {
-              if (
-                new Date(reservedDay.date).getDate() === calDate(0).getDate()
-              ) {
-                return (
-                  <div
-                    key={reservedDay.seq}
-                    className={style.reserve_info}
-                    onClick={() => {
-                      let tempData = { reservedDay, dayOfWeek: "월" };
-                      setModalData(tempData);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    <div className={style.green_circle}></div>
-                    <div className={style.sentenceHover}>
-                      <div className={style.sentence}>{reservedDay.name}</div>
-                      <div className={style.sentence}>
-                        {state.loginUser.userRole === "patient"
-                          ? " 선생님 "
-                          : " 님 "}{" "}
+            {!isLoading &&
+              reservationData.data.list.map((reservedDay) => {
+                if (
+                  new Date(reservedDay.dateTime).getDate() ===
+                  calDate(0).getDate()
+                ) {
+                  return (
+                    <div
+                      key={reservedDay.treatmentSeq}
+                      className={style.reserve_info}
+                      onClick={() => {
+                        let tempData = { reservedDay, dayOfWeek: "월" };
+                        setModalData(tempData);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <div className={style.green_circle}></div>
+                      <div className={style.sentenceHover}>
+                        <div className={style.sentence}>
+                          {reservedDay.doctorName || reservedDay.patientName}
+                        </div>
+                        <div className={style.sentence}>
+                          {state.loginUser.userRole === "patient"
+                            ? " 선생님 "
+                            : " 님 "}
+                        </div>
+                        <div className={style.sentence}>
+                          {new Date(reservedDay.dateTime).getHours()}시
+                        </div>
                       </div>
-                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                  </div>
-                );
-              } else return null;
-            })}
+                  );
+                } else return null;
+              })}
           </div>
         </div>
         <div className={style.calender_div}>
@@ -172,34 +148,40 @@ export default function Schedule() {
             {calDate(1).getDate()}일 (화)
           </div>
           <div className={style.calender_bottom_div}>
-            {data.reservation.map((reservedDay) => {
-              if (
-                new Date(reservedDay.date).getDate() === calDate(1).getDate()
-              ) {
-                return (
-                  <div
-                    key={reservedDay.seq}
-                    className={style.reserve_info}
-                    onClick={() => {
-                      let tempData = { reservedDay, dayOfWeek: "화" };
-                      setModalData(tempData);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    <div className={style.green_circle}></div>
-                    <div className={style.sentenceHover}>
-                      <div className={style.sentence}>{reservedDay.name}</div>
-                      <div className={style.sentence}>
-                        {state.loginUser.userRole === "patient"
-                          ? " 선생님 "
-                          : " 님 "}{" "}
+            {!isLoading &&
+              reservationData.data.list.map((reservedDay) => {
+                if (
+                  new Date(reservedDay.dateTime).getDate() ===
+                  calDate(1).getDate()
+                ) {
+                  return (
+                    <div
+                      key={reservedDay.treatmentSeq}
+                      className={style.reserve_info}
+                      onClick={() => {
+                        let tempData = { reservedDay, dayOfWeek: "화" };
+                        setModalData(tempData);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <div className={style.green_circle}></div>
+                      <div className={style.sentenceHover}>
+                        <div className={style.sentence}>
+                          {reservedDay.doctorName || reservedDay.patientName}
+                        </div>
+                        <div className={style.sentence}>
+                          {state.loginUser.userRole === "patient"
+                            ? " 선생님 "
+                            : " 님 "}
+                        </div>
+                        <div className={style.sentence}>
+                          {new Date(reservedDay.dateTime).getHours()}시
+                        </div>
                       </div>
-                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                  </div>
-                );
-              } else return null;
-            })}
+                  );
+                } else return null;
+              })}
           </div>
         </div>
         <div className={style.calender_div}>
@@ -207,34 +189,40 @@ export default function Schedule() {
             {calDate(2).getDate()}일 (수)
           </div>
           <div className={style.calender_bottom_div}>
-            {data.reservation.map((reservedDay) => {
-              if (
-                new Date(reservedDay.date).getDate() === calDate(2).getDate()
-              ) {
-                return (
-                  <div
-                    key={reservedDay.seq}
-                    className={style.reserve_info}
-                    onClick={() => {
-                      let tempData = { reservedDay, dayOfWeek: "수" };
-                      setModalData(tempData);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    <div className={style.green_circle}></div>
-                    <div className={style.sentenceHover}>
-                      <div className={style.sentence}>{reservedDay.name}</div>
-                      <div className={style.sentence}>
-                        {state.loginUser.userRole === "patient"
-                          ? " 선생님 "
-                          : " 님 "}{" "}
+            {!isLoading &&
+              reservationData.data.list.map((reservedDay) => {
+                if (
+                  new Date(reservedDay.dateTime).getDate() ===
+                  calDate(2).getDate()
+                ) {
+                  return (
+                    <div
+                      key={reservedDay.treatmentSeq}
+                      className={style.reserve_info}
+                      onClick={() => {
+                        let tempData = { reservedDay, dayOfWeek: "수" };
+                        setModalData(tempData);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <div className={style.green_circle}></div>
+                      <div className={style.sentenceHover}>
+                        <div className={style.sentence}>
+                          {reservedDay.doctorName || reservedDay.patientName}
+                        </div>
+                        <div className={style.sentence}>
+                          {state.loginUser.userRole === "patient"
+                            ? " 선생님 "
+                            : " 님 "}
+                        </div>
+                        <div className={style.sentence}>
+                          {new Date(reservedDay.dateTime).getHours()}시
+                        </div>
                       </div>
-                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                  </div>
-                );
-              } else return null;
-            })}
+                  );
+                } else return null;
+              })}
           </div>
         </div>
         <div className={style.calender_div}>
@@ -242,34 +230,40 @@ export default function Schedule() {
             {calDate(3).getDate()}일 (목)
           </div>
           <div className={style.calender_bottom_div}>
-            {data.reservation.map((reservedDay) => {
-              if (
-                new Date(reservedDay.date).getDate() === calDate(3).getDate()
-              ) {
-                return (
-                  <div
-                    key={reservedDay.seq}
-                    className={style.reserve_info}
-                    onClick={() => {
-                      let tempData = { reservedDay, dayOfWeek: "목" };
-                      setModalData(tempData);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    <div className={style.green_circle}></div>
-                    <div className={style.sentenceHover}>
-                      <div className={style.sentence}>{reservedDay.name}</div>
-                      <div className={style.sentence}>
-                        {state.loginUser.userRole === "patient"
-                          ? " 선생님 "
-                          : " 님 "}{" "}
+            {!isLoading &&
+              reservationData.data.list.map((reservedDay) => {
+                if (
+                  new Date(reservedDay.dateTime).getDate() ===
+                  calDate(3).getDate()
+                ) {
+                  return (
+                    <div
+                      key={reservedDay.treatmentSeq}
+                      className={style.reserve_info}
+                      onClick={() => {
+                        let tempData = { reservedDay, dayOfWeek: "목" };
+                        setModalData(tempData);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <div className={style.green_circle}></div>
+                      <div className={style.sentenceHover}>
+                        <div className={style.sentence}>
+                          {reservedDay.doctorName || reservedDay.patientName}
+                        </div>
+                        <div className={style.sentence}>
+                          {state.loginUser.userRole === "patient"
+                            ? " 선생님 "
+                            : " 님 "}
+                        </div>
+                        <div className={style.sentence}>
+                          {new Date(reservedDay.dateTime).getHours()}시
+                        </div>
                       </div>
-                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                  </div>
-                );
-              } else return null;
-            })}
+                  );
+                } else return null;
+              })}
           </div>
         </div>
         <div className={style.calender_div}>
@@ -277,34 +271,40 @@ export default function Schedule() {
             {calDate(4).getDate()}일 (금)
           </div>
           <div className={style.calender_bottom_div}>
-            {data.reservation.map((reservedDay) => {
-              if (
-                new Date(reservedDay.date).getDate() === calDate(4).getDate()
-              ) {
-                return (
-                  <div
-                    key={reservedDay.seq}
-                    className={style.reserve_info}
-                    onClick={() => {
-                      let tempData = { reservedDay, dayOfWeek: "금" };
-                      setModalData(tempData);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    <div className={style.green_circle}></div>
-                    <div className={style.sentenceHover}>
-                      <div className={style.sentence}>{reservedDay.name}</div>
-                      <div className={style.sentence}>
-                        {state.loginUser.userRole === "patient"
-                          ? " 선생님 "
-                          : " 님 "}{" "}
+            {!isLoading &&
+              reservationData.data.list.map((reservedDay) => {
+                if (
+                  new Date(reservedDay.dateTime).getDate() ===
+                  calDate(4).getDate()
+                ) {
+                  return (
+                    <div
+                      key={reservedDay.treatmentSeq}
+                      className={style.reserve_info}
+                      onClick={() => {
+                        let tempData = { reservedDay, dayOfWeek: "금" };
+                        setModalData(tempData);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <div className={style.green_circle}></div>
+                      <div className={style.sentenceHover}>
+                        <div className={style.sentence}>
+                          {reservedDay.doctorName || reservedDay.patientName}
+                        </div>
+                        <div className={style.sentence}>
+                          {state.loginUser.userRole === "patient"
+                            ? " 선생님 "
+                            : " 님 "}
+                        </div>
+                        <div className={style.sentence}>
+                          {new Date(reservedDay.dateTime).getHours()}시
+                        </div>
                       </div>
-                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                  </div>
-                );
-              } else return null;
-            })}
+                  );
+                } else return null;
+              })}
           </div>
         </div>
         <div className={style.calender_div}>
@@ -312,34 +312,40 @@ export default function Schedule() {
             {calDate(5).getDate()}일 (토)
           </div>
           <div className={style.calender_bottom_div}>
-            {data.reservation.map((reservedDay) => {
-              if (
-                new Date(reservedDay.date).getDate() === calDate(5).getDate()
-              ) {
-                return (
-                  <div
-                    key={reservedDay.seq}
-                    className={style.reserve_info}
-                    onClick={() => {
-                      let tempData = { reservedDay, dayOfWeek: "토" };
-                      setModalData(tempData);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    <div className={style.green_circle}></div>
-                    <div className={style.sentenceHover}>
-                      <div className={style.sentence}>{reservedDay.name}</div>
-                      <div className={style.sentence}>
-                        {state.loginUser.userRole === "patient"
-                          ? " 선생님 "
-                          : " 님 "}{" "}
+            {!isLoading &&
+              reservationData.data.list.map((reservedDay) => {
+                if (
+                  new Date(reservedDay.dateTime).getDate() ===
+                  calDate(5).getDate()
+                ) {
+                  return (
+                    <div
+                      key={reservedDay.treatmentSeq}
+                      className={style.reserve_info}
+                      onClick={() => {
+                        let tempData = { reservedDay, dayOfWeek: "토" };
+                        setModalData(tempData);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <div className={style.green_circle}></div>
+                      <div className={style.sentenceHover}>
+                        <div className={style.sentence}>
+                          {reservedDay.doctorName || reservedDay.patientName}
+                        </div>
+                        <div className={style.sentence}>
+                          {state.loginUser.userRole === "patient"
+                            ? " 선생님 "
+                            : " 님 "}
+                        </div>
+                        <div className={style.sentence}>
+                          {new Date(reservedDay.dateTime).getHours()}시
+                        </div>
                       </div>
-                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                  </div>
-                );
-              } else return null;
-            })}
+                  );
+                } else return null;
+              })}
           </div>
         </div>
         <div className={style.calender_div}>
@@ -350,35 +356,40 @@ export default function Schedule() {
             className={style.calender_bottom_div}
             style={{ borderRight: "none" }}
           >
-            {" "}
-            {data.reservation.map((reservedDay) => {
-              if (
-                new Date(reservedDay.date).getDate() === calDate(6).getDate()
-              ) {
-                return (
-                  <div
-                    key={reservedDay.seq}
-                    className={style.reserve_info}
-                    onClick={() => {
-                      let tempData = { reservedDay, dayOfWeek: "일" };
-                      setModalData(tempData);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    <div className={style.green_circle}></div>
-                    <div className={style.sentenceHover}>
-                      <div className={style.sentence}>{reservedDay.name}</div>
-                      <div className={style.sentence}>
-                        {state.loginUser.userRole === "patient"
-                          ? " 선생님 "
-                          : " 님 "}{" "}
+            {!isLoading &&
+              reservationData.data.list.map((reservedDay) => {
+                if (
+                  new Date(reservedDay.dateTime).getDate() ===
+                  calDate(6).getDate()
+                ) {
+                  return (
+                    <div
+                      key={reservedDay.treatmentSeq}
+                      className={style.reserve_info}
+                      onClick={() => {
+                        let tempData = { reservedDay, dayOfWeek: "일" };
+                        setModalData(tempData);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <div className={style.green_circle}></div>
+                      <div className={style.sentenceHover}>
+                        <div className={style.sentence}>
+                          {reservedDay.doctorName || reservedDay.patientName}
+                        </div>
+                        <div className={style.sentence}>
+                          {state.loginUser.userRole === "patient"
+                            ? " 선생님 "
+                            : " 님 "}
+                        </div>
+                        <div className={style.sentence}>
+                          {new Date(reservedDay.dateTime).getHours()}시
+                        </div>
                       </div>
-                      <div className={style.sentence}>{reservedDay.time}시</div>
                     </div>
-                  </div>
-                );
-              } else return null;
-            })}
+                  );
+                } else return null;
+              })}
           </div>
         </div>
         <div className={style.only_border}></div>
@@ -393,16 +404,16 @@ export default function Schedule() {
         <Board
           headRow={headRow}
           grid={"40% 30% 30%"}
-          data={dumy}
+          data={lastRecordData !== undefined && lastRecordData.data.content}
           type={"mypageSchedule"}
           setIsModalOpen={setIsModalOpen}
         ></Board>
         <Pagination
-          number={13}
-          first={false}
-          last={false}
-          totalPages={25}
-          url={"www.naver.com"}
+          number={lastRecordData && lastRecordData.data.number}
+          first={lastRecordData && lastRecordData.data.first}
+          last={lastRecordData && lastRecordData.data.last}
+          totalPages={lastRecordData && lastRecordData.data.totalPages}
+          url={"mypage/schedule/"}
         ></Pagination>
       </div>
       {isModalOpen && (
