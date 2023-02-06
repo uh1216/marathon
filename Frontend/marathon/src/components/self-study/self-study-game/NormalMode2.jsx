@@ -523,9 +523,6 @@ export default function EasyMode1() {
             <button
               className={style.button}
               style={{ backgroundColor: "gray" }}
-              onClick={() => {
-                setSelected(createSelect());
-              }}
             >
               초기화
             </button>
@@ -535,73 +532,19 @@ export default function EasyMode1() {
             >
               <tbody>
                 <tr>
-                  <td
-                    onClick={() => {
-                      setSelected(inputSelect(nineArr[0]));
-                    }}
-                  >
-                    {nineArr[0]}
-                  </td>
-                  <td
-                    onClick={() => {
-                      setSelected(inputSelect(nineArr[1]));
-                    }}
-                  >
-                    {nineArr[1]}
-                  </td>
-                  <td
-                    onClick={() => {
-                      setSelected(inputSelect(nineArr[2]));
-                    }}
-                  >
-                    {nineArr[2]}
-                  </td>
+                  <td>{nineArr[0]}</td>
+                  <td>{nineArr[1]}</td>
+                  <td>{nineArr[2]}</td>
                 </tr>
                 <tr>
-                  <td
-                    onClick={() => {
-                      setSelected(inputSelect(nineArr[3]));
-                    }}
-                  >
-                    {nineArr[3]}
-                  </td>
-                  <td
-                    onClick={() => {
-                      setSelected(inputSelect(nineArr[4]));
-                    }}
-                  >
-                    {nineArr[4]}
-                  </td>
-                  <td
-                    onClick={() => {
-                      setSelected(inputSelect(nineArr[5]));
-                    }}
-                  >
-                    {nineArr[5]}
-                  </td>
+                  <td>{nineArr[3]}</td>
+                  <td>{nineArr[4]}</td>
+                  <td>{nineArr[5]}</td>
                 </tr>
                 <tr>
-                  <td
-                    onClick={() => {
-                      setSelected(inputSelect(nineArr[6]));
-                    }}
-                  >
-                    {nineArr[6]}
-                  </td>
-                  <td
-                    onClick={() => {
-                      setSelected(inputSelect(nineArr[7]));
-                    }}
-                  >
-                    {nineArr[7]}
-                  </td>
-                  <td
-                    onClick={() => {
-                      setSelected(inputSelect(nineArr[8]));
-                    }}
-                  >
-                    {nineArr[8]}
-                  </td>
+                  <td>{nineArr[6]}</td>
+                  <td>{nineArr[7]}</td>
+                  <td>{nineArr[8]}</td>
                 </tr>
               </tbody>
             </table>
