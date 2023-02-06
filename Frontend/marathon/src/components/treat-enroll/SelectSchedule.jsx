@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { $ } from "util/axiosFile";
+import { $ } from "util/axios";
 import style from "./SelectSchedule.module.css";
 
 export default function SelectSchedule({ name }) {
