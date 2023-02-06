@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const nowBoardInfo = createSlice({
   name: "nowBoardInfo",
-  initialState: "",
+  initialState: { consultingSeq: "" },
   reducers: {
     changeNowBoardInfo(state, action) {
-      return action.payload;
+      state.consultingSeq = action.payload;
     },
   },
 });

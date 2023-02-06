@@ -10,21 +10,26 @@ import SelectBox from "components/common/SelectBox";
 import { $ } from "util/axios";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function ConsultList() {
   const headRow = ["성함", "희망 날짜", "연락처", "처리 여부", "내용"];
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const queryClient = useQueryClient();
   const optionSearch = [
-    { value: "all", name: "모두" },
-    { value: "unchecked", name: "미처리" },
+    { value: false, name: "모두" },
+    { value: true, name: "미처리" },
   ];
-  const [searchOption, setSearchOption] = useState("all");
+  const [searchOption, setSearchOption] = useState(false);
   const dispatch = useDispatch();
   const { pageNum } = useParams();
 
-  const { data: lastRecordData } = useQuery(
+  const { data: lastRecordData, refetch } = useQuery(
     ["mypageConsultingList", pageNum],
-    () => $.get(`/admin-consult/list?pageNum=${pageNum}`)
+    () =>
+      $.get(
+        `/admin-consult/list?pageNum=${pageNum}&checkedOrder=${searchOption}`
+      )
   );
 
   useEffect(() => {
@@ -40,7 +45,7 @@ export default function ConsultList() {
           <h3 style={{ fontWeight: "bold", display: "inline-block" }}>
             상담 관리
           </h3>
-          <div style={{ display: "flex", width: "50%", justifyContent: "end" }}>
+          <div style={{ display: "flex", width: "70%", justifyContent: "end" }}>
             <SelectBox
               options={optionSearch}
               onChange={(e) => {
@@ -48,6 +53,14 @@ export default function ConsultList() {
               }}
               width="50%"
             />
+            <div
+              className={style.button}
+              onClick={() => {
+                refetch();
+              }}
+            >
+              검색
+            </div>
             <div className={style.button} onClick={() => {}}>
               방생성
             </div>

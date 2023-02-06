@@ -7,8 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import style from "./TreatmentDetail.module.css";
 
 export default function TreatmentDetail({ setIsModalOpen }) {
-  const [isInput, setIsInput] = useState(false);
   const state = useSelector((state) => state);
+  const [isInput, setIsInput] = useState(false);
   const dispatch = useDispatch();
   const { no } = useParams();
   const toggleToInput = () => {
@@ -134,8 +134,8 @@ export default function TreatmentDetail({ setIsModalOpen }) {
                 }}
                 className={style.textarea}
                 type="text"
-                value={!isLoading && data.data.feedback}
-              ></textarea>
+                // value={!isLoading && data.data.feedback}
+              />
             </>
           ) : (
             <div className={style.content}>

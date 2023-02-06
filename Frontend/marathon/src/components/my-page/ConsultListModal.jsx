@@ -2,16 +2,59 @@ import style from "./ConsultListModal.module.css";
 import { useSelector } from "react-redux";
 import { $ } from "util/axios";
 import { useQuery } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 
 export default function ConsultListModal({ setIsModalOpen }) {
   const state = useSelector((state) => state);
+  const { pageNum } = useParams();
+  const queryClient = useQueryClient();
   const { isLoading, data } = useQuery(["mypageConsultingDetail"], () =>
     $.get(`/admin-consult/detail/${state.nowBoardInfo.consultingSeq}`)
   );
 
-  if (!isLoading) {
-    console.log(data.data.checked);
-  }
+  const { mutate } = useMutation(
+    () => $.put(`/admin-consult/detail/${state.nowBoardInfo.consultingSeq}`),
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries(["mypageConsultingList", pageNum]);
+        const oldData = queryClient.getQueryData([
+          "mypageConsultingList",
+          pageNum,
+        ]);
+        queryClient.setQueryData(["mypageConsultingList", pageNum], () => {
+          return {
+            data: [updateData()],
+          };
+        });
+        return { oldData };
+      },
+      onError: (_error, _variables, context) => {
+        queryClient.setQueryData(
+          ["mypageConsultingList", pageNum],
+          context.oldData
+        );
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(["mypageConsultingList", pageNum]);
+      },
+    }
+  );
+
+  const updateData = () => {
+    let newData = queryClient.getQueryData(["mypageConsultingList", pageNum]);
+    for (let i = 0; i < newData.data.content.length; i++) {
+      if (
+        newData.data.content[i].consultingSeq ===
+        state.nowBoardInfo.consultingSeq
+      ) {
+        newData.data.content[i].checked = !newData.data.content[i].checked;
+        break;
+      }
+    }
+    return newData;
+  };
 
   return (
     <div className={style.modal_container}>
@@ -119,6 +162,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
               : style.button + " " + style.button_cancel
           }
           onClick={() => {
+            mutate();
             setIsModalOpen(false);
           }}
         >
