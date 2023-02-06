@@ -16,8 +16,20 @@ export default function SelfStudyResult() {
       if (gameState.record[i]) cnt++;
     }
 
-    $.post(``, {})
-      .then((res) => {})
+    console.log({
+      gameType: gameState.type,
+      difficulty: gameState.mode,
+      correct: cnt,
+    });
+
+    $.post(`patient-game/save`, {
+      gameType: gameState.type,
+      difficulty: gameState.mode,
+      correct: cnt,
+    })
+      .then((res) => {
+        console.log(res);
+      })
       .catch((err) => {
         console.log(err);
       });

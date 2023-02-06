@@ -74,6 +74,9 @@ export default function Messenger() {
       });
   };
 
+  /** 메시지 삭제 */
+  const removeMessage = () => {};
+
   /** 페이지네이션 */
   const getMoreMessage = () => {
     $.get(`/user-commu/list?pageNum=${pageNum + 1}`)
@@ -123,7 +126,11 @@ export default function Messenger() {
             >
               {/* content가 null이면 알림, null이 아니면 메시지 */}
               {item.content !== null && (
-                <FontAwesomeIcon icon={faXmark} className={style.icon_x} />
+                <FontAwesomeIcon
+                  icon={faXmark}
+                  className={style.icon_x}
+                  onClick={removeMessage}
+                />
               )}
               <FontAwesomeIcon
                 icon={item.content !== null ? faPaperPlane : faBell}
