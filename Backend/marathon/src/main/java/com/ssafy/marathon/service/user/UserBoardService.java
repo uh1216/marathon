@@ -41,7 +41,7 @@ public class UserBoardService {
 
         System.out.println(contentCondition);
 
-        if (contentCondition == null && titleCondition == null) {
+        if (contentCondition.isBlank() && titleCondition.isBlank()) {
             boardResDtoPages = boardRepository.findAllByOrderByRegistDateDesc(pageRequest)
                 .map(board -> BoardResDto.builder()
                     .boardSeq(board.getSeq())
@@ -49,7 +49,7 @@ public class UserBoardService {
                     .registDate(board.getRegistDate())
                     .viewCnt(board.getViewCnt())
                     .build());
-        } else if (contentCondition != null && titleCondition != null) {
+        } else if (!contentCondition.isBlank() && !titleCondition.isBlank()) {
             boardResDtoPages = boardRepository.findAllByContentContainingOrTitleContainingOrderByRegistDateDesc(
                     contentCondition, titleCondition,
                     pageRequest)
@@ -59,7 +59,7 @@ public class UserBoardService {
                     .registDate(board.getRegistDate())
                     .viewCnt(board.getViewCnt())
                     .build());
-        } else if (titleCondition != null) {
+        } else if (!titleCondition.isBlank()) {
             boardResDtoPages = boardRepository.findAllByTitleContainingOrderByRegistDateDesc(
                     titleCondition, pageRequest)
                 .map(board -> BoardResDto.builder()
