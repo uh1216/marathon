@@ -27,6 +27,7 @@ public class HistoryResDto {
     private String doctorPhone;
     private String doctorImg;
     //    patient
+    private String patientImg;
     private String patientName;
     private String patientPhone;
     private String patientMainPhone;

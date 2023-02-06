@@ -95,6 +95,7 @@ public class DoctorHistoryServiceImpl implements DoctorHistoryService {
             .day(history.getDate().getDayOfWeek().toString())
             .videoUrl(history.getVideoUrl())
             .feedback(history.getFeedback())
+            .patientImg(history.getPatient().getImg())
             .build();
 
 
