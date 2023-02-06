@@ -87,7 +87,7 @@ export default function Header() {
                 </div>
               </>
             )}
-            {!isUserToggled && !state.loginUser.userProfileImg && (
+            {!isUserToggled && !state.loginUser.userRole && (
               <FontAwesomeIcon className={style.clickable} icon={faUser} />
             )}
 

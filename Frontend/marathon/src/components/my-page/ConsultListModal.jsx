@@ -1,8 +1,17 @@
 import style from "./ConsultListModal.module.css";
 import { useSelector } from "react-redux";
+import { $ } from "util/axios";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ConsultListModal({ setIsModalOpen }) {
   const state = useSelector((state) => state);
+  const { isLoading, data } = useQuery(["mypageConsultingDetail"], () =>
+    $.get(`/admin-consult/detail/${state.nowBoardInfo.consultingSeq}`)
+  );
+
+  if (!isLoading) {
+    console.log(data.data.checked);
+  }
 
   return (
     <div className={style.modal_container}>
@@ -21,7 +30,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
               <span>대상자 성명</span>
             </td>
             <td className={style.table_td2 + " " + style.table_d3}>
-              <span>{state.nowBoardInfo.name}</span>
+              <span>{!isLoading && data.data.name}</span>
             </td>
             <td
               className={style.table_td1}
@@ -30,7 +39,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
               <span>희망 날짜</span>
             </td>
             <td className={style.table_td2}>
-              <span>{state.nowBoardInfo.birth}</span>
+              <span>{!isLoading && data.data.hopeDate}</span>
             </td>
           </tr>
           <tr className={style.table_tr}>
@@ -38,7 +47,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
               <span>대상자 생년월일</span>
             </td>
             <td className={style.table_td2 + " " + style.table_d3}>
-              <span>{state.nowBoardInfo.birth}</span>
+              <span>{!isLoading && data.data.birthDate}</span>
             </td>
             <td
               className={style.table_td1}
@@ -47,7 +56,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
               <span>이메일 주소</span>
             </td>
             <td className={style.table_td2}>
-              <span>{state.nowBoardInfo.email}</span>
+              <span>{!isLoading && data.data.email}</span>
             </td>
           </tr>
           <tr className={style.table_tr}>
@@ -55,7 +64,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
               <span>연락처</span>
             </td>
             <td className={style.table_td2 + " " + style.table_d3}>
-              <span>{state.nowBoardInfo.phone}</span>
+              <span>{!isLoading && data.data.phone1}</span>
             </td>
             <td
               className={style.table_td1}
@@ -64,7 +73,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
               <span>비상 연락처1</span>
             </td>
             <td className={style.table_td2}>
-              <span>{state.nowBoardInfo.phone}</span>
+              <span>{!isLoading && data.data.phone2}</span>
             </td>
           </tr>
           <tr className={style.table_tr}>
@@ -72,7 +81,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
               <span>뇌손상 발병시기</span>
             </td>
             <td className={style.table_td2 + " " + style.table_d3}>
-              <span>{state.nowBoardInfo.birth}</span>
+              <span>{!isLoading && data.data.sickDate}</span>
             </td>
             <td
               className={style.table_td1}
@@ -81,7 +90,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
               <span>비상 연락처2</span>
             </td>
             <td className={style.table_td2}>
-              <span>{state.nowBoardInfo.phone}</span>
+              <span>{!isLoading && data.data.phone3}</span>
             </td>
           </tr>
           <tr>
@@ -96,7 +105,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
               <p>어려운 부분</p>
             </td>
             <td colSpan="3" style={{ borderTop: "1px solid black" }}>
-              <span>{state.nowBoardInfo.des}</span>
+              <span>{!isLoading && data.data.description}</span>
             </td>
           </tr>
         </tbody>
@@ -105,7 +114,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
         <div style={{ flexGrow: "1" }} />
         <div
           className={
-            !state.nowBoardInfo.done
+            !isLoading && !data.data.checked
               ? style.button
               : style.button + " " + style.button_cancel
           }
@@ -113,7 +122,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
             setIsModalOpen(false);
           }}
         >
-          {state.nowBoardInfo.done ? "처리완료" : "미처리"}
+          {!isLoading && data.data.checked ? "처리완료" : "미처리"}
         </div>
         <div style={{ flexGrow: "1" }} />
       </div>
