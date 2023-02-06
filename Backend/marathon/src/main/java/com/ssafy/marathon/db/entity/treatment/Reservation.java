@@ -33,4 +33,14 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "doctor_seq")
     private Doctor doctor;
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+            "seq=" + seq +
+            ", date=" + date +
+            ", bitDate='" + bitDate + '\'' +
+            ", doctor=" + doctor +
+            '}';
+    }
 }
