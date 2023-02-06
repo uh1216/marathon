@@ -46,12 +46,13 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
             LocalDate date = MilliFunc.makeDate(milli);
 //            logger.info("현재" + i + "번째 반복중");
 //            logger.info(reservationRepository.countReservationByDate(date) + "");
-            if (0 == reservationRepository.countReservationByDate(date)) {
+            if (0 == reservationRepository.countReservationByDateAndDoctor_Seq(date, doctorSeq)) {
                 Reservation rv = Reservation.builder().date(date).bitDate("00000000")
 //                    doctor받아와야함
-                    .doctor(doctorRepository.getBySeq(doctorSeq)).build();
+                    .doctor(doctorRepository.findBySeq(doctorSeq)).build();
 //                logger.info(rv.toString());
                 reservationRepository.save(rv);
+
             }
             milli += MilliFunc.DAYMILLIESEC;
         }
@@ -60,10 +61,12 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
     //    각 예약의 정보를 리스트로 만들어 반환한다.
     @Override
     public List<DayOfReservationResDto> makeReservationList(Long doctorSeq) { // 의사로 바꿀것? seq여도 되는가?
+
         List<DayOfReservationResDto> list = new ArrayList<DayOfReservationResDto>();
         Long milli = MilliFunc.startDayMilliSec();
         for (int i = 0; i < 21; i++) {
             LocalDate ld = MilliFunc.makeDate(milli);
+
 //            logger.info(ld + ", " + doctorSeq + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             Reservation reservation = reservationRepository.findByDateAndDoctor_Seq(ld, doctorSeq);
 
