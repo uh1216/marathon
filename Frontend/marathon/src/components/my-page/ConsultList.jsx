@@ -12,19 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
 export default function ConsultList() {
-  let dumy = [];
-  for (let i = 1; i <= 10; i++) {
-    const newContents = {
-      name: "김두환",
-      birth: "1972-07-16",
-      phone: "010-9292-7649",
-      email: "umigwan@hanyang.seoul",
-      des: "오랜 지병에 시달리고 있습니다. 사실은 그럴수도 아닐수도 있습니다. 나는 전설이다!",
-      done: i % 2,
-    };
-    dumy = [newContents, ...dumy];
-  }
-
   const headRow = ["성함", "희망 날짜", "연락처", "처리 여부", "내용"];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const optionSearch = [
@@ -69,7 +56,7 @@ export default function ConsultList() {
         <Board
           headRow={headRow}
           grid={"15% 23% 28% 17% 17%"}
-          data={dumy}
+          data={lastRecordData && lastRecordData.data.content}
           type={"mypageConsultList"}
           setIsModalOpen={setIsModalOpen}
         />
@@ -78,7 +65,7 @@ export default function ConsultList() {
           first={lastRecordData && lastRecordData.data.first}
           last={lastRecordData && lastRecordData.data.last}
           totalPages={lastRecordData && lastRecordData.data.totalPages}
-          url={"admin-consult/"}
+          url={"mypage/consult-list/"}
         />
       </div>
       {isModalOpen && (

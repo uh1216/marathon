@@ -141,33 +141,34 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
             return <div key={idx + content}>{content}</div>;
           })}
         </div>
-        {data.map((content, idx) => {
-          return (
-            <div
-              key={content.name + idx + 1123}
-              className={style.content_container3}
-              style={{ gridTemplateColumns: grid }}
-            >
-              <div>{content.name} 님</div>
-              <div>{content.birth}</div>
-              <div>{content.phone}</div>
-              <div className={content.done ? style.fontR : style.fontB}>
-                {content.done ? "처리 완료" : "미처리"}
+        {data &&
+          data.map((content, idx) => {
+            return (
+              <div
+                key={content.name + idx + 1123}
+                className={style.content_container3}
+                style={{ gridTemplateColumns: grid }}
+              >
+                <div>{content.name} 님</div>
+                <div>{content.hopeDate}</div>
+                <div>{content.phone1}</div>
+                <div className={!content.checked ? style.fontR : style.fontB}>
+                  {content.checked ? "처리 완료" : "미처리"}
+                </div>
+                <div>
+                  <button
+                    className={style.button + " " + style.button2}
+                    onClick={() => {
+                      setIsModalOpen(true);
+                      dispath(changeNowBoardInfo(content));
+                    }}
+                  >
+                    상세보기
+                  </button>
+                </div>
               </div>
-              <div>
-                <button
-                  className={style.button + " " + style.button2}
-                  onClick={() => {
-                    setIsModalOpen(true);
-                    dispath(changeNowBoardInfo(content));
-                  }}
-                >
-                  상세보기
-                </button>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </>
     );
   }
