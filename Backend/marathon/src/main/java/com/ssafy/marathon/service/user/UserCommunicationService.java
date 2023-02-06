@@ -81,7 +81,7 @@ public class UserCommunicationService {
 
         List<UserResDto> userResDtoList = new ArrayList<>();
 
-        if (isNew) {
+        if (!isNew) {
             Optional<Message> findMessage = communicationRepository.findById(commuSeq);
             Message beforeMessage = findMessage.orElseThrow();
 
