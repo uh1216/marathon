@@ -6,7 +6,7 @@ import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode, setType } from "stores/game.store";
 import GIF from "img/gif/11.gif";
 import CARD_BACK from "img/card_back.jpg";
-import style from "./EasyMode2.module.css";
+import style from "./Game2.module.css";
 
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
@@ -25,7 +25,7 @@ export default function EasyMode1() {
       answer: "고양이",
     },
     {
-      url: "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202009/09/b9790a8b-f789-4cdf-8c81-25d5bf5cbd2b.jpg",
+      url: "https://dl0.creation.com/articles/p136/c13624/red-fox.jpg",
       answer: "여우",
     },
     {
@@ -41,11 +41,11 @@ export default function EasyMode1() {
       answer: "원숭이",
     },
     {
-      url: "https://img.seoul.co.kr/img/upload/2021/04/30/SSI_20210430195948_O2.jpg",
+      url: "https://cdn.gjdream.com/news/photo/old/news/contents/UPFILE/2019/20190707497381.jpg",
       answer: "토끼",
     },
     {
-      url: "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202211/25/2b2812e7-e4d9-48ed-b42c-4500394ba3ec.jpg",
+      url: "https://pds.joongang.co.kr//news/component/htmlphoto_mmdata/201712/30/f886d305-bd3e-4b18-9b13-6ee8766ee6dd.jpg",
       answer: "늑대",
     },
     {
@@ -182,7 +182,12 @@ export default function EasyMode1() {
         <div>
           <div className={style.flip_outer}>
             <div className={style.flip_inner}>
-              <img src={CARD_BACK} alt="" className={style.front} />
+              <img
+                src={CARD_BACK}
+                alt=""
+                className={style.front}
+                style={{ animation: "1s loadEffect1" }}
+              />
             </div>
           </div>
           <div className={style.choice_box}>
@@ -270,7 +275,11 @@ export default function EasyMode1() {
               <img src={CARD_BACK} alt="" className={style.front} />
               <img
                 src={gameData[quiz[gameState.stage - 1]].url}
-                style={{ borderRadius: "5px", border: "2px solid black" }}
+                style={{
+                  borderRadius: "5px",
+                  border: "2px solid black",
+                  objectFit: "cover",
+                }}
                 alt=""
                 className={style.back}
               />
@@ -281,6 +290,7 @@ export default function EasyMode1() {
               className={style.real_front}
               style={{
                 animation: "1s rotateCard_opacity_no",
+                objectFit: "cover",
               }}
             />
           </div>
@@ -360,7 +370,174 @@ export default function EasyMode1() {
         <div className={commonStyle.title}>
           {stageResult ? "정답입니다😊" : "틀렸습니다😥"}
         </div>
-        <div>--------여기에 '정답'을 제시해주세요--------</div>
+        <div>
+          <div className={style.flip_outer}>
+            <div
+              className={style.flip_inner}
+              style={{
+                animation: "0.7s rotateCard2",
+              }}
+            >
+              <img
+                src={gameData[quiz[gameState.stage - 1]].url}
+                style={{
+                  borderRadius: "5px",
+                  border: "2px solid black",
+                  objectFit: "cover",
+                }}
+                alt=""
+                className={style.front}
+              />
+              <div
+                className={style.back}
+                style={{
+                  border: "2px solid black",
+                  backfaceVisibility: "hidden",
+                  paddingTop: "85px",
+                }}
+              >
+                <h3>{gameData[quiz[gameState.stage - 1]].answer}</h3>
+              </div>
+            </div>
+            <div
+              className={style.real_front}
+              style={{
+                animation: "0.7s rotateCard_opacity_no",
+                backgroundColor: "white",
+                textAlign: "center",
+                paddingTop: "85px",
+              }}
+            >
+              <h3>{gameData[quiz[gameState.stage - 1]].answer}</h3>
+            </div>
+          </div>
+          <div className={style.choice_box + " " + style.disable}>
+            <div
+              className={
+                gameData[quiz[gameState.stage - 1]].answer ===
+                gameData[choices[0]].answer
+                  ? style.cb + " " + style.correct
+                  : style.cb
+              }
+              onClick={() => {
+                clickChoice(0);
+              }}
+            >
+              <div className={selectState[0] ? style.arrow : null} />
+              <div
+                className={
+                  gameData[quiz[gameState.stage - 1]].answer ===
+                  gameData[choices[0]].answer
+                    ? style.number_box + " " + style.correct_border
+                    : style.number_box
+                }
+              >
+                <div className={style.number} style={{ right: "6.5px" }}>
+                  1
+                </div>
+              </div>
+              {gameData[choices[0]].answer}
+            </div>
+            <div
+              className={
+                gameData[quiz[gameState.stage - 1]].answer ===
+                gameData[choices[1]].answer
+                  ? style.cb + " " + style.correct
+                  : style.cb
+              }
+              onClick={() => {
+                clickChoice(1);
+              }}
+            >
+              <div className={selectState[1] ? style.arrow : null} />
+              <div
+                className={
+                  gameData[quiz[gameState.stage - 1]].answer ===
+                  gameData[choices[1]].answer
+                    ? style.number_box + " " + style.correct_border
+                    : style.number_box
+                }
+              >
+                <div className={style.number}>2</div>
+              </div>
+              {gameData[choices[1]].answer}
+            </div>
+            <div
+              className={
+                gameData[quiz[gameState.stage - 1]].answer ===
+                gameData[choices[2]].answer
+                  ? style.cb + " " + style.correct
+                  : style.cb
+              }
+              onClick={() => {
+                clickChoice(2);
+              }}
+            >
+              <div className={selectState[2] ? style.arrow : null} />
+              <div
+                className={
+                  gameData[quiz[gameState.stage - 1]].answer ===
+                  gameData[choices[2]].answer
+                    ? style.number_box + " " + style.correct_border
+                    : style.number_box
+                }
+              >
+                <div className={style.number}>3</div>
+              </div>
+              {gameData[choices[2]].answer}
+            </div>
+            <div
+              className={
+                gameData[quiz[gameState.stage - 1]].answer ===
+                gameData[choices[3]].answer
+                  ? style.cb + " " + style.correct
+                  : style.cb
+              }
+              onClick={() => {
+                clickChoice(3);
+              }}
+            >
+              <div className={selectState[3] ? style.arrow : null} />
+              <div
+                className={
+                  gameData[quiz[gameState.stage - 1]].answer ===
+                  gameData[choices[3]].answer
+                    ? style.number_box + " " + style.correct_border
+                    : style.number_box
+                }
+              >
+                <div className={style.number} style={{ right: "4.8px" }}>
+                  4
+                </div>
+              </div>
+              {gameData[choices[3]].answer}
+            </div>
+            <div
+              className={
+                gameData[quiz[gameState.stage - 1]].answer ===
+                gameData[choices[4]].answer
+                  ? style.cb + " " + style.correct
+                  : style.cb
+              }
+              onClick={() => {
+                clickChoice(4);
+              }}
+            >
+              <div className={selectState[4] ? style.arrow : null} />
+              <div
+                className={
+                  gameData[quiz[gameState.stage - 1]].answer ===
+                  gameData[choices[4]].answer
+                    ? style.number_box + " " + style.correct_border
+                    : style.number_box
+                }
+              >
+                <div className={style.number}>5</div>
+              </div>
+              {gameData[choices[4]].answer}
+            </div>
+          </div>
+        </div>
       </>
     );
   }

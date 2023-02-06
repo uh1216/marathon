@@ -60,7 +60,10 @@ export default function SelfStudyLayout({ type, children }) {
                   : style.btn_difficulty
               }
               style={{ backgroundColor: "#63F282" }}
-              onClick={() => navigate(`/self-study/${type}/easy`)}
+              onClick={() => {
+                navigate(`/self-study/${type}/easy`);
+                window.location.reload();
+              }}
             >
               초급
             </button>
@@ -71,7 +74,10 @@ export default function SelfStudyLayout({ type, children }) {
                   : style.btn_difficulty
               }
               style={{ backgroundColor: "#FBDB35" }}
-              onClick={() => navigate(`/self-study/${type}/normal`)}
+              onClick={() => {
+                navigate(`/self-study/${type}/normal`);
+                window.location.reload();
+              }}
             >
               중급
             </button>
@@ -82,7 +88,10 @@ export default function SelfStudyLayout({ type, children }) {
                   : style.btn_difficulty
               }
               style={{ backgroundColor: "#FF4218" }}
-              onClick={() => navigate(`/self-study/${type}/hard`)}
+              onClick={() => {
+                navigate(`/self-study/${type}/hard`);
+                window.location.reload();
+              }}
             >
               고급
             </button>
