@@ -1,15 +1,18 @@
 import SelectBox from "components/common/SelectBox";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
 import style from "./UserInformation.module.css";
 import { useQuery } from "@tanstack/react-query";
-import { $ } from "util/axios";
+import { $ } from "util/axiosFile";
+import { useNavigate } from "react-router-dom";
+import { userLogout } from "stores/user.store";
 
 /** 마이페이지 - 나의 정보 */
 export default function UserInformation() {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const inputUserPwd = useRef();
   const inputUserPwdChk = useRef();
@@ -35,7 +38,9 @@ export default function UserInformation() {
 
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
-  const [userProfileImg, setUserProfileImg] = useState("");
+  const [ImgUrl, setImgUrl] = useState("");
+  const [newImgUrl, setNewImgUrl] = useState("");
+  const [imgFile, setImgFile] = useState(null); //파일
   const [userSignUpDate, setUserSignUpDate] = useState("");
   const [userPwd, setUserPwd] = useState("");
   const [userPwdChk, setUserPwdChk] = useState("");
@@ -104,29 +109,6 @@ export default function UserInformation() {
     setUserEmailHost(x);
   };
 
-  const { data } = useQuery(
-    ["getUserInformation"],
-    () => {
-      return $.get(`/patient-sign/modify`);
-    },
-    {
-      onSuccess: ({ data }) => {
-        setUserProfileImg(state.loginUser.userProfileImg);
-        setUserName(state.loginUser.userName);
-        setUserEmailId(data.email.split("@")[0]);
-        setUserId(data.id);
-        setUserEmailHost(data.email.split("@")[1]);
-        setUserPhone(Number(data.phone.replaceAll("-", "")));
-        setUserSignUpDate(data.registDate);
-        setUserFirstResponder(data.mainPhone);
-        setUserFirstResponderRelationship(data.mainRelationship);
-        setUserSecondResponder(data.subPhone);
-        setUserSecondResponderRelationship(data.subRelationship);
-        // setUserSelfIntroduce(data.);
-      },
-    }
-  );
-
   /** 사이드 Nav 초기화 */
   useEffect(() => {
     dispatch(changeNowSideNav("회원 정보 관리"));
@@ -191,8 +173,46 @@ export default function UserInformation() {
     return true;
   };
 
+  /** 회원정보 불러오기 */
+  const { data: userInfo } = useQuery(
+    ["getUserInformation"],
+    () => {
+      return $.get(`/${state.loginUser.userRole}-sign/modify`);
+    },
+    {
+      onSuccess: ({ data }) => {
+        setImgUrl(state.loginUser.userProfileImg);
+        setUserName(state.loginUser.userName);
+        setUserEmailId(data.email.split("@")[0]);
+        setUserEmailHost(data.email.split("@")[1]);
+        setUserPhone(data.phone.replaceAll("-", ""));
+        setUserSignUpDate(data.registDate);
+        setUserId(data.id);
+        if (state.loginUser.userRole === "patient") {
+          setUserFirstResponder(data.mainPhone.replaceAll("-", ""));
+          setUserFirstResponderRelationship(data.mainRelationship);
+          setUserSecondResponder(data.mainPhone.replaceAll("-", ""));
+          setUserSecondResponderRelationship(data.subRelationship);
+        } else if (state.loginUser.userRole === "doctor") {
+          setUserSelfIntroduce(data.introduce ? data.introduce : "");
+        }
+      },
+    }
+  );
+
   /** 회원탈퇴 버튼을 누르면 실행되는 함수 */
-  const unregister = () => {};
+  const unregister = () => {
+    const check = window.confirm("정말로 탈퇴하시겠습니까?");
+    if (check) {
+      $.delete(`/user-sign/withdraw`)
+        .then(() => {
+          alert("정상적으로 회원탈퇴 되었습니다.");
+          dispatch(userLogout());
+          navigate("/");
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   /** 수정완료 버튼을 누르면 실행되는 함수 */
   const modify = () => {
@@ -219,26 +239,26 @@ export default function UserInformation() {
       alert("연락처가 유효하지 않습니다.");
       inputUserPhone.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       (userFirstResponder === "" || userFirstResponder === null)
     ) {
       alert("비상 연락처 1을 입력해주세요.");
       inputUserFirstResponder.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       !chkPhone(userFirstResponder)
     ) {
       alert("연락처가 유효하지 않습니다.");
       inputUserFirstResponder.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       (userFirstResponderRelationship === "none" ||
         userFirstResponderRelationship === null)
     ) {
       alert("비상 연락처 1의 관계를 입력해주세요.");
       inputUserFirstResponderRelationship.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       userSecondResponderRelationship !== "none" &&
       userSecondResponderRelationship !== null &&
       (userSecondResponder === "" || userSecondResponder === null)
@@ -246,14 +266,14 @@ export default function UserInformation() {
       alert("비상 연락처 2를 입력해주세요.");
       inputUserSecondResponder.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       userSecondResponder.length > 0 &&
       !chkPhone(userSecondResponder)
     ) {
       alert("연락처가 유효하지 않습니다.");
       inputUserSecondResponder.current.focus();
     } else if (
-      state.loginUser.userRole === "normal" &&
+      state.loginUser.userRole === "patient" &&
       userSecondResponder.length > 0 &&
       (userSecondResponderRelationship === "none" ||
         userSecondResponderRelationship === null)
@@ -261,38 +281,42 @@ export default function UserInformation() {
       alert("비상 연락처 2의 관계를 입력해주세요.");
       inputUserSecondResponderRelationship.current.focus();
     } else {
-      $.put(
-        `/patient-sign/modify`,
-        {
-          image: userProfileImg,
-          patient: {
-            seq: null,
-            role: null,
-            id: "asdf",
-            password: userPwd,
-            name: "김환자",
-            sex: false,
-            email: userEmailId + "@" + userEmailHost,
-            phone: userPhone,
-            birthDate: null,
-            img: "default.png",
-            registDate: "2023-02-01",
-            mainPhone: userFirstResponder,
-            mainRelationship: userFirstResponderRelationship,
-            subPhone: userSecondResponder,
-            subRelationship: userSecondResponderRelationship,
-          },
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
+      let userInfo = {
+        seq: null,
+        role: null,
+        id: "asdf",
+        password: userPwd,
+        name: "김환자",
+        sex: false,
+        email: userEmailId + "@" + userEmailHost,
+        phone: userPhone,
+        birthDate: null,
+        img: "default.png",
+        registDate: "2023-02-01",
+      };
+
+      if (state.loginUser.userRole === "patient") {
+        userInfo.mainPhone = userFirstResponder.toString();
+        userInfo.mainRelationship = userFirstResponderRelationship;
+        userInfo.subPhone = userSecondResponder.toString();
+        userInfo.subRelationship = userSecondResponderRelationship;
+      } else if (state.loginUser.userRole === "doctor") {
+        userInfo.introduce = userSelfIntroduce;
+      }
+
+      const formData = new FormData();
+      formData.append("image", imgFile);
+      formData.append(
+        `${state.loginUser.userRole}`,
+        new Blob([JSON.stringify(userInfo)], { type: "application/json" })
+      );
+
+      $.put(`/${state.loginUser.userRole}-sign/modify`, formData)
         .then(() => {
           alert("수정 완료되었습니다.");
           setUserPwd("");
           setUserPwdChk("");
+          this.forceUpdate();
         })
         .catch((error) => {
           console.log(error);
@@ -305,23 +329,17 @@ export default function UserInformation() {
   };
 
   /** file input 선택 후 실행될 함수 */
-  const onUploadImage = useCallback((e) => {
-    if (!e.target.files) {
-      return;
-    }
+  const encodeFileToBase64 = (fileBlob) => {
+    setImgFile(fileBlob);
     const reader = new FileReader();
-    reader.onload = (e) => {
-      console.log("sdsdsdsdsds");
-      console.log(e);
-    };
-    reader.onerror = (e) => {
-      console.log(e);
-    };
-    // let file = document.getElementById("fileImgInput");
-    // console.log("------------");
-    // console.log(file.value);
-    // setUserProfileImg(file.value);
-  }, []);
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setNewImgUrl(reader.result);
+        resolve();
+      };
+    });
+  };
 
   return (
     <div className={style.side_right_board}>
@@ -330,31 +348,31 @@ export default function UserInformation() {
         {/* 왼쪽 박스 */}
         <div className={style.left_box}>
           {/* 프로필 사진 */}
-          {userProfileImg === null ||
-          userProfileImg === "" ||
-          userProfileImg === undefined ? (
+          {!ImgUrl && !newImgUrl ? (
             <div className={style.profile_img + " " + style.profile_initial}>
               A
             </div>
           ) : (
             <img
               className={style.profile_img}
-              src={userProfileImg}
+              src={newImgUrl ? newImgUrl : ImgUrl}
               alt="프로필 사진"
             />
           )}
           <div className={style.user_name}>{userName} 님</div>
           <div className={style.welcome}>환영합니다.</div>
-          <label htmlFor="fileImgInput" className={style.btn_upload}>
+          <label className={style.btn_upload}>
             사진 업로드
+            <input
+              className={style.btn_upload}
+              type="file"
+              id="fileImgInput"
+              accept="image/*"
+              onChange={(e) => {
+                encodeFileToBase64(e.target.files[0]);
+              }}
+            />
           </label>
-          <input
-            className={style.btn_upload}
-            type="file"
-            id="fileImgInput"
-            accept="image/*"
-            onChange={onUploadImage}
-          />
 
           <hr className={style.left_center_line} />
           <div className={style.sub_title}>아이디</div>
@@ -459,7 +477,7 @@ export default function UserInformation() {
             {/* (주) 연락처 */}
             <div className={style.input_div}>
               <label className={style.input_label} htmlFor="user_phone">
-                {state.loginUser.userRole === "normal" ? (
+                {state.loginUser.userRole === "patient" ? (
                   <>주 연락처</>
                 ) : (
                   <>연락처</>
@@ -467,7 +485,7 @@ export default function UserInformation() {
               </label>
               <input
                 className={`${style.input_number} ${style.input_long}`}
-                type="number"
+                type="text"
                 id="user_phone"
                 placeholder="'-'를 제외한 숫자만 입력해 주세요."
                 value={userPhone}
@@ -478,7 +496,7 @@ export default function UserInformation() {
               />
             </div>
             {/* userRole에 따라서 달라지는 내용 */}
-            {state.loginUser.userRole === "normal" ? (
+            {state.loginUser.userRole === "patient" ? (
               <>
                 <div className={style.input_div}>
                   <label
@@ -489,7 +507,7 @@ export default function UserInformation() {
                   </label>
                   <input
                     className={`${style.input_number} ${style.input_middle}`}
-                    type="number"
+                    type="text"
                     id="user_first_responder"
                     placeholder="'-'를 제외한 숫자만 입력해 주세요."
                     value={userFirstResponder}
@@ -516,7 +534,7 @@ export default function UserInformation() {
                   </label>
                   <input
                     className={`${style.input_number} ${style.input_middle}`}
-                    type="number"
+                    type="text"
                     id="user_second_responder"
                     placeholder="'-'를 제외한 숫자만 입력해 주세요."
                     value={userSecondResponder}
@@ -547,12 +565,12 @@ export default function UserInformation() {
                     onChange={(e) => {
                       setUserSelfIntroduce(e.target.value);
                     }}
-                    value={userSelfIntroduce}
                     id="user_self_introduce"
                     ref={inputUserSelfIntroduce}
                     maxLength="174"
+                    value={userSelfIntroduce}
                     placeholder="이용자들에게 보여질 자기소개 글을 작성해주세요."
-                  />
+                  ></textarea>
                 </div>
               </>
             ) : null}

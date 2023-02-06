@@ -48,6 +48,7 @@
   border-radius: 100%;
   box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 25%);
   margin-bottom: 22px;
+  object-fit: cover;
 }
 /* 프로필 사진이 없을 때 */
 .profile_initial {
@@ -201,6 +202,15 @@ label.btn_upload:hover {
 
 .input_email_host:read-only {
   background-color: #e6e6e6;
+}
+
+.input_middle {
+  padding: 0 13px;
+  width: 307px;
+  height: 40px;
+  border-radius: 5px;
+  border: 0.2px solid rgb(189, 189, 189);
+  margin-right: 10px;
 }
 
 .at {

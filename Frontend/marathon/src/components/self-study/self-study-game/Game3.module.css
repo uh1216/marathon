@@ -37,3 +37,20 @@
   height: 60px;
   font-size: 40px;
 }
+
+.result {
+  position: absolute;
+  top: -2px;
+  left: -6px;
+  z-index: 2;
+  font-size: 60px;
+}
+
+.result_animal {
+  position: absolute;
+  top: 8px;
+  left: 6px;
+  z-index: 3;
+  font-size: 40px;
+  opacity: 50%;
+}
