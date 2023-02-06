@@ -9,6 +9,7 @@ import com.ssafy.marathon.dto.response.game.GameResDto;
 //import com.ssafy.marathon.dto.response.game.gameDateMapping;
 import com.ssafy.marathon.dto.response.treatment.HistoryResDto;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +33,8 @@ public class PatientGameServiceImpl implements PatientGameService{
             .gameType(gameReqDto.getGameType())
             .difficulty(gameReqDto.getDifficulty())
             .correct(gameReqDto.getCorrect())
-            .date(gameReqDto.getDate())
-            .time(gameReqDto.getTime())
+            .date(LocalDate.now())
+            .time(LocalTime.now())
             .patient(patientRepository.findBySeq(patientSeq))
             .build();
 

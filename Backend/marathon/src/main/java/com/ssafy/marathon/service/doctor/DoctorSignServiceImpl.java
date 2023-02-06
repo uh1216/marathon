@@ -42,6 +42,7 @@ public class DoctorSignServiceImpl implements DoctorSignService {
             .phone(doctorReqDto.getPhone())
             .license(doctorReqDto.getLicense())
             .degree(doctorReqDto.getDegree())
+            .introduce("안녕하세요. 잘부탁드립니다^^")
             .build();
         doctor.setImg("default.PNG");
         Doctor savedDoctor = (Doctor) doctorRepository.save(doctor);
