@@ -38,9 +38,9 @@ public class AdminConsultingService {
     }
 
     public Page<ConsultingResDto> getConsultingPages(int pageNum) {
-        PageRequest pageRequest = PageRequest.of(pageNum, 10);
+        PageRequest pageRequest = PageRequest.of(pageNum-1, 10);
 
-        Page<ConsultingResDto> consultingResDtoPages = consultingRepository.findAll(pageRequest)
+        Page<ConsultingResDto> consultingResDtoPages = consultingRepository.findAllByOrderByCheckedAsc(pageRequest)
             .map(consulting -> ConsultingResDto.builder()
                 .consultingSeq(consulting.getConsultingSeq())
                 .name(consulting.getName())
