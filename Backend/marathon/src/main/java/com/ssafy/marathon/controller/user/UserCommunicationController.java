@@ -9,6 +9,7 @@ import com.ssafy.marathon.service.user.UserCommunicationService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,9 +58,15 @@ public class UserCommunicationController {
         return userCommunicationService.findCanSendMessageUsers(userSeq, userRole, isNew, commuSeq);
     }
 
+    @DeleteMapping("/message/{commuSeq}")
+    public void deleteCommunication(@PathVariable Long commuSeq) {
+        userCommunicationService.deleteCommunication(commuSeq);
+    }
+
     @GetMapping("/count")
     public UserCommuCntResDto countUncheckedCommunication(
         @RequestHeader("Access-Token") String accessToken) {
+
         Long userSeq = jwtTokenProvider.getUserSeq(accessToken);
 
         return userCommunicationService.countUncheckedCommunication(userSeq);

@@ -142,4 +142,11 @@ public class UserCommunicationService {
             .build();
         return userCommuCntResDto;
     }
+
+    public void deleteCommunication(Long commuSeq) {
+        Optional<Message> findCommu = communicationRepository.findById(commuSeq);
+        Message message = findCommu.orElseThrow();
+
+        communicationRepository.delete(message);
+    }
 }

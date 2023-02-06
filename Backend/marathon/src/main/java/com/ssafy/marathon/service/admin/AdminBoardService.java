@@ -37,6 +37,9 @@ public class AdminBoardService {
     }
 
     public void deleteBoard(Long boardSeq) {
-        boardRepository.deleteById(boardSeq);
+        Optional<Board> findBoard = boardRepository.findById(boardSeq);
+        Board board = findBoard.orElseThrow();
+
+        boardRepository.delete(board);
     }
 }
