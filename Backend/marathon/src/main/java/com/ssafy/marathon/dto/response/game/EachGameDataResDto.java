@@ -16,19 +16,18 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
-public class GameAnalysisResDto {
+public class EachGameDataResDto {
 
-    private int gameType;
+    //  high score
+    private int easyHighScore;
 
-    private LocalDate lastGameDate;
+    private int normalHighScore;
 
-    private LocalTime lastGameTime;
+    private int hardHighScore;
+    //  5days avg score
+    private List<String> easyRecentAccuary;
 
-    private String lastGameDifficulty;
+    private List<String> normalRecentAccuary;
 
-    private float lastGameAccuarcy;
-
-//  최근 게임
-    private List<EachGameDataResDto> list;
+    private List<String> hardRecentAccuary;
 }
