@@ -2,18 +2,20 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
+import { useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { $ } from "util/axios";
 import { useQuery } from "@tanstack/react-query";
 import style from "./TreatmentDetail.module.css";
 
-export default function TreatmentDetail({ setIsModalOpen }) {
+export default function TreatmentDetail() {
   const state = useSelector((state) => state);
-  const [isInput, setIsInput] = useState(false);
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { no } = useParams();
-  const toggleToInput = () => {
-    setIsInput(!isInput);
-  };
+  const [isInput, setIsInput] = useState(false);
+  const [content, setContent] = useState("");
+
   const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
   const { isLoading, data, isError, error } = useQuery(
     ["mypageHistoryDetail"],
@@ -25,11 +27,51 @@ export default function TreatmentDetail({ setIsModalOpen }) {
       )
   );
 
+  const { mutate } = useMutation(
+    () =>
+      $.put(`/doctor-history/feedback`, {
+        historySeq: data.data.historySeq,
+        feedback: content,
+      }),
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries(["mypageHistoryDetail"]);
+        const oldData = queryClient.getQueryData(["mypageHistoryDetail"]);
+        queryClient.setQueryData(["mypageHistoryDetail"], updateData());
+        return { oldData };
+      },
+      onError: (_error, _variables, context) => {
+        queryClient.setQueryData(["mypageHistoryDetail"], context.oldData);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(["mypageHistoryDetail"]);
+      },
+    }
+  );
+
+  const toggleToInput = () => {
+    setIsInput(!isInput);
+  };
+
+  const copyContent = () => content;
+
+  const updateData = () => {
+    let newData = queryClient.getQueryData(["mypageHistoryDetail"]);
+    newData.data.feedback = content;
+    return newData;
+  };
+
   useEffect(() => {
-    // 사이드 나브 초기화
+    // 사이드 nav 초기화
     if (state.loginUser.userRole === "doctor")
       dispatch(changeNowSideNav("수업 기록"));
   }, []);
+
+  // onSuccess로 조건주면 자꾸 애러나서 그냥 useEffet로 따로 뺌
+  useEffect(() => {
+    if (isLoading) return;
+    setContent(data.data.feedback);
+  }, [isLoading]);
 
   return (
     <>
@@ -62,9 +104,9 @@ export default function TreatmentDetail({ setIsModalOpen }) {
                 <div className={style.sub_content}>
                   {!isLoading &&
                     new Date(data.data.dateTime).toLocaleDateString() +
-                      " " +
+                      " (" +
                       WEEKDAY[new Date(data.data.dateTime).getDay()] +
-                      " " +
+                      ") " +
                       new Date(data.data.dateTime).getHours() +
                       "시"}
                 </div>
@@ -108,6 +150,7 @@ export default function TreatmentDetail({ setIsModalOpen }) {
               <button
                 className={style.btn}
                 onClick={() => {
+                  mutate();
                   toggleToInput();
                 }}
               >
@@ -130,17 +173,15 @@ export default function TreatmentDetail({ setIsModalOpen }) {
             <>
               <textarea
                 onChange={(e) => {
-                  //setContent(e.target.value);
+                  setContent(e.target.value);
                 }}
                 className={style.textarea}
                 type="text"
-                // value={!isLoading && data.data.feedback}
+                value={copyContent()}
               />
             </>
           ) : (
-            <div className={style.content}>
-              {!isLoading && data.data.feedback}
-            </div>
+            <div className={style.content}>{content}</div>
           )}
         </div>
       </div>

@@ -10,33 +10,38 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
   const queryClient = useQueryClient();
   const [isCreatable, setIsCreatable] = useState(false);
 
-  // const { mutate } = useMutation(
-  //   () => $.put(`/admin-consult/detail/${state.nowBoardInfo.consultingSeq}`),
-  //   {
-  //     onMutate: async () => {
-  //       await queryClient.cancelQueries(["mypageConsultingList", pageNum]);
-  //       const oldData = queryClient.getQueryData([
-  //         "mypageConsultingList",
-  //         pageNum,
-  //       ]);
-  //       queryClient.setQueryData(["mypageConsultingList", pageNum], () => {
-  //         return {
-  //           data: [updateData()],
-  //         };
-  //       });
-  //       return { oldData };
-  //     },
-  //     onError: (_error, _variables, context) => {
-  //       queryClient.setQueryData(
-  //         ["mypageConsultingList", pageNum],
-  //         context.oldData
-  //       );
-  //     },
-  //     onSettled: () => {
-  //       queryClient.invalidateQueries(["mypageConsultingList", pageNum]);
-  //     },
-  //   }
-  // );
+  const { mutate } = useMutation(
+    () => $.delete(`/doctor-treatment/${modalData.reservedDay.treatmentSeq}`),
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries(["mypageSchedule"]);
+        const oldData = queryClient.getQueryData(["mypageSchedule"]);
+        queryClient.setQueryData(["mypageSchedule"], updateData());
+        return { oldData };
+      },
+      onError: (_error, _variables, context) => {
+        queryClient.setQueryData(["mypageSchedule"], context.oldData);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(["mypageSchedule"]);
+      },
+    }
+  );
+
+  const updateData = () => {
+    let newData = queryClient.getQueryData(["mypageSchedule"]);
+    for (let i = 0; i < newData.data.list.length; i++) {
+      if (
+        newData.data.list[i].treatmentSeq === modalData.reservedDay.treatmentSeq
+      ) {
+        let temp = [...newData.data.list];
+        temp.splice(i, 1);
+        newData.data.list = temp;
+        break;
+      }
+    }
+    return newData;
+  };
 
   useEffect(() => {
     let date = new Date(modalData.reservedDay.dateTime).getTime();
@@ -110,7 +115,7 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                   className={style.button + " " + style.button_cancel}
                   onClick={() => {
                     if (window.confirm("정말로 취소하시겠습니까?")) {
-                      //useMutate를 수행
+                      mutate();
                       setIsModalOpen(false);
                     }
                   }}
