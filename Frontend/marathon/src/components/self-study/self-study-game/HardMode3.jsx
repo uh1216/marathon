@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRecord, resetRecord } from "stores/game.store";
+import { addRecord, resetRecord, setType } from "stores/game.store";
 import commonStyle from "./Game.module.css";
 import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode } from "stores/game.store";
@@ -164,6 +164,7 @@ export default function EasyMode1() {
 
   // 인트로 화면 띄울 때 세팅할 것
   useEffect(() => {
+    dispatch(setType(3));
     dispatch(setMode("hard"));
     dispatch(setStage(0));
     dispatch(setIsReady(0));
@@ -205,7 +206,6 @@ export default function EasyMode1() {
 
       // 이번 stage의 정답
       let tmp = Array.from(new Array(row), () => new Array(col).fill(0));
-      console.log(tmp);
 
       for (let i = 0; i < size; i++) {
         let y = list[i][0];

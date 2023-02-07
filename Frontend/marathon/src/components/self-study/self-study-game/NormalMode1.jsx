@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRecord, resetRecord } from "stores/game.store";
+import { addRecord, resetRecord, setType } from "stores/game.store";
 import commonStyle from "./Game.module.css";
 import style from "./NormalMode1.module.css";
 import SelfStudyIntro from "../SelfStudyIntro";
@@ -28,6 +28,7 @@ export default function EasyMode1() {
 
   // 인트로 화면 띄울 때 세팅할 것
   useEffect(() => {
+    dispatch(setType(1));
     dispatch(setMode("normal"));
     dispatch(setStage(0));
     dispatch(setIsReady(0));

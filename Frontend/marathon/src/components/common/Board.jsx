@@ -63,14 +63,14 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
           className={style.header_container}
           style={{ gridTemplateColumns: grid, maxWidth: "850px" }}
         >
-          {headRow.map((content) => {
-            return <div key={content.name + 30}>{content}</div>;
+          {headRow.map((content, idx) => {
+            return <div key={idx}>{content}</div>;
           })}
         </div>
         {data.map((content, idx) => {
           return (
             <div
-              key={content.name + idx + 20}
+              key={idx}
               className={style.content_container}
               style={{ gridTemplateColumns: grid, maxWidth: "850px" }}
             >

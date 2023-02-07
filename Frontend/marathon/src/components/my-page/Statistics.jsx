@@ -5,19 +5,20 @@ import StatisticsBox from "components/common/StatisticsBox";
 import Board from "components/common/Board";
 import Pagination from "components/common/Pagination";
 import { $ } from "util/axios";
+import { useParams } from "react-router-dom";
 
 export default function Statistics() {
+  const { pageNum } = useParams();
   const dispatch = useDispatch();
   // 페이지네이션 관련 변수
-  const [pageNum, setPageNum] = useState(1);
+  const [number, setNumber] = useState(1);
   const [isFirst, setIsFirst] = useState(true);
   const [isLast, setIsLast] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
-  const [pageUrl, setPageUrl] = useState("");
 
   const gameName = ["색깔 위치 맞추기", "그림 카드 맞추기", "동물 위치 맞추기"];
   const [gameList, setGameList] = useState([]);
-  const recentStudy = [
+  const [recentStudy, setRecentStudy] = useState([
     {
       date: "2022.12.25 12:03:24",
       difficulty: "고급",
@@ -33,15 +34,13 @@ export default function Statistics() {
       difficulty: "고급",
       accuracy: 70,
     },
-  ];
-
-  const bestRecords = [
-    [100, 60, 10],
-    [100, 60, 10],
-    [100, 60, 10],
-  ];
-
-  const graphLabels = [
+  ]);
+  const [bestRecords, setBestRecords] = useState([
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+  ]);
+  const [graphLabels, setGraphLabels] = useState([
     [
       ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
       ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
@@ -57,9 +56,8 @@ export default function Statistics() {
       ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
       ["23.01.01", "23.01.02", "23.01.03", "23.01.04", "23.01.05"],
     ],
-  ];
-
-  const graphData = [
+  ]);
+  const [graphData, setGraphData] = useState([
     [
       [10, 20, 40, 80, 70],
       [30, 50, 10, 80, 50],
@@ -75,7 +73,7 @@ export default function Statistics() {
       [30, 50, 10, 80, 50],
       [10, 20, 40, 60, 0],
     ],
-  ];
+  ]);
 
   const getGameList = (page) => {
     $.get(`patient-game/list?page=${page}`)
@@ -100,16 +98,10 @@ export default function Statistics() {
 
         // 페이지네이션 설정
 
-        // number={11}
-        // first={false}
-        // last={false}
-        // totalPages={17}
-        // url={"www.naver.com"}
-        // const [pageNum, setPageNum] = useState(1);
-        // const [isFirst, setIsFirst] = useState(true);
-        // const [isLast, setIsLast] = useState(false);
-        // const [totalPages, setTotalPages] = useState(1);
-        // const [pageUrl, setPageUrl] = useState("");
+        setNumber(res.data.number);
+        setIsFirst(res.data.first);
+        setIsLast(res.data.last);
+        setTotalPages(res.data.totalPages);
       })
       .catch((err) => console.log(err));
   };
@@ -119,7 +111,84 @@ export default function Statistics() {
     dispatch(changeNowSideNav("스스로 학습 통계"));
 
     // 최근 게임 기록 가져오기
-    getGameList(1);
+    getGameList(pageNum);
+
+    // 게임 통계 가져오기
+    $.get(`/patient-game/analysis`)
+      .then((res) => {
+        console.log(res);
+        setRecentStudy([
+          {
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: 70,
+          },
+          {
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: 70,
+          },
+          {
+            date: "2022.12.25 12:03:24",
+            difficulty: "고급",
+            accuracy: 70,
+          },
+        ]);
+        setBestRecords([
+          [
+            Number(res.data.list[0].easyHighScore) * 10,
+            Number(res.data.list[0].normalHighScore) * 10,
+            Number(res.data.list[0].hardHighScore) * 10,
+          ],
+          [
+            Number(res.data.list[1].easyHighScore) * 10,
+            Number(res.data.list[1].normalHighScore) * 10,
+            Number(res.data.list[1].hardHighScore) * 10,
+          ],
+          [
+            Number(res.data.list[2].easyHighScore) * 10,
+            Number(res.data.list[2].normalHighScore) * 10,
+            Number(res.data.list[2].hardHighScore) * 10,
+          ],
+        ]);
+
+        let labels = [];
+        let datas = [];
+        for (let i = 0; i < 3; i++) {
+          let labelEasy = [];
+          let labelNormal = [];
+          let labelHard = [];
+          let dataEasy = [];
+          let dataNormal = [];
+          let dataHard = [];
+
+          res.data.list[i].easyRecentAccuary.forEach((item) => {
+            labelEasy.push(item.split(",")[0]);
+            dataEasy.push(Number(item.split(",")[1]) * 10);
+          });
+
+          res.data.list[i].normalRecentAccuary.forEach((item) => {
+            labelNormal.push(item.split(",")[0]);
+            dataNormal.push(Number(item.split(",")[1]) * 10);
+          });
+
+          res.data.list[i].hardRecentAccuary.forEach((item) => {
+            labelHard.push(item.split(",")[0]);
+            dataHard.push(Number(item.split(",")[1]) * 10);
+          });
+
+          labels.push([[...labelEasy], [...labelNormal], [...labelHard]]);
+          datas.push([[...dataEasy], [...dataNormal], [...dataHard]]);
+        }
+
+        setGraphData(datas);
+        setGraphLabels(labels);
+        console.log(labels);
+        console.log(datas);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -160,11 +229,11 @@ export default function Statistics() {
       />
       <br />
       <Pagination
-        number={11}
-        first={false}
-        last={false}
-        totalPages={17}
-        url={"www.naver.com"}
+        number={number}
+        first={isFirst}
+        last={isLast}
+        totalPages={totalPages}
+        url="mypage/statistics/"
       ></Pagination>
       <br />
     </div>

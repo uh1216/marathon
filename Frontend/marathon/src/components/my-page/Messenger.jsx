@@ -75,7 +75,16 @@ export default function Messenger() {
   };
 
   /** 메시지 삭제 */
-  const removeMessage = () => {};
+  const removeMessage = (commuSeq, idx) => {
+    $.delete(`/user-commu/message/${commuSeq}`)
+      .then(() => {
+        list.splice(idx, 1);
+        setList([...list]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   /** 페이지네이션 */
   const getMoreMessage = () => {
@@ -129,7 +138,9 @@ export default function Messenger() {
                 <FontAwesomeIcon
                   icon={faXmark}
                   className={style.icon_x}
-                  onClick={removeMessage}
+                  onClick={() => {
+                    removeMessage(item.commuSeq, idx);
+                  }}
                 />
               )}
               <FontAwesomeIcon
