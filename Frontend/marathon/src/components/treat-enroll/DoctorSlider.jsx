@@ -33,7 +33,14 @@ const NowSlider = styled.div`
     (props.check === "hidden_prev" && "5%")};
 `;
 
-export default function DoctorSlider({ check, name, content, bg, animation }) {
+export default function DoctorSlider({
+  check,
+  seq,
+  name,
+  introduce,
+  img,
+  animation,
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   /** 모달창 오픈 함수 */
   const showModal = () => {
@@ -45,7 +52,7 @@ export default function DoctorSlider({ check, name, content, bg, animation }) {
       <NowSlider check={check} style={{ transition: animation }}>
         <div className={style.total}>
           <div className={style.info}>
-            <img src={bg} alt="" className={style.doctor_img}></img>
+            <img src={img} alt="" className={style.doctor_img}></img>
             <h3 className={style.title}>
               {name}&nbsp;
               <span className={style.span}>재활사</span>
@@ -60,15 +67,15 @@ export default function DoctorSlider({ check, name, content, bg, animation }) {
               예약하기
             </button>
           </div>
-          <div className={style.content}>
+          <div className={style.introduce}>
             <h3 className={style.introduce_title}>자기소개</h3>
-            {content}
+            {introduce}
           </div>
         </div>
       </NowSlider>
       {isModalOpen && (
         <Modal setModalOpen={setIsModalOpen}>
-          <SelectSchedule setModalOpen={setIsModalOpen} name={name} />
+          <SelectSchedule setModalOpen={setIsModalOpen} seq={seq} />
         </Modal>
       )}
     </>
