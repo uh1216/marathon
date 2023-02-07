@@ -360,7 +360,7 @@ export default function ConsultEnroll() {
           </div>
         </div>
       </div>
-      <div className="inner_container" style={{ width: "90%" }}>
+      <div className="inner_container" style={{ width: "100%" }}>
         <div
           className={style.inner_container}
           style={{ animation: "0.8s ease-in-out loadEffect1" }}
@@ -397,8 +397,8 @@ export default function ConsultEnroll() {
           <div className={style.input_div}>
             <label className={style.input_label}>대상자 생년월일</label>
             <div
+              className={style.calbox}
               style={{
-                width: "412px",
                 display: "flex",
                 justifyContent: "space-between",
               }}
@@ -406,17 +406,19 @@ export default function ConsultEnroll() {
               <SelectBox
                 options={optionsYear}
                 onChange={(x) => setUserYear(x)}
-                width="191px"
+                width="30%"
                 ref={inputUserYear}
               />
               <SelectBox
                 options={optionsMonth}
                 onChange={(x) => setUserMonth(x)}
+                width="30%"
                 ref={inputUserMonth}
               />
               <SelectBox
                 options={optionsDay}
                 onChange={(x) => setUserDay(x)}
+                width="30%"
                 ref={inputUserDay}
               />
             </div>
@@ -528,7 +530,7 @@ export default function ConsultEnroll() {
           <div className={style.input_div}>
             <label className={style.input_label}>
               대상자의 뇌손상 발병시기
-              <div style={{ display: "inline-block", marginLeft: "140px" }}>
+              <div style={{ display: "inline-block", marginLeft: "40px" }}>
                 <input
                   className={style.input_check_box2 + " " + style.inline}
                   type="checkbox"
@@ -548,8 +550,8 @@ export default function ConsultEnroll() {
               </div>
             </label>
             <div
+              className={style.calbox}
               style={{
-                width: "412px",
                 display: "flex",
                 justifyContent: "space-between",
               }}
@@ -557,17 +559,19 @@ export default function ConsultEnroll() {
               <SelectBox
                 options={optionsYear}
                 onChange={(x) => setDiseaseYear(x)}
-                width="191px"
+                width="30%"
                 ref={inputDiseaseYear}
               />
               <SelectBox
                 options={optionsMonth}
                 onChange={(x) => setDiseaseMonth(x)}
+                width="30%"
                 ref={inputDiseaseMonth}
               />
               <SelectBox
                 options={optionsDay2}
                 onChange={(x) => setDiseaseDay(x)}
+                width="30%"
                 ref={inputDiseaseDay}
               />
             </div>
