@@ -58,4 +58,18 @@ public class DoctorHistoryController {
         return HistoryResDto;
     }
 
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchPaitentHistory(
+        @RequestHeader("Access-Token") String accessToken,
+        @RequestParam int page,
+        @RequestParam String name){
+
+        Long doctorSeq = jwtTokenProvider.getUserSeq(accessToken);
+
+        Page<HistoryResDto> pages = historyService.searchPaitentHistory(doctorSeq, name, page-1);
+
+        return new ResponseEntity<Page<HistoryResDto>>(pages, HttpStatus.OK);
+    }
+
 }
