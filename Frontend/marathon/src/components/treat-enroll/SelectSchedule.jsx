@@ -1,141 +1,43 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { $ } from "util/axios";
 import style from "./SelectSchedule.module.css";
 
-export default function SelectSchedule({ name }) {
-  const state = useSelector((state) => state);
-
-  /** 수업 스케쥴 데이터 */
-  const { isLoading, data, isError, error } = useQuery(["Time-table"], () =>
-    $.get(`/doctor-treatment/table/`)
-  );
-
-  // const data = {
-  //   firstDateInfo: "1675036800000",
-  //   list: [
-  //     {
-  //       reservationSeq: 0,
-  //       localDate: "2023-01-30",
-  //       timeTable: "00021000",
-  //     },
-  //     {
-  //       reservationSeq: 1,
-  //       localDate: "2023-01-31",
-  //       timeTable: "00000210",
-  //     },
-  //     {
-  //       reservationSeq: 2,
-  //       localDate: "2023-02-01",
-  //       timeTable: "10020000",
-  //     },
-  //     {
-  //       reservationSeq: 3,
-  //       localDate: "2023-02-02",
-  //       timeTable: "01002010",
-  //     },
-  //     {
-  //       reservationSeq: 4,
-  //       localDate: "2023-02-03",
-  //       timeTable: "00200010",
-  //     },
-  //     {
-  //       reservationSeq: 5,
-  //       localDate: "2023-02-04",
-  //       timeTable: "00200011",
-  //     },
-  //     {
-  //       reservationSeq: 6,
-  //       localDate: "2023-02-05",
-  //       timeTable: "20000001",
-  //     },
-  //     {
-  //       reservationSeq: 7,
-  //       localDate: "2023-02-06",
-  //       timeTable: "00001000",
-  //     },
-  //     {
-  //       reservationSeq: 8,
-  //       localDate: "2023-02-07",
-  //       timeTable: "00001110",
-  //     },
-  //     {
-  //       reservationSeq: 9,
-  //       localDate: "2023-02-08",
-  //       timeTable: "02220000",
-  //     },
-  //     {
-  //       reservationSeq: 10,
-  //       localDate: "2023-02-09",
-  //       timeTable: "01000010",
-  //     },
-  //     {
-  //       reservationSeq: 11,
-  //       localDate: "2023-02-10",
-  //       timeTable: "00100020",
-  //     },
-  //     {
-  //       reservationSeq: 12,
-  //       localDate: "2023-02-11",
-  //       timeTable: "00000001",
-  //     },
-  //     {
-  //       reservationSeq: 13,
-  //       localDate: "2023-02-12",
-  //       timeTable: "00000000",
-  //     },
-  //     {
-  //       reservationSeq: 14,
-  //       localDate: "2023-02-13",
-  //       timeTable: "02000000",
-  //     },
-  //     {
-  //       reservationSeq: 15,
-  //       localDate: "2023-02-14",
-  //       timeTable: "01000110",
-  //     },
-  //     {
-  //       reservationSeq: 16,
-  //       localDate: "2023-02-15",
-  //       timeTable: "10000002",
-  //     },
-  //     {
-  //       reservationSeq: 17,
-  //       localDate: "2023-02-16",
-  //       timeTable: "01002012",
-  //     },
-  //     {
-  //       reservationSeq: 18,
-  //       localDate: "2023-02-17",
-  //       timeTable: "01000010",
-  //     },
-  //     {
-  //       reservationSeq: 19,
-  //       localDate: "2023-02-18",
-  //       timeTable: "11000001",
-  //     },
-  //     {
-  //       reservationSeq: 20,
-  //       localDate: "2023-02-19",
-  //       timeTable: "22000001",
-  //     },
-  //   ],
-  // };
-
-  const thisDateNum = data.data.firstDateInfo;
+export default function SelectSchedule({ name, seq }) {
   const [cnt, setCnt] = useState(0);
-  const [teacherSchedule, setTeacherSchedule] = useState(data.data.list);
+  const [teacherSchedule, setTeacherSchedule] = useState();
   const [targetDate, setTargetDate] = useState([]);
   const [target, setTarget] = useState();
+  const newData = {
+    list: teacherSchedule,
+  };
 
-  console.log(thisDateNum);
-  console.log(teacherSchedule);
+  /** API GET 함수 */
+  const { isLoading, data, isError, error } = useQuery(["Time-table"], () =>
+    $.get(`/patient-treatment/book/${seq}`)
+  );
+
+  /** API PUT 함수 */
+  const res_put = () => {
+    return $.put(`/patient-treatment/book/${seq}`, newData);
+  };
+
+  const { mutate: onPut } = useMutation(res_put, {
+    onSuccess: () => {
+      alert("예악 되었습니다.");
+    },
+    onError: () => {
+      alert("실패했습니다.");
+    },
+  });
+
   /** 날짜 구하기
    * num = 0 : 월요일 ~ num = 6 : 일요일
    */
   const totalThisDate = (num) => {
-    let today = new Date(Number(thisDateNum) + (num + cnt * 7) * 86400000);
+    let today = new Date(
+      Number(data.data.firstDateInfo) + (num + cnt * 7) * 86400000
+    );
     let todayYear = today.getFullYear();
     let todayMonth = today.getMonth() + 1;
     if (todayMonth < 10) todayMonth = "0" + todayMonth;
@@ -146,28 +48,34 @@ export default function SelectSchedule({ name }) {
   };
 
   const thisYear = (num) => {
-    let today = new Date(Number(thisDateNum) + (num + cnt * 7) * 86400000);
+    let today = new Date(
+      Number(data.data.firstDateInfo) + (num + cnt * 7) * 86400000
+    );
     let todayYear = today.getFullYear();
     return todayYear.toString();
   };
 
   const thisMonth = (num) => {
-    let today = new Date(Number(thisDateNum) + (num + cnt * 7) * 86400000);
+    let today = new Date(
+      Number(data.data.firstDateInfo) + (num + cnt * 7) * 86400000
+    );
     let todayMonth = today.getMonth() + 1;
     if (todayMonth < 10) todayMonth = "0" + todayMonth;
     return todayMonth.toString();
   };
 
   const thisDay = (num) => {
-    let today = new Date(Number(thisDateNum) + (num + cnt * 7) * 86400000);
+    let today = new Date(
+      Number(data.data.firstDateInfo) + (num + cnt * 7) * 86400000
+    );
     let todayDate = today.getDate();
     if (todayDate < 10) todayDate = "0" + todayDate;
     return todayDate.toString();
   };
 
   const checkSchedule = (thisDay) => {
-    const found = teacherSchedule.find((e) => e.localDate === thisDay);
-    const thisTimeTable = found.timeTable;
+    const found = data.data.list.find((e) => e.localDate === thisDay);
+    const thisTimeTable = found.bitDate;
 
     const timeLlist = [];
     for (let i = 0; i < thisTimeTable.length; i++) {
@@ -250,21 +158,21 @@ export default function SelectSchedule({ name }) {
       reserve = "1";
     }
 
-    let findItem = teacherSchedule.find((t) => t.localDate === e.target.name);
+    let findItem = data.data.list.find((t) => t.localDate === e.target.name);
     let newTimeTable = [];
     for (let i = 0; i < 8; i++) {
       i.toString() === e.target.value[1]
         ? newTimeTable.push(reserve)
-        : newTimeTable.push(findItem.timeTable[i]);
+        : newTimeTable.push(findItem.bitDate[i]);
     }
     newTimeTable = newTimeTable.join("");
-    let newSchedule = [...teacherSchedule];
+    let newSchedule = [...data.data.list];
     let findorigin = newSchedule.find((t) => t.localDate === e.target.name);
-    findorigin.timeTable = newTimeTable;
+    findorigin.bitDate = newTimeTable;
 
     /** 선택 취소된 날짜 반영하기 위한 코드 */
-    let prevItem = teacherSchedule.find((t) => t.localDate === targetDate[0])
-      ? teacherSchedule.find((t) => t.localDate === targetDate[0])
+    let prevItem = data.data.list.find((t) => t.localDate === targetDate[0])
+      ? data.data.list.find((t) => t.localDate === targetDate[0])
       : null;
     if (prevItem !== null) {
       let newTimeTable2 = [];
@@ -273,23 +181,23 @@ export default function SelectSchedule({ name }) {
         for (let i = 0; i < 8; i++) {
           /** 날짜가 다른 경우 */
           if (targetDate[0] !== e.target.name) {
-            if (prevItem.timeTable[i] === "3") {
+            if (prevItem.bitDate[i] === "3") {
               /** 그외 나머지 */
               newTimeTable2.push("1");
             } else {
-              newTimeTable2.push(prevItem.timeTable[i]);
+              newTimeTable2.push(prevItem.bitDate[i]);
             }
           } else if (targetDate[0] === e.target.name) {
             /** 날짜가 같은 경우 */
-            if (prevItem.timeTable[i] === "3") {
+            if (prevItem.bitDate[i] === "3") {
               /** 클릭한 버튼을 제외한 나머지에서 값이 3인 부분 1로 변경 */
               if (i.toString() === targetDate[1][1]) {
                 newTimeTable2.push("1");
               } else {
-                newTimeTable2.push(prevItem.timeTable[i]);
+                newTimeTable2.push(prevItem.bitDate[i]);
               }
             } else {
-              newTimeTable2.push(prevItem.timeTable[i]);
+              newTimeTable2.push(prevItem.bitDate[i]);
             }
           }
         }
@@ -297,22 +205,22 @@ export default function SelectSchedule({ name }) {
         let findorigin2 = newSchedule.find(
           (t) => t.localDate === targetDate[0]
         );
-        findorigin2.timeTable = newTimeTable2;
+        findorigin2.bitDate = newTimeTable2;
       } else {
         if (e.target.value[0] !== targetDate[1][0]) {
           /** 요일, 시간이 같고 주차가 다른 경우 */
           for (let i = 0; i < 8; i++) {
-            if (prevItem.timeTable[i] === "3") {
+            if (prevItem.bitDate[i] === "3") {
               newTimeTable2.push("1");
             } else {
-              newTimeTable2.push(prevItem.timeTable[i]);
+              newTimeTable2.push(prevItem.bitDate[i]);
             }
           }
           newTimeTable2 = newTimeTable2.join("");
           let findorigin2 = newSchedule.find(
             (t) => t.localDate === targetDate[0]
           );
-          findorigin2.timeTable = newTimeTable2;
+          findorigin2.bitDate = newTimeTable2;
         }
       }
     }
@@ -340,96 +248,110 @@ export default function SelectSchedule({ name }) {
     let findItem = teacherSchedule.find((t) => t.localDate === targetDate[0]);
     let newTimeTable = [];
     for (let i = 0; i < 8; i++) {
-      findItem.timeTable[i] === "3"
+      findItem.bitDate[i] === "3"
         ? newTimeTable.push("2")
-        : newTimeTable.push(findItem.timeTable[i]);
+        : newTimeTable.push(findItem.bitDate[i]);
     }
     newTimeTable = newTimeTable.join("");
     let newSchedule = [...teacherSchedule];
     let findorigin = newSchedule.find((t) => t.localDate === targetDate[0]);
-    findorigin.timeTable = newTimeTable;
+    findorigin.bitDate = newTimeTable;
     setTeacherSchedule(newSchedule);
-    alert("예약 되었습니다.");
-    console.log(teacherSchedule);
+    console.log(newData);
     /** 서버로 보낼 코드 작성 예정 */
+    onPut();
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.inner_container}>
-        <div className={style.title}>
-          <span className={style.title_name}>{name} </span>
-          <span className={style.title_position}>선생님</span>
-          <span className={style.title_schedule}>수업 스케쥴</span>
+    <>
+      {!isLoading && (
+        <div className={style.container}>
+          <div className={style.inner_container}>
+            <div className={style.title}>
+              <span className={style.title_name}>{name} </span>
+              <span className={style.title_position}>선생님</span>
+              <span className={style.title_schedule}>수업 스케쥴</span>
+            </div>
+            <div className={style.content}>
+              <div className={style.date_header}>
+                <button className={style.button} onClick={prevWeek}>
+                  ◁ 이전
+                </button>
+                <span className={style.date_text}>
+                  {thisYear(0)}.{thisMonth(0)}.{thisDay(0)} ~ {thisYear(6)}.
+                  {thisMonth(6)}.{thisDay(6)}
+                </span>
+                <button className={style.button} onClick={nextWeek}>
+                  다음 ▷
+                </button>
+              </div>
+              <div className={style.date_item}>
+                <div className={style.day_start}>
+                  <div className={style.day_header}>
+                    {thisDay(0)} &#40;월&#41;
+                  </div>
+                  <div className={style.day_item}>
+                    {checkSchedule(totalThisDate(0))}
+                  </div>
+                </div>
+                <div className={style.day}>
+                  <div className={style.day_header}>
+                    {thisDay(1)} &#40;화&#41;
+                  </div>
+                  <div className={style.day_item}>
+                    {checkSchedule(totalThisDate(1))}
+                  </div>
+                </div>
+                <div className={style.day}>
+                  <div className={style.day_header}>
+                    {thisDay(2)} &#40;수&#41;
+                  </div>
+                  <div className={style.day_item}>
+                    {checkSchedule(totalThisDate(2))}
+                  </div>
+                </div>
+                <div className={style.day}>
+                  <div className={style.day_header}>
+                    {thisDay(3)} &#40;목&#41;
+                  </div>
+                  <div className={style.day_item}>
+                    {checkSchedule(totalThisDate(3))}
+                  </div>
+                </div>
+                <div className={style.day}>
+                  <div className={style.day_header}>
+                    {thisDay(4)} &#40;금&#41;
+                  </div>
+                  <div className={style.day_item}>
+                    {checkSchedule(totalThisDate(4))}
+                  </div>
+                </div>
+                <div className={style.day}>
+                  <div className={style.day_header} style={{ color: "blue" }}>
+                    {thisDay(5)} &#40;토&#41;
+                  </div>
+                  <div className={style.day_item}>
+                    {checkSchedule(totalThisDate(5))}
+                  </div>
+                </div>
+                <div className={style.day_end}>
+                  <div className={style.day_header} style={{ color: "red" }}>
+                    {thisDay(6)} &#40;일&#41;
+                  </div>
+                  <div className={style.day_item}>
+                    {checkSchedule(totalThisDate(6))}
+                  </div>
+                </div>
+              </div>
+              <div className={style.save_button_div}>
+                <button className={style.save_button} onClick={onSubmit}>
+                  예약하기
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className={style.content}>
-          <div className={style.date_header}>
-            <button className={style.button} onClick={prevWeek}>
-              ◁ 이전
-            </button>
-            <span className={style.date_text}>
-              {thisYear(0)}.{thisMonth(0)}.{thisDay(0)} ~ {thisYear(6)}.
-              {thisMonth(6)}.{thisDay(6)}
-            </span>
-            <button className={style.button} onClick={nextWeek}>
-              다음 ▷
-            </button>
-          </div>
-          <div className={style.date_item}>
-            <div className={style.day_start}>
-              <div className={style.day_header}>{thisDay(0)} &#40;월&#41;</div>
-              <div className={style.day_item}>
-                {checkSchedule(totalThisDate(0))}
-              </div>
-            </div>
-            <div className={style.day}>
-              <div className={style.day_header}>{thisDay(1)} &#40;화&#41;</div>
-              <div className={style.day_item}>
-                {checkSchedule(totalThisDate(1))}
-              </div>
-            </div>
-            <div className={style.day}>
-              <div className={style.day_header}>{thisDay(2)} &#40;수&#41;</div>
-              <div className={style.day_item}>
-                {checkSchedule(totalThisDate(2))}
-              </div>
-            </div>
-            <div className={style.day}>
-              <div className={style.day_header}>{thisDay(3)} &#40;목&#41;</div>
-              <div className={style.day_item}>
-                {checkSchedule(totalThisDate(3))}
-              </div>
-            </div>
-            <div className={style.day}>
-              <div className={style.day_header}>{thisDay(4)} &#40;금&#41;</div>
-              <div className={style.day_item}>
-                {checkSchedule(totalThisDate(4))}
-              </div>
-            </div>
-            <div className={style.day}>
-              <div className={style.day_header} style={{ color: "blue" }}>
-                {thisDay(5)} &#40;토&#41;
-              </div>
-              <div className={style.day_item}>
-                {checkSchedule(totalThisDate(5))}
-              </div>
-            </div>
-            <div className={style.day_end}>
-              <div className={style.day_header} style={{ color: "red" }}>
-                {thisDay(6)} &#40;일&#41;
-              </div>
-              <div className={style.day_item}>
-                {checkSchedule(totalThisDate(6))}
-              </div>
-            </div>
-          </div>
-          <div className={style.save_button_div}>
-            <button className={style.save_button} onClick={onSubmit}>
-              예약하기
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
