@@ -6,6 +6,9 @@ import com.ssafy.marathon.dto.response.game.GameAnalysisResDto;
 import com.ssafy.marathon.dto.response.game.GameResDto;
 import com.ssafy.marathon.service.patient.PatientGameService;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -52,14 +55,16 @@ public class PatientGameController {
         return new ResponseEntity<Page<GameResDto>>(pages, HttpStatus.OK);
     }
 
-//    @GetMapping("/analysis")
-//    public ResponseEntity<?> getAnalysis(@RequestHeader("Access-Token") String accessToken){
-//        Long patientSeq = jwtTokenProvider.getUserSeq(accessToken);
-//
-//        List<GameAnalysisResDto> list = patientGameService.getAnalysis(patientSeq);
-//
-//
-//        return null;
-//    }
+    @GetMapping("/analysis")
+    public ResponseEntity<?> getAnalysis(@RequestHeader("Access-Token") String accessToken){
+        Long patientSeq = jwtTokenProvider.getUserSeq(accessToken);
+
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory()
+
+        GameAnalysisResDto gameAnalysisResDto = patientGameService.getAnalysis(patientSeq);
+
+
+        return new ResponseEntity<GameAnalysisResDto>(gameAnalysisResDto, HttpStatus.OK);
+    }
 
 }

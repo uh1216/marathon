@@ -4,6 +4,7 @@ import com.ssafy.marathon.dto.request.game.GameReqDto;
 import com.ssafy.marathon.dto.response.game.GameAnalysisResDto;
 import com.ssafy.marathon.dto.response.game.GameResDto;
 import java.util.List;
+import javax.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,6 @@ public interface PatientGameService {
 
     Page<GameResDto> getPages(Long patientSeq, int page);
 
-//    List<GameAnalysisResDto> getAnalysis(Long patientSeq);
+    GameAnalysisResDto getAnalysis(Long patientSeq);
 
 }
