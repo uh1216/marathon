@@ -16,11 +16,38 @@ export default function NoticeBoard() {
     { value: "conetent", name: "내용" },
     { value: "title_content", name: "제목 + 내용" },
   ];
-  const [searchOption, setSearchOption] = useState("none");
+  const [searchOption, setSearchOption] = useState(optionSearch[0]);
+  const [searchTitle, setSearchTitle] = useState("");
+  const [searchContent, setSearchContent] = useState("");
 
-  const { isLoading, data, isError, error } = useQuery(
+  const onChange = (e) => {
+    if (searchOption.value === "title") {
+      setSearchTitle(e.target.value);
+      setSearchContent("");
+    } else if (searchOption.value === "content") {
+      setSearchTitle("");
+      setSearchContent(e.target.value);
+    } else {
+      setSearchTitle(e.target.value);
+      setSearchContent(e.target.value);
+    }
+  };
+
+  /** 엔터 키 검색 버튼 구현 */
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      refetch();
+      navigate(`/notice/${1}`);
+    }
+  };
+
+  /** 공지사항 접속시 최초 get 호출 */
+  const { isLoading, data, isError, error, refetch } = useQuery(
     ["NoticeBoard", pageNum],
-    () => $.get(`/user-board/list?pageNum=${pageNum}`)
+    () =>
+      $.get(
+        `/user-board/list?pageNum=${pageNum}&contentCondition=${searchTitle}&titleCondition=${searchContent}`
+      )
   );
 
   return (
@@ -48,10 +75,25 @@ export default function NoticeBoard() {
                 />
               </div>
               <div className={style.notice_top_interface_item3}>
-                <input type="text" className={style.notice_text}></input>
+                <input
+                  type="text"
+                  id="search"
+                  className={style.notice_text}
+                  onChange={onChange}
+                  onKeyDown={onKeyPress}
+                ></input>
               </div>
               <div className={style.notice_top_interface_item4}>
-                <button className={style.notice_button}>검색</button>
+                <button
+                  className={style.notice_button}
+                  onClick={() => {
+                    refetch();
+                    navigate(`/notice/${1}`);
+                  }}
+                  id="enter"
+                >
+                  검색
+                </button>
               </div>
             </div>
             {/** 보드 div입니다. 상단 버튼을 제외한 부분이며 다른 페이지에서 사용 시 해당 div영역과 style.css를 참고해 활용하면 됩니다.
@@ -93,7 +135,7 @@ export default function NoticeBoard() {
             </div>
           </div>
           <Pagination
-            number={!isLoading && data.data.number + 1}
+            number={!isLoading && data.data.number}
             first={!isLoading && data.data.first}
             last={!isLoading && data.data.last}
             totalPages={!isLoading && data.data.totalPages}
