@@ -102,4 +102,31 @@ public class DoctorHistoryServiceImpl implements DoctorHistoryService {
 
         return historyResDto;
     }
+
+    public Page<HistoryResDto> searchPaitentHistory(Long doctorSeq, String name, int page) {
+        List<History> list = historyRepository.findAllByDoctor_SeqAndPatient_Name(doctorSeq, name);
+
+        List<HistoryResDto> HistoryResList = new ArrayList<>();
+
+        for (History history : list) {
+            HistoryResDto historyResDto = HistoryResDto.builder()
+                .historySeq(history.getSeq())
+                .patientName(history.getPatient().getName())
+                .dateTime(LocalDateTime.of(history.getDate(), history.getTime()))
+                .day(history.getDate().getDayOfWeek().toString())
+                .patientPhone(history.getPatient().getPhone())
+                .build();
+
+            HistoryResList.add(historyResDto);
+        }
+
+//        list to page
+        PageRequest pageRequestForList = PageRequest.of(page, 10);
+        int start = (int) pageRequestForList.getOffset();
+        int end = Math.min((start + pageRequestForList.getPageSize()), HistoryResList.size());
+        Page<HistoryResDto> historyResDtoPage = new PageImpl<>(HistoryResList.subList(start, end),
+            pageRequestForList, HistoryResList.size());
+
+        return historyResDtoPage;
+    }
 }
