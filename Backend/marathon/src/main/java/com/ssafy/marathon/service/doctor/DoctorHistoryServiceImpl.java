@@ -104,7 +104,7 @@ public class DoctorHistoryServiceImpl implements DoctorHistoryService {
     }
 
     public Page<HistoryResDto> searchPaitentHistory(Long doctorSeq, String name, int page) {
-        List<History> list = historyRepository.findAllByDoctor_SeqAndPatient_Name(doctorSeq, name);
+        List<History> list = historyRepository.findAllByDoctor_SeqAndPatient_NameContaining(doctorSeq, name);
 
         List<HistoryResDto> HistoryResList = new ArrayList<>();
 
