@@ -72,7 +72,7 @@ export default function Main() {
           }}
           type="text"
           placeholder="아이디"
-          value={userId ? userId : null}
+          value={userId ? userId : ""}
         />
         <input
           className={style.input_text}
@@ -81,7 +81,7 @@ export default function Main() {
           }}
           type="password"
           placeholder="비밀번호"
-          value={userPwd ? userPwd : null}
+          value={userPwd ? userPwd : ""}
         />
         {/* 아이디 기억하기 */}
         <div className={style.memorize_id}>
