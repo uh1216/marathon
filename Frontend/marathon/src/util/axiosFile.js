@@ -2,7 +2,7 @@ import axios from "axios";
 
 // axios 객체 생성
 export const $ = axios.create({
-  baseURL: "http://localhost:9999",
+  baseURL: "http://i8a304.p.ssafy.io/api",
   headers: {
     "Content-Type": "multipart/form-data",
   },
