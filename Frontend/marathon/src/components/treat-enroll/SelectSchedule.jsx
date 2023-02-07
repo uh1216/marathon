@@ -257,8 +257,6 @@ export default function SelectSchedule({ name, seq }) {
     let findorigin = newSchedule.find((t) => t.localDate === targetDate[0]);
     findorigin.bitDate = newTimeTable;
     setTeacherSchedule(newSchedule);
-    console.log(newData);
-    /** 서버로 보낼 코드 작성 예정 */
     onPut();
   };
 
