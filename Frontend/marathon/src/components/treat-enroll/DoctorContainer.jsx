@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import style from "./DoctorContainer.module.css";
+import { useQuery } from "@tanstack/react-query";
+import { $ } from "util/axios";
 import Doctor1 from "img/doctor_1.jpg";
 import Doctor2 from "img/doctor_2.jpg";
 import Doctor3 from "img/doctor_3.jpg";
@@ -10,8 +12,15 @@ import DoctorSlider from "./DoctorSlider";
 
 export default function DoctorContainer() {
   const transition = "ease-in-out 0.5s";
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState();
+  const [currentSeq, setCurrentSeq] = useState();
   const [animation, setAnimation] = useState(transition);
+
+  /** API GET 함수 */
+  const { isLoading, data, isError, error } = useQuery(["DoctorList"], () =>
+    $.get(`/patient-treatment/list`)
+  );
+
   const doctors = [
     {
       id: 1,
@@ -42,6 +51,28 @@ export default function DoctorContainer() {
       img_url: Doctor4,
     },
   ];
+
+  if (!isLoading) {
+    const doctor = data.data;
+    setCurrentSeq(doctor[0].seq);
+    console.log(doctor);
+    const last_Item = JSON.parse(JSON.stringify(doctor[doctor.length - 1]));
+    const last_Item2 = JSON.parse(JSON.stringify(doctor[doctor.length - 2]));
+    const first_Item = JSON.parse(JSON.stringify(doctor[0]));
+    const first_Item2 = JSON.parse(JSON.stringify(doctor[1]));
+
+    last_Item.seq = doctor[doctor.length - 1].seq - 1;
+    last_Item2.seq = doctor[doctor.length - 1].seq - 2;
+    first_Item.seq = doctor[0].seq + 1;
+    first_Item2.seq = doctor[0].seq + 2;
+
+    doctor.push(first_Item);
+    doctor.push(first_Item2);
+    doctor.unshift(last_Item);
+    doctor.unshift(last_Item2);
+
+    console.log(doctor);
+  }
 
   // 무한슬라이드 구현을 위해 양끝 요소의 인덱스 활용
   const lastItem = JSON.parse(JSON.stringify(doctors[doctors.length - 1]));
@@ -109,7 +140,7 @@ export default function DoctorContainer() {
                     key={val.id}
                     check={check(val.id)}
                     name={val.name}
-                    content={val.content}
+                    content={val.introduce}
                     bg={val.img_url}
                     animation={animation}
                   />

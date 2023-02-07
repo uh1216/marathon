@@ -12,14 +12,12 @@ const qureyClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={qureyClient}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-left" />
-    </QueryClientProvider>
-  </React.StrictMode>
+  <QueryClientProvider client={qureyClient}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+    <ReactQueryDevtools initialIsOpen={false} position="bottom-left" />
+  </QueryClientProvider>
 );

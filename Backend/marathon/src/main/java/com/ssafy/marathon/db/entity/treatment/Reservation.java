@@ -24,7 +24,6 @@ public class Reservation {
     @Id
     @GeneratedValue
     private Long seq;
-//    private String day;
 
     private LocalDate date;
 

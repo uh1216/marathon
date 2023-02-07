@@ -9,8 +9,6 @@ import com.ssafy.marathon.db.repository.ReservationRepository;
 import com.ssafy.marathon.db.repository.TreatmentRepository;
 import com.ssafy.marathon.dto.response.treatment.DayOfReservationResDto;
 import com.ssafy.marathon.dto.response.treatment.DayOfTreatmentResDto;
-import com.ssafy.marathon.dto.response.treatment.ReservationResDto;
-import com.ssafy.marathon.dto.response.treatment.TreatmentResDto;
 import com.ssafy.marathon.dto.response.user.DoctorResDto;
 import com.ssafy.marathon.util.MilliFunc;
 import java.time.LocalDate;
@@ -58,7 +56,7 @@ public class PatientTreatmentServiceImpl implements PatientTreatmentService{
                 LocalDate date = MilliFunc.makeDate(milli);
 //            logger.info("현재" + i + "번째 반복중");
 //            logger.info(reservationRepository.countReservationByDate(date) + "");
-                if (0 == reservationRepository.countReservationByDate(date)) {
+                if (0 == reservationRepository.countReservationByDateAndDoctor_Seq(date, doctorSeq)) {
                     Reservation rv = Reservation.builder().date(date).bitDate("00000000")
 //                    doctor받아와야함
                         .doctor(doctorRepository.getBySeq(doctorSeq)).build();
@@ -128,10 +126,8 @@ public class PatientTreatmentServiceImpl implements PatientTreatmentService{
         List<Treatment> list = treatmentRepository.findAllByPatient_Seq(patientSeq);
         List<DayOfTreatmentResDto> resList = new ArrayList<>();
 
-        System.out.println(list.size() + "<<<<<<<<<<<<<<<<<<<<<<<<");
 
         for (Treatment treatment:list) {
-            System.out.println(treatment.toString());
             DayOfTreatmentResDto dayOfTreatmentResDto = DayOfTreatmentResDto.builder()
                 .treatmentSeq(treatment.getSeq())
                 .doctorName(treatment.getDoctor().getName())

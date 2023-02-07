@@ -10,10 +10,12 @@ import style from "./Game3.module.css";
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
-  const row = 5; // 행 수
+  const row = 4; // 행 수
   const col = 5; // 열 수
   const size = 5; // 동물의 수
+  const animals = ["", "🦊", "🐸", "🐶", "🐱", "🐰"];
   const [answer, setAnswer] = useState([]);
+  const [myAnswer, setMyAnswer] = useState([]);
   const [stageResult, setStageResult] = useState();
 
   /** (min <= 값 < max) 랜덤숫자 뽑기 */
@@ -22,9 +24,10 @@ export default function EasyMode1() {
   };
 
   /** 정답 확인 */
-  const chkAnswer = (myAnswer) => {
+  const chkAnswer = () => {
     for (let y = 0; y < row; y++) {
       for (let x = 0; x < col; x++) {
+        // 틀렸음
         if (answer[y][x] !== myAnswer[y][x]) {
           setStageResult(false);
           dispatch(addRecord(false));
@@ -32,11 +35,16 @@ export default function EasyMode1() {
         }
       }
     }
+    // 맞았음
     setStageResult(true);
     dispatch(addRecord(true));
   };
 
-  /** 테이블을 그려주는 함수 */
+  /** 테이블을 그려주는 함수
+   * idx == 0 이면 문제(정답) 세팅
+   * idx == 1 이면 그냥 비어있는 테이블 세팅
+   * idx == 2 이면 정답이랑 내 정답 비교한 테이블 세팅
+   */
   const renderingTable = (idx) => {
     if (answer.length === 0) return;
 
@@ -58,65 +66,96 @@ export default function EasyMode1() {
       }
     }
     // 문제 세팅
-    else {
+    else if (idx === 0) {
       for (let x = 0; x < col; x++) {
-        if (answer[y][x] === 0)
-          result.push(<td className="drag_container" y={y} x={x} key={x}></td>);
-        else if (answer[y][x] === 1)
-          result.push(
-            <td
-              className={"drag_container " + style.draggable}
-              y={y}
-              x={x}
-              key={x}
-            >
-              🦊
-            </td>
-          );
-        else if (answer[y][x] === 2)
-          result.push(
-            <td
-              className={"drag_container " + style.draggable}
-              y={y}
-              x={x}
-              key={x}
-            >
-              🐸
-            </td>
-          );
-        else if (answer[y][x] === 3)
-          result.push(
-            <td
-              className={"drag_container " + style.draggable}
-              y={y}
-              x={x}
-              key={x}
-            >
-              🐶
-            </td>
-          );
-        else if (answer[y][x] === 4)
-          result.push(
-            <td
-              className={"drag_container " + style.draggable}
-              y={y}
-              x={x}
-              key={x}
-            >
-              🐱
-            </td>
-          );
-        else if (answer[y][x] === 5)
-          result.push(
-            <td
-              className={"drag_container " + style.draggable}
-              y={y}
-              x={x}
-              key={x}
-            >
-              🐰
-            </td>
-          );
+        result.push(
+          <td
+            className="drag_container"
+            style={{ fontSize: "40px" }}
+            y={y}
+            x={x}
+            key={x}
+          >
+            {animals[answer[y][x]]}
+          </td>
+        );
+      }
+    }
+    // 정답 vs 내정답 세팅
+    else if (idx === 2) {
+      for (let x = 0; x < col; x++) {
+        if (answer[y][x] === 0) {
+          // 비어있어야 정답인데, 비어있지 않음
+          if (myAnswer[y][x] !== 0) {
+            result.push(
+              <td
+                className="drag_container"
+                style={{ fontSize: "40px", position: "relative" }}
+                y={y}
+                x={x}
+                key={x}
+              >
+                {animals[answer[y][x]]}
+                <div className={style.result}>❌</div>
+              </td>
+            );
+          }
+          // 비어있어야 정답이고, 비어있음
+          else {
+            result.push(
+              <td className="drag_container" y={y} x={x} key={x}></td>
+            );
+          }
+        } else {
+          // 동물이 들어있는게 정답인데, 동물이 없음
+          if (myAnswer[y][x] === 0) {
+            result.push(
+              <td
+                className="drag_container"
+                style={{
+                  fontSize: "40px",
+                  position: "relative",
+                  opacity: "50%",
+                }}
+                y={y}
+                x={x}
+                key={x}
+              >
+                {animals[answer[y][x]]}
+              </td>
+            );
+          }
+          // 동물이 들어있는게 정답인데, 동물이 다름
+          else if (myAnswer[y][x] !== answer[y][x]) {
+            result.push(
+              <td
+                className="drag_container"
+                style={{ fontSize: "40px", position: "relative" }}
+                y={y}
+                x={x}
+                key={x}
+              >
+                {/* {animals[myAnswer[y][x]]} */}
+                <div className={style.result}>❌</div>
+              </td>
+            );
+          }
+          // 동물이 들어있는게 정답이고, 동물이 일치함
+          else {
+            result.push(
+              <td
+                className="drag_container"
+                style={{ fontSize: "40px", position: "relative" }}
+                y={y}
+                x={x}
+                key={x}
+              >
+                {/* {animals[myAnswer[y][x]]} */}
+                <div className={style.result}>⭕</div>
+              </td>
+            );
+          }
+        }
       }
     }
 
@@ -133,6 +172,9 @@ export default function EasyMode1() {
 
   /** 문제 세팅 */
   useEffect(() => {
+    // 나의 정답 초기화
+    setMyAnswer(Array.from(new Array(row), () => new Array(col).fill(0)));
+
     if (0 < gameState.stage && gameState.stage < 11) {
       // 랜덤 좌표가 들어갈 리스트
       let list = [];
@@ -162,7 +204,8 @@ export default function EasyMode1() {
       }
 
       // 이번 stage의 정답
-      let tmp = Array.from(new Array(col), () => new Array(row).fill(0));
+      let tmp = Array.from(new Array(row), () => new Array(col).fill(0));
+      console.log(tmp);
 
       for (let i = 0; i < size; i++) {
         let y = list[i][0];
@@ -178,7 +221,6 @@ export default function EasyMode1() {
   /** 드래그 앤 드롭 */
   useEffect(() => {
     if (gameState.isReady === 1) {
-      let isFilled = Array.from(new Array(col), () => new Array(row).fill(0));
       const draggables = document.querySelectorAll(".draggable");
       const containers = document.querySelectorAll(".drag_container");
 
@@ -201,9 +243,9 @@ export default function EasyMode1() {
           draggable.setAttribute("pre_x", now_x);
 
           // 새로 이동한 좌표 표시
-          isFilled[now_y][now_x] = k;
+          myAnswer[now_y][now_x] = k;
           // 예전에 있던 좌표 비우기
-          if (pre_y !== -1 && pre_x !== -1) isFilled[pre_y][pre_x] = 0;
+          if (pre_y !== -1 && pre_x !== -1) myAnswer[pre_y][pre_x] = 0;
         });
       });
 
@@ -223,7 +265,7 @@ export default function EasyMode1() {
             container.insertBefore(draggable, afterElement);
           }
           // 최초 container가 아니고, 해당 칸이 비어있다면 appendChild
-          else if (afterElement === undefined && isFilled[y][x] === 0) {
+          else if (afterElement === undefined && myAnswer[y][x] === 0) {
             container.appendChild(draggable);
             now_y = y;
             now_x = x;
@@ -251,7 +293,7 @@ export default function EasyMode1() {
         ).element;
       }
       return async () => {
-        chkAnswer(isFilled);
+        chkAnswer();
       };
     }
   }, [gameState.isReady]);
@@ -260,7 +302,7 @@ export default function EasyMode1() {
     return (
       <SelfStudyIntro
         mode={"easy"}
-        title="도형의 위치를 기억해서 원래 위치로 가져다 놓는 게임입니다."
+        title="동물의 위치를 기억해서 원래 위치로 가져다 놓는 게임입니다."
         gif={GIF}
       />
     );
@@ -268,7 +310,7 @@ export default function EasyMode1() {
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
-        <div className={commonStyle.title}>도형의 위치를 잘 기억해두세요.</div>
+        <div className={commonStyle.title}>동물의 위치를 잘 기억해두세요.</div>
         <div className={style.gameBoard}>
           <table className={style.table + " game_3_table"}>
             <tbody>{renderingTable(0)}</tbody>
@@ -281,58 +323,24 @@ export default function EasyMode1() {
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
-          원래 위치로 도형을 가져다 놓으세요!
+          원래 위치로 동물을 가져다 놓으세요!
         </div>
         <div className={style.gameBoard}>
           <table className={style.table + " game_3_table"}>
             <tbody>{renderingTable(1)}</tbody>
           </table>
           <div className={style.figure_box + " drag_container"}>
-            <button
-              className={"draggable " + style.draggable}
-              k="1"
-              draggable
-              pre_y="-1"
-              pre_x="-1"
-            >
-              🦊
-            </button>
-            <button
-              className={"draggable " + style.draggable}
-              k="2"
-              draggable
-              pre_y="-1"
-              pre_x="-1"
-            >
-              🐸
-            </button>
-            <button
-              className={"draggable " + style.draggable}
-              k="3"
-              draggable
-              pre_y="-1"
-              pre_x="-1"
-            >
-              🐶
-            </button>
-            <button
-              className={"draggable " + style.draggable}
-              k="4"
-              draggable
-              pre_y="-1"
-              pre_x="-1"
-            >
-              🐱
-            </button>
-            <button
-              className={"draggable " + style.draggable}
-              k="5"
-              draggable
-              pre_y="-1"
-              pre_x="-1"
-            >
-              🐰
-            </button>
+            {[1, 2, 3, 4, 5].map((i) => (
+              <button
+                className={"draggable " + style.draggable}
+                k={i}
+                draggable
+                pre_y="-1"
+                pre_x="-1"
+              >
+                {animals[i]}
+              </button>
+            ))}
           </div>
         </div>
       </>
@@ -344,11 +352,11 @@ export default function EasyMode1() {
         <div className={commonStyle.title}>
           {stageResult ? "정답입니다😊" : "틀렸습니다😥"}
         </div>
-        {/* <div className={style.gameBoard}>
+        <div className={style.gameBoard}>
           <table className={style.table + " game_3_table"}>
-            <tbody>{renderingTable(0)}</tbody>
+            <tbody>{renderingTable(2)}</tbody>
           </table>
-        </div> */}
+        </div>
       </>
     );
   }

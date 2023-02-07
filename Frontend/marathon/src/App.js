@@ -15,6 +15,8 @@ import ScheduleManage from "pages/ScheduleManage";
 import SelfStudy from "pages/SelfStudy";
 import { useSelector } from "react-redux";
 import AuthRoute from "util/AuthRoute";
+import Consult from "pages/Consult";
+import Treat from "pages/Treat";
 
 function App() {
   const state = useSelector((state) => state);
@@ -38,6 +40,8 @@ function App() {
           <Route path="/user/*" element={<User />} />
           <Route path="/self-study/*" element={<SelfStudy />} />
         </Route>
+        <Route path="/consult" element={<Consult />} />
+        <Route path="/treat" element={<Treat />} />
       </Routes>
     </>
   );

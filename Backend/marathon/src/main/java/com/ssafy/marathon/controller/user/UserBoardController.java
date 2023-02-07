@@ -23,7 +23,9 @@ public class UserBoardController {
     }
 
     @GetMapping("/list")
-    public Page<BoardResDto> getBoardPages(@RequestParam int pageNum) {
-        return userBoardService.getBoardPages(pageNum);
+    public Page<BoardResDto> getBoardPages(@RequestParam int pageNum, @RequestParam
+    String contentCondition, @RequestParam String titleCondition) {
+
+        return userBoardService.getBoardPages(pageNum, contentCondition, titleCondition);
     }
 }

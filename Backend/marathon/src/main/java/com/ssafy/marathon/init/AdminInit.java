@@ -24,7 +24,7 @@ public class AdminInit {
         Admin admin = Admin.builder()
             .id("ssafy").password(passwordEncoder
                 .encode("ssafy"))
-            .roles(Collections.singletonList("ROLE_ADMIN")).build();
+            .roles(Collections.singletonList("ROLE_ADMIN")).name("관리자").build();
         admin.setImg("default.PNG");
         adminRepository.save(admin);
         LOGGER.info("[init] admin 유저생성 완료 id : {}", admin.getId());

@@ -1,14 +1,51 @@
 import style from "./ScheduleModal.module.css";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { $ } from "util/axios";
 
 export default function ScheduleModal({ modalData, setIsModalOpen }) {
   const state = useSelector((state) => state);
+  const queryClient = useQueryClient();
   const [isCreatable, setIsCreatable] = useState(false);
 
+  const { mutate } = useMutation(
+    () => $.delete(`/doctor-treatment/${modalData.reservedDay.treatmentSeq}`),
+    {
+      onMutate: async () => {
+        await queryClient.cancelQueries(["mypageSchedule"]);
+        const oldData = queryClient.getQueryData(["mypageSchedule"]);
+        queryClient.setQueryData(["mypageSchedule"], updateData());
+        return { oldData };
+      },
+      onError: (_error, _variables, context) => {
+        queryClient.setQueryData(["mypageSchedule"], context.oldData);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(["mypageSchedule"]);
+      },
+    }
+  );
+
+  const updateData = () => {
+    let newData = queryClient.getQueryData(["mypageSchedule"]);
+    for (let i = 0; i < newData.data.list.length; i++) {
+      if (
+        newData.data.list[i].treatmentSeq === modalData.reservedDay.treatmentSeq
+      ) {
+        let temp = [...newData.data.list];
+        temp.splice(i, 1);
+        newData.data.list = temp;
+        break;
+      }
+    }
+    return newData;
+  };
+
   useEffect(() => {
-    let date = new Date(modalData.reservedDay.date).getTime();
-    date += (modalData.reservedDay.time - 9) * 3600000;
+    let date = new Date(modalData.reservedDay.dateTime).getTime();
+    date += (modalData.reservedDay.dateTime - 9) * 3600000;
     let nowTime = new Date();
     if (
       -3600000 <= date - nowTime.getTime() &&
@@ -24,13 +61,16 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
       <div className={style.modal_left_box}>
         <img
           className={style.modal_profile}
-          src={modalData.reservedDay.url}
+          src={
+            modalData.reservedDay.doctorImg || modalData.reservedDay.patientImg
+          }
           alt=""
         />
       </div>
       <div className={style.modal_right_box}>
         <h3 style={{ display: "inline-block" }}>
-          {modalData.reservedDay.name}{" "}
+          {modalData.reservedDay.doctorName ||
+            modalData.reservedDay.patientName}
         </h3>
         <h4>{state.loginUser.userRole === "patient" ? " 선생님 " : " 님 "}</h4>
         <hr />
@@ -47,9 +87,11 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
         >
           예약 날짜
         </span>
-        <span>{modalData.reservedDay.date}</span>
+        <span>
+          {new Date(modalData.reservedDay.dateTime).toLocaleDateString()}
+        </span>
         <span>({modalData.dayOfWeek})</span>
-        <span>{modalData.reservedDay.time}시</span>
+        <span>{new Date(modalData.reservedDay.dateTime).getHours()}시</span>
         {state.loginUser.userRole === "doctor" ? (
           <>
             <div style={{ display: "flex" }}>
@@ -73,7 +115,7 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                   className={style.button + " " + style.button_cancel}
                   onClick={() => {
                     if (window.confirm("정말로 취소하시겠습니까?")) {
-                      //useMutate를 수행
+                      mutate();
                       setIsModalOpen(false);
                     }
                   }}

@@ -33,16 +33,51 @@ public class UserBoardService {
         return boardResDto;
     }
 
-    public Page<BoardResDto> getBoardPages(int pageNum) {
-        PageRequest pageRequest = PageRequest.of(pageNum-1, 10);
+    public Page<BoardResDto> getBoardPages(int pageNum, String contentCondition,
+        String titleCondition) {
+        PageRequest pageRequest = PageRequest.of(pageNum - 1, 10);
 
-        Page<BoardResDto> boardResDtoPages = boardRepository.findAllByOrderByRegistDateDesc(pageRequest)
-            .map(board -> BoardResDto.builder()
-                .boardSeq(board.getSeq())
-                .title(board.getTitle())
-                .registDate(board.getRegistDate())
-                .viewCnt(board.getViewCnt())
-                .build());
+        Page<BoardResDto> boardResDtoPages;
+
+        System.out.println(contentCondition);
+
+        if (contentCondition.isBlank() && titleCondition.isBlank()) {
+            boardResDtoPages = boardRepository.findAllByOrderByRegistDateDesc(pageRequest)
+                .map(board -> BoardResDto.builder()
+                    .boardSeq(board.getSeq())
+                    .title(board.getTitle())
+                    .registDate(board.getRegistDate())
+                    .viewCnt(board.getViewCnt())
+                    .build());
+        } else if (!contentCondition.isBlank() && !titleCondition.isBlank()) {
+            boardResDtoPages = boardRepository.findAllByContentContainingOrTitleContainingOrderByRegistDateDesc(
+                    contentCondition, titleCondition,
+                    pageRequest)
+                .map(board -> BoardResDto.builder()
+                    .boardSeq(board.getSeq())
+                    .title(board.getTitle())
+                    .registDate(board.getRegistDate())
+                    .viewCnt(board.getViewCnt())
+                    .build());
+        } else if (!titleCondition.isBlank()) {
+            boardResDtoPages = boardRepository.findAllByTitleContainingOrderByRegistDateDesc(
+                    titleCondition, pageRequest)
+                .map(board -> BoardResDto.builder()
+                    .boardSeq(board.getSeq())
+                    .title(board.getTitle())
+                    .registDate(board.getRegistDate())
+                    .viewCnt(board.getViewCnt())
+                    .build());
+        } else {
+            boardResDtoPages = boardRepository.findAllByContentContainingOrderByRegistDateDesc(
+                    contentCondition, pageRequest)
+                .map(board -> BoardResDto.builder()
+                    .boardSeq(board.getSeq())
+                    .title(board.getTitle())
+                    .registDate(board.getRegistDate())
+                    .viewCnt(board.getViewCnt())
+                    .build());
+        }
 
         return boardResDtoPages;
     }

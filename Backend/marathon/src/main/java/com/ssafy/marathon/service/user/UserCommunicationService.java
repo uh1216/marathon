@@ -55,12 +55,13 @@ public class UserCommunicationService {
         Optional<User> findUser = userRepository.findById(userSeq);
         User user = findUser.orElseThrow();
 
-        PageRequest pageRequest = PageRequest.of(pageNum - 1, 10);
+        PageRequest pageRequest = PageRequest.of(pageNum - 1, 5);
 
         Page<CommunicationResDto> communicationResDtoPages = communicationRepository.findAllByReceiverOrderByCheckedAscDateTimeDesc(
                 user, pageRequest)
             .map(message -> CommunicationResDto.builder()
                 .commuSeq(message.getSeq())
+                .senderSeq(message.getSender().getSeq())
                 .senderName(message.getSender().getName())
                 .content(message.getContent())
                 .date(message.getDateTime())
@@ -76,19 +77,20 @@ public class UserCommunicationService {
         message.changeChecked();
     }
 
-    public List<UserResDto> findCanSendMessageUsers(Long userSeq, String userRole,
-        MessageReqDto messageReqDto) {
+    public List<UserResDto> findCanSendMessageUsers(Long userSeq, String userRole, boolean isNew,
+        Long commuSeq) {
+
         List<UserResDto> userResDtoList = new ArrayList<>();
 
-        if (!messageReqDto.getIsNew()) {
-            Optional<Message> findMessage = communicationRepository.findById(
-                messageReqDto.getCommuSeq());
+        if (!isNew) {
+            Optional<Message> findMessage = communicationRepository.findById(commuSeq);
             Message beforeMessage = findMessage.orElseThrow();
 
             Optional<User> findSender = userRepository.findById(beforeMessage.getSender().getSeq());
             User sender = findSender.orElseThrow();
 
             userResDtoList.add(UserResDto.builder()
+                .seq(sender.getSeq())
                 .img(sender.getImg())
                 .name(sender.getName())
                 .id(sender.getId())
@@ -97,6 +99,7 @@ public class UserCommunicationService {
             userResDtoList = userRepository.findAllByDtypeIsNot("Admin")
                 .stream()
                 .map(user -> UserResDto.builder()
+                    .seq(user.getSeq())
                     .img(user.getImg())
                     .name(user.getName())
                     .id(user.getId())
@@ -106,6 +109,7 @@ public class UserCommunicationService {
                     LocalDate.now(), LocalDate.now().minusYears(1))
                 .stream()
                 .map(treatment -> UserResDto.builder()
+                    .seq(treatment.getPatient().getSeq())
                     .img(treatment.getPatient().getImg())
                     .name(treatment.getPatient().getName())
                     .id(treatment.getPatient().getId())
@@ -116,6 +120,7 @@ public class UserCommunicationService {
                     LocalDate.now(), LocalDate.now().minusYears(1))
                 .stream()
                 .map(treatment -> UserResDto.builder()
+                    .seq(treatment.getPatient().getSeq())
                     .img(treatment.getDoctor().getImg())
                     .name(treatment.getDoctor().getName())
                     .id(treatment.getDoctor().getId())
@@ -136,5 +141,12 @@ public class UserCommunicationService {
             .count(count)
             .build();
         return userCommuCntResDto;
+    }
+
+    public void deleteCommunication(Long commuSeq) {
+        Optional<Message> findCommu = communicationRepository.findById(commuSeq);
+        Message message = findCommu.orElseThrow();
+
+        communicationRepository.delete(message);
     }
 }

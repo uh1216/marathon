@@ -21,6 +21,7 @@ export default function Header() {
     ["unReadMsgNum"],
     () => $.get(`/user-commu/count`),
     {
+      enabled: !!state.loginUser.userRole,
       onSuccess: (data) => {
         dispatch(updateUnReadMsgNum(data.data.count));
       },
@@ -86,7 +87,7 @@ export default function Header() {
                 </div>
               </>
             )}
-            {!isUserToggled && !state.loginUser.userProfileImg && (
+            {!isUserToggled && !state.loginUser.userRole && (
               <FontAwesomeIcon className={style.clickable} icon={faUser} />
             )}
 
@@ -123,7 +124,7 @@ export default function Header() {
             >
               서비스 안내
             </span>
-            <div className={style.sub_menu}>
+            <div className={style.sub_menu} style={{ bottom: "-134px" }}>
               <dl
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
@@ -143,14 +144,6 @@ export default function Header() {
                 }}
               >
                 파트너 재활사 소개
-              </dl>
-              <dl
-                onClick={() => {
-                  if (isToggled) setIsToggled(!isToggled);
-                  if (isUserToggled) setIsUserToggled(!isUserToggled);
-                }}
-              >
-                지정병원 소개
               </dl>
             </div>
           </li>
@@ -199,7 +192,7 @@ export default function Header() {
                   navigate("/self-study/3/easy");
                 }}
               >
-                도형 위치 맞추기
+                동물 위치 맞추기
               </dl>
             </div>
           </li>

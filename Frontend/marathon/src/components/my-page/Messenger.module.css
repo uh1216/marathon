@@ -43,6 +43,29 @@
   right: 22px;
 }
 
+/* 더보기 버튼 */
+.btn_more {
+  background-color: white;
+  border-radius: 20px;
+  width: 200px;
+  border: 0;
+}
+.btn_more:hover {
+  background-color: #e6e6e6;
+}
+
+/* 메시지 없음 박스 */
+.not_message {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid grey;
+  border-radius: 10px;
+  text-align: center;
+}
+
 /* 답장 쓰기, 수업 입장 버튼*/
 .btn {
   border: #696969 1px solid;

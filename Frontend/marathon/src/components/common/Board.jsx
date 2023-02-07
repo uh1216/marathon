@@ -14,7 +14,7 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
   const dispath = useDispatch();
   const navigate = useNavigate();
 
-  if (type === "mypageSchedule" && state.loginUser.userRole === "patient") {
+  if (type === "mypageSchedule") {
     return (
       <>
         <div
@@ -25,64 +25,34 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
             return <div key={idx + 999}>{content}</div>;
           })}
         </div>
-        {data.map((content, idx) => {
-          return (
-            <div
-              key={idx + 11}
-              className={style.content_container}
-              style={{ gridTemplateColumns: grid }}
-            >
-              <div>{content.dateTime}</div>
-              <div>{content.doctorName} 선생님</div>
-              <div>
-                <button
-                  className={style.button}
-                  onClick={() => {
-                    navigate(`treatment-detail/${content.seq}`);
-                  }}
-                >
-                  수업상세
-                </button>
+        {data &&
+          data.map((content, idx) => {
+            return (
+              <div
+                key={idx + 11}
+                className={style.content_container}
+                style={{ gridTemplateColumns: grid }}
+              >
+                <div>{new Date(content.dateTime).toLocaleDateString()}</div>
+                <div>
+                  {content.doctorName || content.patientName}
+                  {state.loginUser.userRole === "patient" ? " 선생님 " : " 님 "}
+                </div>
+                <div>
+                  <button
+                    className={style.button}
+                    onClick={() => {
+                      navigate(
+                        `/mypage/treatment-detail/${content.historySeq}`
+                      );
+                    }}
+                  >
+                    수업상세
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </>
-    );
-  }
-  if (type === "mypageSchedule" && state.loginUser.userRole === "doctor") {
-    return (
-      <>
-        <div
-          className={style.header_container}
-          style={{ gridTemplateColumns: grid }}
-        >
-          {headRow.map((content, idx) => {
-            return <div key={idx + 9011}>{content}</div>;
+            );
           })}
-        </div>
-        {data.map((content, idx) => {
-          return (
-            <div
-              key={content.name + idx + 40}
-              className={style.content_container}
-              style={{ gridTemplateColumns: grid }}
-            >
-              <div>{content.dateTime}</div>
-              <div>{content.doctorName} 님</div>
-              <div>
-                <button
-                  className={style.button}
-                  onClick={() => {
-                    navigate(`treatment-detail/${content.doctorName}`);
-                  }}
-                >
-                  수업상세
-                </button>
-              </div>
-            </div>
-          );
-        })}
       </>
     );
   }
@@ -126,29 +96,37 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
             return <div key={idx + 9065}>{content}</div>;
           })}
         </div>
-        {data.map((content, idx) => {
-          return (
-            <div
-              key={content.name + idx + 10}
-              className={style.content_container3}
-              style={{ gridTemplateColumns: grid }}
-            >
-              <div>{content.doctorName} 님</div>
-              <div>{content.dateTime}</div>
-              <div>{content.phone}</div>
-              <div>
-                <button
-                  className={style.button + " " + style.button2}
-                  onClick={() => {
-                    navigate(`treatment-detail/${content.seq}`);
-                  }}
-                >
-                  수업상세
-                </button>
+        {data &&
+          data.map((content) => {
+            return (
+              <div
+                key={content.historySeq}
+                className={style.content_container3}
+                style={{ gridTemplateColumns: grid }}
+              >
+                <div>{content.patientName} 님</div>
+                <div>
+                  {new Date(content.dateTime).toLocaleDateString() +
+                    " " +
+                    new Date(content.dateTime).getHours() +
+                    "시"}
+                </div>
+                <div>{content.patientPhone}</div>
+                <div>
+                  <button
+                    className={style.button + " " + style.button2}
+                    onClick={() => {
+                      navigate(
+                        `/mypage/treatment-detail/${content.historySeq}`
+                      );
+                    }}
+                  >
+                    수업상세
+                  </button>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </>
     );
   }
@@ -163,33 +141,34 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
             return <div key={idx + content}>{content}</div>;
           })}
         </div>
-        {data.map((content, idx) => {
-          return (
-            <div
-              key={content.name + idx + 1123}
-              className={style.content_container3}
-              style={{ gridTemplateColumns: grid }}
-            >
-              <div>{content.name} 님</div>
-              <div>{content.birth}</div>
-              <div>{content.phone}</div>
-              <div className={content.done ? style.fontR : style.fontB}>
-                {content.done ? "처리 완료" : "미처리"}
+        {data &&
+          data.map((content, idx) => {
+            return (
+              <div
+                key={content.name + idx + 1123}
+                className={style.content_container3}
+                style={{ gridTemplateColumns: grid }}
+              >
+                <div>{content.name} 님</div>
+                <div>{content.hopeDate}</div>
+                <div>{content.phone1}</div>
+                <div className={!content.checked ? style.fontR : style.fontB}>
+                  {content.checked ? "처리 완료" : "미처리"}
+                </div>
+                <div>
+                  <button
+                    className={style.button + " " + style.button2}
+                    onClick={() => {
+                      setIsModalOpen(true);
+                      dispath(changeNowBoardInfo(content.consultingSeq));
+                    }}
+                  >
+                    상세보기
+                  </button>
+                </div>
               </div>
-              <div>
-                <button
-                  className={style.button + " " + style.button2}
-                  onClick={() => {
-                    setIsModalOpen(true);
-                    dispath(changeNowBoardInfo(content));
-                  }}
-                >
-                  상세보기
-                </button>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </>
     );
   }
