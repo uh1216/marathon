@@ -7,6 +7,7 @@ import { $ } from "util/axios.js";
 
 export default function SelfStudyResult() {
   const gameState = useSelector((state) => state).gameState;
+  const loginUser = useSelector((state) => state).loginUser;
   const [ansCnt, setAnsCnt] = useState(0);
 
   useEffect(() => {
@@ -22,17 +23,21 @@ export default function SelfStudyResult() {
       correct: cnt,
     });
 
-    $.post(`patient-game/save`, {
-      gameType: gameState.type,
-      difficulty: gameState.mode,
-      correct: cnt,
-    })
-      .then((res) => {
-        console.log(res);
+    // 로그인한 환자 유저만 결과가 서버로 전송됨
+    if (loginUser.userRole === "patient") {
+      $.post(`patient-game/save`, {
+        gameType: gameState.type,
+        difficulty: gameState.mode,
+        correct: cnt,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
     setAnsCnt(cnt);
   }, []);
   // 게임 종류 : gameState.type
