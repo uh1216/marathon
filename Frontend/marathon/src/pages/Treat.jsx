@@ -13,6 +13,7 @@ import style from "./Treat.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Chatting from "components/treat/Chatting";
+import VideoCom from "components/webRTC/VideoCom";
 
 const interactionTitle = [
   "스케치 보드",
@@ -59,6 +60,7 @@ export default function Treat() {
     <div className={style.wrapper}>
       <div className={style.main_container}>
         <div className={style.left_container}>
+          <VideoCom />
           <img
             style={{
               width: "460px",
