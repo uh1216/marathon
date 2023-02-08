@@ -1,23 +1,28 @@
 import { useRef, useState, useEffect } from "react";
+import style from "./ChatRoom.module.css";
 import { useParams } from "react-router-dom";
 import * as StompJs from "@stomp/stompjs";
+import * as SockJS from "sockjs-client";
+import { useSelector } from "react-redux";
 
-export default function Chatting() {
+export default function ChatRoom() {
+  const state = useSelector((state) => state);
   const { id } = useParams();
   const client = useRef({});
   const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState("");
+  let stompClient = null;
 
   /** 서버와 연결 성공 시 작업하는 부분 */
   const connect = () => {
+    // 연결할 때
     client.current = new StompJs.Client({
       brokerURL: "ws://localhost:9999/ws",
-      debug: null,
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
+      onConnect: () => {
+        subscribe();
+      },
     });
-    client.current.activate();
+    client.current.activate(); // 클라이언트 활성화
   };
 
   /** 메세지 발행 코드 */
@@ -26,10 +31,11 @@ export default function Chatting() {
     if (!client.current.connected) return;
 
     client.current.publish({
-      destination: "/pub/chat",
+      destination: "/pub/chatroom",
       /** 형식에 맞게 수정하기 */
       body: JSON.stringify({
-        applyId: id,
+        channelId: id,
+        senderSeq: state.loginUser.name,
         chat: chat,
       }),
     });
@@ -51,14 +57,14 @@ export default function Chatting() {
   };
 
   /** 채팅 입력 시 state에 값 설정 */
-  const handleChange = (event) => {
-    setChat(event.target.value);
+  const handleChange = (e) => {
+    setChat(e.target.value);
   };
 
   /** 메세지 보내기 버튼 클릭 */
-  const handleSubmit = (event, chat) => {
-    event.preventDefault();
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(chat);
     publish(chat);
   };
 
@@ -68,19 +74,25 @@ export default function Chatting() {
   }, []);
 
   return (
-    <div>
-      <div className={"chat-list"}>{chatList}</div>
-      <form onSubmit={(event) => handleSubmit(event, chat)}>
-        <div>
-          <input
-            type={"text"}
-            name={"chatInput"}
-            onChange={handleChange}
-            value={chat}
-          />
+    <>
+      <div className={style.container}>
+        <div className={style.inner_container}>
+          <div className={style.message_board}>{chatList}</div>
+          <div>
+            <input
+              className={style.message_text}
+              type={"text"}
+              name={"chatInput"}
+              onChange={handleChange}
+              value={chat}
+            />
+          </div>
+          <div>
+            <button onClick={handleSubmit}>보내기</button>
+            <button onClick={disconnect}>종료</button>
+          </div>
         </div>
-        <input type={"submit"} value={"보내기"} />
-      </form>
-    </div>
+      </div>
+    </>
   );
 }
