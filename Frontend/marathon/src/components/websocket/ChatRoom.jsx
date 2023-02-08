@@ -8,24 +8,37 @@ import { useSelector } from "react-redux";
 export default function ChatRoom() {
   const state = useSelector((state) => state);
   const { id } = useParams();
-  const client = useRef({});
   const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState("");
   let stompClient = null;
 
   /** 서버와 연결 성공 시 작업하는 부분 */
-  const connect = () => {
-    // 연결할 때
-    client.current = new StompJs.Client({
-      brokerURL: "ws://localhost:9999/ws",
-      onConnect: () => {
-        subscribe();
-      },
-    });
-    client.current.activate(); // 클라이언트 활성화
+  const client = new StompJs.Client({
+    brokerURL: "ws://localhost:3000/ws",
+    connectHeaders: {
+      login: "user",
+      passcode: "password",
+    },
+    debug: function (str) {
+      console.log(str);
+    },
+    reconnectDelay: 5000,
+    heartbeatIncoming: 4000,
+    heartbeatOutgoing: 4000,
+  });
+
+  client.onConnect = function (frame) {
+    console.log(frame);
   };
 
-  /** 메세지 발행 코드 */
+  client.onStompError = function (frame) {
+    console.log("Broker reported error: " + frame.headers["message"]);
+    console.log("Additional details: " + frame.body);
+  };
+
+  client.activate();
+
+  // /** 메세지 발행 코드 */
   const publish = (chat) => {
     /** 클라이언트 연결여부 체크 */
     if (!client.current.connected) return;
@@ -54,6 +67,7 @@ export default function ChatRoom() {
   /** 연결 해제 */
   const disconnect = () => {
     client.current.deactivate();
+    console.log("disconnected");
   };
 
   /** 채팅 입력 시 state에 값 설정 */
@@ -67,11 +81,6 @@ export default function ChatRoom() {
     console.log(chat);
     publish(chat);
   };
-
-  /** 최초 랜더링 시 서버 연결 */
-  useEffect(() => {
-    connect();
-  }, []);
 
   return (
     <>

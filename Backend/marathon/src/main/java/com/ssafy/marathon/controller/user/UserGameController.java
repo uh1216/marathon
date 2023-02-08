@@ -14,6 +14,6 @@ public class UserGameController {
 
     @MessageMapping("/chat")
     public void sendMessage(InteractionReqDto interactionReqDto, SimpMessageHeaderAccessor accessor) {
-        simpMessagingTemplate.convertAndSend("/sub/chat/" + interactionReqDto.getChannelId(), interactionReqDto);
+        simpMessagingTemplate.convertAndSend("/app/chat/" + interactionReqDto.getChannelId(), interactionReqDto);
     }
 }
