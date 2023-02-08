@@ -55,7 +55,7 @@ export default function DoctorSlider({
             <img src={img} alt="" className={style.doctor_img}></img>
             <h3 className={style.title}>
               {name}&nbsp;
-              <span className={style.span}>재활사</span>
+              <span className={style.span}>선생님</span>
             </h3>
           </div>
           <div className={style.button}>
@@ -75,7 +75,7 @@ export default function DoctorSlider({
       </NowSlider>
       {isModalOpen && (
         <Modal setModalOpen={setIsModalOpen}>
-          <SelectSchedule setModalOpen={setIsModalOpen} seq={seq} />
+          <SelectSchedule setModalOpen={setIsModalOpen} seq={seq} name={name} />
         </Modal>
       )}
     </>

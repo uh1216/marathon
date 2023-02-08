@@ -27,7 +27,7 @@ export default function DoctorContainer() {
       setFirstSeq(array[0].seq);
       setLastSeq(array[array.length - 1].seq);
     }
-    if (list.length > 2) setIsArr(true);
+    if (list.length > 1) setIsArr(true);
     // 무한슬라이드 구현을 위해 양끝 요소의 인덱스 활용
     if (list.length >= 3) {
       const lastItem = JSON.parse(JSON.stringify(list[list.length - 1]));
