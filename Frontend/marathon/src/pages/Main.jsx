@@ -93,7 +93,7 @@ export default function Main() {
               <div className={style.quoto_center}>
                 <p>더 많은 분들과</p>
                 <p>더 제약없이 소통하고</p>
-                <p>스스로의 실력도 쌓아가요!</p>
+                <p>스스로의 실력도 쌓아가요</p>
               </div>
               <div className={style.quoto_right}>
                 <FontAwesomeIcon icon={faQuoteRight} />

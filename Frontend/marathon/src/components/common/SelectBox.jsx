@@ -33,7 +33,7 @@ const SelectBox = forwardRef((props, ref) => {
         <option
           key={idx}
           value={option.value}
-          selected={props.defaultValue === option.value}
+          defaultValue={props.defaultValue === option.value}
           disabled={props.hasOwnProperty("readonly")}
         >
           {option.name}

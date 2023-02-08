@@ -1,10 +1,12 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import style from "./NoticeDetail.module.css";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { $ } from "util/axios";
 
 export default function NoticeDetail() {
+  const state = useSelector((state) => state);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -39,28 +41,31 @@ export default function NoticeDetail() {
           <div className={style.inner_container}>
             <div className={style.notice_body}>
               <div className={style.notice_top_interface}>
-                <div>
-                  <button
-                    className={style.right_menu + " " + style.notice_button}
-                    onClick={() =>
-                      navigate("./update", {
-                        state: {
-                          seq: data.data.boardSeq,
-                          title: data.data.title,
-                          content: data.data.content,
-                        },
-                      })
-                    }
-                  >
-                    수정하기
-                  </button>
-                  <button
-                    className={style.notice_button_delete}
-                    onClick={deleteArticle}
-                  >
-                    삭제하기
-                  </button>
-                </div>
+                {state.loginUser.userRole === "admin" ? (
+                  <div>
+                    <button
+                      className={style.right_menu + " " + style.notice_button}
+                      onClick={() =>
+                        navigate("./update", {
+                          state: {
+                            seq: data.data.boardSeq,
+                            title: data.data.title,
+                            content: data.data.content,
+                          },
+                        })
+                      }
+                    >
+                      수정하기
+                    </button>
+                    <button
+                      className={style.notice_button_delete}
+                      onClick={deleteArticle}
+                    >
+                      삭제하기
+                    </button>
+                  </div>
+                ) : null}
+
                 <div>
                   <button
                     className={style.notice_button}

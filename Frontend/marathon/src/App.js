@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import AuthRoute from "util/AuthRoute";
 import Consult from "pages/Consult";
 import Treat from "pages/Treat";
+import ChatRoom from "components/websocket/ChatRoom";
 
 function App() {
   const state = useSelector((state) => state);
@@ -31,6 +32,7 @@ function App() {
           <Route path="/self-study-list" element={<SelfStudyList />} />
           <Route path="/schedule-manage" element={<ScheduleManage />} />
           <Route path="/treat-enroll" element={<TreatEnroll />} />
+          <Route path="/chatroom" element={<ChatRoom />} />
           <Route
             path="/mypage/*"
             element={<AuthRoute render={() => <MyPage />} />}

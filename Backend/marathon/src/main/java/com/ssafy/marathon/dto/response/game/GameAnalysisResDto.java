@@ -30,5 +30,17 @@ public class GameAnalysisResDto {
     private float lastGameAccuarcy;
 
 //  최근 게임
-    private List<EachGameDataResDto> list;
+//    private List<EachGameDataResDto> list;
+
+    private int easyHighScore;
+
+    private int normalHighScore;
+
+    private int hardHighScore;
+    //  5days avg score
+    private List<String> easyRecentAccuary;
+
+    private List<String> normalRecentAccuary;
+
+    private List<String> hardRecentAccuary;
 }

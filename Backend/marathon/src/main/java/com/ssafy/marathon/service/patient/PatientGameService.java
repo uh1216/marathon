@@ -14,6 +14,6 @@ public interface PatientGameService {
 
     Page<GameResDto> getPages(Long patientSeq, int page);
 
-    GameAnalysisResDto getAnalysis(Long patientSeq);
+    List<GameAnalysisResDto> getAnalysis(Long patientSeq);
 
 }

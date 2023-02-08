@@ -70,7 +70,7 @@ export default function StatisticsBox({
             <label htmlFor="radio_easy">
               <button
                 onClick={() => SetSelected(0)}
-                className={selected == 0 ? style.selected : ""}
+                className={selected === 0 ? style.selected : ""}
               >
                 초급
               </button>
@@ -79,7 +79,7 @@ export default function StatisticsBox({
             <label htmlFor="radio_normal">
               <button
                 onClick={() => SetSelected(1)}
-                className={selected == 1 ? style.selected : ""}
+                className={selected === 1 ? style.selected : ""}
               >
                 중급
               </button>
@@ -88,7 +88,7 @@ export default function StatisticsBox({
             <label htmlFor="radio_hard">
               <button
                 onClick={() => SetSelected(2)}
-                className={selected == 2 ? style.selected : ""}
+                className={selected === 2 ? style.selected : ""}
               >
                 고급
               </button>

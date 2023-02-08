@@ -42,6 +42,9 @@
   position: absolute;
   right: 22px;
 }
+.icon_x:hover {
+  color: #838383;
+}
 
 /* 더보기 버튼 */
 .btn_more {
