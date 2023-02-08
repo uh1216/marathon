@@ -30,8 +30,8 @@ const interactionTitle = [
 
 export default function Treat() {
   const navigate = useNavigate();
-  const [isVideo, setIsVideo] = useState(false);
-  const [isMic, setIsMic] = useState(false);
+  const [isVideo, setIsVideo] = useState(true);
+  const [isMic, setIsMic] = useState(true);
   const [isChatting, setIsChatting] = useState(false);
   const [isPreset0, setIsPreset0] = useState(false);
   const [isPreset1, setIsPreset1] = useState(false);
@@ -121,17 +121,7 @@ export default function Treat() {
     <div className={style.wrapper}>
       <div className={style.main_container}>
         <div className={style.left_container}>
-          <VideoCom />
-          <img
-            style={{
-              width: "100%",
-              height: "550px",
-              objectFit: "cover",
-              borderRadius: "10px",
-            }}
-            src="https://pickcon.co.kr/site/data/img_dir/2022/06/29/2022062980010_0.jpg"
-            alt="임시 이미지"
-          />
+          <VideoCom isVideo={isVideo} isMic={isMic} />
           <div className={style.alert_emoji_box}>
             {isPreset0 && <div className={style.alert_emoji}>⏰</div>}
             {isPreset1 && <div className={style.alert_emoji}>😂</div>}
@@ -191,18 +181,7 @@ export default function Treat() {
             {interactionMode === 3 && <QuestionBoard />}
           </div>
           <div className={style.right_bottom_container}>
-            <div>
-              <img
-                style={{
-                  width: "190px",
-                  height: "200px",
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                }}
-                src="https://pickcon.co.kr/site/data/img_dir/2022/06/29/2022062980010_0.jpg"
-                alt="임시 이미지"
-              />
-            </div>
+            <div></div>
             <div className={style.preset_container}>
               <div
                 className={style.preset + " " + (isPreset0 && style.blink)}
