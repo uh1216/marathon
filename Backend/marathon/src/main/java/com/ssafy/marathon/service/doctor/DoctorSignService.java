@@ -9,11 +9,13 @@ import com.ssafy.marathon.dto.response.user.PatientResDto;
 import com.ssafy.marathon.dto.response.user.SignInResDto;
 import com.ssafy.marathon.dto.response.user.SignUpResDto;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface DoctorSignService {
     SignUpResDto signUp(DoctorReqDto patientReqDto);
 
     DoctorResDto getDoctor(Long seq);
 
-    void modifyDoctor(Long seq, DoctorReqDto doctorReqDto);
+    void modifyDoctor(Long seq, DoctorReqDto doctorReqDto, MultipartFile file)
+        throws Exception;
 }
