@@ -59,7 +59,7 @@ public class PatientSignController {
 
     @PutMapping("/modify")
     public ResponseEntity<?> modifyPatient(@RequestHeader("Access-Token") String accessToken, @RequestPart(name = "patient") PatientReqDto patientReqDto, @RequestPart MultipartFile image)
-        throws IOException {
+        throws Exception {
         Long seq = jwtTokenProvider.getUserSeq(accessToken);
         LOGGER.info("[modifyPatient] 환자정보 수정 시작 ");
         patientSignService.modifyPatient(seq, patientReqDto, image);

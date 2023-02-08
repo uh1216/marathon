@@ -9,6 +9,8 @@ import com.ssafy.marathon.dto.request.user.UserReqDto;
 import com.ssafy.marathon.dto.response.user.PatientResDto;
 import com.ssafy.marathon.dto.response.user.SignInResDto;
 import com.ssafy.marathon.dto.response.user.SignUpResDto;
+import com.ssafy.marathon.expection.FileUploadFailedException;
+import com.ssafy.marathon.service.user.AwsS3Service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,12 +37,9 @@ public class PatientSignServiceImpl implements PatientSignService {
     private final UserRepository userRepository;
     private final PatientRepository patientRepository;
     private final PasswordEncoder passwordEncoder;
-    //프로젝트 내부에 저장
-//    private static String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\image";
-    //로컬 테스트 : 바탕화면 static 폴더에 저장
-    //private static String projectPath = "C:\\Users\\SSAFY\\Desktop\\static\\image";
+    private final AwsS3Service awsS3Service;
+    private static String defaultImg = "https://d1v10kml6l14kq.cloudfront.net/default.jpg";
 
-    private static String projectPath = "C:\\Users\\SSAFY\\Desktop\\S08P12A304\\Frontend\\marathon\\public\\img\\profile";
     @Override
     public SignUpResDto signUp(PatientReqDto patientReqDto) {
 
@@ -59,11 +58,8 @@ public class PatientSignServiceImpl implements PatientSignService {
             .mainRelationship(patientReqDto.getMainRelationship())
             .subPhone(patientReqDto.getSubPhone())
             .subRelationship(patientReqDto.getSubRelationship())
-            .img("default.PNG")
-            .imgName("default.PNG")
-            .imgPath(projectPath)
+            .img(defaultImg)
             .build();
-        patient.setImg("default.PNG");
         Patient savedPatient = (Patient) patientRepository.save(patient);
         SignUpResDto signUpResDto;
 
@@ -98,7 +94,7 @@ public class PatientSignServiceImpl implements PatientSignService {
 
     @Override
     public void modifyPatient(Long seq, PatientReqDto patientReqDto, MultipartFile image)
-        throws IOException {
+        throws Exception {
 
         LOGGER.info("[modifyPatient] 환자정보 수정 시작");
         Patient patient = patientRepository.getBySeq(seq);
@@ -111,28 +107,16 @@ public class PatientSignServiceImpl implements PatientSignService {
         patient.setSubRelationship(patientReqDto.getSubRelationship());
         LOGGER.info("[modifyPatient] 이미지 비교 시작");
         //이미지 url이 다르면 파일 저장하고 유저이미지 정보 수정
-        if(patientReqDto.getImgName()!= patient.getImgName()) {
-            //저장경로 지정
-//            String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\image";
+        if(patientReqDto.getImg()!= patient.getImg()) {
             //랜덤식별자 생성
             UUID uuid = UUID.randomUUID();
             //파일이름 설정
             String fileName = uuid + "_" + image.getOriginalFilename();
-            //파일 생성
-            File saveFile = new File(projectPath, fileName);
-            //파일 저장
-            image.transferTo(saveFile);
-            //유저정보 변경
-            patient.setImgName(fileName);
-            patient.setImg(fileName);
-            //바이트코드 생성
-//            byte[] byte1 = Files.readAllBytes(saveFile.toPath());
-//            byte[] base64 = Base64.getEncoder().encode(byte1);
-//            String str1 = Base64.getEncoder().encodeToString(byte1);
-//            patient.setImg(str1);
+            //aws s3 저장
+            String url = awsS3Service.uploadFileV1(fileName, image);
+            patient.setImg(url);
         }
-        LOGGER.info("[modifyPatient] 환자정보 수정 시작");
-        LOGGER.info("[modifyPatient] 환자정보 수정 시작");
+        LOGGER.info("[modifyPatient] 환자정보 수정 완료");
     }
 
 

@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("doctor-sign")
 @RestController
@@ -57,10 +59,11 @@ public class DoctorSignController {
     }
 
     @PutMapping("/modify")
-    public ResponseEntity<?> modifyDoctor(@RequestHeader("Access-Token") String accessToken, @RequestBody DoctorReqDto doctorReqDto) {
+    public ResponseEntity<?> modifyDoctor(@RequestHeader("Access-Token") String accessToken, @RequestPart(name = "doctor") DoctorReqDto doctorReqDto, @RequestPart MultipartFile image)
+        throws Exception {
         Long seq = jwtTokenProvider.getUserSeq(accessToken);
         LOGGER.info("[modifyDoctor] 의사정보 수정 시작 ");
-        doctorSignService.modifyDoctor(seq, doctorReqDto);
+        doctorSignService.modifyDoctor(seq, doctorReqDto, image);
         LOGGER.info("[modifyPatient] 의사정보 수정 완료 ");
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
