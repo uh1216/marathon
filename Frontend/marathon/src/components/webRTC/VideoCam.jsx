@@ -2,11 +2,11 @@ import { OpenVidu } from "openvidu-browser";
 import { Component } from "react";
 import axios from "axios";
 import UserVideoComponent from "./UserVideoComponent";
-import style from "./VideoCom.moduel.css";
+import style from "./VideoCam.moduel.css";
 
 const APPLICATION_SERVER_URL = "http://localhost:5000/";
 
-class VideoCom extends Component {
+class VideoCam extends Component {
   constructor(props) {
     super(props);
 
@@ -30,13 +30,26 @@ class VideoCom extends Component {
 
   componentDidMount() {
     window.addEventListener("beforeunload", this.onbeforeunload);
+    /**
+      => 여기에 join 함수를 실행시킨다.
+      => 생성자에서 name와 sessionId를 주입시킨다.
+      this.joinSession();
+    */
   }
 
   componentWillUnmount() {
     window.removeEventListener("beforeunload", this.onbeforeunload);
   }
 
-  onbeforeunload(event) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.isVideo !== this.props.isVideo)
+      this.state.publisher.publishVideo(this.props.isVideo);
+    if (prevProps.isMic !== this.props.isMic)
+      this.state.publisher.publishAudio(this.props.isMic);
+    if (prevProps.isIn !== this.props.isIn) this.leaveSession();
+  }
+
+  onbeforeunload() {
     this.leaveSession();
   }
 
@@ -155,19 +168,13 @@ class VideoCom extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.isVideo !== this.props.isVideo) {
-      if (this.props.isVideo) this.state.publisher.publishVideo(true);
-      else this.state.publisher.publishVideo(false);
-    }
-  }
-
   render() {
     const mySessionId = this.state.mySessionId;
     const myUserName = this.state.myUserName;
 
     return (
       <div>
+        {/* 곧 삭제할 영역임 */}
         {this.state.session === undefined ? (
           <div id="join">
             <div id="img-div">
@@ -215,11 +222,12 @@ class VideoCom extends Component {
         ) : null}
 
         {this.state.session !== undefined ? (
-          <div id="session">
-            <div id="session-header">
-              <h2 id="session-title">{mySessionId}</h2>
+          <div>
+            <div style={{ float: "left" }}>
+              <h2>{mySessionId}</h2>
             </div>
 
+            {/* 상대방 커다란 화면 */}
             {this.state.mainStreamManager !== undefined ? (
               <div className={style.main_video}>
                 <UserVideoComponent
@@ -228,6 +236,7 @@ class VideoCom extends Component {
                 />
               </div>
             ) : null}
+            {/* 나의 작은 화면 */}
             <div>
               <div className={style.sub_video}>
                 <UserVideoComponent
@@ -238,41 +247,6 @@ class VideoCom extends Component {
             </div>
           </div>
         ) : null}
-        <input
-          className="btn btn-large btn-danger"
-          type="button"
-          id="buttonLeaveSession"
-          onClick={this.leaveSession}
-          value="Leave session"
-        />
-        <button
-          onClick={() => {
-            this.state.publisher.publishVideo(false);
-          }}
-        >
-          비디오 종료
-        </button>
-        <button
-          onClick={() => {
-            this.state.publisher.publishVideo(true);
-          }}
-        >
-          비디오 켜기
-        </button>
-        <button
-          onClick={() => {
-            this.state.publisher.publishAudio(false);
-          }}
-        >
-          오디오 종료
-        </button>
-        <button
-          onClick={() => {
-            this.state.publisher.publishAudio(true);
-          }}
-        >
-          오디오 켜기
-        </button>
       </div>
     );
   }
@@ -320,4 +294,4 @@ class VideoCom extends Component {
   }
 }
 
-export default VideoCom;
+export default VideoCam;
