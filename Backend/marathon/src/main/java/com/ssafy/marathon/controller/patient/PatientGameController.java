@@ -60,10 +60,9 @@ public class PatientGameController {
 
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory()
 
-        GameAnalysisResDto gameAnalysisResDto = patientGameService.getAnalysis(patientSeq);
+        List<GameAnalysisResDto> list = patientGameService.getAnalysis(patientSeq);
 
-
-        return new ResponseEntity<GameAnalysisResDto>(gameAnalysisResDto, HttpStatus.OK);
+        return new ResponseEntity<List<GameAnalysisResDto>>(list, HttpStatus.OK);
     }
 
 }

@@ -5,7 +5,6 @@ import com.ssafy.marathon.db.repository.GameScoreRepository;
 import com.ssafy.marathon.db.repository.PatientRepository;
 
 import com.ssafy.marathon.dto.request.game.GameReqDto;
-import com.ssafy.marathon.dto.response.game.EachGameDataResDto;
 import com.ssafy.marathon.dto.response.game.GameAnalysisResDto;
 import com.ssafy.marathon.dto.response.game.GameResDto;
 
@@ -18,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -83,28 +81,16 @@ public class PatientGameServiceImpl implements PatientGameService{
 
     @Override
 //    @Query("SELECT g.date, avg(g.correct) FROM GameScore g WHERE g.gameType = ?1 GROUP BY g.date ORDER BY g.date LIMIT 5")
-    public GameAnalysisResDto getAnalysis(Long patientSeq) {
+    public List<GameAnalysisResDto> getAnalysis(Long patientSeq) {
 
-//        List<String> dataList = gameScoreRepository.findAllByPatient(1, patientSeq);
-//        List<String> gett = gameScoreRepository.findAllByPatient(1, patientSeq);
-//        for (String ge:
-//        gett) {
-//            System.out.println(ge);
-//        }
-//      가장 최근 최고 기록
-        GameScore lastGame = gameScoreRepository.findFirstByPatient_SeqOrderByDateDesc(patientSeq);
-
-        GameAnalysisResDto gameAnalysisResDto = GameAnalysisResDto.builder()
-            .lastGameDate(lastGame.getDate())
-            .lastGameAccuarcy(lastGame.getCorrect())
-            .lastGameDifficulty(lastGame.getDifficulty())
-            .lastGameDate(lastGame.getDate())
-            .lastGameTime(lastGame.getTime())
-            .list(new ArrayList<>())
-            .build();
+        List<GameAnalysisResDto> list = new ArrayList<>();
 
         for (int i = 1; i < 4; i++) {
+//          게임별 가장 최근 기록
+            GameScore lastGame = gameScoreRepository.findFirstByPatient_SeqAndGameTypeOrderByDateDesc(patientSeq, i);
 //          게임별 난이도 최고 기록
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + lastGame);
+
 
             GameScore easy = gameScoreRepository.findFirstByPatient_SeqAndDifficultyAndGameTypeOrderByCorrectDesc(patientSeq, "easy", i);
             GameScore normal = gameScoreRepository.findFirstByPatient_SeqAndDifficultyAndGameTypeOrderByCorrectDesc(patientSeq, "normal", i);
@@ -117,7 +103,11 @@ public class PatientGameServiceImpl implements PatientGameService{
             List<String> easyAvgScoreList = gameScoreRepository.findAllByPatient(i, patientSeq, "easy");
             List<String> normalAvgScoreList = gameScoreRepository.findAllByPatient(i, patientSeq, "normal");
             List<String> hardAvgScoreList = gameScoreRepository.findAllByPatient(i, patientSeq, "hard");
-            EachGameDataResDto eachGameDataResDto = EachGameDataResDto.builder()
+
+
+
+            GameAnalysisResDto gameAnalysisResDto = GameAnalysisResDto.builder()
+                .gameType(i)
                 .easyHighScore(easyHighScore)
                 .normalHighScore(normalHighScore)
                 .hardHighScore(hardHighScore)
@@ -126,8 +116,15 @@ public class PatientGameServiceImpl implements PatientGameService{
                 .hardRecentAccuary(hardAvgScoreList)
                 .build();
 
-            gameAnalysisResDto.getList().add(eachGameDataResDto);
+            if(lastGame != null){
+                gameAnalysisResDto.setLastGameAccuarcy(lastGame.getCorrect());
+                gameAnalysisResDto.setLastGameDate(lastGame.getDate());
+                gameAnalysisResDto.setLastGameTime(lastGame.getTime());
+                gameAnalysisResDto.setLastGameDifficulty(lastGame.getDifficulty());
+            }
+
+            list.add(gameAnalysisResDto);
         }
-        return gameAnalysisResDto;
+        return list;
     }
 }
