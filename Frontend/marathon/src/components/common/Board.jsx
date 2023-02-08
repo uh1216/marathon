@@ -67,18 +67,34 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
             return <div key={idx}>{content}</div>;
           })}
         </div>
-        {data.map((content, idx) => {
+        {data?.content.map((content, idx) => {
           return (
             <div
               key={idx}
               className={style.content_container}
               style={{ gridTemplateColumns: grid, maxWidth: "850px" }}
             >
-              <div>{content.no}</div>
-              <div>{content.game}</div>
+              <div>{content.gameSeq}</div>
+              <div>
+                {content.gameType === 1
+                  ? "색깔 위치 맞추기"
+                  : content.gameType === 2
+                  ? "그림 카드 맞추기"
+                  : content.gameType === 3
+                  ? "동물 위치 맞추기"
+                  : "없음"}
+              </div>
               <div>{content.date}</div>
-              <div>{content.difficulty}</div>
-              <div>{content.accuracy}</div>
+              <div>
+                {content.difficulty === "easy"
+                  ? "초급"
+                  : content.difficulty === "normal"
+                  ? "중급"
+                  : content.difficulty === "hard"
+                  ? "고급"
+                  : "없음"}
+              </div>
+              <div>{Number(content.accuracy) * 10 + "%"}</div>
             </div>
           );
         })}
