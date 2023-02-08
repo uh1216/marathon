@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import style from "./NoticeBoard.module.css";
 import SelectBox from "components/common/SelectBox";
 import Pagination from "components/common/Pagination";
@@ -7,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { $ } from "util/axios";
 
 export default function NoticeBoard() {
+  const state = useSelector((state) => state);
   const navigate = useNavigate();
   const { pageNum } = useParams();
 
@@ -57,13 +59,15 @@ export default function NoticeBoard() {
           <div className={style.notice_body}>
             <div className={style.notice_top_interface_grid}>
               <div className={style.notice_top_interface_item1}>
-                <button
-                  type="button"
-                  className={style.notice_button}
-                  onClick={() => navigate("/notice/notice-create")}
-                >
-                  글쓰기
-                </button>
+                {state.loginUser.userRole === "admin" ? (
+                  <button
+                    type="button"
+                    className={style.notice_button}
+                    onClick={() => navigate("/notice/notice-create")}
+                  >
+                    글쓰기
+                  </button>
+                ) : null}
               </div>
               <div className={style.notice_top_interface_item2}>
                 <SelectBox
