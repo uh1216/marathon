@@ -1,7 +1,8 @@
 import { OpenVidu } from "openvidu-browser";
-import axios from "axios";
 import { Component } from "react";
+import axios from "axios";
 import UserVideoComponent from "./UserVideoComponent";
+import style from "./VideoCom.moduel.css";
 
 const APPLICATION_SERVER_URL = "http://localhost:5000/";
 
@@ -21,7 +22,6 @@ class VideoCom extends Component {
 
     this.joinSession = this.joinSession.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
-    this.switchCamera = this.switchCamera.bind(this);
     this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
@@ -72,6 +72,7 @@ class VideoCom extends Component {
   }
 
   joinSession() {
+    console.log("접속?");
     this.OV = new OpenVidu();
     this.setState(
       {
@@ -102,7 +103,7 @@ class VideoCom extends Component {
                 videoSource: undefined, // The source of video. If undefined default webcam
                 publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
                 publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                resolution: "640x480", // The resolution of your video
+                resolution: "500x600", // The resolution of your video
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: false, // Whether to mirror your local video or not
@@ -154,37 +155,10 @@ class VideoCom extends Component {
     });
   }
 
-  async switchCamera() {
-    try {
-      const devices = await this.OV.getDevices();
-      var videoDevices = devices.filter(
-        (device) => device.kind === "videoinput"
-      );
-
-      if (videoDevices && videoDevices.length > 1) {
-        var newVideoDevice = videoDevices.filter(
-          (device) => device.deviceId !== this.state.currentVideoDevice.deviceId
-        );
-
-        if (newVideoDevice.length > 0) {
-          var newPublisher = this.OV.initPublisher(undefined, {
-            videoSource: newVideoDevice[0].deviceId,
-            publishAudio: true,
-            publishVideo: true,
-            mirror: true,
-          });
-
-          await this.state.session.unpublish(this.state.mainStreamManager);
-          await this.state.session.publish(newPublisher);
-          this.setState({
-            currentVideoDevice: newVideoDevice[0],
-            mainStreamManager: newPublisher,
-            publisher: newPublisher,
-          });
-        }
-      }
-    } catch (e) {
-      console.error(e);
+  componentDidUpdate(prevProps) {
+    if (prevProps.isVideo !== this.props.isVideo) {
+      if (this.props.isVideo) this.state.publisher.publishVideo(true);
+      else this.state.publisher.publishVideo(false);
     }
   }
 
@@ -193,7 +167,7 @@ class VideoCom extends Component {
     const myUserName = this.state.myUserName;
 
     return (
-      <div className="container">
+      <div>
         {this.state.session === undefined ? (
           <div id="join">
             <div id="img-div">
@@ -247,14 +221,18 @@ class VideoCom extends Component {
             </div>
 
             {this.state.mainStreamManager !== undefined ? (
-              <div id="main-video" className="col-md-6">
-                <UserVideoComponent streamManager={this.state.subscribers[0]} />
+              <div className={style.main_video}>
+                <UserVideoComponent
+                  streamManager={this.state.subscribers[0]}
+                  type={"you"}
+                />
               </div>
             ) : null}
-            <div id="video-container" className="col-md-6">
-              <div className="stream-container col-md-6 col-xs-6">
+            <div>
+              <div className={style.sub_video}>
                 <UserVideoComponent
                   streamManager={this.state.mainStreamManager}
+                  type={"me"}
                 />
               </div>
             </div>
