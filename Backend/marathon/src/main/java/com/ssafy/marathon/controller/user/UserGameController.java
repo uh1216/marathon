@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserGameController {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    @MessageMapping("/chat")
+    @MessageMapping("/text")
     public void sendMessage(InteractionReqDto interactionReqDto, SimpMessageHeaderAccessor accessor) {
-        simpMessagingTemplate.convertAndSend("/sub/chat/" + interactionReqDto.getChannelId(), interactionReqDto);
+        simpMessagingTemplate.convertAndSend("/app/text/" + interactionReqDto.getChannelId(), interactionReqDto);
     }
 }
