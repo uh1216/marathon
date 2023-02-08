@@ -41,7 +41,7 @@ function App() {
           <Route path="/self-study/*" element={<SelfStudy />} />
         </Route>
         <Route path="/consult" element={<Consult />} />
-        {/* <Route path="/treat" element={<Treat />} /> */}
+        <Route path="/treat" element={<Treat />} />
       </Routes>
     </>
   );
