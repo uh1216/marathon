@@ -1,9 +1,5 @@
-import Chatting from "components/common/Chatting";
+//import Chatting from "components/common/Chatting";
 
 export default function Consult() {
-  return (
-    <>
-      <Chatting />
-    </>
-  );
+  return <>{/* <Chatting /> */}</>;
 }
