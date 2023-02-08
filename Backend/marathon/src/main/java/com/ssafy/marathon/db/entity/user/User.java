@@ -55,10 +55,7 @@ public class User implements UserDetails {
     private boolean sex;
     private String email;
     private String phone;
-    @Column(length = 10000)
     private String img;
-    private String imgName;
-    private String imgPath;
     private LocalDate birthDate;
 
     @Column(updatable = false, insertable = false)
