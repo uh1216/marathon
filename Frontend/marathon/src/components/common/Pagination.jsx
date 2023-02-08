@@ -22,7 +22,7 @@ export default function Pagination({ number, first, last, totalPages, url }) {
         <FontAwesomeIcon
           style={{ paddingTop: "2.5px" }}
           onClick={() => {
-            navigate("/" + url + (number - 1));
+            navigate("/" + url + (number + 0));
           }}
           icon={faChevronLeft}
         />
@@ -59,7 +59,7 @@ export default function Pagination({ number, first, last, totalPages, url }) {
           icon={faChevronRight}
           style={{ paddingTop: "2.5px" }}
           onClick={() => {
-            navigate("/" + url + (number + 1));
+            navigate("/" + url + (number + 2));
           }}
         />
       </div>
