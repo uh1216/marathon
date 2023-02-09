@@ -12,8 +12,8 @@ class VideoCam extends Component {
 
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
-      mySessionId: "SessionA",
-      myUserName: "Participant" + Math.floor(Math.random() * 100),
+      mySessionId: this.props.sessionId,
+      myUserName: this.props.name,
       session: undefined,
       mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
       publisher: undefined,
@@ -30,11 +30,7 @@ class VideoCam extends Component {
 
   componentDidMount() {
     window.addEventListener("beforeunload", this.onbeforeunload);
-    /**
-      => 여기에 join 함수를 실행시킨다.
-      => 생성자에서 name와 sessionId를 주입시킨다.
-      this.joinSession();
-    */
+    this.joinSession();
   }
 
   componentWillUnmount() {
@@ -91,8 +87,9 @@ class VideoCam extends Component {
   }
 
   joinSession() {
-    console.log("접속?");
     this.OV = new OpenVidu();
+    console.log(this.state.myUserName);
+    console.log(this.state.mySessionId);
     this.setState(
       {
         session: this.OV.initSession(),

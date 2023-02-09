@@ -118,15 +118,15 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                   style={{ marginRight: "10px" }}
                   onClick={() => {
                     let sessionId =
-                      modalData.reservedDay.patientName +
-                      state.loginUser.userName +
+                      new Date().getTime() +
+                      modalData.reservedDay.treatmentSeq +
+                      "marathon" +
                       modalData.reservedDay.treatmentSeq;
-
-                    $.post("/doctor-treatment/api/alarm", {
-                      patientSeq: modalData.reservedDay.patientName,
+                    console.log(sessionId);
+                    $.post("/doctor-treatment/alarm", {
+                      treatmentSeq: modalData.reservedDay.treatmentSeq,
                       sessionId: sessionId,
                     }).then(dispatch(changeTreatSessionId(sessionId)));
-                    console.log(state.treatSessionId);
                   }}
                 >
                   방 생성
