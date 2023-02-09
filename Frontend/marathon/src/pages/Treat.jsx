@@ -24,6 +24,7 @@ import { changeTreatSessionId } from "stores/content.store";
 
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
+import { Buffer } from "buffer";
 
 let sockJS = new SockJS("http://localhost:9999/api/webSocket");
 let stompClient = Stomp.over(sockJS);
@@ -54,6 +55,9 @@ export default function Treat() {
   const [isPreset5, setIsPreset5] = useState(false);
   const [interactionMode, SetInteractionMode] = useState(0);
   const [sessionId, setSessionId] = useState(state.treatSessionId.sessionId);
+
+  // 채팅 대화 목록
+  const [chatList, setChatList] = useState([]);
 
   const resetSessionId = () => {
     dispatch(changeTreatSessionId(""));
@@ -177,6 +181,8 @@ export default function Treat() {
     }
   };
 
+  // let headers = { Authorization: sessionStorage.getItem("access-token") };
+
   useEffect(() => {
     // 오픈비두
     setSessionId(resetSessionId());
@@ -184,10 +190,32 @@ export default function Treat() {
     // 웹소켓
     stompClient.connect({}, () => {
       console.log("websocket connect");
+
       /** 다른 사람이 채팅을 치면 일어날 일 */
       stompClient.subscribe(`/chat/${channelId}`, (data) => {
         const newMessage = JSON.parse(data.body);
         console.log(newMessage);
+        // 내가 보낸 메시지라면
+        if (newMessage.sender === sessionStorage.getItem("access-token"))
+          addMessage({ content: newMessage.content });
+        // 다른 사람이 보낸 메시지라면
+        else {
+          if (newMessage.sender) {
+            let base64Payload = newMessage.sender.split(".")[1];
+            let payload = Buffer.from(base64Payload, "base64");
+            let result = JSON.parse(payload.toString());
+            addMessage({
+              senderImg: result.img,
+              senderName: result.name,
+              content: newMessage.content,
+            });
+            console.log({
+              senderImg: result.img,
+              senderName: result.name,
+              content: newMessage.content,
+            });
+          }
+        }
       });
 
       /** 다른 사람이 프리셋을 누르면 일어날 일 */
@@ -228,6 +256,11 @@ export default function Treat() {
       });
     });
   }, []);
+
+  /** 채팅 대화 리스트에 새로운 채팅을 추가 */
+  const addMessage = (message) => {
+    setChatList((prev) => [...prev, message]);
+  };
 
   return (
     <div className={style.wrapper}>
@@ -422,11 +455,14 @@ export default function Treat() {
           <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>
-      <Chatting
-        isChatting={isChatting ? "visible" : "hidden"}
-        stompClient={stompClient}
-        channelId={channelId}
-      />
+      <div style={{ height: "100vh", position: "fixed", right: "0" }}>
+        <Chatting
+          isChatting={isChatting ? "visible" : "hidden"}
+          stompClient={stompClient}
+          channelId={channelId}
+          chatList={chatList}
+        />
+      </div>
     </div>
   );
 }

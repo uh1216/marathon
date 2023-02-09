@@ -17,7 +17,7 @@ public class InteractionReqDto {
 //    url
     private String channelId;
 
-    private Long senderSeq;
+    private String sender;
 
     private String content;
 }

@@ -19,10 +19,7 @@ const loginUser = createSlice({
         let result = JSON.parse(payload.toString());
 
         state.userName = result.name;
-        // 실제로는 이걸로 바꿔야 한다
-        // state.userProfileImg = result.url;
-        state.userProfileImg =
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwX-eqkkKMB3CD4rksUziVvafltd3iiqZeHw&usqp=CAU";
+        state.userProfileImg = result.img;
 
         if (result.roles[0] === "ROLE_PATIENT") {
           state.userRole = "patient";
@@ -48,9 +45,18 @@ const loginUser = createSlice({
     updateUnReadMsgNum: (state, action) => {
       state.unReadMsgNum = action.payload;
     },
+
+    changeImg: (state, action) => {
+      state.userProfileImg = action.payload;
+    },
   },
 });
 
-export let { userLogin, userLogout, changeMsgNum, updateUnReadMsgNum } =
-  loginUser.actions;
+export let {
+  userLogin,
+  userLogout,
+  changeMsgNum,
+  updateUnReadMsgNum,
+  changeImg,
+} = loginUser.actions;
 export { loginUser };

@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { $ } from "util/axiosFile";
 import { useNavigate } from "react-router-dom";
 import { userLogout } from "stores/user.store";
+import { changeImg } from "stores/user.store";
 
 /** 마이페이지 - 나의 정보 */
 export default function UserInformation() {
@@ -291,7 +292,6 @@ export default function UserInformation() {
         email: userEmailId + "@" + userEmailHost,
         phone: userPhone,
         birthDate: null,
-        img: "default.png",
         registDate: "2023-02-01",
       };
 
@@ -316,6 +316,10 @@ export default function UserInformation() {
           alert("수정 완료되었습니다.");
           setUserPwd("");
           setUserPwdChk("");
+          if (newImgUrl) {
+            dispatch(changeImg(newImgUrl));
+          }
+
           this.forceUpdate();
         })
         .catch((error) => {
@@ -348,17 +352,11 @@ export default function UserInformation() {
         {/* 왼쪽 박스 */}
         <div className={style.left_box}>
           {/* 프로필 사진 */}
-          {!imgUrl || !newImgUrl ? (
-            <div className={style.profile_img + " " + style.profile_initial}>
-              {userId[0]}
-            </div>
-          ) : (
-            <img
-              className={style.profile_img}
-              src={`/img/profile/${imgUrl}`} // 서버 올리고 나면 /home/ubuntu/static/image/asdf.png 이 경로로
-              alt="프로필 사진"
-            />
-          )}
+          <img
+            className={style.profile_img}
+            src={!newImgUrl ? imgUrl : newImgUrl}
+            alt="프로필 사진"
+          />
           <div className={style.user_name}>{userName} 님</div>
           <div className={style.welcome}>환영합니다.</div>
           <label className={style.btn_upload}>
