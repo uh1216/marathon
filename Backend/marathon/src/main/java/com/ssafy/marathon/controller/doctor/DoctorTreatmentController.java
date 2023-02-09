@@ -78,10 +78,10 @@ public class DoctorTreatmentController {
         ){
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"  );
         String sessionId = map.get("sessionId");
-        Long patientSeq = Long.parseLong(map.get("patientSeq"));
+        Long treatmentSeq = Long.parseLong(map.get("treatmentSeq"));
         Long doctorSeq = jwtTokenProvider.getUserSeq(accessToken);
 
-        doctorTreatmentService.makeAlarmAndDelTreatment(patientSeq, sessionId, doctorSeq);
+        doctorTreatmentService.makeAlarmAndDelTreatment(treatmentSeq, sessionId, doctorSeq);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
