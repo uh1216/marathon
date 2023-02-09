@@ -76,7 +76,7 @@ public class DoctorTreatmentController {
         @RequestBody Map<String, String> map
         , @RequestHeader("Access-Token") String accessToken
         ){
-
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"  );
         String sessionId = map.get("sessionId");
         Long patientSeq = Long.parseLong(map.get("patientSeq"));
         Long doctorSeq = jwtTokenProvider.getUserSeq(accessToken);

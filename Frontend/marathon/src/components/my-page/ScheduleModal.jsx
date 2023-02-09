@@ -122,8 +122,8 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                       state.loginUser.userName +
                       modalData.reservedDay.treatmentSeq;
 
-                    $.post("/doctor-treatment/api/alarm", {
-                      patientSeq: modalData.reservedDay.patientName,
+                    $.post("/doctor-treatment/alarm", {
+                      treatmentSeq: modalData.reservedDay.treatmentSeq,
                       sessionId: sessionId,
                     }).then(dispatch(changeTreatSessionId(sessionId)));
                     console.log(state.treatSessionId);
