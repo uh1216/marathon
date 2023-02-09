@@ -19,5 +19,5 @@ public class InteractionReqDto {
 
     private Long senderSeq;
 
-    private String text;
+    private String content;
 }
