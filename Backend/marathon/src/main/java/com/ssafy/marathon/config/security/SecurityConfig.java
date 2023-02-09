@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //예외는 누구나 발생가능
             .antMatchers("**exception**").permitAll()
             //예외는 누구나 발생가능
-            .antMatchers("**webSocket**").permitAll()
+            .antMatchers("/webSocket/**").permitAll()
             // 그외에는 인증 필요
             .anyRequest().authenticated()
             //---------------------------------------------------------------
@@ -75,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("*");
+        configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

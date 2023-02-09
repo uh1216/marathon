@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 
-let sockJS = new SockJS("http://localhost:9999/webSocket");
+let sockJS = new SockJS("http://localhost:9999/api/webSocket");
 let stompClient = Stomp.over(sockJS);
 stompClient.debug = () => {};
 console.log(stompClient);
