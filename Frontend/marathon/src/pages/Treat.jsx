@@ -22,6 +22,12 @@ import WordChainBoard from "components/treat/WordChainBoard";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTreatSessionId } from "stores/content.store";
 
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
+
+let sockJS = new SockJS("http://localhost:9999/api/webSocket");
+let stompClient = Stomp.over(sockJS);
+
 const interactionTitle = [
   "스케치 보드",
   "끝말잇기 보드",
@@ -30,6 +36,9 @@ const interactionTitle = [
 ];
 
 export default function Treat() {
+  // 방 고유 아이디
+  const channelId = 1;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state);
@@ -55,7 +64,12 @@ export default function Treat() {
    * idx : 몇 번째 상호작용 보드를 골랐는지
    */
   const changeInteraction = (idx) => {
-    SetInteractionMode(idx);
+    // SetInteractionMode(idx);
+    stompClient.send(
+      "/changeInteraction",
+      {},
+      JSON.stringify({ channelId: channelId, content: idx })
+    );
   };
   /** 프리셋 클릭
    * idx : 몇 번째 프리셋을 클릭했는지
@@ -64,38 +78,98 @@ export default function Treat() {
     switch (idx) {
       case 0:
         setIsPreset0(true);
+        stompClient.send(
+          "/preset",
+          {},
+          JSON.stringify({ channelId: channelId, content: "0,true" })
+        );
         setTimeout(() => {
           setIsPreset0(false);
+          stompClient.send(
+            "/preset",
+            {},
+            JSON.stringify({ channelId: channelId, content: "0," })
+          );
         }, 3000);
         break;
       case 1:
         setIsPreset1(true);
+        stompClient.send(
+          "/preset",
+          {},
+          JSON.stringify({ channelId: channelId, content: "1,true" })
+        );
         setTimeout(() => {
           setIsPreset1(false);
+          stompClient.send(
+            "/preset",
+            {},
+            JSON.stringify({ channelId: channelId, content: "1," })
+          );
         }, 3000);
         break;
       case 2:
         setIsPreset2(true);
+        stompClient.send(
+          "/preset",
+          {},
+          JSON.stringify({ channelId: channelId, content: "2,true" })
+        );
         setTimeout(() => {
           setIsPreset2(false);
+          stompClient.send(
+            "/preset",
+            {},
+            JSON.stringify({ channelId: channelId, content: "2," })
+          );
         }, 3000);
         break;
       case 3:
         setIsPreset3(true);
+        stompClient.send(
+          "/preset",
+          {},
+          JSON.stringify({ channelId: channelId, content: "3,true" })
+        );
         setTimeout(() => {
           setIsPreset3(false);
+          stompClient.send(
+            "/preset",
+            {},
+            JSON.stringify({ channelId: channelId, content: "3," })
+          );
         }, 3000);
         break;
       case 4:
         setIsPreset4(true);
+        stompClient.send(
+          "/preset",
+          {},
+          JSON.stringify({ channelId: channelId, content: "4,true" })
+        );
         setTimeout(() => {
           setIsPreset4(false);
+          stompClient.send(
+            "/preset",
+            {},
+            JSON.stringify({ channelId: channelId, content: "4," })
+          );
         }, 3000);
         break;
       case 5:
         setIsPreset5(true);
+        stompClient.send(
+          "/preset",
+          {},
+          JSON.stringify({ channelId: channelId, content: "5,true" })
+        );
         setTimeout(() => {
           setIsPreset5(false);
+          stompClient.send(
+            "/preset",
+            {},
+            JSON.stringify({ channelId: channelId, content: "5," })
+          );
         }, 3000);
         break;
       default:
@@ -104,7 +178,55 @@ export default function Treat() {
   };
 
   useEffect(() => {
+    // 오픈비두
     setSessionId(resetSessionId());
+
+    // 웹소켓
+    stompClient.connect({}, () => {
+      console.log("websocket connect");
+      /** 다른 사람이 채팅을 치면 일어날 일 */
+      stompClient.subscribe(`/chat/${channelId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        console.log(newMessage);
+      });
+
+      /** 다른 사람이 프리셋을 누르면 일어날 일 */
+      stompClient.subscribe(`/preset/${channelId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        const idx = Number(newMessage.content.split(",")[0]);
+        const bool = Boolean(newMessage.content.split(",")[1]);
+
+        switch (idx) {
+          case 0:
+            setIsPreset0(bool);
+            break;
+          case 1:
+            setIsPreset1(bool);
+            break;
+          case 2:
+            setIsPreset2(bool);
+            break;
+          case 3:
+            setIsPreset3(bool);
+            break;
+          case 4:
+            setIsPreset4(bool);
+            break;
+          case 5:
+            setIsPreset5(bool);
+            break;
+          default:
+            break;
+        }
+        console.log("프리셋");
+      });
+
+      /** 다른 사람이 상호작용 보드를 바꾸면 일어날 일 */
+      stompClient.subscribe(`/changeInteraction/${channelId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        SetInteractionMode(Number(newMessage.content));
+      });
+    });
   }, []);
 
   return (
@@ -300,7 +422,11 @@ export default function Treat() {
           <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>
-      {isChatting && <Chatting />}
+      <Chatting
+        isChatting={isChatting ? "visible" : "hidden"}
+        stompClient={stompClient}
+        channelId={channelId}
+      />
     </div>
   );
 }

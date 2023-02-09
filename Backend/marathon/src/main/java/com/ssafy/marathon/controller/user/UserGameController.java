@@ -73,4 +73,14 @@ public class UserGameController {
         simpMessagingTemplate.convertAndSend("/wordChain/" + interactionReqDto.getChannelId(), interactionReqDto);
 //        simpMessagingTemplate.convertAndSend("/topic/roomId" + interactionReqDto.getChannelId(), interactionReqDto);
     }
+
+    //    끝말잇기
+    @MessageMapping("/changeInteraction")
+    public void sendChangeInteraction(@RequestBody InteractionReqDto interactionReqDto, SimpMessageHeaderAccessor accessor) {
+        System.out.println("--------------------");
+        System.out.println(interactionReqDto.getContent());
+        System.out.println("/changeInteraction/" + interactionReqDto.getChannelId());
+        simpMessagingTemplate.convertAndSend("/changeInteraction/" + interactionReqDto.getChannelId(), interactionReqDto);
+//        simpMessagingTemplate.convertAndSend("/topic/roomId" + interactionReqDto.getChannelId(), interactionReqDto);
+    }
 }
