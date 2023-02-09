@@ -11,15 +11,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faComment as faCommentBlank } from "@fortawesome/free-regular-svg-icons";
 import style from "./Treat.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Chatting from "components/treat/Chatting";
 import VideoCam from "components/webRTC/VideoCam";
-
 import QuestionBoard from "components/treat/QuestionBoard";
 import SketchBoard from "components/treat/SketchBoard";
 import ImageBoard from "components/treat/ImageBoard";
 import WordChainBoard from "components/treat/WordChainBoard";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTreatSessionId } from "stores/content.store";
 
 const interactionTitle = [
   "스케치 보드",
@@ -29,7 +30,9 @@ const interactionTitle = [
 ];
 
 export default function Treat() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const state = useSelector((state) => state);
   const [isVideo, setIsVideo] = useState(true);
   const [isMic, setIsMic] = useState(true);
   const [isIn, setIsIn] = useState(true);
@@ -41,6 +44,12 @@ export default function Treat() {
   const [isPreset4, setIsPreset4] = useState(false);
   const [isPreset5, setIsPreset5] = useState(false);
   const [interactionMode, SetInteractionMode] = useState(0);
+  const [sessionId, setSessionId] = useState(state.treatSessionId.sessionId);
+
+  const resetSessionId = () => {
+    dispatch(changeTreatSessionId(""));
+    return "";
+  };
 
   /** 상호작용 보드 바꾸기
    * idx : 몇 번째 상호작용 보드를 골랐는지
@@ -93,12 +102,23 @@ export default function Treat() {
         break;
     }
   };
+
+  useEffect(() => {
+    setSessionId(resetSessionId());
+  }, []);
+
   return (
     <div className={style.wrapper}>
       <div className={style.main_container}>
         <div className={style.left_container}>
           {/* webRTC */}
-          <VideoCam isVideo={isVideo} isMic={isMic} isIn={isIn} />
+          <VideoCam
+            isVideo={isVideo}
+            isMic={isMic}
+            isIn={isIn}
+            sessionId={sessionId}
+            name={state.loginUser.userName}
+          />
           {/* 이제 여기 윗부분에 세션id, 사용자name을 주입해 주자 */}
           <div className={style.alert_emoji_box}>
             {isPreset0 && <div className={style.alert_emoji}>⏰</div>}
