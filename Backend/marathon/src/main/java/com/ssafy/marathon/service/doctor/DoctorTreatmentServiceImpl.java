@@ -1,20 +1,26 @@
 package com.ssafy.marathon.service.doctor;
 
+import com.ssafy.marathon.db.entity.communication.Alarm;
 import com.ssafy.marathon.db.entity.treatment.Reservation;
 import com.ssafy.marathon.db.entity.treatment.Treatment;
+import com.ssafy.marathon.db.entity.user.User;
+import com.ssafy.marathon.db.repository.CommunicationRepository;
 import com.ssafy.marathon.db.repository.DoctorRepository;
 import com.ssafy.marathon.db.repository.ReservationRepository;
 import com.ssafy.marathon.db.repository.TreatmentRepository;
+import com.ssafy.marathon.db.repository.UserRepository;
 import com.ssafy.marathon.dto.request.treatment.ReservationReqDto;
 import com.ssafy.marathon.dto.response.treatment.DayOfReservationResDto;
 import com.ssafy.marathon.dto.response.treatment.DayOfTreatmentResDto;
 import com.ssafy.marathon.dto.response.treatment.ReservationResDto;
 import com.ssafy.marathon.util.MilliFunc;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +34,8 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
     private final ReservationRepository reservationRepository;
     private final DoctorRepository doctorRepository;
     private final TreatmentRepository treatmentRepository;
+    private final CommunicationRepository communicationRepository;
+    private final UserRepository userRepository;
 
 
     // 해당 의사의 예약이 몇개인지 반환한다.
@@ -50,7 +58,7 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
             if (0 == reservationRepository.countReservationByDateAndDoctor_Seq(date, doctorSeq)) {
                 Reservation rv = Reservation.builder().date(date).bitDate("00000000")
 //                    doctor받아와야함
-                    .doctor(doctorRepository.findBySeq(doctorSeq)).build();
+                        .doctor(doctorRepository.findBySeq(doctorSeq)).build();
 //                logger.info(rv.toString());
                 reservationRepository.save(rv);
 
@@ -72,8 +80,8 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
             Reservation reservation = reservationRepository.findByDateAndDoctor_Seq(ld, doctorSeq);
 
             DayOfReservationResDto reservationResDto = DayOfReservationResDto.builder()
-                .reservationSeq(reservation.getSeq()).localDate(reservation.getDate())
-                .bitDate(reservation.getBitDate()).build();
+                    .reservationSeq(reservation.getSeq()).localDate(reservation.getDate())
+                    .bitDate(reservation.getBitDate()).build();
             list.add(reservationResDto);
             milli += MilliFunc.DAYMILLIESEC;
         }
@@ -90,7 +98,7 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
 //        logger.info("test check 2");
 
         ReservationResDto reservationResDto = ReservationResDto.builder()
-            .firstDateInfo(MilliFunc.startDayMilliSec()).list(list).build();
+                .firstDateInfo(MilliFunc.startDayMilliSec()).list(list).build();
 //        logger.info("test check 3");
         return reservationResDto;
     }
@@ -104,7 +112,7 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
                 continue;
             }
             logger.info("[UPDATE] 의사의 예약 가능 시간 변경 date:{}, before:{}, After:{}", dto.getLocalDate(),
-                reservation.getBitDate(), dto.getBitDate());
+                    reservation.getBitDate(), dto.getBitDate());
             reservation.setBitDate(dto.getBitDate());
             reservationRepository.save(reservation);
         }
@@ -113,20 +121,20 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
     @Override
     public List<DayOfTreatmentResDto> getTreatments(Long doctorSeq) {
         List<Treatment> list = treatmentRepository.findByDateBetween(MilliFunc.getStartDate(),
-            MilliFunc.getEndDate());
+                MilliFunc.getEndDate());
         List<DayOfTreatmentResDto> dtoList = new ArrayList<>();
 
         for (Treatment treatment : list) {
             LocalDateTime dateTime = LocalDateTime.of(treatment.getDate(),
-                treatment.getTime()); // Treatment바꾸기
+                    treatment.getTime()); // Treatment바꾸기
 
             DayOfTreatmentResDto dayOfTreatmentResDto = DayOfTreatmentResDto.builder()
-                .treatmentSeq(treatment.getSeq())
-                .patientName(treatment.getPatient().getName())
-                .dateTime(dateTime)
-                .day(dateTime.getDayOfWeek().toString())
-                .patientImg(treatment.getPatient().getImg())
-                .build();
+                    .treatmentSeq(treatment.getSeq())
+                    .patientName(treatment.getPatient().getName())
+                    .dateTime(dateTime)
+                    .day(dateTime.getDayOfWeek().toString())
+                    .patientImg(treatment.getPatient().getImg())
+                    .build();
 
             dtoList.add(dayOfTreatmentResDto);
         }
@@ -140,6 +148,21 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
         Treatment treatment = findTreatment.orElseThrow();
 
         treatmentRepository.delete(treatment);
+    }
+
+    @Override
+    public void makeAlarmAndDelTreatment(Long treatmentSeq, String sessionId, Long doctorSeq) {
+        User receiver = userRepository.findBySeq(treatmentRepository.findBySeq(treatmentSeq).getPatient().getSeq());
+        User sender = userRepository.findBySeq(doctorSeq);
+
+        Alarm alarm = Alarm.builder()
+                .link(sessionId)
+                .receiver(receiver)
+                .sender(sender)
+                .checked(false)
+                .dateTime(LocalDateTime.now())
+                .build();
+        communicationRepository.save(alarm);
     }
 
 

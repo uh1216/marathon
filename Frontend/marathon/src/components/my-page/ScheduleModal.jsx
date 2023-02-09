@@ -1,12 +1,16 @@
 import style from "./ScheduleModal.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
+import { changeTreatSessionId } from "stores/content.store";
 import { $ } from "util/axios";
+import { useNavigate } from "react-router-dom";
 
 export default function ScheduleModal({ modalData, setIsModalOpen }) {
   const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [isCreatable, setIsCreatable] = useState(false);
 
@@ -45,7 +49,6 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
 
   useEffect(() => {
     let date = new Date(modalData.reservedDay.dateTime).getTime();
-    date += (modalData.reservedDay.dateTime - 9) * 3600000;
     let nowTime = new Date();
     if (
       -3600000 <= date - nowTime.getTime() &&
@@ -55,6 +58,11 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!state.treatSessionId.sessionId) return;
+    navigate("/treat");
+  }, [state.treatSessionId.sessionId]);
 
   return (
     <div className={style.modal_container}>
@@ -108,6 +116,18 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                         style.unable
                   }
                   style={{ marginRight: "10px" }}
+                  onClick={() => {
+                    let sessionId =
+                      new Date().getTime() +
+                      modalData.reservedDay.treatmentSeq +
+                      "marathon" +
+                      modalData.reservedDay.treatmentSeq;
+                    console.log(sessionId);
+                    $.post("/doctor-treatment/alarm", {
+                      treatmentSeq: modalData.reservedDay.treatmentSeq,
+                      sessionId: sessionId,
+                    }).then(dispatch(changeTreatSessionId(sessionId)));
+                  }}
                 >
                   방 생성
                 </button>

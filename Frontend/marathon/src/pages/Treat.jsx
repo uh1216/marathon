@@ -11,15 +11,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faComment as faCommentBlank } from "@fortawesome/free-regular-svg-icons";
 import style from "./Treat.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Chatting from "components/treat/Chatting";
 import VideoCam from "components/webRTC/VideoCam";
-
 import QuestionBoard from "components/treat/QuestionBoard";
 import SketchBoard from "components/treat/SketchBoard";
 import ImageBoard from "components/treat/ImageBoard";
 import WordChainBoard from "components/treat/WordChainBoard";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTreatSessionId } from "stores/content.store";
 
 const interactionTitle = [
   "스케치 보드",
@@ -29,7 +30,9 @@ const interactionTitle = [
 ];
 
 export default function Treat() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const state = useSelector((state) => state);
   const [isVideo, setIsVideo] = useState(true);
   const [isMic, setIsMic] = useState(true);
   const [isIn, setIsIn] = useState(true);
@@ -41,18 +44,13 @@ export default function Treat() {
   const [isPreset4, setIsPreset4] = useState(false);
   const [isPreset5, setIsPreset5] = useState(false);
   const [interactionMode, SetInteractionMode] = useState(0);
+  const [sessionId, setSessionId] = useState(state.treatSessionId.sessionId);
 
-  /** 채팅창 보이기 or 끄기 */
-  const showChatting = () => {
-    setIsChatting(!isChatting);
+  const resetSessionId = () => {
+    dispatch(changeTreatSessionId(""));
+    return "";
   };
-  /** 방 나가기 */
-  const exitRoom = () => {
-    if (window.confirm("정말로 나가시겠습니까?")) {
-      setIsIn(false);
-      navigate("/");
-    }
-  };
+
   /** 상호작용 보드 바꾸기
    * idx : 몇 번째 상호작용 보드를 골랐는지
    */
@@ -105,12 +103,22 @@ export default function Treat() {
     }
   };
 
+  useEffect(() => {
+    setSessionId(resetSessionId());
+  }, []);
+
   return (
     <div className={style.wrapper}>
       <div className={style.main_container}>
         <div className={style.left_container}>
           {/* webRTC */}
-          <VideoCam isVideo={isVideo} isMic={isMic} isIn={isIn} />
+          <VideoCam
+            isVideo={isVideo}
+            isMic={isMic}
+            isIn={isIn}
+            sessionId={sessionId}
+            name={state.loginUser.userName}
+          />
           {/* 이제 여기 윗부분에 세션id, 사용자name을 주입해 주자 */}
           <div className={style.alert_emoji_box}>
             {isPreset0 && <div className={style.alert_emoji}>⏰</div>}
@@ -229,7 +237,10 @@ export default function Treat() {
       </div>
       <div className={style.btn_container}>
         {!isVideo ? (
-          <button className={style.btn_video} onClick={setIsVideo(!isVideo)}>
+          <button
+            className={style.btn_video}
+            onClick={() => setIsVideo(!isVideo)}
+          >
             <FontAwesomeIcon
               icon={faVideoSlash}
               style={{ fontSize: "1.4em" }}
@@ -237,13 +248,17 @@ export default function Treat() {
             &nbsp; 비디오 시작
           </button>
         ) : (
-          <button className={style.btn_video} onClick={setIsVideo(!isVideo)}>
+          <button
+            className={style.btn_video}
+            onClick={() => setIsVideo(!isVideo)}
+          >
             <FontAwesomeIcon icon={faVideo} style={{ fontSize: "1.4em" }} />
             &nbsp; 비디오 중지
           </button>
         )}
+
         {!isMic ? (
-          <button className={style.btn_mic} onClick={setIsMic(!isMic)}>
+          <button className={style.btn_mic} onClick={() => setIsMic(!isMic)}>
             <FontAwesomeIcon
               icon={faMicrophoneSlash}
               style={{ fontSize: "1.4em" }}
@@ -251,7 +266,7 @@ export default function Treat() {
             &nbsp; 음소거 해제
           </button>
         ) : (
-          <button className={style.btn_mic} onClick={setIsMic(!isMic)}>
+          <button className={style.btn_mic} onClick={() => setIsMic(!isMic)}>
             <FontAwesomeIcon
               icon={faMicrophone}
               style={{ fontSize: "1.4em" }}
@@ -263,14 +278,25 @@ export default function Treat() {
         <button className={style.btn_share}>
           <FontAwesomeIcon icon={faShareFromSquare} />
         </button>
-        <button className={style.btn_comment} onClick={showChatting}>
+        <button
+          className={style.btn_comment}
+          onClick={() => setIsChatting(!isChatting)}
+        >
           {!isChatting ? (
             <FontAwesomeIcon icon={faComment} />
           ) : (
             <FontAwesomeIcon icon={faCommentBlank} />
           )}
         </button>
-        <button className={style.btn_x} onClick={exitRoom}>
+        <button
+          className={style.btn_x}
+          onClick={() => {
+            if (window.confirm("정말로 나가시겠습니까?")) {
+              setIsIn(false);
+              navigate("/");
+            }
+          }}
+        >
           <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>

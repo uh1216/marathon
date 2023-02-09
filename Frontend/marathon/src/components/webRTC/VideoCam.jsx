@@ -12,8 +12,8 @@ class VideoCam extends Component {
 
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
-      mySessionId: "SessionA",
-      myUserName: "Participant" + Math.floor(Math.random() * 100),
+      mySessionId: this.props.sessionId,
+      myUserName: this.props.name,
       session: undefined,
       mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
       publisher: undefined,
@@ -30,11 +30,7 @@ class VideoCam extends Component {
 
   componentDidMount() {
     window.addEventListener("beforeunload", this.onbeforeunload);
-    /**
-      => 여기에 join 함수를 실행시킨다.
-      => 생성자에서 name와 sessionId를 주입시킨다.
-      this.joinSession();
-    */
+    this.joinSession();
   }
 
   componentWillUnmount() {
@@ -42,11 +38,17 @@ class VideoCam extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.isVideo !== this.props.isVideo)
+    if (prevProps.isVideo !== this.props.isVideo) {
       this.state.publisher.publishVideo(this.props.isVideo);
-    if (prevProps.isMic !== this.props.isMic)
+    }
+
+    if (prevProps.isMic !== this.props.isMic) {
       this.state.publisher.publishAudio(this.props.isMic);
-    if (prevProps.isIn !== this.props.isIn) this.leaveSession();
+    }
+
+    if (prevProps.isIn !== this.props.isIn) {
+      this.leaveSession();
+    }
   }
 
   onbeforeunload() {
@@ -85,8 +87,9 @@ class VideoCam extends Component {
   }
 
   joinSession() {
-    console.log("접속?");
     this.OV = new OpenVidu();
+    console.log(this.state.myUserName);
+    console.log(this.state.mySessionId);
     this.setState(
       {
         session: this.OV.initSession(),
@@ -116,7 +119,7 @@ class VideoCam extends Component {
                 videoSource: undefined, // The source of video. If undefined default webcam
                 publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
                 publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                resolution: "500x600", // The resolution of your video
+                resolution: "560x600", // The resolution of your video
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: false, // Whether to mirror your local video or not
@@ -223,13 +226,9 @@ class VideoCam extends Component {
 
         {this.state.session !== undefined ? (
           <div>
-            <div style={{ float: "left" }}>
-              <h2>{mySessionId}</h2>
-            </div>
-
             {/* 상대방 커다란 화면 */}
             {this.state.mainStreamManager !== undefined ? (
-              <div className={style.main_video}>
+              <div className={style.main_video} style={{ width: "auto" }}>
                 <UserVideoComponent
                   streamManager={this.state.subscribers[0]}
                   type={"you"}
@@ -238,7 +237,7 @@ class VideoCam extends Component {
             ) : null}
             {/* 나의 작은 화면 */}
             <div>
-              <div className={style.sub_video}>
+              <div className={style.sub_video} style={{ width: "auto" }}>
                 <UserVideoComponent
                   streamManager={this.state.mainStreamManager}
                   type={"me"}

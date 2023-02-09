@@ -26,7 +26,6 @@ export default function SendMessage({
     } else {
       $.get(`/user-commu/message?isNew=true&commuSeq=${commuSeq}`)
         .then((res) => {
-          console.log(res);
           let options = [{ name: "받을 사람을 선택해주세요.", value: 0 }];
           res.data.forEach((item) => {
             options.push({ name: item.name, value: item.seq });
