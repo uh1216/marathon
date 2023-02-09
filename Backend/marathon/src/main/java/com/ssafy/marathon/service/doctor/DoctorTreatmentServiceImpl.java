@@ -151,8 +151,8 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
     }
 
     @Override
-    public void makeAlarmAndDelTreatment(Long patientSeq, String sessionId, Long doctorSeq) {
-        User receiver = userRepository.findBySeq(patientSeq);
+    public void makeAlarmAndDelTreatment(Long treatmentSeq, String sessionId, Long doctorSeq) {
+        User receiver = userRepository.findBySeq(treatmentRepository.findBySeq(treatmentSeq).getPatient().getSeq());
         User sender = userRepository.findBySeq(doctorSeq);
 
         Alarm alarm = Alarm.builder()
