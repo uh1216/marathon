@@ -1,11 +1,21 @@
+import { useState } from "react";
 import style from "./Chatting.module.css";
 
-export default function Chatting() {
+export default function Chatting({ isChatting, stompClient, channelId }) {
+  const [message, setMessage] = useState("");
   /** 전송 클릭 시 실행 */
-  const submit = () => {};
+  const submit = () => {
+    if (message === "") return;
+    stompClient.send(
+      "/changeInteraction",
+      {},
+      JSON.stringify({ channelId: channelId, content: message })
+    );
+    setMessage("");
+  };
 
   return (
-    <div className={style.wrapper}>
+    <div className={style.wrapper} style={{ visibility: `${isChatting}` }}>
       <div className={style.chatting_container}>
         <div className={style.your_wrapper}>
           <img
@@ -86,7 +96,13 @@ export default function Chatting() {
       </div>
       <hr />
       <div className={style.textarea_container}>
-        <textarea className={style.textarea}></textarea>
+        <textarea
+          className={style.textarea}
+          value={message}
+          onChange={(e) => {
+            setMessage(e.target.value);
+          }}
+        ></textarea>
         <div className={style.submit} onClick={submit}>
           전송
         </div>
