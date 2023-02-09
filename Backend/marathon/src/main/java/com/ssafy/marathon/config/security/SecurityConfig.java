@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //예외는 누구나 발생가능
             .antMatchers("**exception**").permitAll()
             //예외는 누구나 발생가능
-            .antMatchers("/webSocket/**").permitAll()
+            .antMatchers("**webSocket**").permitAll()
             // 그외에는 인증 필요
             .anyRequest().authenticated()
             //---------------------------------------------------------------
