@@ -203,6 +203,7 @@ export default function Header() {
                 if (isUserToggled) setIsUserToggled(!isUserToggled);
                 navigate("/treat-enroll");
               }}
+              className={style.noMobile}
             >
               <span>수업 예약</span>
             </li>
@@ -214,6 +215,7 @@ export default function Header() {
                 if (isUserToggled) setIsUserToggled(!isUserToggled);
                 navigate("/schedule-manage");
               }}
+              className={style.noMobile}
             >
               <span>일정 관리</span>
             </li>

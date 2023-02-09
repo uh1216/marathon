@@ -67,6 +67,7 @@
   color: white;
   background-color: #7c7fc9;
   border-radius: 10px;
+  margin-bottom: 20px;
   font-size: 1.5em;
   font-family: "GmarketBold";
 }
@@ -77,4 +78,10 @@
   vertical-align: middle;
   text-align: center;
   margin: 2px;
+}
+
+@media screen and (max-width: 420px) {
+  .title_container h2 {
+    font-size: 1.3em;
+  }
 }

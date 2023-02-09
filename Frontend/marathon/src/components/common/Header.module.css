@@ -381,4 +381,8 @@
     font-size: 0.5em;
     top: -9.2px;
   }
+
+  .noMobile {
+    display: none;
+  }
 }

@@ -22,8 +22,6 @@ class VideoCam extends Component {
 
     this.joinSession = this.joinSession.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
-    this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
-    this.handleChangeUserName = this.handleChangeUserName.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
   }
@@ -53,18 +51,6 @@ class VideoCam extends Component {
 
   onbeforeunload() {
     this.leaveSession();
-  }
-
-  handleChangeSessionId(e) {
-    this.setState({
-      mySessionId: e.target.value,
-    });
-  }
-
-  handleChangeUserName(e) {
-    this.setState({
-      myUserName: e.target.value,
-    });
   }
 
   handleMainVideoStream(stream) {
@@ -164,66 +150,16 @@ class VideoCam extends Component {
     this.setState({
       session: undefined,
       subscribers: [],
-      mySessionId: "SessionA",
-      myUserName: "Participant" + Math.floor(Math.random() * 100),
+      mySessionId: "",
+      myUserName: "",
       mainStreamManager: undefined,
       publisher: undefined,
     });
   }
 
   render() {
-    const mySessionId = this.state.mySessionId;
-    const myUserName = this.state.myUserName;
-
     return (
       <div>
-        {/* 곧 삭제할 영역임 */}
-        {this.state.session === undefined ? (
-          <div id="join">
-            <div id="img-div">
-              <img
-                src="resources/images/openvidu_grey_bg_transp_cropped.png"
-                alt="OpenVidu logo"
-              />
-            </div>
-            <div id="join-dialog" className="jumbotron vertical-center">
-              <h1> Join a video session </h1>
-              <form className="form-group" onSubmit={this.joinSession}>
-                <p>
-                  <label>Participant: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="userName"
-                    value={myUserName}
-                    onChange={this.handleChangeUserName}
-                    required
-                  />
-                </p>
-                <p>
-                  <label> Session: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="sessionId"
-                    value={mySessionId}
-                    onChange={this.handleChangeSessionId}
-                    required
-                  />
-                </p>
-                <p className="text-center">
-                  <input
-                    className="btn btn-lg btn-success"
-                    name="commit"
-                    type="submit"
-                    value="JOIN"
-                  />
-                </p>
-              </form>
-            </div>
-          </div>
-        ) : null}
-
         {this.state.session !== undefined ? (
           <div>
             {/* 상대방 커다란 화면 */}

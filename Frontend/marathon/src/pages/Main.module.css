@@ -216,9 +216,12 @@
     font-size: 1em;
   }
 
-  .card2,
-  .card3 {
+  .card2 {
     font-size: 0.7em;
+  }
+
+  .card3 {
+    font-size: 0.85em;
   }
 
   .main_banner_words h2 {
