@@ -33,6 +33,7 @@ export default function Messenger() {
 
     $.get(`/user-commu/list?pageNum=1`)
       .then(({ data }) => {
+        console.log(data);
         setList(data.content);
       })
       .catch((error) => {

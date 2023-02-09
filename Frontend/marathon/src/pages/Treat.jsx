@@ -42,17 +42,6 @@ export default function Treat() {
   const [isPreset5, setIsPreset5] = useState(false);
   const [interactionMode, SetInteractionMode] = useState(0);
 
-  /** 채팅창 보이기 or 끄기 */
-  const showChatting = () => {
-    setIsChatting(!isChatting);
-  };
-  /** 방 나가기 */
-  const exitRoom = () => {
-    if (window.confirm("정말로 나가시겠습니까?")) {
-      setIsIn(false);
-      navigate("/");
-    }
-  };
   /** 상호작용 보드 바꾸기
    * idx : 몇 번째 상호작용 보드를 골랐는지
    */
@@ -104,7 +93,6 @@ export default function Treat() {
         break;
     }
   };
-
   return (
     <div className={style.wrapper}>
       <div className={style.main_container}>
@@ -229,7 +217,10 @@ export default function Treat() {
       </div>
       <div className={style.btn_container}>
         {!isVideo ? (
-          <button className={style.btn_video} onClick={setIsVideo(!isVideo)}>
+          <button
+            className={style.btn_video}
+            onClick={() => setIsVideo(!isVideo)}
+          >
             <FontAwesomeIcon
               icon={faVideoSlash}
               style={{ fontSize: "1.4em" }}
@@ -237,13 +228,17 @@ export default function Treat() {
             &nbsp; 비디오 시작
           </button>
         ) : (
-          <button className={style.btn_video} onClick={setIsVideo(!isVideo)}>
+          <button
+            className={style.btn_video}
+            onClick={() => setIsVideo(!isVideo)}
+          >
             <FontAwesomeIcon icon={faVideo} style={{ fontSize: "1.4em" }} />
             &nbsp; 비디오 중지
           </button>
         )}
+
         {!isMic ? (
-          <button className={style.btn_mic} onClick={setIsMic(!isMic)}>
+          <button className={style.btn_mic} onClick={() => setIsMic(!isMic)}>
             <FontAwesomeIcon
               icon={faMicrophoneSlash}
               style={{ fontSize: "1.4em" }}
@@ -251,7 +246,7 @@ export default function Treat() {
             &nbsp; 음소거 해제
           </button>
         ) : (
-          <button className={style.btn_mic} onClick={setIsMic(!isMic)}>
+          <button className={style.btn_mic} onClick={() => setIsMic(!isMic)}>
             <FontAwesomeIcon
               icon={faMicrophone}
               style={{ fontSize: "1.4em" }}
@@ -263,14 +258,25 @@ export default function Treat() {
         <button className={style.btn_share}>
           <FontAwesomeIcon icon={faShareFromSquare} />
         </button>
-        <button className={style.btn_comment} onClick={showChatting}>
+        <button
+          className={style.btn_comment}
+          onClick={() => setIsChatting(!isChatting)}
+        >
           {!isChatting ? (
             <FontAwesomeIcon icon={faComment} />
           ) : (
             <FontAwesomeIcon icon={faCommentBlank} />
           )}
         </button>
-        <button className={style.btn_x} onClick={exitRoom}>
+        <button
+          className={style.btn_x}
+          onClick={() => {
+            if (window.confirm("정말로 나가시겠습니까?")) {
+              setIsIn(false);
+              navigate("/");
+            }
+          }}
+        >
           <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>

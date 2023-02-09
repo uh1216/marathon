@@ -1,26 +1,28 @@
 .streamcomponent_you video {
-  width: 480px;
+  width: 522px;
   height: auto;
   background: #f8f8f8;
   padding-left: 5px;
   padding-right: 5px;
   color: #777777;
   font-weight: bold;
-  border-radius: 20px;
+  border-radius: 10px;
+  position: absolute;
+  right: -10px;
 }
 
 .streamcomponent_me video {
-  width: 190px;
+  width: 206px;
   height: auto;
   background: #f8f8f8;
   padding-left: 5px;
   padding-right: 5px;
   color: #777777;
   font-weight: bold;
-  position: relative;
-  right: -500px;
-  top: -200px;
-  border-radius: 20px;
+  position: absolute;
+  right: -227px;
+  top: 338px;
+  border-radius: 10px;
 }
 
 p {
