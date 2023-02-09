@@ -13,12 +13,12 @@ export default class UserVideoComponent extends Component {
     return (
       <div>
         {this.props.streamManager !== undefined && this.props.type === "you" ? (
-          <div className={style.streamcomponent_you}>
+          <div className={style.streamcomponent_you} style={{ width: "0px" }}>
             <OpenViduVideoComponent streamManager={this.props.streamManager} />
           </div>
         ) : null}
         {this.props.streamManager !== undefined && this.props.type === "me" ? (
-          <div className={style.streamcomponent_me}>
+          <div className={style.streamcomponent_me} style={{ width: "0px" }}>
             <OpenViduVideoComponent streamManager={this.props.streamManager} />
           </div>
         ) : null}
