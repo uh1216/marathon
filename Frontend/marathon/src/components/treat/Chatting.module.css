@@ -1,5 +1,5 @@
 .wrapper {
-  width: 320px;
+  width: 350px;
   height: 95vh;
   background-color: #fbf9f9;
   border-radius: 10px;
@@ -11,6 +11,7 @@
 
   position: absolute;
   right: 10px;
+  top: 2vh;
 }
 
 .chatting_container {
