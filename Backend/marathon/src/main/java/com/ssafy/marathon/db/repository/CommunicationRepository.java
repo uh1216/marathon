@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommunicationRepository<T extends Communication> extends JpaRepository<T, Long> {
 
-        Page<Message> findAllByReceiverOrderByCheckedAscDateTimeDesc(User user, Pageable pageable);
+        Page<Communication> findAllByReceiverOrderByCheckedAscDateTimeDesc(User user, Pageable pageable);
 
     int countByReceiverAndCheckedIsFalse(User user);
 }
