@@ -1,5 +1,6 @@
 package com.ssafy.marathon.service.user;
 
+import com.ssafy.marathon.db.entity.communication.Alarm;
 import com.ssafy.marathon.db.entity.communication.Message;
 import com.ssafy.marathon.db.entity.user.User;
 import com.ssafy.marathon.db.repository.CommunicationRepository;
@@ -59,13 +60,14 @@ public class UserCommunicationService {
 
         Page<CommunicationResDto> communicationResDtoPages = communicationRepository.findAllByReceiverOrderByCheckedAscDateTimeDesc(
                 user, pageRequest)
-            .map(message -> CommunicationResDto.builder()
-                .commuSeq(message.getSeq())
-                .senderSeq(message.getSender().getSeq())
-                .senderName(message.getSender().getName())
-                .content(message.getContent())
-                .date(message.getDateTime())
-                .checked(message.getChecked())
+            .map(communication -> CommunicationResDto.builder()
+                .commuSeq(communication.getSeq())
+                .senderSeq(communication.getSender().getSeq())
+                .senderName(communication.getSender().getName())
+                .date(communication.getDateTime())
+                .checked(communication.getChecked())
+                .link(communication.getClass() == Alarm.class ? ((Alarm) communication).getLink() : null)
+                .content(communication.getClass() == Message.class ? ((Message) communication).getContent() : null)
                 .build());
         return communicationResDtoPages;
     }
