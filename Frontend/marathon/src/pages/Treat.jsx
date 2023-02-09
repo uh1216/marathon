@@ -274,7 +274,6 @@ export default function Treat() {
             sessionId={sessionId}
             name={state.loginUser.userName}
           />
-          {/* 이제 여기 윗부분에 세션id, 사용자name을 주입해 주자 */}
           <div className={style.alert_emoji_box}>
             {isPreset0 && <div className={style.alert_emoji}>⏰</div>}
             {isPreset1 && <div className={style.alert_emoji}>😂</div>}
