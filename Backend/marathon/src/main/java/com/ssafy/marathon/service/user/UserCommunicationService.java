@@ -1,6 +1,7 @@
 package com.ssafy.marathon.service.user;
 
 import com.ssafy.marathon.db.entity.communication.Alarm;
+import com.ssafy.marathon.db.entity.communication.Communication;
 import com.ssafy.marathon.db.entity.communication.Message;
 import com.ssafy.marathon.db.entity.user.User;
 import com.ssafy.marathon.db.repository.CommunicationRepository;
@@ -28,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserCommunicationService {
 
     private final UserRepository<User> userRepository;
-    private final CommunicationRepository<Message> communicationRepository;
+    private final CommunicationRepository<Communication> communicationRepository;
     private final TreatmentRepository treatmentRepository;
 
     private final String admin = "[ROLE_ADMIN]";
@@ -73,10 +74,10 @@ public class UserCommunicationService {
     }
 
     public void UpdateCheck(Long commuSeq) {
-        Optional<Message> findMessage = communicationRepository.findById(commuSeq);
-        Message message = findMessage.orElseThrow();
+        Optional<Communication> findCommunication = communicationRepository.findById(commuSeq);
+        Communication communication = findCommunication.orElseThrow();
 
-        message.changeChecked();
+        communication.changeChecked();
     }
 
     public List<UserResDto> findCanSendMessageUsers(Long userSeq, String userRole, boolean isNew,
@@ -85,8 +86,8 @@ public class UserCommunicationService {
         List<UserResDto> userResDtoList = new ArrayList<>();
 
         if (!isNew) {
-            Optional<Message> findMessage = communicationRepository.findById(commuSeq);
-            Message beforeMessage = findMessage.orElseThrow();
+            Optional<Communication> findMessage = communicationRepository.findById(commuSeq);
+            Message beforeMessage = (Message) findMessage.orElseThrow();
 
             Optional<User> findSender = userRepository.findById(beforeMessage.getSender().getSeq());
             User sender = findSender.orElseThrow();
@@ -146,9 +147,9 @@ public class UserCommunicationService {
     }
 
     public void deleteCommunication(Long commuSeq) {
-        Optional<Message> findCommu = communicationRepository.findById(commuSeq);
-        Message message = findCommu.orElseThrow();
+        Optional<Communication> findCommunication = communicationRepository.findById(commuSeq);
+        Communication communication = findCommunication.orElseThrow();
 
-        communicationRepository.delete(message);
+        communicationRepository.delete(communication);
     }
 }
