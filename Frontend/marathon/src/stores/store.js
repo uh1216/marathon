@@ -3,6 +3,7 @@ import { nowSideNav } from "./toggle.store";
 import { loginUser } from "./user.store";
 import { gameState } from "./game.store";
 import { nowBoardInfo, treatSessionId } from "./content.store";
+import { kakaoInfo } from "./kakao.store";
 
 export default configureStore({
   reducer: {
@@ -11,5 +12,6 @@ export default configureStore({
     gameState: gameState.reducer,
     nowBoardInfo: nowBoardInfo.reducer,
     treatSessionId: treatSessionId.reducer,
+    kakaoInfo: kakaoInfo.reducer,
   },
 });

@@ -60,6 +60,10 @@ public class PatientSignServiceImpl implements PatientSignService {
             .subRelationship(patientReqDto.getSubRelationship())
             .img(defaultImg)
             .build();
+        if(patientReqDto.getKakao()!=null) {
+            patient.setKakao(patientReqDto.getKakao());
+            patient.setImg(patientReqDto.getImg());
+        }
         Patient savedPatient = (Patient) patientRepository.save(patient);
         SignUpResDto signUpResDto;
 

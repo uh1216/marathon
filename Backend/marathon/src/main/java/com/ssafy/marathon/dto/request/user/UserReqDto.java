@@ -29,6 +29,6 @@ public class UserReqDto {
     private LocalDate birthDate;
     private String img;
     private LocalDate registDate;
-
+    private String kakao;
 
 }

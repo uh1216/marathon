@@ -54,6 +54,7 @@ export default function Treat() {
   const [interactionMode, SetInteractionMode] = useState(0);
 
   // 채팅 or 상호작용 보드에서 쓰이는 데이터들
+  const [items, setItems] = useState([]); // 스케치 보드 데이터 저장용
   const [chatList, setChatList] = useState([]);
   const [wordList, setWordList] = useState([]);
   const [questionNo, setQuestionNo] = useState(0);
@@ -246,6 +247,16 @@ export default function Treat() {
         console.log("프리셋");
       });
 
+      /** 다른 사람이 스케치 보드를 바꾸면 일어날 일 */
+      stompClient.subscribe(`/sketch/${channelId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        setItems((prev) => {
+          // console.log("------------------------");
+          // console.log([...prev, JSON.parse(newMessage.content)]);
+          return [...prev, JSON.parse(newMessage.content)];
+        });
+      });
+
       /** 다른 사람이 상호작용 보드를 바꾸면 일어날 일 */
       stompClient.subscribe(`/changeInteraction/${channelId}`, (data) => {
         const newMessage = JSON.parse(data.body);
@@ -351,7 +362,11 @@ export default function Treat() {
             </div>
             <div className={style.interaction_box}>
               {interactionMode === 0 && (
-                <SketchBoard channelId={channelId} stompClient={stompClient} />
+                <SketchBoard
+                  channelId={channelId}
+                  stompClient={stompClient}
+                  items={items}
+                />
               )}
               {interactionMode === 1 && (
                 <WordChainBoard
