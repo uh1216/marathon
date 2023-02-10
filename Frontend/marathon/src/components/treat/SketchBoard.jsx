@@ -9,7 +9,6 @@ export default function SketchBoard({ channelId, stompClient, items }) {
   const [color, setColor] = useState("#000000");
   const [fill, setFill] = useState(false);
   const [fillColor, setFillColor] = useState("#444444");
-  const [item, setItem] = useState(items);
 
   const submit = (item) => {
     if (!item) return;
@@ -63,11 +62,11 @@ export default function SketchBoard({ channelId, stompClient, items }) {
               width={550}
               height={255}
               animate={true}
-              size={items.size}
-              color={items.color}
+              size={size}
+              color={color}
               fillColor={fill ? fillColor : ""}
-              items={items.points}
-              tool={items.tool}
+              items={items}
+              tool={tool}
               onCompleteItem={(i) => {
                 submit(i);
               }}

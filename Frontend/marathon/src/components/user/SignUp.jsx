@@ -104,7 +104,6 @@ export default function SignIn() {
   const { type, kakao } = useParams();
   const navigate = useNavigate();
   const kakaoInfo = useSelector((state) => state).kakaoInfo;
-  console.log(kakaoInfo);
 
   const inputUserName = useRef();
   const inputUserGender = useRef();
@@ -292,8 +291,7 @@ export default function SignIn() {
         user.mainRelationship = userFirstResponderRelationship;
         user.subPhone = userSecondResponder;
         user.subRelationship = userSecondResponderRelationship;
-        console.log("로그인 시도");
-        console.log(user);
+
         $.post(`/patient-sign/signup`, user)
           .then(() => {
             alert("회원가입에 성공하였습니다.");

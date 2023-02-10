@@ -258,7 +258,11 @@ export default function Treat() {
       /** 다른 사람이 스케치 보드를 바꾸면 일어날 일 */
       stompClient.subscribe(`/sketch/${channelId}`, (data) => {
         const newMessage = JSON.parse(data.body);
-        setItems(JSON.parse(newMessage.content));
+        setItems((prev) => {
+          // console.log("------------------------");
+          // console.log([...prev, JSON.parse(newMessage.content)]);
+          return [...prev, JSON.parse(newMessage.content)];
+        });
       });
 
       /** 다른 사람이 상호작용 보드를 바꾸면 일어날 일 */

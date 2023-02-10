@@ -52,6 +52,7 @@ export default class SketchPad extends Component {
 
   componentWillReceiveProps({ tool, items }) {
     console.log(items);
+    console.log(tool);
     items
       .filter((item) => {
         console.log(this.props.items);
