@@ -57,6 +57,7 @@ public class User implements UserDetails {
     private String phone;
     private String img;
     private LocalDate birthDate;
+    private String kakao;
 
     @Column(updatable = false, insertable = false)
     private String dtype;
