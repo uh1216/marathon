@@ -283,16 +283,10 @@ export default function UserInformation() {
       inputUserSecondResponderRelationship.current.focus();
     } else {
       let userInfo = {
-        seq: null,
-        role: null,
-        id: "asdf",
         password: userPwd,
-        name: "김환자",
-        sex: false,
         email: userEmailId + "@" + userEmailHost,
         phone: userPhone,
-        birthDate: null,
-        registDate: "2023-02-01",
+        img: newImgUrl ? newImgUrl : imgUrl,
       };
 
       if (state.loginUser.userRole === "patient") {

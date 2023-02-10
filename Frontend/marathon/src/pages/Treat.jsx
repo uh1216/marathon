@@ -37,9 +37,6 @@ const interactionTitle = [
 ];
 
 export default function Treat() {
-  // 방 고유 아이디
-  const channelId = 1;
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state);
@@ -56,13 +53,20 @@ export default function Treat() {
   const [interactionMode, SetInteractionMode] = useState(0);
   const [sessionId, setSessionId] = useState(state.treatSessionId.sessionId);
 
-  // 채팅 대화 목록
+  // 채팅 or 상호작용 보드에서 쓰이는 데이터들
   const [chatList, setChatList] = useState([]);
+  const [wordList, setWordList] = useState([]);
+  const [questionNo, setQuestionNo] = useState(0);
+  const [imageNo, setImageNo] = useState(0);
 
   const resetSessionId = () => {
     dispatch(changeTreatSessionId(""));
     return "";
   };
+
+  // 웹 소켓에 쓰이는 아이디
+  // const channelId = sessionId;
+  const channelId = 1;
 
   /** 상호작용 보드 바꾸기
    * idx : 몇 번째 상호작용 보드를 골랐는지
@@ -75,6 +79,7 @@ export default function Treat() {
       JSON.stringify({ channelId: channelId, content: idx })
     );
   };
+
   /** 프리셋 클릭
    * idx : 몇 번째 프리셋을 클릭했는지
    */
@@ -254,12 +259,38 @@ export default function Treat() {
         const newMessage = JSON.parse(data.body);
         SetInteractionMode(Number(newMessage.content));
       });
+
+      /** 다른 사람이 끝말잇기를 입력하면 일어날 일 */
+      stompClient.subscribe(`/wordChain/${channelId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        addWord(newMessage.content);
+      });
+
+      /** 다른 사람이 무작위질문을 바꾸면 일어날 일 */
+      stompClient.subscribe(`/question/${channelId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        setQuestionNo(() => Number(newMessage.content));
+      });
+
+      /** 다른 사람이 사진을 바꾸면 일어날 일 */
+      stompClient.subscribe(`/image/${channelId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        setImageNo(() => Number(newMessage.content));
+      });
     });
   }, []);
 
   /** 채팅 대화 리스트에 새로운 채팅을 추가 */
   const addMessage = (message) => {
     setChatList((prev) => [...prev, message]);
+  };
+
+  /** 끝말잇기 리스트에 새로운 단어 추가 */
+  const addWord = (word) => {
+    setWordList((prev) => {
+      if (prev.length === 0) return [word];
+      return [word, prev[0]];
+    });
   };
 
   return (
@@ -326,11 +357,32 @@ export default function Treat() {
                 </div>
               </span>
             </div>
-            {/* <div className={style.interaction_box}></div> */}
-            {interactionMode === 0 && <SketchBoard />}
-            {interactionMode === 1 && <WordChainBoard />}
-            {interactionMode === 2 && <ImageBoard />}
-            {interactionMode === 3 && <QuestionBoard />}
+            <div className={style.interaction_box}>
+              {interactionMode === 0 && (
+                <SketchBoard channelId={channelId} stompClient={stompClient} />
+              )}
+              {interactionMode === 1 && (
+                <WordChainBoard
+                  channelId={channelId}
+                  stompClient={stompClient}
+                  wordList={wordList}
+                />
+              )}
+              {interactionMode === 2 && (
+                <ImageBoard
+                  channelId={channelId}
+                  stompClient={stompClient}
+                  imageNo={imageNo}
+                />
+              )}
+              {interactionMode === 3 && (
+                <QuestionBoard
+                  channelId={channelId}
+                  stompClient={stompClient}
+                  questionNo={questionNo}
+                />
+              )}
+            </div>
           </div>
           <div className={style.right_bottom_container}>
             <div></div>
@@ -436,6 +488,10 @@ export default function Treat() {
           className={style.btn_comment}
           onClick={() => setIsChatting(!isChatting)}
         >
+          <div className={style.notCheckMsg}>
+            읽지 않은 메시지가 있습니다
+            <div className={style.notCheckMsgTail}></div>
+          </div>
           {!isChatting ? (
             <FontAwesomeIcon icon={faComment} />
           ) : (
@@ -455,12 +511,13 @@ export default function Treat() {
         </button>
       </div>
       <div style={{ height: "100vh", position: "fixed", right: "0" }}>
-        <Chatting
-          isChatting={isChatting ? "visible" : "hidden"}
-          stompClient={stompClient}
-          channelId={channelId}
-          chatList={chatList}
-        />
+        {isChatting && (
+          <Chatting
+            stompClient={stompClient}
+            channelId={channelId}
+            chatList={chatList}
+          />
+        )}
       </div>
     </div>
   );
