@@ -26,5 +26,5 @@ public interface DoctorTreatmentService {
 
     void deleteTreatment(Long treatmentSeq);
 
-    void makeAlarmAndDelTreatment(Long treatmentSeq, String sessionId, Long doctorSeq);
+    boolean makeAlarm(Long treatmentSeq, String sessionId, Long doctorSeq);
 }
