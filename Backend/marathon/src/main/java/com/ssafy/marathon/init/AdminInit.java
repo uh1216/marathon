@@ -22,9 +22,11 @@ public class AdminInit {
     protected void init() {
         LOGGER.info("[init] admin 유저생성 시작");
         Admin admin = Admin.builder()
-            .id("ssafy").password(passwordEncoder
-                .encode("ssafy"))
-            .roles(Collections.singletonList("ROLE_ADMIN")).name("관리자").build();
+            .id("ssafy")
+            .password(passwordEncoder.encode("ssafy"))
+            .roles(Collections.singletonList("ROLE_ADMIN"))
+            .name("관리자")
+            .build();
         admin.setImg("default.PNG");
         adminRepository.save(admin);
         LOGGER.info("[init] admin 유저생성 완료 id : {}", admin.getId());

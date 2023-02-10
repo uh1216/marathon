@@ -1,5 +1,6 @@
 package com.ssafy.marathon.service.doctor;
 
+import com.ssafy.marathon.config.security.JwtTokenProvider;
 import com.ssafy.marathon.db.entity.user.Doctor;
 import com.ssafy.marathon.db.entity.user.Patient;
 import com.ssafy.marathon.db.repository.DoctorRepository;
@@ -29,6 +30,7 @@ public class DoctorSignServiceImpl implements DoctorSignService {
     private final UserRepository userRepository;
     private final DoctorRepository doctorRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
     private final AwsS3Service awsS3Service;
 
     private static String defaultImg = "https://d1v10kml6l14kq.cloudfront.net/default.jpg";
@@ -81,7 +83,7 @@ public class DoctorSignServiceImpl implements DoctorSignService {
     }
 
     @Override
-    public void modifyDoctor(Long seq, DoctorReqDto doctorReqDto , MultipartFile image)
+    public String modifyDoctor(Long seq, DoctorReqDto doctorReqDto , MultipartFile image)
         throws Exception {
         LOGGER.info("[modifyPatient] 환자정보 수정 시작");
         Doctor doctor = doctorRepository.getBySeq(seq);
@@ -101,7 +103,9 @@ public class DoctorSignServiceImpl implements DoctorSignService {
             LOGGER.info("바뀐 이미지 url : {}", url);
             doctor.setImg(url);
         }
+        String token = jwtTokenProvider.createToken(doctor);
         LOGGER.info("[modifyPatient] 환자정보 수정 완료");
+        return token;
     }
 
 

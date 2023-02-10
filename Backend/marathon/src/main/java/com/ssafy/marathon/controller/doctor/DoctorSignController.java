@@ -7,6 +7,7 @@ import com.ssafy.marathon.dto.response.user.DoctorResDto;
 import com.ssafy.marathon.dto.response.user.PatientResDto;
 import com.ssafy.marathon.dto.response.user.SignUpResDto;
 import com.ssafy.marathon.service.doctor.DoctorSignServiceImpl;
+import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -63,8 +64,10 @@ public class DoctorSignController {
         throws Exception {
         Long seq = jwtTokenProvider.getUserSeq(accessToken);
         LOGGER.info("[modifyDoctor] 의사정보 수정 시작 ");
-        doctorSignService.modifyDoctor(seq, doctorReqDto, image);
+        String token = doctorSignService.modifyDoctor(seq, doctorReqDto, image);
+        HashMap<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("accessToken", token);
         LOGGER.info("[modifyPatient] 의사정보 수정 완료 ");
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        return new ResponseEntity<HashMap<String, String>>(tokenMap, HttpStatus.CREATED);
     }
 }
