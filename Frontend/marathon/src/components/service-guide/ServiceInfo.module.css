@@ -198,3 +198,16 @@
     height: 200px;
   }
 }
+
+@media screen and (max-width: 420px) {
+  .content_box_opened {
+    height: 240px;
+  }
+  .inner_bottom_box h3 {
+    font-size: 1.3em;
+  }
+
+  .inner_bottom_box h4 {
+    font-size: 1.1em;
+  }
+}

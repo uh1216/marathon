@@ -1,7 +1,11 @@
 package com.ssafy.marathon.service.doctor;
 
 import com.ssafy.marathon.db.entity.treatment.History;
+import com.ssafy.marathon.db.entity.treatment.Treatment;
+import com.ssafy.marathon.db.entity.user.Doctor;
 import com.ssafy.marathon.db.repository.HistoryRepository;
+import com.ssafy.marathon.db.repository.TreatmentRepository;
+import com.ssafy.marathon.db.repository.UserRepository;
 import com.ssafy.marathon.dto.request.treatment.HistoryReqDto;
 import com.ssafy.marathon.dto.response.treatment.HistoryResDto;
 import java.time.LocalDateTime;
@@ -18,6 +22,8 @@ import org.springframework.stereotype.Service;
 public class DoctorHistoryServiceImpl implements DoctorHistoryService {
 
     private final HistoryRepository historyRepository;
+    private final TreatmentRepository treatmentRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Page<HistoryResDto> getNonFeedbackPages(int page, Long doctorSeq) {
@@ -101,6 +107,19 @@ public class DoctorHistoryServiceImpl implements DoctorHistoryService {
 
 
         return historyResDto;
+    }
+
+    @Override
+    public void makeHistory(Long doctorSeq, Long treatmentSeq) {
+        Treatment treatment = treatmentRepository.findBySeq(treatmentSeq);
+        History history = History.builder()
+                .doctor((Doctor) userRepository.findBySeq(doctorSeq))
+                .patient(treatment.getPatient())
+                .feedback("")
+                .date(treatment.getDate())
+                .time(treatment.getTime())
+                .build();
+        historyRepository.save(history);
     }
 
     public Page<HistoryResDto> searchPaitentHistory(Long doctorSeq, String name, int page) {

@@ -51,6 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/admin*/**").hasRole("ADMIN")
             //예외는 누구나 발생가능
             .antMatchers("**exception**").permitAll()
+            //예외는 누구나 발생가능
+            .antMatchers("/webSocket/**").permitAll()
             // 그외에는 인증 필요
             .anyRequest().authenticated()
             //---------------------------------------------------------------
@@ -73,8 +75,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("*");
+        configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

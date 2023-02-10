@@ -22,5 +22,6 @@ public class CommunicationResDto {
     private String content;
     private LocalDateTime date;
     private boolean checked;
+    private String link;
 
 }
