@@ -11,6 +11,7 @@ export default function AuthRoute(props) {
     if (authenticated) return;
     navigate("/user/login");
     alert("로그인이 필요한 페이지 입니다");
+    // eslint-disable-next-line
   }, []);
 
   return <>{props.render()}</>;

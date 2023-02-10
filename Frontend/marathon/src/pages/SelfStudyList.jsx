@@ -1,11 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import style from "./SelfStudyList.module.css";
 import Game1 from "img/game1.png";
 import Game2 from "img/game2.png";
 import Game3 from "img/game3.png";
 
 export default function SelfStudyList() {
-  const navigate = useNavigate();
   return (
     <>
       <div
@@ -35,21 +33,27 @@ export default function SelfStudyList() {
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#63F282" }}
-                    onClick={() => navigate(`/self-study/1/easy`)}
+                    onClick={() =>
+                      (window.location.href = "/self-study/1/easy")
+                    }
                   >
                     초급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FBDB35" }}
-                    onClick={() => navigate(`/self-study/1/normal`)}
+                    onClick={() =>
+                      (window.location.href = "/self-study/1/normal")
+                    }
                   >
                     중급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FF4218" }}
-                    onClick={() => navigate(`/self-study/1/hard`)}
+                    onClick={() =>
+                      (window.location.href = "/self-study/1/hard")
+                    }
                   >
                     고급
                   </button>
@@ -73,30 +77,37 @@ export default function SelfStudyList() {
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#63F282" }}
-                    onClick={() => navigate(`/self-study/2/easy`)}
+                    onClick={() =>
+                      (window.location.href = "/self-study/2/easy")
+                    }
                   >
                     초급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FBDB35" }}
-                    onClick={() => navigate(`/self-study/2/normal`)}
+                    onClick={() =>
+                      (window.location.href = "/self-study/2/normal")
+                    }
                   >
                     중급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FF4218" }}
-                    onClick={() => navigate(`/self-study/2/hard`)}
+                    onClick={() =>
+                      (window.location.href = "/self-study/2/hard")
+                    }
                   >
                     고급
                   </button>
                 </div>
               </div>
               <div>
-                단어 실어증을 해결하기 위한 솔루션입니다. 재활이후 분명히 아는
+                단어 실어증을 해결하기 위한 솔루션입니다. 와병이후 분명히 아는
                 단어이지만 머리속에 연결이 되지 않으시죠? 연습 그리고 또
-                연습만이 정답입니다! 단계별로 차근차근 연상을 훈련해 보아요
+                연습만이 정답입니다! 단계별로 차근차근 단어를 연상시키는 훈련을
+                해 보아요
               </div>
             </div>
             <img className={style.img_game} src={Game2} alt="학습 이미지" />
@@ -113,21 +124,27 @@ export default function SelfStudyList() {
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#63F282" }}
-                    onClick={() => navigate(`/self-study/3/easy`)}
+                    onClick={() =>
+                      (window.location.href = "/self-study/3/easy")
+                    }
                   >
                     초급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FBDB35" }}
-                    onClick={() => navigate(`/self-study/3/normal`)}
+                    onClick={() =>
+                      (window.location.href = "/self-study/3/normal")
+                    }
                   >
                     중급
                   </button>
                   <button
                     className={style.btn_difficulty}
                     style={{ backgroundColor: "#FF4218" }}
-                    onClick={() => navigate(`/self-study/3/hard`)}
+                    onClick={() =>
+                      (window.location.href = "/self-study/3/hard")
+                    }
                   >
                     고급
                   </button>
@@ -136,8 +153,8 @@ export default function SelfStudyList() {
               <div>
                 단순히 맞는 칸을 칠하는 것을 넘어서 특정한 칸으로 특정한 모양을
                 똑같이 옮기는 훈련입니다! 난이도가 상당하기 때문에 처음에는
-                어려움을 겪으실 수도 있겠지만 이제 충분히 자신감이 붙으셨다면
-                도전해 보세요!
+                어려움을 겪으실 수도 있겠지만 재활도 진전이 있었고 이제 충분히
+                자신감이 붙으셨다면 도전해 보세요!
               </div>
             </div>
           </div>

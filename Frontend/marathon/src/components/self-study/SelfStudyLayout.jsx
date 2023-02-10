@@ -61,8 +61,7 @@ export default function SelfStudyLayout({ type, children }) {
               }
               style={{ backgroundColor: "#63F282" }}
               onClick={() => {
-                navigate(`/self-study/${type}/easy`);
-                window.location.reload();
+                window.location.href = `/self-study/${type}/easy`;
               }}
             >
               초급
@@ -75,8 +74,7 @@ export default function SelfStudyLayout({ type, children }) {
               }
               style={{ backgroundColor: "#FBDB35" }}
               onClick={() => {
-                navigate(`/self-study/${type}/normal`);
-                window.location.reload();
+                window.location.href = `/self-study/${type}/normal`;
               }}
             >
               중급
@@ -89,8 +87,7 @@ export default function SelfStudyLayout({ type, children }) {
               }
               style={{ backgroundColor: "#FF4218" }}
               onClick={() => {
-                navigate(`/self-study/${type}/hard`);
-                window.location.reload();
+                window.location.href = `/self-study/${type}/hard`;
               }}
             >
               고급

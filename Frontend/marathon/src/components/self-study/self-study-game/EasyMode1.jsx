@@ -6,6 +6,7 @@ import style from "./EasyMode1.module.css";
 import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode } from "stores/game.store";
 import GIF from "img/gif/game1_easy.gif";
+import { v4 as uuidv4 } from "uuid";
 
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
@@ -86,7 +87,7 @@ export default function EasyMode1() {
       ans === "1"
         ? button_arr.push(
             <button
-              key={index}
+              key={uuidv4()}
               className={style.button_answer}
               value={index.toString() + ans}
               disabled
@@ -94,7 +95,7 @@ export default function EasyMode1() {
           )
         : button_arr.push(
             <button
-              key={index}
+              key={uuidv4()}
               className={style.button_blank}
               value={index.toString() + ans}
               disabled
@@ -119,7 +120,7 @@ export default function EasyMode1() {
       val.toString() === "1"
         ? button_arr2.push(
             <button
-              key={index}
+              key={uuidv4()}
               className={style.button_selected}
               value={index.toString() + val}
               onClick={onChange}
@@ -127,7 +128,7 @@ export default function EasyMode1() {
           )
         : button_arr2.push(
             <button
-              key={index}
+              key={uuidv4()}
               className={style.button_blank}
               value={index.toString() + val}
               onClick={onChange}
@@ -152,7 +153,7 @@ export default function EasyMode1() {
       if (quiz[index] === "1" && mySelect[index] !== quiz[index]) {
         button_arr3.push(
           <button
-            key={index}
+            key={uuidv4()}
             className={style.button_answer_noselect}
             value={index.toString() + 3}
             disabled
@@ -162,7 +163,7 @@ export default function EasyMode1() {
       } else if (quiz[index] !== mySelect[index]) {
         button_arr3.push(
           <button
-            key={index}
+            key={uuidv4()}
             className={style.button_incorrect}
             value={index.toString() + 3}
             disabled
@@ -172,7 +173,7 @@ export default function EasyMode1() {
       } else if (mySelect[index] === "1" && quiz[index] === mySelect[index]) {
         button_arr3.push(
           <button
-            key={index}
+            key={uuidv4()}
             className={style.button_correct}
             value={index.toString() + 2}
             disabled
@@ -181,7 +182,7 @@ export default function EasyMode1() {
       } else {
         button_arr3.push(
           <button
-            key={index}
+            key={uuidv4()}
             className={style.button_blank}
             value={index.toString() + 0}
             disabled
