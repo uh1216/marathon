@@ -215,6 +215,7 @@
   width: 52px;
   color: white;
   background-color: #ffcd1a;
+  position: relative;
 }
 
 .btn_x {
@@ -224,4 +225,36 @@
   width: 52px;
   color: white;
   background-color: #ff2f2f;
+}
+
+/* 읽지 않은 채팅 */
+.notCheckMsg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  /* top: 100px; */
+  /* bottom: 500px; */
+  right: 20px;
+
+  background-color: #ffcd1a;
+  color: #575757;
+  top: 0;
+  width: 220px;
+  height: 38px;
+  font-size: 14px !important;
+  border-radius: 5px;
+}
+/* #ffcd1a */
+.notCheckMsgTail {
+  width: 10px;
+
+  border-bottom: 10px solid transparent;
+  border-top: 20px solid #0a0a0a;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+
+  position: absolute;
+  right: 20px;
+  bottom: -28px;
 }

@@ -100,8 +100,9 @@ const optionsEducation = [
 ];
 
 export default function SignIn() {
-  const { type } = useParams();
+  const { type, kakao } = useParams();
   const navigate = useNavigate();
+  const state = useState();
 
   const inputUserName = useRef();
   const inputUserGender = useRef();

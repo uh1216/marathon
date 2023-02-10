@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import style from "./Chatting.module.css";
 
-export default function Chatting({
-  isChatting,
-  stompClient,
-  channelId,
-  chatList,
-}) {
+export default function Chatting({ stompClient, channelId, chatList }) {
   const [message, setMessage] = useState("");
 
   /** 전송 클릭 시 실행 */
@@ -25,7 +20,7 @@ export default function Chatting({
   };
 
   return (
-    <div className={style.wrapper} style={{ visibility: `${isChatting}` }}>
+    <div className={style.wrapper}>
       <div className={style.chatting_container}>
         {chatList.map((item) =>
           item.hasOwnProperty("senderImg") ? (

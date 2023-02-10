@@ -12,8 +12,8 @@ export default function Main() {
       <img className={style.background} src={Background} alt="배경이미지" />
       <Routes>
         <Route path="login" element={<Login />}></Route>
-        <Route path="sign-up-type" element={<SignUpType />}></Route>
-        <Route path="sign-up/:type" element={<SignUp />}></Route>
+        <Route path="sign-up-type/:kakao" element={<SignUpType />}></Route>
+        <Route path="sign-up/:type/:kakao" element={<SignUp />}></Route>
       </Routes>
     </div>
   );

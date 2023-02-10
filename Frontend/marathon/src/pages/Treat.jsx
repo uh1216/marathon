@@ -488,6 +488,10 @@ export default function Treat() {
           className={style.btn_comment}
           onClick={() => setIsChatting(!isChatting)}
         >
+          <div className={style.notCheckMsg}>
+            읽지 않은 메시지가 있습니다
+            <div className={style.notCheckMsgTail}></div>
+          </div>
           {!isChatting ? (
             <FontAwesomeIcon icon={faComment} />
           ) : (
@@ -507,12 +511,13 @@ export default function Treat() {
         </button>
       </div>
       <div style={{ height: "100vh", position: "fixed", right: "0" }}>
-        <Chatting
-          isChatting={isChatting ? "visible" : "hidden"}
-          stompClient={stompClient}
-          channelId={channelId}
-          chatList={chatList}
-        />
+        {isChatting && (
+          <Chatting
+            stompClient={stompClient}
+            channelId={channelId}
+            chatList={chatList}
+          />
+        )}
       </div>
     </div>
   );

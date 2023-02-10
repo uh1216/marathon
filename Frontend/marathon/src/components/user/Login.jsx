@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { userLogin } from "stores/user.store";
 import { useNavigate } from "react-router-dom";
 import { $ } from "util/axios";
+import { setInfo } from "stores/kakao.store";
 
 export default function Main() {
   const [userId, setUserId] = useState("");
@@ -64,16 +65,19 @@ export default function Main() {
           },
           success: async (response) => {
             // ID 중복체크를 통해 회원가입 유무 확인하기
-            var kakaoId = response.id + "K";
+            var kakaoId = response.id;
             console.log("카카오 로그인 성공------------");
-            console.log(response);
+            console.log(response.id);
 
-            // $.get(`/member/idcheck/${kakaoId}`).then(({ data }) => {
-            //   // 존재하는 경우 로그인 처리
-            //   if (data > 0) this.hiddenKakaoLogin(kakaoId);
-            //   // 존재하지 않으면 회원가입
-            //   else this.hiddenKakaoJoin(response, kakaoId);
-            // });
+            $.get(`/user-sign/checkkakao/${kakaoId}`)
+              .then(() => {
+                // 존재하는 경우 로그인 처리
+                //hiddenKakaoLogin(kakaoId);
+              })
+              .catch(() => {
+                // 존재하지 않으면 회원가입
+                hiddenKakaoJoin(response);
+              });
           },
           fail: (error) => {
             console.log(error);
@@ -86,39 +90,29 @@ export default function Main() {
     });
   };
 
-  const hiddenKakaoLogin = (kakaoId) => {
-    $.post("/user-sign/login", {
-      id: kakaoId,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          sessionStorage.setItem("access-token", res.data.accessToken);
-          dispatch(userLogin());
-          navigate("/");
-          return;
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const hiddenKakaoLogin = (response) => {
+    // $.post("/user-sign/login", {
+    //   id: kakaoId,
+    // })
+    //   .then((res) => {
+    //     if (res.status === 200) {
+    //       sessionStorage.setItem("access-token", res.data.accessToken);
+    //       dispatch(userLogin());
+    //       navigate("/");
+    //       return;
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   // 카카오 회원가입 한 적 없으면 회원가입 해야 됨
-  const hiddenKakaoJoin = (response, kakaoId) => {
-    alert("회원가입 해야됨!");
-    // console.log(response);
-    // http
-    //   .post(`/member`, {
-    //     userId: kakaoId,
-    //     userName: response.kakao_account.profile.nickname,
-    //     userImgUrl: response.kakao_account.profile.profile_image_url,
-    //     userEmail: response.kakao_account.email,
-    //     userRole: "member",
-    //     loginType: 1,
-    //   })
-    //   .then(() => {
-    //     this.hiddenKakaoLogin(kakaoId);
-    //   });
+  const hiddenKakaoJoin = (response) => {
+    // alert("회원가입 해야됨!");
+    console.log(response);
+    dispatch(setInfo(response));
+    navigate(`/user/sign-up-type/kakao`);
   };
 
   useEffect(() => {

@@ -69,6 +69,7 @@ public class UserSignServiceImpl implements UserSignService {
 
     @Override
     public void checkKakao(String kakao) {
-        userRepository.getByKakao(kakao);
+        User user = userRepository.getByKakao(kakao);
+        String id = user.getId();
     }
 }
