@@ -16,6 +16,6 @@ public interface DoctorSignService {
 
     DoctorResDto getDoctor(Long seq);
 
-    void modifyDoctor(Long seq, DoctorReqDto doctorReqDto, MultipartFile file)
+    String modifyDoctor(Long seq, DoctorReqDto doctorReqDto, MultipartFile file)
         throws Exception;
 }

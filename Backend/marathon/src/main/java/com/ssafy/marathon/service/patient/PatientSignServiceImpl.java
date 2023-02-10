@@ -1,5 +1,6 @@
 package com.ssafy.marathon.service.patient;
 
+import com.ssafy.marathon.config.security.JwtTokenProvider;
 import com.ssafy.marathon.db.entity.user.Patient;
 import com.ssafy.marathon.db.repository.PatientRepository;
 import com.ssafy.marathon.db.repository.UserRepository;
@@ -36,6 +37,7 @@ public class PatientSignServiceImpl implements PatientSignService {
     private final Logger LOGGER = LoggerFactory.getLogger(PatientSignServiceImpl.class);
     private final UserRepository userRepository;
     private final PatientRepository patientRepository;
+    private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
     private final AwsS3Service awsS3Service;
     private static String defaultImg = "https://d1v10kml6l14kq.cloudfront.net/default.jpg";
@@ -97,7 +99,7 @@ public class PatientSignServiceImpl implements PatientSignService {
     }
 
     @Override
-    public void modifyPatient(Long seq, PatientReqDto patientReqDto, MultipartFile image)
+    public String modifyPatient(Long seq, PatientReqDto patientReqDto, MultipartFile image)
         throws Exception {
 
         LOGGER.info("[modifyPatient] 환자정보 수정 시작");
@@ -111,7 +113,7 @@ public class PatientSignServiceImpl implements PatientSignService {
         patient.setSubRelationship(patientReqDto.getSubRelationship());
         LOGGER.info("[modifyPatient] 이미지 비교 시작");
         //이미지 url이 다르면 파일 저장하고 유저이미지 정보 수정
-        if(patientReqDto.getImg()!= patient.getImg()) {
+        if (patientReqDto.getImg() != patient.getImg()) {
             //랜덤식별자 생성
             UUID uuid = UUID.randomUUID();
             //파일이름 설정
@@ -120,7 +122,10 @@ public class PatientSignServiceImpl implements PatientSignService {
             String url = awsS3Service.uploadFileV1(fileName, image);
             patient.setImg(url);
         }
+        //토큰 정보 수정
+        String token = jwtTokenProvider.createToken(patient);
         LOGGER.info("[modifyPatient] 환자정보 수정 완료");
+        return token;
     }
 
 
