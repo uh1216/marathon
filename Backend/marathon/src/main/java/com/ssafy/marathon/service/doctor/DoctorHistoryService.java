@@ -15,4 +15,6 @@ public interface DoctorHistoryService {
     Void writeFeedback(HistoryReqDto historyReqDto);
 
     HistoryResDto getHistoryDetail(Long historySeq);
+
+    void makeHistory(Long doctorSeq, Long treatmentSeq);
 }
