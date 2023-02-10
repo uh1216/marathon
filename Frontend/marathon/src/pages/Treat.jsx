@@ -56,8 +56,9 @@ export default function Treat() {
   const [interactionMode, SetInteractionMode] = useState(0);
   const [sessionId, setSessionId] = useState(state.treatSessionId.sessionId);
 
-  // 채팅 대화 목록
+  // 채팅 or 상호작용 보드에서 쓰이는 데이터들
   const [chatList, setChatList] = useState([]);
+  const [wordList, setWordList] = useState([]);
 
   const resetSessionId = () => {
     dispatch(changeTreatSessionId(""));
@@ -75,6 +76,7 @@ export default function Treat() {
       JSON.stringify({ channelId: channelId, content: idx })
     );
   };
+
   /** 프리셋 클릭
    * idx : 몇 번째 프리셋을 클릭했는지
    */
@@ -254,12 +256,26 @@ export default function Treat() {
         const newMessage = JSON.parse(data.body);
         SetInteractionMode(Number(newMessage.content));
       });
+
+      /** 다른 사람이 끝말잇기를 입력하면 일어날 일 */
+      stompClient.subscribe(`/wordChain/${channelId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        addWord(newMessage.content);
+      });
     });
   }, []);
 
   /** 채팅 대화 리스트에 새로운 채팅을 추가 */
   const addMessage = (message) => {
     setChatList((prev) => [...prev, message]);
+  };
+
+  /** 끝말잇기 리스트에 새로운 단어 추가 */
+  const addWord = (word) => {
+    setWordList((prev) => {
+      if (prev.length === 0) return [word];
+      return [word, prev[0]];
+    });
   };
 
   return (
@@ -326,11 +342,27 @@ export default function Treat() {
                 </div>
               </span>
             </div>
-            {/* <div className={style.interaction_box}></div> */}
-            {interactionMode === 0 && <SketchBoard />}
-            {interactionMode === 1 && <WordChainBoard />}
-            {interactionMode === 2 && <ImageBoard />}
-            {interactionMode === 3 && <QuestionBoard />}
+            <div className={style.interaction_box}>
+              {interactionMode === 0 && (
+                <SketchBoard channelId={channelId} stompClient={stompClient} />
+              )}
+              {interactionMode === 1 && (
+                <WordChainBoard
+                  channelId={channelId}
+                  stompClient={stompClient}
+                  wordList={wordList}
+                />
+              )}
+              {interactionMode === 2 && (
+                <ImageBoard channelId={channelId} stompClient={stompClient} />
+              )}
+              {interactionMode === 3 && (
+                <QuestionBoard
+                  channelId={channelId}
+                  stompClient={stompClient}
+                />
+              )}
+            </div>
           </div>
           <div className={style.right_bottom_container}>
             <div></div>

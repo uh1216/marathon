@@ -9,8 +9,6 @@ export default function Chatting({
 }) {
   const [message, setMessage] = useState("");
 
-  useEffect(() => {}, []);
-
   /** 전송 클릭 시 실행 */
   const submit = () => {
     if (message === "") return;

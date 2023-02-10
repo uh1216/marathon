@@ -157,6 +157,7 @@
   position: absolute;
   top: 3px;
   left: 14px;
+  object-fit: cover;
 }
 
 .profile_header {
@@ -167,6 +168,7 @@
   position: absolute;
   top: -10px;
   left: 0px;
+  object-fit: cover;
 }
 
 .header_eatspace {
