@@ -37,9 +37,6 @@ const interactionTitle = [
 ];
 
 export default function Treat() {
-  // 방 고유 아이디
-  const channelId = 1;
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state);
@@ -59,11 +56,17 @@ export default function Treat() {
   // 채팅 or 상호작용 보드에서 쓰이는 데이터들
   const [chatList, setChatList] = useState([]);
   const [wordList, setWordList] = useState([]);
+  const [questionNo, setQuestionNo] = useState(0);
+  const [imageNo, setImageNo] = useState(0);
 
   const resetSessionId = () => {
     dispatch(changeTreatSessionId(""));
     return "";
   };
+
+  // 웹 소켓에 쓰이는 아이디
+  // const channelId = sessionId;
+  const channelId = 1;
 
   /** 상호작용 보드 바꾸기
    * idx : 몇 번째 상호작용 보드를 골랐는지
@@ -262,6 +265,18 @@ export default function Treat() {
         const newMessage = JSON.parse(data.body);
         addWord(newMessage.content);
       });
+
+      /** 다른 사람이 무작위질문을 바꾸면 일어날 일 */
+      stompClient.subscribe(`/question/${channelId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        setQuestionNo(() => Number(newMessage.content));
+      });
+
+      /** 다른 사람이 사진을 바꾸면 일어날 일 */
+      stompClient.subscribe(`/image/${channelId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        setImageNo(() => Number(newMessage.content));
+      });
     });
   }, []);
 
@@ -354,12 +369,17 @@ export default function Treat() {
                 />
               )}
               {interactionMode === 2 && (
-                <ImageBoard channelId={channelId} stompClient={stompClient} />
+                <ImageBoard
+                  channelId={channelId}
+                  stompClient={stompClient}
+                  imageNo={imageNo}
+                />
               )}
               {interactionMode === 3 && (
                 <QuestionBoard
                   channelId={channelId}
                   stompClient={stompClient}
+                  questionNo={questionNo}
                 />
               )}
             </div>

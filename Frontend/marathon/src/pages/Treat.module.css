@@ -35,6 +35,7 @@
 
 .interaction_box {
   height: 290px;
+  position: relative;
 }
 
 .interaction_nav {
