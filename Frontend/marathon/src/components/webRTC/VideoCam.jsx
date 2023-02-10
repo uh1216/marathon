@@ -12,6 +12,7 @@ class VideoCam extends Component {
 
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
+      // mySessionId: this.props.sessionId,
       mySessionId: this.props.sessionId,
       myUserName: this.props.name,
       session: undefined,
@@ -96,6 +97,7 @@ class VideoCam extends Component {
         });
         this.getToken().then((token) => {
           console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,여기부분1");
+          console.log(this.state.mySessionId);
           mySession
             .connect(token, { clientData: this.state.myUserName })
             .then(async () => {

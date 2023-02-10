@@ -113,7 +113,8 @@ export default function Messenger() {
 
   useEffect(() => {
     if (!state.treatSessionId.sessionId) return;
-    navigate("/treat");
+    // navigate("/treat");
+    window.location.href = "/treat";
   }, [state.treatSessionId.sessionId]);
 
   return (
@@ -198,7 +199,7 @@ export default function Messenger() {
                   <button
                     className={style.btn}
                     onClick={() => {
-                      dispatch(changeTreatSessionId(item.link));
+                      window.location.href = `/treat/${item.link}`;
                     }}
                   >
                     수업 입장

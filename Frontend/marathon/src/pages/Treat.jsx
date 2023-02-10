@@ -12,7 +12,7 @@ import {
 import { faComment as faCommentBlank } from "@fortawesome/free-regular-svg-icons";
 import style from "./Treat.module.css";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Chatting from "components/treat/Chatting";
 import VideoCam from "components/webRTC/VideoCam";
 import QuestionBoard from "components/treat/QuestionBoard";
@@ -39,6 +39,7 @@ const interactionTitle = [
 export default function Treat() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { sessionId } = useParams();
   const state = useSelector((state) => state);
   const [isVideo, setIsVideo] = useState(true);
   const [isMic, setIsMic] = useState(true);
@@ -51,7 +52,6 @@ export default function Treat() {
   const [isPreset4, setIsPreset4] = useState(false);
   const [isPreset5, setIsPreset5] = useState(false);
   const [interactionMode, SetInteractionMode] = useState(0);
-  const [sessionId, setSessionId] = useState(state.treatSessionId.sessionId);
 
   // 채팅 or 상호작용 보드에서 쓰이는 데이터들
   const [chatList, setChatList] = useState([]);
@@ -59,14 +59,9 @@ export default function Treat() {
   const [questionNo, setQuestionNo] = useState(0);
   const [imageNo, setImageNo] = useState(0);
 
-  const resetSessionId = () => {
-    dispatch(changeTreatSessionId(""));
-    return "";
-  };
-
   // 웹 소켓에 쓰이는 아이디
   // const channelId = sessionId;
-  const channelId = 1;
+  const channelId = sessionId;
 
   /** 상호작용 보드 바꾸기
    * idx : 몇 번째 상호작용 보드를 골랐는지
@@ -189,9 +184,6 @@ export default function Treat() {
   // let headers = { Authorization: sessionStorage.getItem("access-token") };
 
   useEffect(() => {
-    // 오픈비두
-    setSessionId(resetSessionId());
-
     // 웹소켓
     stompClient.connect({}, () => {
       console.log("websocket connect");
@@ -503,8 +495,7 @@ export default function Treat() {
           onClick={() => {
             if (window.confirm("정말로 나가시겠습니까?")) {
               setIsIn(false);
-              navigate("/");
-              window.location.reload();
+              window.location.href = "/";
             }
           }}
         >
