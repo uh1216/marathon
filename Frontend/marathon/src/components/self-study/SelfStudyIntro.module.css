@@ -13,7 +13,7 @@
 }
 
 .gif {
-  width: 264px;
+  width: auto;
   height: 264px;
   object-fit: cover;
   border-radius: 5px;
