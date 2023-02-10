@@ -6,10 +6,13 @@ import com.ssafy.marathon.dto.request.treatment.ReservationReqDto;
 import com.ssafy.marathon.dto.response.treatment.DayOfTreatmentResDto;
 import com.ssafy.marathon.dto.response.treatment.ReservationResDto;
 import com.ssafy.marathon.dto.response.treatment.TreatmentResDto;
+import com.ssafy.marathon.service.doctor.DoctorHistoryService;
 import com.ssafy.marathon.service.doctor.DoctorTreatmentService;
 import com.ssafy.marathon.util.MilliFunc;
+
 import java.util.List;
 import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DoctorTreatmentController {
 
     private final DoctorTreatmentService doctorTreatmentService;
+    private final DoctorHistoryService doctorHistoryService;
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/table")
@@ -59,9 +63,9 @@ public class DoctorTreatmentController {
         List<DayOfTreatmentResDto> list = doctorTreatmentService.getTreatments(seq);
 
         TreatmentResDto treatmentResDto = TreatmentResDto.builder()
-            .firstDateInfo(MilliFunc.startDayMilliSec())
-            .list(list)
-            .build();
+                .firstDateInfo(MilliFunc.startDayMilliSec())
+                .list(list)
+                .build();
 
         return new ResponseEntity<TreatmentResDto>(treatmentResDto, HttpStatus.OK);
     }
@@ -73,15 +77,18 @@ public class DoctorTreatmentController {
 
     @PostMapping("/alarm")
     public ResponseEntity<?> makeAlarm(
-        @RequestBody Map<String, String> map
-        , @RequestHeader("Access-Token") String accessToken
-        ){
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"  );
+            @RequestBody Map<String, String> map
+            , @RequestHeader("Access-Token") String accessToken
+    ) {
+
         String sessionId = map.get("sessionId");
         Long treatmentSeq = Long.parseLong(map.get("treatmentSeq"));
         Long doctorSeq = jwtTokenProvider.getUserSeq(accessToken);
 
-        doctorTreatmentService.makeAlarmAndDelTreatment(treatmentSeq, sessionId, doctorSeq);
+        doctorTreatmentService.makeAlarm(treatmentSeq, sessionId, doctorSeq);
+        doctorHistoryService.makeHistory(doctorSeq, treatmentSeq);
+        doctorTreatmentService.deleteTreatment(treatmentSeq);
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

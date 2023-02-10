@@ -151,7 +151,7 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
     }
 
     @Override
-    public void makeAlarmAndDelTreatment(Long treatmentSeq, String sessionId, Long doctorSeq) {
+    public boolean makeAlarm(Long treatmentSeq, String sessionId, Long doctorSeq) {
         User receiver = userRepository.findBySeq(treatmentRepository.findBySeq(treatmentSeq).getPatient().getSeq());
         User sender = userRepository.findBySeq(doctorSeq);
 
@@ -162,7 +162,7 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
                 .checked(false)
                 .dateTime(LocalDateTime.now())
                 .build();
-        communicationRepository.save(alarm);
+        return communicationRepository.save(alarm) != null;
     }
 
 
