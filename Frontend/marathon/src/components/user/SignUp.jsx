@@ -4,6 +4,7 @@ import SelectBox from "components/common/SelectBox";
 import style from "./SignUp.module.css";
 import { useState } from "react";
 import { $ } from "util/axios";
+import { useSelector } from "react-redux";
 
 /** 성별 select box 옵션 */
 const optionsGender = [
@@ -102,7 +103,8 @@ const optionsEducation = [
 export default function SignIn() {
   const { type, kakao } = useParams();
   const navigate = useNavigate();
-  const state = useState();
+  const kakaoInfo = useSelector((state) => state).kakaoInfo;
+  console.log(kakaoInfo);
 
   const inputUserName = useRef();
   const inputUserGender = useRef();
@@ -139,16 +141,24 @@ export default function SignIn() {
 
   const [isNotIdDuplicated, setIsNotIdDuplicated] = useState(false);
 
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState(
+    kakao === "kakao" ? kakaoInfo.userName : ""
+  );
   const [userGender, setUserGender] = useState("none");
   const [userYear, setUserYear] = useState("none");
   const [userMonth, setUserMonth] = useState("none");
   const [userDay, setUserDay] = useState("none");
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState(
+    kakao === "kakao" ? kakaoInfo.userEmail.split("@")[0] : ""
+  );
   const [userPwd, setUserPwd] = useState("");
   const [userPwdChk, setUserPwdChk] = useState("");
-  const [userEmailId, setUserEmailId] = useState("");
-  const [userEmailHost, setUserEmailHost] = useState("");
+  const [userEmailId, setUserEmailId] = useState(
+    kakao === "kakao" ? kakaoInfo.userEmail.split("@")[0] : ""
+  );
+  const [userEmailHost, setUserEmailHost] = useState(
+    kakao === "kakao" ? kakaoInfo.userEmail.split("@")[1] : ""
+  );
   const [userPhone, setUserPhone] = useState("");
   const [userFirstResponder, setUserFirstResponder] = useState("");
   const [userFirstResponderRelationship, setUserFirstResponderRelationship] =
@@ -263,20 +273,28 @@ export default function SignIn() {
       alert("이용약관 및 개인정보 처리방침에 동의해주세요.");
       inputUserTos.current.focue();
     } else {
+      let user = {
+        id: userId,
+        name: userName,
+        password: userPwd,
+        email: userEmailId + "@" + userEmailHost,
+        birthDate: userYear + "-" + userMonth + "-" + userDay,
+        sex: userGender === "male" ? true : false,
+        phone: userPhone,
+      };
+      if (kakao === "kakao") {
+        user.kakao = kakaoInfo.kakaoId;
+        user.img = kakaoInfo.userImgUrl;
+      }
+
       if (type === "normal") {
-        $.post(`/patient-sign/signup`, {
-          id: userId,
-          name: userName,
-          password: userPwd,
-          email: userEmailId + "@" + userEmailHost,
-          birthDate: userYear + "-" + userMonth + "-" + userDay,
-          sex: userGender === "male" ? true : false,
-          phone: userPhone,
-          mainPhone: userFirstResponder,
-          mainRelationship: userFirstResponderRelationship,
-          subPhone: userSecondResponder,
-          subRelationship: userSecondResponderRelationship,
-        })
+        user.mainPhone = userFirstResponder;
+        user.mainRelationship = userFirstResponderRelationship;
+        user.subPhone = userSecondResponder;
+        user.subRelationship = userSecondResponderRelationship;
+        console.log("로그인 시도");
+        console.log(user);
+        $.post(`/patient-sign/signup`, user)
           .then(() => {
             alert("회원가입에 성공하였습니다.");
             navigate("/");
@@ -286,17 +304,10 @@ export default function SignIn() {
             console.log(error);
           });
       } else if (type === "doctor") {
-        $.post(`/doctor-sign/signup`, {
-          id: userId,
-          name: userName,
-          password: userPwd,
-          email: userEmailId + "@" + userEmailHost,
-          birthDate: userYear + "-" + userMonth + "-" + userDay,
-          sex: userGender === "male" ? true : false,
-          phone: userPhone,
-          degree: userEducation,
-          license: userLicense,
-        })
+        user.degree = userEducation;
+        user.license = userLicense;
+
+        $.post(`/doctor-sign/signup`, user)
           .then(() => {
             alert("회원가입에 성공하였습니다.");
             navigate("/");

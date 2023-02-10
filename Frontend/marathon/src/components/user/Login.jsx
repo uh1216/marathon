@@ -65,9 +65,9 @@ export default function Main() {
           },
           success: async (response) => {
             // ID 중복체크를 통해 회원가입 유무 확인하기
-            var kakaoId = response.id;
+            var kakaoId = response.id.toString();
             console.log("카카오 로그인 성공------------");
-            console.log(response.id);
+            console.log(kakaoId);
 
             $.get(`/user-sign/checkkakao/${kakaoId}`)
               .then(() => {

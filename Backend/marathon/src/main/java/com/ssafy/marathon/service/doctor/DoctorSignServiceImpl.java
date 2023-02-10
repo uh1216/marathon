@@ -51,6 +51,10 @@ public class DoctorSignServiceImpl implements DoctorSignService {
             .introduce("안녕하세요. 잘부탁드립니다^^")
             .img(defaultImg)
             .build();
+        if(doctorReqDto.getKakao()!=null) {
+            doctor.setKakao(doctorReqDto.getKakao());
+            doctor.setImg(doctorReqDto.getImg());
+        }
         Doctor savedDoctor = (Doctor) doctorRepository.save(doctor);
         SignUpResDto signUpResDto;
 
