@@ -7,7 +7,7 @@ import { useEffect } from "react";
 export default function SelfStudyLayout({ type, children }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const state = useSelector((state) => state);
   const gameState = useSelector((state) => state.gameState);
 
   const games = [
@@ -50,7 +50,7 @@ export default function SelfStudyLayout({ type, children }) {
   return (
     <div className={style.main_container}>
       <div className={style.title_container}>
-        <h2>{games[type - 1].title}</h2>
+        <h2 style={{ maxWidth: "33%" }}>{games[type - 1].title}</h2>
         <div className={style.btns_container}>
           <div>
             <button
@@ -103,12 +103,14 @@ export default function SelfStudyLayout({ type, children }) {
             >
               목록보기
             </button>
-            <button
-              className={style.btn_etc}
-              onClick={() => navigate("/mypage/statistics")}
-            >
-              기록보기
-            </button>
+            {state.loginUser.userRole === "patient" ? (
+              <button
+                className={style.btn_etc}
+                onClick={() => navigate("/mypage/statistics")}
+              >
+                기록보기
+              </button>
+            ) : null}
           </div>
         </div>
       </div>

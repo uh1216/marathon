@@ -2,9 +2,10 @@ import React from "react";
 import style from "./SignUpType.module.css";
 import Doctor from "img/icon/doctor.png";
 import Patient from "img/icon/patient.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function SignInType() {
+  let { kakao } = useParams();
   const navigate = useNavigate();
 
   return (
@@ -13,14 +14,14 @@ export default function SignInType() {
       <div className={style.select_box}>
         <div
           className={style.box}
-          onClick={() => navigate("/user/sign-up/normal")}
+          onClick={() => navigate(`/user/sign-up/normal/${kakao}`)}
         >
           <img className={style.img} src={Patient} alt="환자 아이콘" />
           <div className={style.txt}>언어재활 대상자/보호자</div>
         </div>
         <div
           className={style.box}
-          onClick={() => navigate("/user/sign-up/doctor")}
+          onClick={() => navigate(`/user/sign-up/doctor/${kakao}`)}
         >
           <img className={style.img} src={Doctor} alt="의사 아이콘" />
           <div className={style.txt}>언어재활사 선생님</div>

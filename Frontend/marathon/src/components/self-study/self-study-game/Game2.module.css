@@ -33,7 +33,7 @@
   width: 165px;
   height: 220px;
   position: absolute;
-  z-index: 2;
+  z-index: 0;
   border-radius: 5px;
   border: 2px solid black;
 }
@@ -173,4 +173,32 @@
 
 .result td {
   background-color: rgb(206, 206, 206);
+}
+
+@media screen and (max-width: 768px) {
+  .cb {
+    font-size: 0.8em;
+    margin: 0px 7px;
+  }
+
+  .number_box {
+    height: 16px;
+    width: 16px;
+    border-radius: 100%;
+    border: 1px solid black;
+    box-sizing: border-box;
+    position: relative;
+    margin-right: 3px;
+    top: 4px;
+    left: 0px;
+  }
+
+  .number {
+    position: absolute;
+    right: 3.5px;
+  }
+
+  .choice_box {
+    margin-bottom: 20px;
+  }
 }

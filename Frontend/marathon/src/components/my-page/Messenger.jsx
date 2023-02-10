@@ -8,10 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "components/common/Modal";
 import SendMessage from "./SendMessage";
 import { updateUnReadMsgNum } from "stores/user.store";
+import { changeTreatSessionId } from "stores/content.store";
 import { $ } from "util/axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Messenger() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const now = new Date();
 
   const [list, setList] = useState([]);
@@ -33,6 +36,7 @@ export default function Messenger() {
 
     $.get(`/user-commu/list?pageNum=1`)
       .then(({ data }) => {
+        console.log(data);
         setList(data.content);
       })
       .catch((error) => {
@@ -50,6 +54,14 @@ export default function Messenger() {
       return str;
     }
     return date;
+  };
+
+  /** Date 객체를 사용해서 boolean을 추출 */
+  const isJoinable = (data) => {
+    let temp = Number(data.split("marathon")[0]);
+    let nowTime = new Date().getTime();
+    if (nowTime - temp <= 3600000) return true;
+    return false;
   };
 
   /** 메시지를 작성하는 모달 */
@@ -98,6 +110,11 @@ export default function Messenger() {
 
     setPageNum(pageNum + 1);
   };
+
+  useEffect(() => {
+    if (!state.treatSessionId.sessionId) return;
+    navigate("/treat");
+  }, [state.treatSessionId.sessionId]);
 
   return (
     <>
@@ -148,7 +165,9 @@ export default function Messenger() {
                 className={style.icon}
               />
               <div className={style.content_box}>
-                <div className={style.message_content}>{item.content}</div>
+                <div className={style.message_content}>
+                  {item.content !== null ? item.content : "방이 생성되었습니다"}
+                </div>
                 <div className={style.sub_content_box}>
                   <div className={style.sub_content}>
                     {dateToString(item.date)}
@@ -175,8 +194,15 @@ export default function Messenger() {
                     답장 쓰기
                   </button>
                 )}
-                {item.content === null && now - new Date(item.date) <= 30 && (
-                  <button className={style.btn}>수업 입장</button>
+                {item.content === null && isJoinable(item.link) && (
+                  <button
+                    className={style.btn}
+                    onClick={() => {
+                      dispatch(changeTreatSessionId(item.link));
+                    }}
+                  >
+                    수업 입장
+                  </button>
                 )}
               </div>
             </div>

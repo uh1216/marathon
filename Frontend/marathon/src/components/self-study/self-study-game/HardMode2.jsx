@@ -4,7 +4,7 @@ import { addRecord, resetRecord } from "stores/game.store";
 import commonStyle from "./Game.module.css";
 import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode, setType } from "stores/game.store";
-import GIF from "img/gif/11.gif";
+import GIF from "img/gif/game2_hard.gif";
 import CARD_BACK from "img/card_back.jpg";
 import style from "./Game2.module.css";
 import Form from "react-bootstrap/Form";

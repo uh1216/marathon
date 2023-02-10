@@ -4,7 +4,7 @@ import { addRecord, resetRecord } from "stores/game.store";
 import commonStyle from "./Game.module.css";
 import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode, setType } from "stores/game.store";
-import GIF from "img/gif/11.gif";
+import GIF from "img/gif/game2_easy.gif";
 import CARD_BACK from "img/card_back.jpg";
 import style from "./Game2.module.css";
 
@@ -199,9 +199,7 @@ export default function EasyMode1() {
             >
               <div className={selectState[0] ? style.arrow : null} />
               <div className={style.number_box}>
-                <div className={style.number} style={{ right: "6.5px" }}>
-                  1
-                </div>
+                <div className={style.number}>1</div>
               </div>
               {gameData[choices[0]].answer}
             </div>
@@ -237,9 +235,7 @@ export default function EasyMode1() {
             >
               <div className={selectState[3] ? style.arrow : null} />
               <div className={style.number_box}>
-                <div className={style.number} style={{ right: "4.8px" }}>
-                  4
-                </div>
+                <div className={style.number}>4</div>
               </div>
               {gameData[choices[3]].answer}
             </div>
@@ -303,9 +299,7 @@ export default function EasyMode1() {
             >
               <div className={selectState[0] ? style.arrow : null} />
               <div className={style.number_box}>
-                <div className={style.number} style={{ right: "6.5px" }}>
-                  1
-                </div>
+                <div className={style.number}>1</div>
               </div>
               {gameData[choices[0]].answer}
             </div>
@@ -341,9 +335,7 @@ export default function EasyMode1() {
             >
               <div className={selectState[3] ? style.arrow : null} />
               <div className={style.number_box}>
-                <div className={style.number} style={{ right: "4.8px" }}>
-                  4
-                </div>
+                <div className={style.number}>4</div>
               </div>
               {gameData[choices[3]].answer}
             </div>
@@ -432,9 +424,7 @@ export default function EasyMode1() {
                     : style.number_box
                 }
               >
-                <div className={style.number} style={{ right: "6.5px" }}>
-                  1
-                </div>
+                <div className={style.number}>1</div>
               </div>
               {gameData[choices[0]].answer}
             </div>
@@ -506,9 +496,7 @@ export default function EasyMode1() {
                     : style.number_box
                 }
               >
-                <div className={style.number} style={{ right: "4.8px" }}>
-                  4
-                </div>
+                <div className={style.number}>4</div>
               </div>
               {gameData[choices[3]].answer}
             </div>
