@@ -56,6 +56,14 @@ export default function Messenger() {
     return date;
   };
 
+  /** Date 객체를 사용해서 boolean을 추출 */
+  const isJoinable = (data) => {
+    let temp = Number(data.split("marathon")[0]);
+    let nowTime = new Date().getTime();
+    if (nowTime - temp <= 3600000) return true;
+    return false;
+  };
+
   /** 메시지를 작성하는 모달 */
   const showModalMessage = (commuSeq, senderSeq, senderName) => {
     setSenderSeq(senderSeq);
@@ -186,7 +194,7 @@ export default function Messenger() {
                     답장 쓰기
                   </button>
                 )}
-                {item.content === null && (
+                {item.content === null && isJoinable(item.link) && (
                   <button
                     className={style.btn}
                     onClick={() => {
