@@ -448,6 +448,7 @@ export default function Treat() {
             if (window.confirm("정말로 나가시겠습니까?")) {
               setIsIn(false);
               navigate("/");
+              window.location.reload();
             }
           }}
         >

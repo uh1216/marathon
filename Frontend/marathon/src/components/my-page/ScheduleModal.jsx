@@ -119,10 +119,9 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                   onClick={() => {
                     let sessionId =
                       new Date().getTime() +
-                      modalData.reservedDay.treatmentSeq +
                       "marathon" +
+                      modalData.reservedDay.treatmentSeq +
                       modalData.reservedDay.treatmentSeq;
-                    console.log(sessionId);
                     $.post("/doctor-treatment/alarm", {
                       treatmentSeq: modalData.reservedDay.treatmentSeq,
                       sessionId: sessionId,

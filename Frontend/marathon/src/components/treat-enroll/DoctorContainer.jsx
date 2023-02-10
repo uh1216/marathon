@@ -172,7 +172,7 @@ export default function DoctorContainer() {
                       check={check(val.seq)}
                       name={val.name}
                       introduce={val.introduce}
-                      img={val.img_url}
+                      img={val.img}
                       animation={animation}
                     />
                   );

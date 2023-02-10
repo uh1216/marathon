@@ -10,7 +10,7 @@
 }
 
 .doctor_img {
-  width: 70px;
+  width: 80px;
   height: 80px;
   border-radius: 100%;
 }
@@ -28,20 +28,21 @@
   justify-content: center;
 }
 
-.button {
-  margin-top: 10px;
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-}
-
 .button_design {
   width: 90%;
   height: 45px;
+  margin-top: 2px;
   border: 0;
   color: white;
   background-color: #4d88fb;
   border-radius: 10px;
+  transition: 0.2s;
+  box-shadow: 1px 4px 4px rgb(17, 17, 17, 0.3);
+}
+
+.button_design:hover {
+  color: rgb(91, 91, 91);
+  background-color: #82a9f9;
 }
 
 .button_design:disabled {
@@ -61,4 +62,8 @@
 
 .introduce_title {
   font-size: 1.2em;
+}
+
+.introduce {
+  padding: 20px;
 }

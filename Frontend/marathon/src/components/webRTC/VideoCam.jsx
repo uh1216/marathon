@@ -74,8 +74,6 @@ class VideoCam extends Component {
 
   joinSession() {
     this.OV = new OpenVidu();
-    console.log(this.state.myUserName);
-    console.log(this.state.mySessionId);
     this.setState(
       {
         session: this.OV.initSession(),
@@ -97,9 +95,13 @@ class VideoCam extends Component {
           console.warn(exception);
         });
         this.getToken().then((token) => {
+          console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,여기부분1");
           mySession
             .connect(token, { clientData: this.state.myUserName })
             .then(async () => {
+              console.log(
+                ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 여기부분2"
+              );
               let publisher = await this.OV.initPublisherAsync(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam

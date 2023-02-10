@@ -4,7 +4,7 @@ import { addRecord, resetRecord, setType } from "stores/game.store";
 import commonStyle from "./Game.module.css";
 import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode } from "stores/game.store";
-import GIF from "img/gif/11.gif";
+import GIF from "img/gif/game3_normal.gif";
 import style from "./Game3.module.css";
 
 export default function NormalMode3() {

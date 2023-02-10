@@ -5,7 +5,7 @@ import commonStyle from "./Game.module.css";
 import style from "./EasyMode1.module.css";
 import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode } from "stores/game.store";
-import GIF from "img/gif/color_match.gif";
+import GIF from "img/gif/game1_easy.gif";
 
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
