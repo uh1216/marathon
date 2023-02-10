@@ -202,6 +202,7 @@ export default function EasyMode1() {
               <Form.Control
                 placeholder="단어를 입력하세요!"
                 aria-label="Username"
+                value={selected}
                 aria-describedby="basic-addon1"
                 onChange={(e) => {
                   setSelected(e.target.value);
@@ -269,6 +270,7 @@ export default function EasyMode1() {
               <Form.Control
                 placeholder="단어를 입력하세요!"
                 disabled
+                value={selected}
                 aria-label="Username"
                 aria-describedby="basic-addon1"
                 onChange={(e) => {

@@ -13,15 +13,11 @@ import MyPage from "pages/MyPage";
 import SelfStudyList from "pages/SelfStudyList";
 import ScheduleManage from "pages/ScheduleManage";
 import SelfStudy from "pages/SelfStudy";
-import { useSelector } from "react-redux";
 import AuthRoute from "util/AuthRoute";
 import Consult from "pages/Consult";
 import Treat from "pages/Treat";
-// import ChatRoom from "components/websocket/ChatRoom";
-import Practice from "components/websocket/Practice";
 
 function App() {
-  const state = useSelector((state) => state);
   return (
     <>
       <Routes>
@@ -33,7 +29,6 @@ function App() {
           <Route path="/self-study-list" element={<SelfStudyList />} />
           <Route path="/schedule-manage" element={<ScheduleManage />} />
           <Route path="/treat-enroll" element={<TreatEnroll />} />
-          <Route path="/chatroom" element={<Practice />} />
           <Route
             path="/mypage/*"
             element={<AuthRoute render={() => <MyPage />} />}

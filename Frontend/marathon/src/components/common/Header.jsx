@@ -171,7 +171,8 @@ export default function Header() {
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/self-study/1/easy");
+
+                  window.location.href = "/self-study/1/easy";
                 }}
               >
                 색깔 위치 맞추기
@@ -180,7 +181,7 @@ export default function Header() {
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/self-study/2/easy");
+                  window.location.href = "/self-study/2/easy";
                 }}
               >
                 그림 카드 맞추기
@@ -189,7 +190,7 @@ export default function Header() {
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/self-study/3/easy");
+                  window.location.href = "/self-study/3/easy";
                 }}
               >
                 동물 위치 맞추기

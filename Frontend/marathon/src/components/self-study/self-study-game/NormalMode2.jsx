@@ -222,9 +222,14 @@ export default function EasyMode1() {
             <table className={style.table2} style={{ height: "20px" }}>
               <tbody>
                 <tr>
-                  {selected.map((value) => {
+                  {selected.map((value, i) => {
                     return (
-                      <td style={{ height: "38px", width: "33px" }}>{value}</td>
+                      <td
+                        style={{ height: "38px", width: "33px" }}
+                        key={new Date().getTime() + value + i}
+                      >
+                        {value}
+                      </td>
                     );
                   })}
                 </tr>
@@ -357,9 +362,14 @@ export default function EasyMode1() {
             <table className={style.table2} style={{ height: "20px" }}>
               <tbody>
                 <tr>
-                  {selected.map((value) => {
+                  {selected.map((value, i) => {
                     return (
-                      <td style={{ height: "38px", width: "33px" }}>{value}</td>
+                      <td
+                        style={{ height: "38px", width: "33px" }}
+                        key={new Date().getTime() + value + i}
+                      >
+                        {value}
+                      </td>
                     );
                   })}
                 </tr>
@@ -512,9 +522,14 @@ export default function EasyMode1() {
             >
               <tbody>
                 <tr>
-                  {selected.map((value) => {
+                  {selected.map((value, i) => {
                     return (
-                      <td style={{ height: "38px", width: "33px" }}>{value}</td>
+                      <td
+                        style={{ height: "38px", width: "33px" }}
+                        key={new Date().getTime() + value + i}
+                      >
+                        {value}
+                      </td>
                     );
                   })}
                 </tr>

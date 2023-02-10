@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShareFromSquare,

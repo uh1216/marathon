@@ -30,7 +30,7 @@
 
 .box_4 {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 .box_4 > button {
   background-color: white;

@@ -13,7 +13,7 @@ export default function ScheduleManage() {
   };
 
   /** API GET 함수 */
-  const { isLoading, data, isError, error } = useQuery(["TimeTable"], () =>
+  const { isLoading, data } = useQuery(["TimeTable"], () =>
     $.get(`/doctor-treatment/table`)
   );
 

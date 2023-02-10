@@ -12,15 +12,14 @@ import {
 import { faComment as faCommentBlank } from "@fortawesome/free-regular-svg-icons";
 import style from "./Treat.module.css";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Chatting from "components/treat/Chatting";
 import VideoCam from "components/webRTC/VideoCam";
 import QuestionBoard from "components/treat/QuestionBoard";
 import SketchBoard from "components/treat/SketchBoard";
 import ImageBoard from "components/treat/ImageBoard";
 import WordChainBoard from "components/treat/WordChainBoard";
-import { useDispatch, useSelector } from "react-redux";
-import { changeTreatSessionId } from "stores/content.store";
+import { useSelector } from "react-redux";
 
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
@@ -37,8 +36,6 @@ const interactionTitle = [
 ];
 
 export default function Treat() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { sessionId } = useParams();
   const state = useSelector((state) => state);
   const [isVideo, setIsVideo] = useState(true);
@@ -281,6 +278,7 @@ export default function Treat() {
         setImageNo(() => Number(newMessage.content));
       });
     });
+    // eslint-disable-next-line
   }, []);
 
   /** 채팅 대화 리스트에 새로운 채팅을 추가 */
