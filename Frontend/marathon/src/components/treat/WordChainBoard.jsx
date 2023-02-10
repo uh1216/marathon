@@ -31,6 +31,7 @@ export default function WordChainBoard({ channelId, stompClient, wordList }) {
         type="text"
         placeholder="단어를 입력해주세요"
         value={word}
+        maxLength="5"
         onChange={(e) => {
           setWord(e.target.value);
         }}
