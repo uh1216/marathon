@@ -66,4 +66,9 @@ public class UserSignServiceImpl implements UserSignService {
             throw new Exception();
         }
     }
+
+    @Override
+    public void checkKakao(String kakao) {
+        userRepository.getByKakao(kakao);
+    }
 }

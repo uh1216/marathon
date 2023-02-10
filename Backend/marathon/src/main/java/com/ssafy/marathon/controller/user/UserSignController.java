@@ -91,4 +91,9 @@ public class UserSignController {
         userSignService.checkId(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+    @GetMapping("/checkkakao/{kakao}")
+    public ResponseEntity<?> checkKakao(@PathVariable String kakao) throws Exception {
+        userSignService.checkKakao(kakao);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }
