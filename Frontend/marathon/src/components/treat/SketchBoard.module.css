@@ -6,7 +6,37 @@
   height: 20px;
 }
 
-.ducplicated {
-  width: 200px;
-  height: 100px;
+.option {
+  display: block;
+}
+
+.tools {
+  display: flex;
+  align-items: start;
+}
+
+.fill {
+  display: inline;
+}
+
+.icon {
+  background-color: #b2caf5;
+  border: 1px #b2caf5;
+  z-index: 1;
+}
+
+.icon2 {
+  background-color: #ffffff;
+  border: 1px #ffffff;
+  z-index: 1;
+}
+
+.right_side {
+  background-color: #fff7ed;
+  border-bottom-right-radius: 10px;
+}
+
+.option {
+  padding-top: 6px;
+  padding-left: 6px;
 }

@@ -74,18 +74,22 @@ export default function SelectSchedule({ name, seq }) {
   };
 
   const checkSchedule = (thisDay) => {
+    const nowDay = new Date();
     const found = data.data.list.find((e) => e.localDate === thisDay);
     const thisTimeTable = found.bitDate;
 
     const timeLlist = [];
     for (let i = 0; i < thisTimeTable.length; i++) {
       /** 9시 수업인 경우 09:00로 표기하기 위해 따로 구분
-       * 11시 다음 수업이 13시 이므로 11시, 12시도 따로 구분*/
+       * 11시 다음 수업이 13시 이므로 11시, 12시도 따로 구분
+       * 예약은 최소 당일 1시간 전까지 신청가능하도록 설정*/
       if (i === 0) {
         timeLlist.push(
           <button
             key={i}
             className={
+              (new Date(Number(new Date(thisDay)) - 3600000) < nowDay &&
+                style.outdated) ||
               (thisTimeTable[i] === "0" && style.button0) ||
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2) ||
@@ -95,6 +99,8 @@ export default function SelectSchedule({ name, seq }) {
             value={cnt.toString() + i.toString() + thisTimeTable[i]}
             onClick={onChange}
             disabled={
+              (new Date(Number(new Date(thisDay)) - 3600000) < nowDay &&
+                true) ||
               (thisTimeTable[i] === "0" && true) ||
               (thisTimeTable[i] === "2" && true)
             }
@@ -107,6 +113,9 @@ export default function SelectSchedule({ name, seq }) {
           <button
             key={i}
             className={
+              (new Date(Number(new Date(thisDay)) + (i - 1) * 3600000) <
+                nowDay &&
+                style.outdated) ||
               (thisTimeTable[i] === "0" && style.button0) ||
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2) ||
@@ -116,6 +125,9 @@ export default function SelectSchedule({ name, seq }) {
             value={cnt.toString() + i.toString() + thisTimeTable[i]}
             onClick={onChange}
             disabled={
+              (new Date(Number(new Date(thisDay)) + (i - 1) * 3600000) <
+                nowDay &&
+                true) ||
               (thisTimeTable[i] === "0" && true) ||
               (thisTimeTable[i] === "2" && true)
             }
@@ -128,6 +140,8 @@ export default function SelectSchedule({ name, seq }) {
           <button
             key={i}
             className={
+              (new Date(Number(new Date(thisDay)) + i * 3600000) <= nowDay &&
+                style.outdated) ||
               (thisTimeTable[i] === "0" && style.button0) ||
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2) ||
@@ -137,6 +151,8 @@ export default function SelectSchedule({ name, seq }) {
             value={cnt.toString() + i.toString() + thisTimeTable[i]}
             onClick={onChange}
             disabled={
+              (new Date(Number(new Date(thisDay)) + i * 3600000) <= nowDay &&
+                true) ||
               (thisTimeTable[i] === "0" && true) ||
               (thisTimeTable[i] === "2" && true)
             }
