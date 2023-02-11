@@ -98,6 +98,7 @@
 
 @media screen and (max-width: 910px) {
   .notice_top_interface_grid {
+    margin-bottom: 30px;
     grid-template-columns: 35% 45% 20%;
     grid-template-rows: 60% 40%;
   }
@@ -130,5 +131,15 @@
     display: flex;
     grid-row-start: 2;
     grid-column-start: 3;
+  }
+
+  .notice_header_container {
+    background-color: #d1d0ff;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 15% 60% 25%;
+    text-align: center;
+    align-items: center;
+    font-size: 1.2em;
   }
 }

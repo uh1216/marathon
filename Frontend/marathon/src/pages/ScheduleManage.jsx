@@ -71,18 +71,22 @@ export default function ScheduleManage() {
   };
 
   const checkSchedule = (thisDay) => {
+    const nowDay = new Date();
     const found = data.data.list.find((e) => e.localDate === thisDay);
     const thisTimeTable = found.bitDate;
 
     const timeLlist = [];
     for (let i = 0; i < thisTimeTable.length; i++) {
       /** 9시 수업인 경우 09:00로 표기하기 위해 따로 구분
-       * 11시 다음 수업이 13시 이므로 11시, 12시도 따로 구분*/
+       * 11시 다음 수업이 13시 이므로 11시, 12시도 따로 구분
+       * 예약은 최소 당일 1시간 전까지 신청가능하도록 설정*/
       if (i === 0) {
         timeLlist.push(
           <button
             key={i}
             className={
+              // (new Date(Number(new Date(thisDay))) < nowDay &&
+              //   style.outdated) ||
               (thisTimeTable[i] === "0" && style.button0) ||
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2)
@@ -90,7 +94,12 @@ export default function ScheduleManage() {
             name={thisDay}
             value={i + thisTimeTable[i]}
             onClick={onClick}
-            disabled={thisTimeTable[i] === "2" ? true : false}
+            disabled={
+              (thisTimeTable[i] === "2" ? true : false) ||
+              (new Date(Number(new Date(thisDay)) - 3600000) < nowDay
+                ? true
+                : false)
+            }
           >
             0{i + 9} : 00
           </button>
@@ -100,6 +109,8 @@ export default function ScheduleManage() {
           <button
             key={i}
             className={
+              // (new Date(Number(new Date(thisDay)) + i * 3600000) < nowDay &&
+              //   style.outdated) ||
               (thisTimeTable[i] === "0" && style.button0) ||
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2)
@@ -107,7 +118,12 @@ export default function ScheduleManage() {
             name={thisDay}
             value={i + thisTimeTable[i]}
             onClick={onClick}
-            disabled={thisTimeTable[i] === "2" ? true : false}
+            disabled={
+              (thisTimeTable[i] === "2" ? true : false) ||
+              (new Date(Number(new Date(thisDay)) + (i - 1) * 3600000) < nowDay
+                ? true
+                : false)
+            }
           >
             {i + 9} : 00
           </button>
@@ -117,6 +133,9 @@ export default function ScheduleManage() {
           <button
             key={i}
             className={
+              // (new Date(Number(new Date(thisDay)) + (i + 1) * 3600000) <=
+              //   nowDay &&
+              //   style.outdated) ||
               (thisTimeTable[i] === "0" && style.button0) ||
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2)
@@ -124,7 +143,12 @@ export default function ScheduleManage() {
             name={thisDay}
             value={i + thisTimeTable[i]}
             onClick={onClick}
-            disabled={thisTimeTable[i] === "2" ? true : false}
+            disabled={
+              (thisTimeTable[i] === "2" ? true : false) ||
+              (new Date(Number(new Date(thisDay)) + i * 3600000) <= nowDay
+                ? true
+                : false)
+            }
           >
             {i + 10} : 00
           </button>
@@ -187,14 +211,22 @@ export default function ScheduleManage() {
             </div>
             <div className={style.content}>
               <div className={style.date_header}>
-                <button className={style.button} onClick={prevWeek}>
+                <button
+                  className={cnt === 0 ? style.button_disable : style.button}
+                  onClick={prevWeek}
+                  disabled={cnt === 0 ? true : false}
+                >
                   ◁ 이전
                 </button>
                 <span className={style.date_text}>
                   {thisYear(0)}.{thisMonth(0)}.{thisDay(0)} ~ {thisYear(6)}.
                   {thisMonth(6)}.{thisDay(6)}
                 </span>
-                <button className={style.button} onClick={nextWeek}>
+                <button
+                  className={cnt === 2 ? style.button_disable : style.button}
+                  onClick={nextWeek}
+                  disabled={cnt === 2 ? true : false}
+                >
                   다음 ▷
                 </button>
               </div>
