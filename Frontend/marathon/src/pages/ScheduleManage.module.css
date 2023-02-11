@@ -114,9 +114,9 @@
   padding: 4px;
   margin-left: 10px;
   background-color: #ffffff;
-  border: 0.5px solid #d3c8c8;
+  border: 0.5px solid #000000;
   border-radius: 20px;
-  color: #d3c8c8;
+  color: #000000;
 }
 
 .button0:hover:enabled {
@@ -155,9 +155,9 @@
   height: 40px;
   padding: 4px;
   margin-left: 10px;
-  background-color: #fcf8f8;
-  border: none;
-  color: rgb(230, 225, 225);
+  background-color: #ffffff;
+  border: 0.5px solid #e6e1e1;
+  color: #e6e1e1;
   border-radius: 20px;
 }
 
