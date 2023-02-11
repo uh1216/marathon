@@ -105,9 +105,9 @@ export default function NoticeBoard() {
              */}
             <div>
               <div className={style.notice_header_container}>
-                <div>No.</div>
-                <div>제목</div>
-                <div>등록일</div>
+                <div className={style.only_title}>No.</div>
+                <div className={style.only_title}>제목</div>
+                <div className={style.only_title}>등록일</div>
                 <div className={style.count_hidden}>조회수</div>
               </div>
               {/** 현재는 더미데이터, 백엔드와 연결 후 서버에서 값 가져와서 출력 */}

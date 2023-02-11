@@ -272,7 +272,7 @@ input[type="password"] {
   }
 
   .inner_container {
-    min-width: 390px;
+    min-width: 375px;
   }
 
   .input_div {
@@ -300,5 +300,16 @@ input[type="password"] {
 
   .calbox {
     width: 100%;
+  }
+
+  .private_info_box {
+    width: 340px;
+    margin-top: 40px;
+    padding: 10px 5px;
+  }
+
+  .private_info_box p {
+    font-size: 0.8em;
+    white-space: normal;
   }
 }
