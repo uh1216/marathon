@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+
 @RequestMapping("user-sign")
 @RestController
 @RequiredArgsConstructor
@@ -37,15 +39,16 @@ public class UserSignController {
     @PostMapping(value = "/login")
     public ResponseEntity<?> signIn(@RequestBody SignInReqDto signInRequestDto) {
         LOGGER.info("[signIn] 로그인을 시도하고 있습니다. id : {}, pw : ****", signInRequestDto.getId());
-        SignInResDto signInResultDto = userSignService.signIn(signInRequestDto);
+        SignInResDto signInResDto = userSignService.signIn(signInRequestDto);
 
-        if (signInResultDto.isSuccess()) {
+        if (signInResDto.isSuccess()) {
             LOGGER.info("[signIn] 정상적으로 로그인되었습니다. id : {}, token : {}", signInRequestDto.getId(),
-                signInResultDto.getAccessToken());
-            return new ResponseEntity<SignInResDto>(signInResultDto, HttpStatus.OK);
+                    signInResDto.getAccessToken());
+            return new ResponseEntity<SignInResDto>(signInResDto, HttpStatus.OK);
         }
-        return new ResponseEntity<SignInResDto>(signInResultDto, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<SignInResDto>(signInResDto, HttpStatus.UNAUTHORIZED);
     }
+
 
     @DeleteMapping("/withdraw")
     public ResponseEntity<?> withdraw(@RequestHeader("Access-Token") String accessToken) {
@@ -91,9 +94,22 @@ public class UserSignController {
         userSignService.checkId(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
     @GetMapping("/checkkakao/{kakao}")
     public ResponseEntity<?> checkKakao(@PathVariable String kakao) throws Exception {
         userSignService.checkKakao(kakao);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/login-kakao")
+    public ResponseEntity<?> signInByKakao(@RequestBody HashMap<String, String> map) {
+        LOGGER.info("[signInByKakao] 로그인을 시도하고 있습니다. kakao : {}", map.get("kakao"));
+        SignInResDto signInResDto = userSignService.signInByKakao(map.get("kakao"));
+
+        if (signInResDto.isSuccess()) {
+            LOGGER.info("[signInByKakao] 정상적으로 로그인되었습니다. token : {}", signInResDto.getAccessToken());
+            return new ResponseEntity<SignInResDto>(signInResDto, HttpStatus.OK);
+        }
+        return new ResponseEntity<SignInResDto>(signInResDto, HttpStatus.UNAUTHORIZED);
     }
 }

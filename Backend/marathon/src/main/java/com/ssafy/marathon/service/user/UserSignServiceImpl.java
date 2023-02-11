@@ -72,4 +72,22 @@ public class UserSignServiceImpl implements UserSignService {
         User user = userRepository.getByKakao(kakao);
         String id = user.getId();
     }
+
+    @Override
+    public SignInResDto signInByKakao(String kakao) {
+        LOGGER.info("[signInByKakao] kakao 로 회원 정보 요청");
+        User user = userRepository.getByKakao(kakao);
+        SignInResDto signInResDto;
+        try {
+            LOGGER.info("[signIn] 카카오id 조회 성공 id : {}", user.getId());
+            signInResDto = SignInResDto.builder().success(true).msg("로그인 성공").accessToken(
+                    jwtTokenProvider.createToken(user)).build();
+        } catch (Exception e) {
+            LOGGER.info("[signInByKakao] 카카오 id 조회 실패");
+            signInResDto = SignInResDto.builder().success(false).msg("로그인 실패 : 카카오ID 조회 실패").build();
+            return signInResDto;
+        }
+
+        return signInResDto;
+    }
 }

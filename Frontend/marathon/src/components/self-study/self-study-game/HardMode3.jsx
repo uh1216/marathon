@@ -334,6 +334,7 @@ export default function EasyMode1() {
               <button
                 className={"draggable " + style.draggable}
                 k={i}
+                key={i}
                 draggable
                 pre_y="-1"
                 pre_x="-1"

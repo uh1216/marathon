@@ -17,6 +17,7 @@ public class AdminInit {
     private final Logger LOGGER = LoggerFactory.getLogger(AdminInit.class);
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
+    private static String defaultImg = "https://d1v10kml6l14kq.cloudfront.net/default.jpg";
 
     @PostConstruct
     protected void init() {
@@ -25,9 +26,8 @@ public class AdminInit {
             .id("ssafy")
             .password(passwordEncoder.encode("ssafy"))
             .roles(Collections.singletonList("ROLE_ADMIN"))
-            .name("관리자")
+            .name("관리자").img(defaultImg)
             .build();
-        admin.setImg("default.PNG");
         adminRepository.save(admin);
         LOGGER.info("[init] admin 유저생성 완료 id : {}", admin.getId());
     }

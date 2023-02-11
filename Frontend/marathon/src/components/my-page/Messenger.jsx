@@ -8,14 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "components/common/Modal";
 import SendMessage from "./SendMessage";
 import { updateUnReadMsgNum } from "stores/user.store";
-import { changeTreatSessionId } from "stores/content.store";
 import { $ } from "util/axios";
-import { useNavigate } from "react-router-dom";
 
 export default function Messenger() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const now = new Date();
 
   const [list, setList] = useState([]);
   const state = useSelector((state) => state);
@@ -36,12 +32,12 @@ export default function Messenger() {
 
     $.get(`/user-commu/list?pageNum=1`)
       .then(({ data }) => {
-        console.log(data);
         setList(data.content);
       })
       .catch((error) => {
         console.log(error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Date 객체를 원하는 포맷의 String으로 반환하는 함수 */
@@ -110,12 +106,6 @@ export default function Messenger() {
 
     setPageNum(pageNum + 1);
   };
-
-  useEffect(() => {
-    if (!state.treatSessionId.sessionId) return;
-    // navigate("/treat");
-    window.location.href = "/treat";
-  }, [state.treatSessionId.sessionId]);
 
   return (
     <>
@@ -199,7 +189,11 @@ export default function Messenger() {
                   <button
                     className={style.btn}
                     onClick={() => {
-                      window.location.href = `/treat/${item.link}`;
+                      window.open(
+                        `/treat/${item.link}`,
+                        `Marathon - 화상제활`,
+                        "fullscreen, menubar=no, status=no, toolbar=no, location=no"
+                      );
                     }}
                   >
                     수업 입장

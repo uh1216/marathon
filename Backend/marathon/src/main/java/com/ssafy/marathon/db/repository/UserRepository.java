@@ -16,4 +16,5 @@ public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
     List<User> findAllByDtypeIsNot(String role);
 
     User getByKakao(String kakao);
+    Optional<User> findByKakao(String kakao);
 }

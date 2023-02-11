@@ -240,7 +240,7 @@ export default function Header() {
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/user/sign-up-type");
+                  navigate("/user/sign-up-type/normal");
                 }}
               >
                 <span>회원가입</span>
@@ -415,7 +415,7 @@ export default function Header() {
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
                   if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/user/sign-up-type");
+                  navigate("/user/sign-up-type/normal");
                 }}
               >
                 <span>회원가입</span>
