@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import style from "./Chatting.module.css";
 
 export default function Chatting({ stompClient, channelId, chatList }) {
@@ -35,9 +35,7 @@ export default function Chatting({ stompClient, channelId, chatList }) {
                 <div className={style.your_bubble_container}>
                   <span className={style.your_bubble}>
                     <div className={style.your_bubble_tail}></div>
-                    <span className={style.your_bubble_content}>
-                      {item.content}
-                    </span>
+                    <p className={style.your_bubble_content}>{item.content}</p>
                   </span>
                 </div>
               </div>
@@ -46,7 +44,7 @@ export default function Chatting({ stompClient, channelId, chatList }) {
             <div className={style.my_bubble_container}>
               <span className={style.my_bubble}>
                 <div className={style.my_bubble_tail}></div>
-                <span className={style.my_bubble_content}>{item.content}</span>
+                <p className={style.my_bubble_content}>{item.content}</p>
               </span>
             </div>
           )
