@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import style from "./SelfStudyLayout.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setStage, setType, setIsReady, setMode } from "stores/game.store";
+import { setStage, setIsReady } from "stores/game.store";
 import { useEffect } from "react";
 
 export default function SelfStudyLayout({ type, children }) {
@@ -103,7 +103,7 @@ export default function SelfStudyLayout({ type, children }) {
             {state.loginUser.userRole === "patient" ? (
               <button
                 className={style.btn_etc}
-                onClick={() => navigate("/mypage/statistics")}
+                onClick={() => navigate("/mypage/statistics/1")}
               >
                 기록보기
               </button>
@@ -123,7 +123,7 @@ export default function SelfStudyLayout({ type, children }) {
           >
             시 작
           </button>
-        ) : gameState.stage <= 10 && gameState.isReady == 0 ? (
+        ) : gameState.stage <= 10 && gameState.isReady === 0 ? (
           <button
             className={style.btn_main}
             onClick={() => {
@@ -132,7 +132,7 @@ export default function SelfStudyLayout({ type, children }) {
           >
             도 전
           </button>
-        ) : gameState.stage <= 10 && gameState.isReady == 1 ? (
+        ) : gameState.stage <= 10 && gameState.isReady === 1 ? (
           <button
             className={style.btn_main}
             onClick={() => {
@@ -141,7 +141,7 @@ export default function SelfStudyLayout({ type, children }) {
           >
             정답 보기
           </button>
-        ) : gameState.stage < 10 && gameState.isReady == 2 ? (
+        ) : gameState.stage < 10 && gameState.isReady === 2 ? (
           <button
             className={style.btn_main}
             onClick={() => {
@@ -151,7 +151,7 @@ export default function SelfStudyLayout({ type, children }) {
           >
             다 음
           </button>
-        ) : gameState.stage == 10 && gameState.isReady == 2 ? (
+        ) : gameState.stage === 10 && gameState.isReady === 2 ? (
           <button
             className={style.btn_main}
             onClick={() => {

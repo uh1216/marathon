@@ -1,5 +1,5 @@
 import style from "./ScheduleModal.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
@@ -116,7 +116,14 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                     $.post("/doctor-treatment/alarm", {
                       treatmentSeq: modalData.reservedDay.treatmentSeq,
                       sessionId: sessionId,
-                    }).then((window.location.href = `/treat/${sessionId}`));
+                    }).then(
+                      window.open(
+                        `/treat/${sessionId}`,
+                        `Marathon - 화상제활`,
+                        "fullscreen, menubar=no, status=no, toolbar=no, location=no"
+                      )
+                    );
+                    setIsModalOpen(false);
                   }}
                 >
                   방 생성

@@ -508,7 +508,7 @@ export default function Treat() {
           onClick={() => {
             if (window.confirm("정말로 나가시겠습니까?")) {
               setIsIn(false);
-              window.location.href = "/";
+              window.close();
             }
           }}
         >
