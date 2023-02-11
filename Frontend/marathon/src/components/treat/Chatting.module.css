@@ -38,7 +38,7 @@
 .my_bubble_container {
   min-height: 32px;
   height: auto;
-  margin: 10px;
+  margin: 15px 10px;
   display: flex;
   justify-content: flex-end;
 }
@@ -78,6 +78,7 @@
 /* 너의 말풍선 */
 .your_wrapper {
   display: flex;
+  margin: 7px 0;
 }
 .your_name {
   font-size: 0.8em;
@@ -86,7 +87,7 @@
 .your_bubble_container {
   min-height: 32px;
   height: auto;
-  margin: 10px;
+  margin: 5px 10px;
   display: flex;
   justify-content: flex-start;
 }
@@ -123,8 +124,8 @@
   border-right: 15px solid transparent;
 }
 .your_bubble_profile {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 100%;
   object-fit: cover;
 }
