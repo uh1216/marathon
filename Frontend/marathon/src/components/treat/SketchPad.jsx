@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { findDOMNode } from "react-dom";
+import style from "./SketchPad.module.css";
 import {
   Pencil,
   TOOL_PENCIL,
@@ -51,15 +52,11 @@ export default class SketchPad extends Component {
   }
 
   componentWillReceiveProps({ tool, items }) {
-    console.log(items);
-    console.log(tool);
     items
       .filter((item) => {
-        console.log(this.props.items);
         return this.props.items.indexOf(item) === -1;
       })
       .forEach((item) => {
-        console.log(item);
         this.initTool(item.tool);
         this.tool.draw(item, this.props.animate);
       });
@@ -133,7 +130,7 @@ export default class SketchPad extends Component {
         ref={(canvas) => {
           this.canvasRef = canvas;
         }}
-        className={canvasClassName}
+        className={`${canvasClassName} ${style.white_board}`}
         onMouseDown={this.onMouseDown}
         onMouseMove={this.onMouseMove}
         onMouseOut={this.onMouseUp}
