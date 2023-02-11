@@ -17,4 +17,6 @@ public interface UserSignService {
     void checkId(String id) throws Exception;
 
     void checkKakao(String kakao);
+
+    SignInResDto signInByKakao(String kakao);
 }

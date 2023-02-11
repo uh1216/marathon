@@ -85,8 +85,8 @@ export default function ScheduleManage() {
           <button
             key={i}
             className={
-              // (new Date(Number(new Date(thisDay))) < nowDay &&
-              //   style.outdated) ||
+              (new Date(Number(new Date(thisDay)) - 3600000) < nowDay &&
+                style.outdated) ||
               (thisTimeTable[i] === "0" && style.button0) ||
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2)
@@ -109,8 +109,9 @@ export default function ScheduleManage() {
           <button
             key={i}
             className={
-              // (new Date(Number(new Date(thisDay)) + i * 3600000) < nowDay &&
-              //   style.outdated) ||
+              (new Date(Number(new Date(thisDay)) + (i - 1) * 3600000) <
+                nowDay &&
+                style.outdated) ||
               (thisTimeTable[i] === "0" && style.button0) ||
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2)
@@ -133,9 +134,8 @@ export default function ScheduleManage() {
           <button
             key={i}
             className={
-              // (new Date(Number(new Date(thisDay)) + (i + 1) * 3600000) <=
-              //   nowDay &&
-              //   style.outdated) ||
+              (new Date(Number(new Date(thisDay)) + i * 3600000) <= nowDay &&
+                style.outdated) ||
               (thisTimeTable[i] === "0" && style.button0) ||
               (thisTimeTable[i] === "1" && style.button1) ||
               (thisTimeTable[i] === "2" && style.button2)
