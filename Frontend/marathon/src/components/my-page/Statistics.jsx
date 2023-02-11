@@ -85,8 +85,6 @@ export default function Statistics() {
     () => $.get(`patient-game/list?page=${pageNum}`),
     {
       onSuccess: ({ data }) => {
-        console.log("----------");
-        console.log(data);
         setNumber(data.number);
         setIsFirst(data.first);
         setIsLast(data.last);

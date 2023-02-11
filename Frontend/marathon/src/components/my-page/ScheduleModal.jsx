@@ -3,13 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
-import { changeTreatSessionId } from "stores/content.store";
 import { $ } from "util/axios";
-import { useNavigate } from "react-router-dom";
 
 export default function ScheduleModal({ modalData, setIsModalOpen }) {
   const state = useSelector((state) => state);
-  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [isCreatable, setIsCreatable] = useState(false);
 

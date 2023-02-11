@@ -3,7 +3,6 @@ import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 
 const GameChart = (props) => {
-  console.log(props);
   let data = {
     labels: props.label,
     datasets: [
