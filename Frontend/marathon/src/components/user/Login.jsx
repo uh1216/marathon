@@ -70,11 +70,12 @@ export default function Main() {
             console.log(kakaoId);
 
             $.get(`/user-sign/checkkakao/${kakaoId}`)
-              .then(() => {
+              .then((res) => {
                 // 존재하는 경우 로그인 처리
                 hiddenKakaoLogin(kakaoId);
               })
-              .catch(() => {
+              .catch((err) => {
+                console.log(err);
                 // 존재하지 않으면 회원가입
                 hiddenKakaoJoin(response);
               });
@@ -90,22 +91,21 @@ export default function Main() {
     });
   };
 
-  const hiddenKakaoLogin = (response) => {
-    // 이거 카카오 로그인 전용 API 하나 더 만들어야됨 (카카오 아이디만 일치하면 바로 로그인)
-    // $.post("/user-sign/login", {
-    //   id: kakaoId,
-    // })
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       sessionStorage.setItem("access-token", res.data.accessToken);
-    //       dispatch(userLogin());
-    //       navigate("/");
-    //       return;
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+  const hiddenKakaoLogin = (kakaoId) => {
+    $.post("/user-sign/login-kakao", {
+      kakao: kakaoId,
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          sessionStorage.setItem("access-token", res.data.accessToken);
+          dispatch(userLogin());
+          navigate("/");
+          return;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // 카카오 회원가입 한 적 없으면 회원가입 해야 됨

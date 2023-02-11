@@ -336,6 +336,7 @@ export default function EasyMode1() {
             {[1, 2, 3].map((i) => (
               <button
                 className={"draggable " + style.draggable}
+                key={i}
                 k={i}
                 draggable
                 pre_y="-1"
