@@ -64,7 +64,11 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
           style={{ gridTemplateColumns: grid, maxWidth: "850px" }}
         >
           {headRow.map((content, idx) => {
-            return <div key={idx}>{content}</div>;
+            return (
+              <div key={idx} style={{ marginLeft: "2px" }}>
+                {content}
+              </div>
+            );
           })}
         </div>
         {data?.content.map((content, idx) => {

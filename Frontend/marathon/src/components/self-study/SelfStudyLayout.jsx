@@ -18,25 +18,16 @@ export default function SelfStudyLayout({ type, children }) {
 
   const preventGoBack = (e) => {
     console.log(e);
-    //let isGoBack = window.confirm("종료하기를 눌러주세요 :D");
-    // if (!isGoBack) {
-    //   window.history.pushState(null, "", "");
-    // }
-    // if (isGoBack) {
-    //   window.history.popState();
-    // }
   };
 
   // 새로고침 막기 변수
   const preventClose = (e) => {
     e.preventDefault();
-    e.returnValue = ""; // chrome에서는 설정이 필요해서 넣은 코드
+    e.returnValue = "";
   };
 
-  // 브라우저에 렌더링 시 한 번만 실행하는 코드
   useEffect(() => {
     (() => {
-      //window.history.pushState(null, "", "");
       window.addEventListener("popstate", preventGoBack);
       window.addEventListener("beforeunload", preventClose);
     })();

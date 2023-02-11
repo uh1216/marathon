@@ -4,7 +4,7 @@ import SelfStudyResult from "./SelfStudyResult";
 import EasyMode1 from "components/self-study/self-study-game/EasyMode1";
 import NormalMode1 from "components/self-study/self-study-game/NormalMode1";
 import HardMode1 from "components/self-study/self-study-game/HardMode1";
-import { setStage, setType, setIsReady, setMode } from "stores/game.store";
+import { setType } from "stores/game.store";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
