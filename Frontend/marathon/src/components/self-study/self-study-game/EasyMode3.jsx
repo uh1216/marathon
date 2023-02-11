@@ -11,9 +11,9 @@ import { v4 as uuidv4 } from "uuid";
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
-  const row = 3; //11*행 수
-  const col = 3; //11*열 수
-  const size = 3; //11*동물의 수
+  const row = 3; // 행 수
+  const col = 3; // 열 수
+  const size = 3; // 동물의 수
   const animals = ["", "🦊", "🐸", "🐶", "🐱"];
   const [answer, setAnswer] = useState([]);
   const [myAnswer, setMyAnswer] = useState([]);
@@ -28,7 +28,7 @@ export default function EasyMode1() {
   const chkAnswer = () => {
     for (let y = 0; y < row; y++) {
       for (let x = 0; x < col; x++) {
-        //11*틀렸음
+        // 틀렸음
         if (answer[y][x] !== myAnswer[y][x]) {
           setStageResult(false);
           dispatch(addRecord(false));
@@ -36,7 +36,7 @@ export default function EasyMode1() {
         }
       }
     }
-    //11*맞았음
+    // 맞았음
     setStageResult(true);
     dispatch(addRecord(true));
   };
@@ -60,7 +60,7 @@ export default function EasyMode1() {
   const renderingCol = (y, idx) => {
     const result = [];
 
-    //11*문제 풀기 세팅
+    // 문제 풀기 세팅
     if (idx === 1) {
       for (let x = 0; x < col; x++) {
         result.push(
@@ -68,7 +68,7 @@ export default function EasyMode1() {
         );
       }
     }
-    //11*문제 세팅
+    // 문제 세팅
     else if (idx === 0) {
       for (let x = 0; x < col; x++) {
         result.push(
@@ -84,11 +84,11 @@ export default function EasyMode1() {
         );
       }
     }
-    //11*정답 vs 내정답 세팅
+    // 정답 vs 내정답 세팅
     else if (idx === 2) {
       for (let x = 0; x < col; x++) {
         if (answer[y][x] === 0) {
-          //11*비어있어야 정답인데, 비어있지 않음
+          // 비어있어야 정답인데, 비어있지 않음
           if (myAnswer[y][x] !== 0) {
             result.push(
               <td
@@ -103,14 +103,14 @@ export default function EasyMode1() {
               </td>
             );
           }
-          //11*비어있어야 정답이고, 비어있음
+          // 비어있어야 정답이고, 비어있음
           else {
             result.push(
               <td className="drag_container" y={y} x={x} key={uuidv4()}></td>
             );
           }
         } else {
-          //11*동물이 들어있는게 정답인데, 동물이 없음
+          // 동물이 들어있는게 정답인데, 동물이 없음
           if (myAnswer[y][x] === 0) {
             result.push(
               <td
@@ -128,7 +128,7 @@ export default function EasyMode1() {
               </td>
             );
           }
-          //11*동물이 들어있는게 정답인데, 동물이 다름
+          // 동물이 들어있는게 정답인데, 동물이 다름
           else if (myAnswer[y][x] !== answer[y][x]) {
             result.push(
               <td
@@ -143,7 +143,7 @@ export default function EasyMode1() {
               </td>
             );
           }
-          //11*동물이 들어있는게 정답이고, 동물이 일치함
+          // 동물이 들어있는게 정답이고, 동물이 일치함
           else {
             result.push(
               <td
@@ -165,7 +165,7 @@ export default function EasyMode1() {
     return result;
   };
 
-  //11*인트로 화면 띄울 때 세팅할 것
+  // 인트로 화면 띄울 때 세팅할 것
   useEffect(() => {
     dispatch(setType(3));
     dispatch(setMode("easy"));
@@ -176,11 +176,11 @@ export default function EasyMode1() {
 
   /** 문제 세팅 */
   useEffect(() => {
-    //11*나의 정답 초기화
+    // 나의 정답 초기화
     setMyAnswer(Array.from(new Array(row), () => new Array(col).fill(0)));
 
     if (0 < gameState.stage && gameState.stage < 11) {
-      //11*랜덤 좌표가 들어갈 리스트
+      // 랜덤 좌표가 들어갈 리스트
       let list = [];
 
       for (let i = 0; i < size; i++) {
@@ -188,11 +188,11 @@ export default function EasyMode1() {
         let newCol = -1;
 
         do {
-          //11*랜덤 좌표 뽑기
+          // 랜덤 좌표 뽑기
           newRow = random(0, row);
           newCol = random(0, col);
 
-          //11*이미 뽑은 좌표인지 확인하기
+          // 이미 뽑은 좌표인지 확인하기
           let i = 0;
           for (; i < list.length; i++) {
             if (list[i][0] === newRow && list[i][1] === newCol) {
@@ -200,14 +200,14 @@ export default function EasyMode1() {
             }
           }
 
-          //11*이미 뽑은 적 없는 좌표임
+          // 이미 뽑은 적 없는 좌표임
           if (i === list.length) break;
         } while (true);
 
         list.push([newRow, newCol]);
       }
 
-      //11*이번 stage의 정답
+      // 이번 stage의 정답
       let tmp = Array.from(new Array(row), () => new Array(col).fill(0));
 
       for (let i = 0; i < size; i++) {
@@ -245,9 +245,9 @@ export default function EasyMode1() {
           draggable.setAttribute("pre_y", now_y);
           draggable.setAttribute("pre_x", now_x);
 
-          //11*새로 이동한 좌표 표시
+          // 새로 이동한 좌표 표시
           myAnswer[now_y][now_x] = k;
-          //11*예전에 있던 좌표 비우기
+          // 예전에 있던 좌표 비우기
           if (pre_y !== -1 && pre_x !== -1) myAnswer[pre_y][pre_x] = 0;
         });
       });
@@ -258,16 +258,16 @@ export default function EasyMode1() {
           const x = container.getAttribute("x");
 
           e.preventDefault();
-          //11*해당 container에 들어있는 dragable 요소들 중, 제일 가까운 요소 말하는 듯
+          // 해당 container에 들어있는 dragable 요소들 중, 제일 가까운 요소 말하는 듯
           const afterElement = getDragAfterElement(container, e.clientX);
           const draggable = document.querySelector(".dragging");
 
-          //11*최초 container라면
+          // 최초 container라면
           if (!container.hasAttribute("y")) {
-            //11*해당 container에 들어있는 dragable 요소의 앞에 appendChild
+            // 해당 container에 들어있는 dragable 요소의 앞에 appendChild
             container.insertBefore(draggable, afterElement);
           }
-          //11*최초 container가 아니고, 해당 칸이 비어있다면 appendChild
+          // 최초 container가 아니고, 해당 칸이 비어있다면 appendChild
           else if (afterElement === undefined && myAnswer[y][x] === 0) {
             container.appendChild(draggable);
             now_y = y;
@@ -285,7 +285,7 @@ export default function EasyMode1() {
           (closest, child) => {
             const box = child.getBoundingClientRect();
             const offset = x - box.left - (box.width / 11) * 2;
-            //11*console.log(offset);
+            // console.log(offset);
             if (offset < 0 && offset > closest.offset) {
               return { offset: offset, element: child };
             } else {
@@ -314,7 +314,7 @@ export default function EasyMode1() {
       <>
         <div className={commonStyle.stage}>{gameState.stage} /10</div>
         <div className={commonStyle.title}>동물의 위치를 잘 기억해두세요.</div>
-        <div className={style.gameBoard}>
+        <div className={style.gameBoard + " " + style.marginTop}>
           <table className={style.table + " game_3_table"}>
             <tbody>{renderingTable(0)}</tbody>
           </table>
@@ -328,7 +328,7 @@ export default function EasyMode1() {
         <div className={commonStyle.title}>
           원래 위치로 동물을 가져다 놓으세요!
         </div>
-        <div className={style.gameBoard}>
+        <div className={style.gameBoard + " " + style.marginTop}>
           <table className={style.table + " game_3_table"}>
             <tbody>{renderingTable(1)}</tbody>
           </table>
@@ -355,7 +355,7 @@ export default function EasyMode1() {
         <div className={commonStyle.title}>
           {stageResult ? "정답입니다 😊" : "틀렸습니다 😥"}
         </div>
-        <div className={style.gameBoard}>
+        <div className={style.gameBoard + " " + style.marginTop}>
           <table className={style.table + " game_3_table"}>
             <tbody>{renderingTable(2)}</tbody>
           </table>
