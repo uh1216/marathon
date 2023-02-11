@@ -119,6 +119,12 @@
   color: #d3c8c8;
 }
 
+.button0:hover:enabled {
+  background-color: #a1c0ff;
+  border: 0.5px solid #a1c0ff;
+  color: #ffffff;
+}
+
 /** 일정 할당 버튼*/
 .button1 {
   width: 110px;
@@ -129,7 +135,6 @@
   border: none;
   border-radius: 20px;
   color: white;
-  transition: 0.25s;
 }
 
 /** 예약된 버튼*/
