@@ -13,7 +13,6 @@ class VideoCam extends Component {
 
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
-      // mySessionId: this.props.sessionId,
       mySessionId: this.props.sessionId,
       myUserName: this.props.name,
       session: undefined,
