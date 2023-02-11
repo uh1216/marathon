@@ -40,6 +40,7 @@ export default function DoctorSlider({
   introduce,
   img,
   animation,
+  animation2,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   /** 모달창 오픈 함수 */
@@ -61,6 +62,7 @@ export default function DoctorSlider({
           <div className={style.button}>
             <button
               className={style.button_design}
+              style={{ transition: animation2 }}
               disabled={check === "now" ? false : true}
               onClick={showModal}
             >

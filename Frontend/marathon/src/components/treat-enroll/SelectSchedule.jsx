@@ -272,14 +272,22 @@ export default function SelectSchedule({ name, seq }) {
             </div>
             <div className={style.content}>
               <div className={style.date_header}>
-                <button className={style.button} onClick={prevWeek}>
+                <button
+                  className={cnt === 0 ? style.button_disable : style.button}
+                  onClick={prevWeek}
+                  disabled={cnt === 0 ? true : false}
+                >
                   ◁ 이전
                 </button>
                 <span className={style.date_text}>
                   {thisYear(0)}.{thisMonth(0)}.{thisDay(0)} ~ {thisYear(6)}.
                   {thisMonth(6)}.{thisDay(6)}
                 </span>
-                <button className={style.button} onClick={nextWeek}>
+                <button
+                  className={cnt === 2 ? style.button_disable : style.button}
+                  onClick={nextWeek}
+                  disabled={cnt === 2 ? true : false}
+                >
                   다음 ▷
                 </button>
               </div>

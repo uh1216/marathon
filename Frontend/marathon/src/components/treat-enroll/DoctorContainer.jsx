@@ -8,8 +8,10 @@ import DoctorSlider from "./DoctorSlider";
 
 export default function DoctorContainer() {
   const transition = "ease-in-out 0.5s";
+  const transition2 = "ease-in-out 0.2s";
   const [currentSeq, setCurrentSeq] = useState();
   const [animation, setAnimation] = useState(transition);
+  const [animation2, setAnimation2] = useState(transition2);
   const [arr, setArr] = useState([]);
   const [firstSeq, setFirstSeq] = useState();
   const [lastSeq, setLastSeq] = useState();
@@ -89,6 +91,7 @@ export default function DoctorContainer() {
     if (arr.length >= 8) {
       if (currentSeq === arr[arr.length - 4].seq) resetSlide(firstSeq);
       setAnimation(transition);
+      setAnimation2(transition2);
     } else if (arr.length === 1) return;
   };
 
@@ -106,12 +109,14 @@ export default function DoctorContainer() {
     if (arr.length >= 8) {
       if (currentSeq === arr[3].seq) resetSlide(lastSeq);
       setAnimation(transition);
+      setAnimation2(transition2);
     } else if (arr.length === 1) return;
   };
 
   const resetSlide = (n) => {
     setTimeout(() => {
       setAnimation("");
+      setAnimation2("");
       setCurrentSeq(n);
     }, 500);
   };
@@ -174,6 +179,7 @@ export default function DoctorContainer() {
                       introduce={val.introduce}
                       img={val.img}
                       animation={animation}
+                      animation2={animation2}
                     />
                   );
                 })}
