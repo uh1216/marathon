@@ -4,7 +4,7 @@ import axios from "axios";
 import UserVideoComponent from "./UserVideoComponent";
 import style from "./VideoCam.moduel.css";
 
-const APPLICATION_SERVER_URL = "http://localhost:5000/";
+const APPLICATION_SERVER_URL = "http://localhost:9999/";
 
 class VideoCam extends Component {
   constructor(props) {
@@ -96,20 +96,17 @@ class VideoCam extends Component {
           console.warn(exception);
         });
         this.getToken().then((token) => {
-          console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,여기부분1");
           console.log(this.state.mySessionId);
+          console.log(this.state.myUserName);
           mySession
             .connect(token, { clientData: this.state.myUserName })
             .then(async () => {
-              console.log(
-                ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 여기부분2"
-              );
               let publisher = await this.OV.initPublisherAsync(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
                 publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
                 publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                resolution: "560x600", // The resolution of your video
+                resolution: !this.props.onlyConsult ? "560x600" : "560x400", // The resolution of your video
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: false, // Whether to mirror your local video or not
@@ -164,7 +161,7 @@ class VideoCam extends Component {
   render() {
     return (
       <div>
-        {this.state.session !== undefined ? (
+        {this.state.session !== undefined && !this.props.onlyConsult ? (
           <div>
             {/* 상대방 커다란 화면 */}
             {this.state.mainStreamManager !== undefined ? (
@@ -184,6 +181,36 @@ class VideoCam extends Component {
                 />
               </div>
             </div>
+          </div>
+        ) : null}
+
+        {this.state.session !== undefined && this.props.onlyConsult ? (
+          <div
+            style={{
+              display: "flex",
+              flexFlow: "wrap",
+              marginLeft: "145px",
+              position: "relative",
+              top: "-30px",
+            }}
+          >
+            <div>
+              <div className={style.sub_video} style={{ width: "auto" }}>
+                <UserVideoComponent
+                  streamManager={this.state.mainStreamManager}
+                  type={"multi"}
+                />
+              </div>
+            </div>
+            {this.state.subscribers.map((data, i) => {
+              return (
+                <div>
+                  <div key={i} style={{ width: "auto" }}>
+                    <UserVideoComponent streamManager={data} type={"multi"} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         ) : null}
       </div>

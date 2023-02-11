@@ -49,10 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/patient*/**").hasRole("PATIENT")
             .antMatchers("/doctor*/**").hasRole("DOCTOR")
             .antMatchers("/admin*/**").hasRole("ADMIN")
-            //예외는 누구나 발생가능
+            //예외발생, 화상방 입장은 누구나 통과가능
             .antMatchers("**exception**").permitAll()
-            //예외는 누구나 발생가능
             .antMatchers("/webSocket/**").permitAll()
+            .antMatchers("/sessions/**").permitAll()
             // 그외에는 인증 필요
             .anyRequest().authenticated()
             //---------------------------------------------------------------
