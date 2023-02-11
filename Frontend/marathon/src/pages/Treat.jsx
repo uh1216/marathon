@@ -48,7 +48,7 @@ export default function Treat() {
   const [isPreset3, setIsPreset3] = useState(false);
   const [isPreset4, setIsPreset4] = useState(false);
   const [isPreset5, setIsPreset5] = useState(false);
-  const [interactionMode, SetInteractionMode] = useState(0);
+  const [interactionMode, setInteractionMode] = useState(0);
 
   // 채팅 or 상호작용 보드에서 쓰이는 데이터들
   const [items, setItems] = useState([]); // 스케치 보드 데이터 저장용
@@ -56,6 +56,7 @@ export default function Treat() {
   const [wordList, setWordList] = useState([]);
   const [questionNo, setQuestionNo] = useState(0);
   const [imageNo, setImageNo] = useState(0);
+  const [isNotChkMessage, setIsNotChkMessage] = useState(false);
 
   // 웹 소켓에 쓰이는 아이디
   // const channelId = sessionId;
@@ -257,7 +258,7 @@ export default function Treat() {
       /** 다른 사람이 상호작용 보드를 바꾸면 일어날 일 */
       stompClient.subscribe(`/changeInteraction/${channelId}`, (data) => {
         const newMessage = JSON.parse(data.body);
-        SetInteractionMode(Number(newMessage.content));
+        setInteractionMode(Number(newMessage.content));
       });
 
       /** 다른 사람이 끝말잇기를 입력하면 일어날 일 */
@@ -280,6 +281,16 @@ export default function Treat() {
     });
     // eslint-disable-next-line
   }, []);
+
+  /** 새로운 채팅이 왔고, 채팅창이 꺼져있으면 읽지 않은 메시지 알림이 뜬다. */
+  useEffect(() => {
+    if (!isChatting) setIsNotChkMessage(() => true);
+  }, [chatList, isChatting]);
+
+  /** 채팅창이 켜지면 읽지 않은 메시지 알림이 사라진다. */
+  useEffect(() => {
+    setIsNotChkMessage(() => false);
+  }, [isChatting]);
 
   /** 채팅 대화 리스트에 새로운 채팅을 추가 */
   const addMessage = (message) => {
@@ -493,7 +504,10 @@ export default function Treat() {
           className={style.btn_comment}
           onClick={() => setIsChatting(!isChatting)}
         >
-          <div className={style.notCheckMsg}>
+          <div
+            className={style.notCheckMsg}
+            style={{ display: isNotChkMessage ? "flex" : "none" }}
+          >
             읽지 않은 메시지가 있습니다
             <div className={style.notCheckMsgTail}></div>
           </div>
