@@ -6,7 +6,6 @@ import style from "./VideoCam.moduel.css";
 
 const APPLICATION_SERVER_URL = "https://i8a304.p.ssafy.io/";
 // const APPLICATION_SERVER_URL = "http://localhost:4433/";
-////
 
 class VideoCam extends Component {
   constructor(props) {
