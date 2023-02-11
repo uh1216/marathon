@@ -38,7 +38,7 @@ function App() {
           <Route path="/user/*" element={<User />} />
           <Route path="/self-study/*" element={<SelfStudy />} />
         </Route>
-        <Route path="/consult" element={<Consult />} />
+        <Route path="/consult/:sessionId" element={<Consult />} />
         <Route path="/treat/:sessionId" element={<Treat />} />
       </Routes>
     </>
