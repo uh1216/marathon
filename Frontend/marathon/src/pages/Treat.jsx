@@ -506,7 +506,10 @@ export default function Treat() {
         >
           <div
             className={style.notCheckMsg}
-            style={{ display: isNotChkMessage ? "flex" : "none" }}
+            style={{
+              visibility: isNotChkMessage ? "visible" : "hidden",
+              // transition: " 0.3s ease-out",
+            }}
           >
             읽지 않은 메시지가 있습니다
             <div className={style.notCheckMsgTail}></div>
