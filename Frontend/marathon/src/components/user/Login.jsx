@@ -72,7 +72,7 @@ export default function Main() {
             $.get(`/user-sign/checkkakao/${kakaoId}`)
               .then(() => {
                 // 존재하는 경우 로그인 처리
-                //hiddenKakaoLogin(kakaoId);
+                hiddenKakaoLogin(kakaoId);
               })
               .catch(() => {
                 // 존재하지 않으면 회원가입
@@ -91,6 +91,7 @@ export default function Main() {
   };
 
   const hiddenKakaoLogin = (response) => {
+    // 이거 카카오 로그인 전용 API 하나 더 만들어야됨 (카카오 아이디만 일치하면 바로 로그인)
     // $.post("/user-sign/login", {
     //   id: kakaoId,
     // })
