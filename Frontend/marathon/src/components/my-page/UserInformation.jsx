@@ -306,15 +306,15 @@ export default function UserInformation() {
       );
 
       $.put(`/${state.loginUser.userRole}-sign/modify`, formData)
-        .then(() => {
+        .then((res) => {
           alert("수정 완료되었습니다.");
+          console.log(res);
+          sessionStorage.setItem("access-token", res.data.accessToken);
           setUserPwd("");
           setUserPwdChk("");
           if (newImgUrl) {
             dispatch(changeImg(newImgUrl));
           }
-
-          this.forceUpdate();
         })
         .catch((error) => {
           console.log(error);
