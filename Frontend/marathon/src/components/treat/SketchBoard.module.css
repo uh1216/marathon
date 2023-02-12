@@ -22,14 +22,12 @@
 .icon {
   background-color: #90b5fb;
   border: 1px #b2caf5;
-  z-index: 1;
 }
 
 .icon2 {
   background-color: #ffffff;
   border: 1px #ffffff;
   transition: 0.3s;
-  z-index: 1;
 }
 
 .icon2:hover {
