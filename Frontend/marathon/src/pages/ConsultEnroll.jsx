@@ -256,6 +256,7 @@ export default function ConsultEnroll() {
         .then(() => {
           alert("상담신청 완료");
           navigate("/");
+          window.scrollTo(0, 0);
         })
         .catch((error) => {
           alert("에러가 발생했습니다. 다시 신청해 주세요");

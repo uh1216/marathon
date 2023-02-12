@@ -6,6 +6,7 @@
 }
 
 .button {
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,6 +15,12 @@
   background-color: #d9d9d9;
   border-radius: 100%;
   font-size: 1.5em;
+  transition: 0.3s;
+}
+
+.button:hover {
+  background-color: rgb(149, 149, 149);
+  color: rgb(234, 234, 234);
 }
 
 .question {

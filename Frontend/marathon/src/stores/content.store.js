@@ -10,16 +10,5 @@ const nowBoardInfo = createSlice({
   },
 });
 
-const treatSessionId = createSlice({
-  name: "treatSessionId",
-  initialState: { sessionId: "" },
-  reducers: {
-    changeTreatSessionId(state, action) {
-      state.sessionId = action.payload;
-    },
-  },
-});
-
 export let { changeNowBoardInfo } = nowBoardInfo.actions;
-export let { changeTreatSessionId } = treatSessionId.actions;
-export { nowBoardInfo, treatSessionId };
+export { nowBoardInfo };
