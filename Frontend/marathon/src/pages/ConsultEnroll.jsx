@@ -233,9 +233,9 @@ export default function ConsultEnroll() {
           ? `0${calenderDay.getMonth() + 1}`
           : calenderDay.getMonth() + 1;
       let hopeD =
-        calenderDay.getDay() < 10
-          ? `0${calenderDay.getDay()}`
-          : calenderDay.getDay();
+        calenderDay.getDate() < 10
+          ? `0${calenderDay.getDate()}`
+          : calenderDay.getDate();
 
       $.post(`/user-consult/apply`, {
         name: userName,
@@ -366,7 +366,7 @@ export default function ConsultEnroll() {
           className={style.inner_container}
           style={{ animation: "0.8s ease-in-out loadEffect1" }}
         >
-          <div>
+          <div style={{ marginLeft: "10px" }}>
             <p style={{ marginBottom: "1px" }}>상담 희망날짜</p>
             {/* 달력 컴포넌트 */}
             <Calendar onChange={setCalenderDay} value={calenderDay} />
@@ -579,7 +579,12 @@ export default function ConsultEnroll() {
           </div>
 
           {/* 재활에 어려운 점 */}
-          <div style={{ marginTop: "30px" }}>
+          <div
+            className={style.input_div}
+            style={{
+              marginTop: "30px",
+            }}
+          >
             <label className={style.input_label} htmlFor="des_textarea">
               의사소통에서 어려움을 느끼는 부분을 말해주세요!
             </label>
