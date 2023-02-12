@@ -41,6 +41,7 @@
 .choice_box {
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .disable {
@@ -196,9 +197,5 @@
   .number {
     position: absolute;
     right: 3.5px;
-  }
-
-  .choice_box {
-    margin-bottom: 20px;
   }
 }
