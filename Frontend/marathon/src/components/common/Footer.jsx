@@ -32,10 +32,6 @@ export default function Footer() {
             />
           </div>
           <div className={style.center_div}>
-            <div className={style.center_inner_div}>
-              <p>이용약관</p>
-              <p>개인처리방침</p>
-            </div>
             <div>
               <p>SSAFY 8기 2학기 공통 프로젝트</p>
               <p>김동연 | 김정수 | 윤호산 | 이연학 | 조웅희 | 최준아</p>

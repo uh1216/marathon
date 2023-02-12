@@ -20,6 +20,8 @@
   background-color: #ffffff;
   border-radius: 100%;
   font-size: 1.5em;
+  border: 1px solid black;
+  transition: ease-in-out 0.2s;
 
   position: absolute;
   right: 15px;
@@ -32,4 +34,10 @@
   object-fit: cover;
   margin: 0 40px;
   border-radius: 10px;
+}
+
+.button:hover {
+  color: rgb(226, 226, 226);
+  border: 1px solid rgb(226, 226, 226);
+  background-color: rgb(152, 152, 152);
 }

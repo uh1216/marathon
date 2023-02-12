@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ConsultList() {
-  const headRow = ["성함", "희망 날짜", "연락처", "처리 여부", "내용"];
+  const headRow = ["성함", "희망 날짜", "연락처", "처리여부", "내용"];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const optionSearch = [
     { value: false, name: "모두" },
@@ -44,7 +44,7 @@ export default function ConsultList() {
           <h3 style={{ fontWeight: "bold", display: "inline-block" }}>
             상담 관리
           </h3>
-          <div style={{ display: "flex", width: "70%", justifyContent: "end" }}>
+          <div style={{ display: "flex", width: "80%", justifyContent: "end" }}>
             <SelectBox
               options={optionSearch}
               onChange={(e) => {
