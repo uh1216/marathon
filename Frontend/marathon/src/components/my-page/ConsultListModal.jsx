@@ -166,7 +166,7 @@ export default function ConsultListModal({ setIsModalOpen }) {
             setIsModalOpen(false);
           }}
         >
-          {!isLoading && data.data.checked ? "처리완료" : "미처리"}
+          {!isLoading && !data.data.checked ? "처리완료" : "미처리"}
         </div>
         <div style={{ flexGrow: "1" }} />
       </div>
