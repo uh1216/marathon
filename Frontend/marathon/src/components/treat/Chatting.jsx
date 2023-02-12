@@ -1,5 +1,6 @@
 import { useState } from "react";
 import style from "./Chatting.module.css";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Chatting({ stompClient, channelId, chatList }) {
   const [message, setMessage] = useState("");
@@ -24,7 +25,7 @@ export default function Chatting({ stompClient, channelId, chatList }) {
       <div className={style.chatting_container}>
         {chatList.map((item) =>
           item.hasOwnProperty("senderImg") ? (
-            <div className={style.your_wrapper}>
+            <div className={style.your_wrapper} key={uuidv4()}>
               <img
                 className={style.your_bubble_profile}
                 src={item.senderImg}
@@ -41,7 +42,7 @@ export default function Chatting({ stompClient, channelId, chatList }) {
               </div>
             </div>
           ) : (
-            <div className={style.my_bubble_container}>
+            <div className={style.my_bubble_container} key={uuidv4()}>
               <span className={style.my_bubble}>
                 <div className={style.my_bubble_tail}></div>
                 <p className={style.my_bubble_content}>{item.content}</p>

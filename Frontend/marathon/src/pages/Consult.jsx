@@ -8,31 +8,35 @@ import {
   faVideoSlash,
   faMicrophone,
   faMicrophoneSlash,
-  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import { faComment as faCommentBlank } from "@fortawesome/free-regular-svg-icons";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import style from "./Treat.module.css";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import VideoCam from "components/webRTC/VideoCam";
 import Chatting from "components/treat/Chatting";
 
-import QuestionBoard from "components/treat/QuestionBoard";
-import SketchBoard from "components/treat/SketchBoard";
-import ImageBoard from "components/treat/ImageBoard";
-import WordChainBoard from "components/treat/WordChainBoard";
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
+import { Buffer } from "buffer";
+
+let sockJS = new SockJS("https://i8a304.p.ssafy.io/api/webSocket");
+// let sockJS = new SockJS("http://localhost:4433/api/webSocket");
+let stompClient = Stomp.over(sockJS);
 
 export default function Consult() {
-  const navigate = useNavigate();
-  const [isVideo, setIsVideo] = useState(false);
-  const [isMic, setIsMic] = useState(false);
+  const { sessionId } = useParams();
+  const state = useSelector((state) => state);
+  const [isVideo, setIsVideo] = useState(true);
+  const [isMic, setIsMic] = useState(true);
+  const [isIn, setIsIn] = useState(true);
+  const [chatList, setChatList] = useState([]);
   const [isChatting, setIsChatting] = useState(false);
-  const [isPreset0, setIsPreset0] = useState(false);
-  const [isPreset1, setIsPreset1] = useState(false);
-  const [isPreset2, setIsPreset2] = useState(false);
-  const [isPreset3, setIsPreset3] = useState(false);
-  const [isPreset4, setIsPreset4] = useState(false);
-  const [isPreset5, setIsPreset5] = useState(false);
-  const [interactionMode, SetInteractionMode] = useState(0);
+  const [isNotChkMessage, setIsNotChkMessage] = useState(false);
+
+  // 웹 소켓에 쓰이는 아이디
+  const channelId = sessionId;
 
   /** 비디오 켜기 */
   const turnOnVideo = () => {
@@ -54,14 +58,70 @@ export default function Consult() {
   const showChatting = () => {
     setIsChatting(!isChatting);
   };
-  /** 방 나가기 */
-  const exitRoom = () => {
-    if (window.confirm("정말로 나가시겠습니까?")) navigate("/");
+
+  useEffect(() => {
+    // 웹소켓
+    stompClient.connect({}, () => {
+      console.log("websocket connect");
+
+      /** 다른 사람이 채팅을 치면 일어날 일 */
+      stompClient.subscribe(`/chat/${channelId}`, (data) => {
+        const newMessage = JSON.parse(data.body);
+        console.log(newMessage);
+        // 내가 보낸 메시지라면
+        if (newMessage.sender === sessionStorage.getItem("access-token"))
+          addMessage({ content: newMessage.content });
+        // 다른 사람이 보낸 메시지라면
+        else {
+          if (newMessage.sender) {
+            let base64Payload = newMessage.sender.split(".")[1];
+            let payload = Buffer.from(base64Payload, "base64");
+            let result = JSON.parse(payload.toString());
+            addMessage({
+              senderImg: result.img,
+              senderName: result.name,
+              content: newMessage.content,
+            });
+            console.log({
+              senderImg: result.img,
+              senderName: result.name,
+              content: newMessage.content,
+            });
+          }
+        }
+      });
+    });
+    // eslint-disable-next-line
+  }, []);
+
+  /** 새로운 채팅이 왔고, 채팅창이 꺼져있으면 읽지 않은 메시지 알림이 뜬다. */
+  useEffect(() => {
+    if (!isChatting) setIsNotChkMessage(() => true);
+  }, [chatList, isChatting]);
+
+  /** 채팅창이 켜지면 읽지 않은 메시지 알림이 사라진다. */
+  useEffect(() => {
+    setIsNotChkMessage(() => false);
+  }, [isChatting]);
+
+  /** 채팅 대화 리스트에 새로운 채팅을 추가 */
+  const addMessage = (message) => {
+    setChatList((prev) => [...prev, message]);
   };
 
   return (
     <div className={style.wrapper}>
-      <div className={style.main_container}>여기에 화상화면 4개 들어감</div>
+      <div className={style.main_container}>
+        {/* webRTC */}
+        <VideoCam
+          isVideo={isVideo}
+          isMic={isMic}
+          isIn={isIn}
+          sessionId={sessionId}
+          name={state.loginUser.userName || "임시방문자"}
+          onlyConsult={true}
+        />
+      </div>
       <div className={style.btn_container}>
         {!isVideo && (
           <button className={style.btn_video} onClick={turnOnVideo}>
@@ -100,15 +160,40 @@ export default function Consult() {
         <button className={style.btn_share}>
           <FontAwesomeIcon icon={faShareFromSquare} />
         </button>
+        <div
+          className={style.notCheckMsg}
+          style={{
+            visibility: isNotChkMessage ? "visible" : "hidden",
+            // transition: " 0.3s ease-out",
+          }}
+        >
+          읽지 않은 메시지가 있습니다
+          <div className={style.notCheckMsgTail}></div>
+        </div>
         <button className={style.btn_comment} onClick={showChatting}>
           {!isChatting && <FontAwesomeIcon icon={faComment} />}
           {isChatting && <FontAwesomeIcon icon={faCommentBlank} />}
         </button>
-        <button className={style.btn_x} onClick={exitRoom}>
+        <button
+          className={style.btn_x}
+          onClick={() => {
+            if (window.confirm("정말로 나가시겠습니까?")) {
+              setIsIn(false);
+              window.close();
+              window.history.back();
+            }
+          }}
+        >
           <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>
-      {isChatting && <Chatting />}
+      {isChatting && (
+        <Chatting
+          stompClient={stompClient}
+          channelId={channelId}
+          chatList={chatList}
+        />
+      )}
     </div>
   );
 }

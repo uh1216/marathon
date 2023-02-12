@@ -22,6 +22,15 @@ export default class UserVideoComponent extends Component {
             <OpenViduVideoComponent streamManager={this.props.streamManager} />
           </div>
         ) : null}
+        {this.props.streamManager !== undefined &&
+        this.props.type === "multi" ? (
+          <div
+            className={style.streamcomponent_multi}
+            style={{ width: "auto" }}
+          >
+            <OpenViduVideoComponent streamManager={this.props.streamManager} />
+          </div>
+        ) : null}
       </div>
     );
   }

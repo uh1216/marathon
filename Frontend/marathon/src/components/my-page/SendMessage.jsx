@@ -71,14 +71,14 @@ export default function SendMessage({
         {commuSeq === 0 ? (
           <SelectBox
             options={userList}
-            width="270px"
+            width="65%"
             onChange={(x) => selectSeq(x)}
             defaultValue={0}
           />
         ) : (
           <SelectBox
             options={userList}
-            width="270px"
+            width="65%"
             onChange={(x) => selectSeq(x)}
             defaultValue={senderSeq}
             readonly={true}

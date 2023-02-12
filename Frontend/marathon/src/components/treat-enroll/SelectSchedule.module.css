@@ -118,9 +118,15 @@
   padding: 4px;
   margin-left: 10px;
   background-color: #ffffff;
-  border: 1px solid black;
+  border: 1px solid #6b6767;
   border-radius: 20px;
-  color: #000000;
+  color: #6b6767;
+}
+
+.button1:hover:enabled {
+  background-color: #a1c0ff;
+  border: 0.5px solid #a1c0ff;
+  color: #ffffff;
 }
 
 /** 이미 에약된 버튼*/
@@ -130,9 +136,21 @@
   padding: 4px;
   margin-left: 10px;
   background-color: #ffffff;
-  border: 1px solid #b3b2b2;
+  border: 1px solid #e6e1e1;
   border-radius: 20px;
-  color: #b3b2b2;
+  color: #e6e1e1;
+}
+
+/** 예약 가능 시간 지남 */
+.outdated {
+  width: 110px;
+  height: 40px;
+  padding: 4px;
+  margin-left: 10px;
+  background-color: #ffffff;
+  border: 0.5px solid #ffffff;
+  color: #ffffff;
+  border-radius: 20px;
 }
 
 /** 예약 버튼 눌렀을때 임시로 표시되는 버튼*/
@@ -145,7 +163,6 @@
   border: none;
   border-radius: 20px;
   color: white;
-  transition: 0.25s;
 }
 
 .save_button_div {

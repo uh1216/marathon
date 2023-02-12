@@ -25,7 +25,8 @@ import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { Buffer } from "buffer";
 
-let sockJS = new SockJS("http://localhost:9999/api/webSocket");
+let sockJS = new SockJS("https://i8a304.p.ssafy.io/api/webSocket");
+// let sockJS = new SockJS("http://localhost:4433/api/webSocket");
 let stompClient = Stomp.over(sockJS);
 
 const interactionTitle = [
@@ -526,6 +527,7 @@ export default function Treat() {
             if (window.confirm("정말로 나가시겠습니까?")) {
               setIsIn(false);
               window.close();
+              window.history.back();
             }
           }}
         >

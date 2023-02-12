@@ -45,6 +45,7 @@ export default function TreatmentList() {
           }}
         >
           <h3
+            className={style.top_head}
             style={{
               marginTop: "6px",
               fontWeight: "bold",

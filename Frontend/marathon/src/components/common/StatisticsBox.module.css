@@ -162,3 +162,10 @@
     margin: 20px;
   }
 }
+
+@media (max-width: 650px) {
+  .main_container {
+    padding-left: 0px;
+    padding-right: 12px;
+  }
+}

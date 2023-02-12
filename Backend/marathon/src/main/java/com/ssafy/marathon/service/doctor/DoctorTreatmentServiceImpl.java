@@ -147,6 +147,20 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
         Optional<Treatment> findTreatment = treatmentRepository.findById(treatmentSeq);
         Treatment treatment = findTreatment.orElseThrow();
 
+        Reservation reservation = reservationRepository.findByDateAndDoctor_Seq(treatment.getDate(), treatment.getDoctor().getSeq());
+
+        StringBuilder sb = new StringBuilder();
+
+        String oldBitdate = reservation.getBitDate();
+        String[] arr = {"09:00:00", "10:00:00", "11:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00"};
+
+        for (int i = 0; i < oldBitdate.length(); i++) {
+            if(arr[i].equals(treatment.getTime())) sb.append('1');
+            else sb.append(oldBitdate.charAt(i));
+        }
+        reservation.setBitDate(sb.toString());
+        reservationRepository.save(reservation);
+
         treatmentRepository.delete(treatment);
     }
 

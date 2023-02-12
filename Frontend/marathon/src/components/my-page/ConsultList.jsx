@@ -10,12 +10,11 @@ import SelectBox from "components/common/SelectBox";
 import { $ } from "util/axios";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
+import { v4 as uuidv4 } from "uuid";
 
 export default function ConsultList() {
   const headRow = ["성함", "희망 날짜", "연락처", "처리 여부", "내용"];
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const queryClient = useQueryClient();
   const optionSearch = [
     { value: false, name: "모두" },
     { value: true, name: "미처리" },
@@ -61,7 +60,17 @@ export default function ConsultList() {
             >
               검색
             </div>
-            <div className={style.button} onClick={() => {}}>
+            <div
+              className={style.button}
+              onClick={() => {
+                let sessionId = uuidv4();
+                window.open(
+                  `/consult/${sessionId}`,
+                  `Marathon - 화상 상담`,
+                  "fullscreen, menubar=no, status=no, toolbar=no, location=no"
+                );
+              }}
+            >
               방생성
             </div>
           </div>

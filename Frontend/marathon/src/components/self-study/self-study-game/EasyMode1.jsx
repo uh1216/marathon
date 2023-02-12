@@ -106,8 +106,8 @@ export default function EasyMode1() {
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
-        <div className={commonStyle.title}>
-          다음 화면에서 색칠된 부분의 위치를 기억해주세요
+        <div className={commonStyle.title} style={{ marginBottom: "20px" }}>
+          다음 화면에서 색칠된 곳을 기억해주세요
         </div>
         <div className={style.content}>
           <div className={style.board}>{button_arr}</div>
@@ -138,8 +138,8 @@ export default function EasyMode1() {
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
-        <div className={commonStyle.title}>
-          기억을 토대로 색칠되었던 부분을 클릭해주세요
+        <div className={commonStyle.title} style={{ marginBottom: "20px" }}>
+          색칠되었던 곳을 클릭해주세요
         </div>
         <div className={style.content}>
           <div className={style.board}>{button_arr2}</div>
@@ -195,11 +195,11 @@ export default function EasyMode1() {
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         {JSON.stringify(quiz) === JSON.stringify(mySelect) ? (
-          <div className={commonStyle.title}>
+          <div className={style.title}>
             <span className={style.correct_text}>정답</span> 입니다
           </div>
         ) : (
-          <div className={commonStyle.title}>
+          <div className={style.title}>
             <span className={style.incorrect_text}>오답</span> 입니다
           </div>
         )}

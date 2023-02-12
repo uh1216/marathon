@@ -112,7 +112,7 @@
 @media screen and (max-width: 768px) {
   .footer {
     height: auto;
-    min-width: 370px;
+    min-width: 365px;
   }
 
   .inner_footer {

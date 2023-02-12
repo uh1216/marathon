@@ -6,6 +6,7 @@ import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode } from "stores/game.store";
 import GIF from "img/gif/game3_easy.gif";
 import style from "./Game3.module.css";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 export default function EasyMode1() {
@@ -18,6 +19,14 @@ export default function EasyMode1() {
   const [answer, setAnswer] = useState([]);
   const [myAnswer, setMyAnswer] = useState([]);
   const [stageResult, setStageResult] = useState();
+  const navigate = useNavigate();
+
+  // 모바일일때 돌아가게 만들기
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  };
 
   /** (min <= 값 < max) 랜덤숫자 뽑기 */
   const random = (min, max) => {
@@ -164,6 +173,15 @@ export default function EasyMode1() {
 
     return result;
   };
+
+  useEffect(() => {
+    if (isMobile()) {
+      alert(
+        "모바일에서는 지원하지 않는 게임입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
+      );
+      navigate("/self-study-list");
+    }
+  }, []);
 
   // 인트로 화면 띄울 때 세팅할 것
   useEffect(() => {

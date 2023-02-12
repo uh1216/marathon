@@ -85,3 +85,18 @@
     padding: 3px 10px;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .button {
+    padding: 4px 15px;
+  }
+
+  .button2 {
+    font-size: 0.9em;
+    padding: 3px 8px;
+  }
+
+  .header_container {
+    font-size: 0.9em;
+  }
+}
