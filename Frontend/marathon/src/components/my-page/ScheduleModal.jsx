@@ -4,11 +4,19 @@ import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { $ } from "util/axios";
+import { v4 as uuidv4 } from "uuid";
 
 export default function ScheduleModal({ modalData, setIsModalOpen }) {
   const state = useSelector((state) => state);
   const queryClient = useQueryClient();
   const [isCreatable, setIsCreatable] = useState(false);
+
+  // 모바일일때 돌아가게 만들기
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  };
 
   const { mutate } = useMutation(
     () => $.delete(`/doctor-treatment/${modalData.reservedDay.treatmentSeq}`),
@@ -108,22 +116,26 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                   }
                   style={{ marginRight: "10px" }}
                   onClick={() => {
-                    let sessionId =
-                      new Date().getTime() +
-                      "marathon" +
-                      modalData.reservedDay.treatmentSeq +
-                      modalData.reservedDay.treatmentSeq;
-                    $.post("/doctor-treatment/alarm", {
-                      treatmentSeq: modalData.reservedDay.treatmentSeq,
-                      sessionId: sessionId,
-                    }).then(
-                      window.open(
-                        `/treat/${sessionId}`,
-                        `Marathon - 화상제활`,
-                        "fullscreen, menubar=no, status=no, toolbar=no, location=no"
-                      )
-                    );
-                    setIsModalOpen(false);
+                    if (isMobile()) {
+                      alert(
+                        "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
+                      );
+                    } else {
+                      let sessionId =
+                        new Date().getTime() + "marathon" + uuidv4();
+
+                      $.post("/doctor-treatment/alarm", {
+                        treatmentSeq: modalData.reservedDay.treatmentSeq,
+                        sessionId: sessionId,
+                      }).then(
+                        window.open(
+                          `/treat/${sessionId}`,
+                          `Marathon - 화상제활`,
+                          "fullscreen, menubar=no, status=no, toolbar=no, location=no"
+                        )
+                      );
+                      setIsModalOpen(false);
+                    }
                   }}
                 >
                   방 생성

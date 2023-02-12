@@ -93,10 +93,15 @@
 
   .button2 {
     font-size: 0.9em;
-    padding: 3px 8px;
+    padding: 3px 6px;
   }
 
   .header_container {
-    font-size: 0.9em;
+    font-size: 0.8em;
+  }
+
+  .header_container3_title {
+    height: 22px;
+    font-size: 15px;
   }
 }

@@ -20,15 +20,18 @@
 }
 
 .icon {
-  background-color: #b2caf5;
+  background-color: #90b5fb;
   border: 1px #b2caf5;
-  z-index: 1;
 }
 
 .icon2 {
   background-color: #ffffff;
   border: 1px #ffffff;
-  z-index: 1;
+  transition: 0.3s;
+}
+
+.icon2:hover {
+  background-color: #e6faff;
 }
 
 .right_side {
@@ -37,6 +40,6 @@
 }
 
 .option {
-  padding-top: 6px;
-  padding-left: 6px;
+  padding-top: 15px;
+  padding-left: 15px;
 }

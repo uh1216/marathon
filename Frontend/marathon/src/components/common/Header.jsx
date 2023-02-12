@@ -61,7 +61,15 @@ export default function Header() {
         </div>
 
         <div className={style.logo}>
-          <img onClick={() => navigate("/")} src={logo} alt="" />
+          <img
+            onClick={() => {
+              setIsToggled(false);
+              setIsUserToggled(false);
+              navigate("/");
+            }}
+            src={logo}
+            alt=""
+          />
         </div>
 
         <div

@@ -45,7 +45,11 @@ export default function Board({ channelId, stompClient, questionNo }) {
 
   return (
     <div className={style.wrapper}>
-      <div className={style.button} onClick={prev}>
+      <div
+        className={style.button}
+        style={{ paddingRight: "5px" }}
+        onClick={prev}
+      >
         ◀
       </div>
       <div className={style.question}>
@@ -53,7 +57,11 @@ export default function Board({ channelId, stompClient, questionNo }) {
           questionNo < questions.length &&
           questions[questionNo]}
       </div>
-      <div className={style.button} onClick={next}>
+      <div
+        className={style.button}
+        style={{ paddingLeft: "5px" }}
+        onClick={next}
+      >
         ▶
       </div>
     </div>

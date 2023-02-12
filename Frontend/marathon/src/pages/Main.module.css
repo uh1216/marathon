@@ -236,8 +236,18 @@
     font-size: 0.5em;
   }
 
+  .quoto_center {
+    width: 70%;
+  }
+
   .quoto_center p {
-    font-size: 0.6em;
+    font-size: 0.8em;
+  }
+
+  .quoto_left,
+  .quoto_right {
+    font-size: 2em;
+    width: 15%;
   }
 
   .last_box h3 {
