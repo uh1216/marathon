@@ -20,6 +20,7 @@ import Chatting from "components/treat/Chatting";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { Buffer } from "buffer";
+import { v4 as uuidv4 } from "uuid";
 
 let sockJS = new SockJS("https://i8a304.p.ssafy.io/api/webSocket");
 // let sockJS = new SockJS("http://localhost:4433/api/webSocket");
@@ -34,6 +35,9 @@ export default function Consult() {
   const [chatList, setChatList] = useState([]);
   const [isChatting, setIsChatting] = useState(false);
   const [isNotChkMessage, setIsNotChkMessage] = useState(false);
+
+  const [anonymousName, setAnonymousName] = useState(null);
+  const [anonymousId, setAnonymousId] = useState(null);
 
   // 웹 소켓에 쓰이는 아이디
   const channelId = sessionId;
@@ -63,31 +67,53 @@ export default function Consult() {
     // 웹소켓
     stompClient.connect({}, () => {
       console.log("websocket connect");
+      let myAnonymousId = uuidv4();
+
+      // 내가 로그인하지 않았다면
+      if (!sessionStorage.getItem("access-token") && anonymousId == null) {
+        let name = prompt(
+          "현재 비로그인 상태입니다.\n사람들에게 보여질 이름을 입력해주세요."
+        );
+        setAnonymousName(!name ? "익명의 누군가" : name);
+        setAnonymousId(myAnonymousId);
+      }
 
       /** 다른 사람이 채팅을 치면 일어날 일 */
       stompClient.subscribe(`/chat/${channelId}`, (data) => {
         const newMessage = JSON.parse(data.body);
-        console.log(newMessage);
-        // 내가 보낸 메시지라면
-        if (newMessage.sender === sessionStorage.getItem("access-token"))
-          addMessage({ content: newMessage.content });
-        // 다른 사람이 보낸 메시지라면
+
+        // 익명의 누군가가 보낸 채팅이라면
+        if (newMessage.sender.includes("anonymous-id")) {
+          const yourAnonymousId = newMessage.sender.split("anonymous-id:")[1];
+          const yourAnonymousName = newMessage.sender.split("anonymous-id:")[0];
+          // 내가 보낸 메시지라면
+          console.log(yourAnonymousId);
+          console.log(myAnonymousId);
+          if (yourAnonymousId === myAnonymousId)
+            addMessage({ content: newMessage.content });
+          else
+            addMessage({
+              senderImg: "https://d1v10kml6l14kq.cloudfront.net/default.jpg",
+              senderName: yourAnonymousName,
+              content: newMessage.content,
+            });
+        }
+        // 로그인한 사람이 보낸 채팅이라면
         else {
-          if (newMessage.sender) {
-            let base64Payload = newMessage.sender.split(".")[1];
-            let payload = Buffer.from(base64Payload, "base64");
-            let result = JSON.parse(payload.toString());
+          let base64Payload = newMessage.sender.split(".")[1];
+          let payload = Buffer.from(base64Payload, "base64");
+          let result = JSON.parse(payload.toString());
+
+          // 내가 보낸 메시지라면
+          if (newMessage.sender === sessionStorage.getItem("access-token"))
+            addMessage({ content: newMessage.content });
+          // 다른 사람이 보낸 메시지라면
+          else
             addMessage({
               senderImg: result.img,
               senderName: result.name,
               content: newMessage.content,
             });
-            console.log({
-              senderImg: result.img,
-              senderName: result.name,
-              content: newMessage.content,
-            });
-          }
         }
       });
     });
@@ -160,17 +186,18 @@ export default function Consult() {
         <button className={style.btn_share}>
           <FontAwesomeIcon icon={faShareFromSquare} />
         </button>
-        <div
-          className={style.notCheckMsg}
-          style={{
-            visibility: isNotChkMessage ? "visible" : "hidden",
-            // transition: " 0.3s ease-out",
-          }}
-        >
-          읽지 않은 메시지가 있습니다
-          <div className={style.notCheckMsgTail}></div>
-        </div>
+
         <button className={style.btn_comment} onClick={showChatting}>
+          <div
+            className={style.notCheckMsg}
+            style={{
+              visibility: isNotChkMessage ? "visible" : "hidden",
+              // transition: " 0.3s ease-out",
+            }}
+          >
+            읽지 않은 메시지가 있습니다
+            <div className={style.notCheckMsgTail}></div>
+          </div>
           {!isChatting && <FontAwesomeIcon icon={faComment} />}
           {isChatting && <FontAwesomeIcon icon={faCommentBlank} />}
         </button>
@@ -187,13 +214,18 @@ export default function Consult() {
           <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>
-      {isChatting && (
-        <Chatting
-          stompClient={stompClient}
-          channelId={channelId}
-          chatList={chatList}
-        />
-      )}
+      <div style={{ height: "100vh", position: "fixed", right: "0" }}>
+        {isChatting && (
+          <Chatting
+            stompClient={stompClient}
+            channelId={channelId}
+            chatList={chatList}
+            setIsChatting={showChatting}
+            anonymousName={anonymousName}
+            anonymousId={anonymousId}
+          />
+        )}
+      </div>
     </div>
   );
 }

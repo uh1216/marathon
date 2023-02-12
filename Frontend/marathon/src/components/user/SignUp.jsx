@@ -172,6 +172,9 @@ export default function SignIn() {
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [optionsDay, setOptionsDay] = useState([{ value: "none", name: "일" }]);
 
+  // 브라우저 너비
+  const [viewWidth, setViewWidth] = useState(window.innerWidth);
+
   /** 회원가입 버튼을 누를 때 실행되는 함수 */
   const signUp = () => {
     if (userName === "" || userName === null) {
@@ -433,6 +436,18 @@ export default function SignIn() {
     }
   }, [userPwd, userPwdChk]);
 
+  /** 브라우저 너비 변화 감지 (SelectBox 너비 반응형으로 만들기 위함) */
+  useEffect(() => {
+    const handleResize = () => {
+      setViewWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className={style.user_box}>
       <div className={style.inner_container}>
@@ -481,7 +496,7 @@ export default function SignIn() {
           <label className={style.input_label}>대상자 생년월일</label>
           <div
             style={{
-              width: "412px",
+              width: viewWidth > 540 ? "412px" : "320px",
               display: "flex",
               justifyContent: "space-between",
             }}
@@ -489,7 +504,7 @@ export default function SignIn() {
             <SelectBox
               options={optionsYear}
               onChange={(x) => setUserYear(x)}
-              width="191px"
+              width={viewWidth > 540 ? "191px" : "120px"}
               ref={inputUserYear}
             />
             <SelectBox
@@ -707,7 +722,7 @@ export default function SignIn() {
               </label>
               <SelectBox
                 options={optionsLicense}
-                width="412px"
+                width={viewWidth > 540 ? "412px" : "320px"}
                 onChange={(x) => {
                   setUserLicense(x);
                 }}
@@ -720,7 +735,7 @@ export default function SignIn() {
               </label>
               <SelectBox
                 options={optionsEducation}
-                width="412px"
+                width={viewWidth > 540 ? "412px" : "320px"}
                 onChange={(x) => {
                   setUserEducation(x);
                 }}

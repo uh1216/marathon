@@ -6,13 +6,11 @@
   height: 20px;
 }
 
-.option {
-  display: block;
-}
-
 .tools {
+  padding: 5px;
+  background-color: white;
   display: flex;
-  align-items: start;
+  justify-content: space-between;
 }
 
 .fill {
@@ -22,21 +20,51 @@
 .icon {
   background-color: #b2caf5;
   border: 1px #b2caf5;
-  z-index: 1;
 }
 
 .icon2 {
   background-color: #ffffff;
   border: 1px #ffffff;
-  z-index: 1;
+}
+
+.icon_img {
+  width: 25px;
 }
 
 .right_side {
-  background-color: #fff7ed;
+  width: 180px;
+  border-left: solid 1px rgb(236, 236, 236);
+  background-color: #f9f9f9;
   border-bottom-right-radius: 10px;
+}
+
+.options {
+  padding: 10px;
 }
 
 .option {
   padding-top: 6px;
-  padding-left: 6px;
+
+  margin-bottom: 20px;
+}
+
+.option_div {
+  display: flex;
+  flex-direction: column;
+}
+.option_span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input_range {
+  width: 140px;
+}
+
+.input_checkbox {
+  width: 20px;
+  height: 20px;
+  background-color: #b2caf5;
+  margin-right: 15px;
 }

@@ -1,11 +1,23 @@
 import style from "./ImageBoard.module.css";
-import Park from "img/interaction/park.jpg";
-import School from "img/interaction/school.jpg";
-import Subway from "img/interaction/subway.jpg";
 import { faRepeat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const images = [Park, School, Subway];
+const images = [
+  "https://d1v10kml6l14kq.cloudfront.net/place/beach.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/cinema.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/coffeeShop.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/concert.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/fitness.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/library.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/meseum.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/park.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/restaurant.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/shoppingMall.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/soccer.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/subway.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/themePark.jpg",
+  "https://d1v10kml6l14kq.cloudfront.net/place/zoo.jpg",
+];
 
 export default function ImageBoard({ channelId, stompClient, imageNo }) {
   /** 이전 질문 보기 */

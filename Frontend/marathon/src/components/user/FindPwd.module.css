@@ -39,3 +39,17 @@
 .btn:hover {
   background-color: rgb(144, 144, 144);
 }
+
+@media (max-width: 610px) {
+  .container {
+    width: 380px;
+    height: 370px;
+    font-size: 12px;
+  }
+  .input_txt {
+    width: 320px;
+  }
+  .content {
+    padding-left: 38px;
+  }
+}

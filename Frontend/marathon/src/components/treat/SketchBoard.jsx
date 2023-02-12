@@ -88,10 +88,11 @@ export default function SketchBoard({ channelId, stompClient, items }) {
                 <img class={style.icon_img} src={Rentangle} alt="" />
               </button>
             </div>
-            <div>
-              <div className={style.option} style={{ marginBottom: 20 }}>
-                <label htmlFor="">펜크기</label>
+            <div className={style.options}>
+              <div className={style.option + " " + style.option_div}>
+                <label htmlFor="">두께</label>
                 <input
+                  className={style.input_range}
                   min="1"
                   max="50"
                   type="range"
@@ -99,8 +100,8 @@ export default function SketchBoard({ channelId, stompClient, items }) {
                   onChange={(e) => setSize(parseInt(e.target.value))}
                 />
               </div>
-              <div className={style.option} style={{ marginBottom: 20 }}>
-                <label htmlFor="">색상 :&nbsp;</label>
+              <div className={style.option + " " + style.option_span}>
+                <label htmlFor="">색상 &nbsp;</label>
                 <input
                   type="color"
                   value={color}
@@ -109,9 +110,10 @@ export default function SketchBoard({ channelId, stompClient, items }) {
               </div>
               {tool === TOOL_ELLIPSE || tool === TOOL_RECTANGLE ? (
                 <div className={style.fill}>
-                  <div className={style.option}>
-                    <label htmlFor="">채우기 :&nbsp;</label>
+                  <div className={style.option + " " + style.option_span}>
+                    <label htmlFor="">채우기 &nbsp;</label>
                     <input
+                      className={style.input_checkbox}
                       type="checkbox"
                       value={fill}
                       style={{ margin: "0 8" }}
@@ -120,14 +122,14 @@ export default function SketchBoard({ channelId, stompClient, items }) {
                   </div>
                   <div className={style.option}>
                     {fill ? (
-                      <span>
-                        <label htmlFor="">채우기 색 :&nbsp;</label>
+                      <div className={style.option_span}>
+                        <label htmlFor="">채우기 색 &nbsp;</label>
                         <input
                           type="color"
                           value={fillColor}
                           onChange={(e) => setFillColor(e.target.value)}
                         />
-                      </span>
+                      </div>
                     ) : (
                       ""
                     )}
