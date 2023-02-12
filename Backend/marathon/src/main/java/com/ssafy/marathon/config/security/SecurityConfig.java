@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //            .antMatchers("/**").permitAll()
             //실제 배포할때 -------------------------------------------------------------
             //로그인,회원가입은 모두 가능
-            .antMatchers("/user-sign/**","/user-board/**", "/**/signup").permitAll()
+            .antMatchers("/user-sign/**","/user-board/**","/**/signup","/user-consult/**").permitAll()
             //각 권한에 맞는 설정
             .antMatchers("/patient*/**").hasRole("PATIENT")
             .antMatchers("/doctor*/**").hasRole("DOCTOR")

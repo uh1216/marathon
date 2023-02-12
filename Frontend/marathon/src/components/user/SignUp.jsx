@@ -310,6 +310,7 @@ export default function SignIn() {
           .then(() => {
             alert("회원가입에 성공하였습니다.");
             navigate("/");
+            window.scrollTo(0, 0);
           })
           .catch((error) => {
             alert("회원가입에 실패하였습니다.");
