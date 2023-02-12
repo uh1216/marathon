@@ -39,6 +39,13 @@ export default function Consult() {
   const [anonymousName, setAnonymousName] = useState(null);
   const [anonymousId, setAnonymousId] = useState(null);
 
+  // 모바일일때 돌아가게 만들기
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  };
+
   // 웹 소켓에 쓰이는 아이디
   const channelId = sessionId;
 
@@ -64,6 +71,13 @@ export default function Consult() {
   };
 
   useEffect(() => {
+    if (isMobile()) {
+      alert(
+        "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
+      );
+      window.location.href = "/";
+    }
+
     // 웹소켓
     stompClient.connect({}, () => {
       console.log("websocket connect");
@@ -189,17 +203,23 @@ export default function Consult() {
 
         <button className={style.btn_comment} onClick={showChatting}>
           <div
-            className={style.notCheckMsg}
+            className={
+              isNotChkMessage
+                ? style.notCheckMsg
+                : style.notCheckMsg + " " + style.vhidden
+            }
             style={{
-              visibility: isNotChkMessage ? "visible" : "hidden",
-              // transition: " 0.3s ease-out",
+              animation: "0.5s ease-in-out loadEffect5",
             }}
           >
             읽지 않은 메시지가 있습니다
             <div className={style.notCheckMsgTail}></div>
           </div>
-          {!isChatting && <FontAwesomeIcon icon={faComment} />}
-          {isChatting && <FontAwesomeIcon icon={faCommentBlank} />}
+          {!isChatting ? (
+            <FontAwesomeIcon icon={faComment} />
+          ) : (
+            <FontAwesomeIcon icon={faCommentBlank} />
+          )}
         </button>
         <button
           className={style.btn_x}

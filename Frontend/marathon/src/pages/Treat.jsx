@@ -25,6 +25,13 @@ import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { Buffer } from "buffer";
 
+// 모바일일때 돌아가게 만들기
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+};
+
 let sockJS = new SockJS("https://i8a304.p.ssafy.io/api/webSocket");
 // let sockJS = new SockJS("http://localhost:4433/api/webSocket");
 let stompClient = Stomp.over(sockJS);
@@ -188,6 +195,13 @@ export default function Treat() {
   // let headers = { Authorization: sessionStorage.getItem("access-token") };
 
   useEffect(() => {
+    if (isMobile()) {
+      alert(
+        "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
+      );
+      window.location.href = "/";
+    }
+
     // 웹소켓
     stompClient.connect({}, () => {
       console.log("websocket connect");
@@ -341,7 +355,6 @@ export default function Treat() {
                   className={style.bars}
                   style={{ fontSize: "1.4em" }}
                 />
-                <div className={style.blank_box}></div>
                 <div className={style.interaction_menu}>
                   <div
                     onClick={() => {
@@ -510,10 +523,13 @@ export default function Treat() {
           onClick={() => setIsChatting(!isChatting)}
         >
           <div
-            className={style.notCheckMsg}
+            className={
+              isNotChkMessage
+                ? style.notCheckMsg
+                : style.notCheckMsg + " " + style.vhidden
+            }
             style={{
-              visibility: isNotChkMessage ? "visible" : "hidden",
-              // transition: " 0.3s ease-out",
+              animation: "0.5s ease-in-out loadEffect5",
             }}
           >
             읽지 않은 메시지가 있습니다

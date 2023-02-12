@@ -26,6 +26,13 @@ export default function Messenger() {
   const [senderSeq, setSenderSeq] = useState(0);
   const [senderName, setSenderName] = useState("");
 
+  // 모바일일때 돌아가게 만들기
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  };
+
   useEffect(() => {
     // 사이드 나브 초기화
     dispatch(changeNowSideNav("알림 / 메시지"));
@@ -189,11 +196,17 @@ export default function Messenger() {
                   <button
                     className={style.btn}
                     onClick={() => {
-                      window.open(
-                        `/treat/${item.link}`,
-                        `Marathon - 화상제활`,
-                        "fullscreen, menubar=no, status=no, toolbar=no, location=no"
-                      );
+                      if (isMobile()) {
+                        alert(
+                          "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
+                        );
+                      } else {
+                        window.open(
+                          `/treat/${item.link}`,
+                          `Marathon - 화상제활`,
+                          "fullscreen, menubar=no, status=no, toolbar=no, location=no"
+                        );
+                      }
                     }}
                   >
                     수업 입장

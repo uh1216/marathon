@@ -27,7 +27,24 @@
 
 @media screen and (max-width: 1050px) {
   .button {
-    padding: 9px 25px 5px;
+    padding: 9px 16px 5px;
     font-size: 15px;
+  }
+
+  .flex h3 {
+    font-size: 1.2em;
+    margin-top: 10px;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .button {
+    padding: 13px 15px 4px;
+    font-size: 10px;
+  }
+
+  .flex h3 {
+    font-size: 1em;
+    margin-top: 10px;
   }
 }

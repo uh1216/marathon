@@ -158,7 +158,14 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
           style={{ gridTemplateColumns: grid }}
         >
           {headRow.map((content, idx) => {
-            return <div key={idx + content}>{content}</div>;
+            return (
+              <div
+                className={style.header_container3_title}
+                key={idx + content}
+              >
+                {content}
+              </div>
+            );
           })}
         </div>
         {data &&
@@ -169,7 +176,7 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
                 className={style.content_container3}
                 style={{ gridTemplateColumns: grid }}
               >
-                <div>{content.name} 님</div>
+                <div>{content.name}</div>
                 <div>{content.hopeDate}</div>
                 <div>{content.phone1}</div>
                 <div className={!content.checked ? style.fontR : style.fontB}>

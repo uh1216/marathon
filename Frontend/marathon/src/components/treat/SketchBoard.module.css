@@ -18,7 +18,7 @@
 }
 
 .icon {
-  background-color: #b2caf5;
+  background-color: #90b5fb;
   border: 1px #b2caf5;
 }
 
@@ -29,6 +29,11 @@
 
 .icon_img {
   width: 25px;
+  transition: 0.3s;
+}
+
+.icon2:hover {
+  background-color: #e6faff;
 }
 
 .right_side {

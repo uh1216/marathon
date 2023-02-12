@@ -61,7 +61,16 @@ export default function Header() {
         </div>
 
         <div className={style.logo}>
-          <img onClick={() => navigate("/")} src={logo} alt="" />
+          <img
+            onClick={() => {
+              setIsToggled(false);
+              setIsUserToggled(false);
+              navigate("/");
+              window.scrollTo(0, 0);
+            }}
+            src={logo}
+            alt=""
+          />
         </div>
 
         <div
@@ -305,6 +314,7 @@ export default function Header() {
                         setIsToggled(false);
                         setIsUserToggled(false);
                         navigate("/");
+                        window.scrollTo(0, 0);
                       }}
                     >
                       로그아웃
@@ -347,6 +357,7 @@ export default function Header() {
                         setIsToggled(false);
                         setIsUserToggled(false);
                         navigate("/");
+                        window.scrollTo(0, 0);
                       }}
                     >
                       로그아웃
@@ -382,6 +393,7 @@ export default function Header() {
                         setIsToggled(false);
                         setIsUserToggled(false);
                         navigate("/");
+                        window.scrollTo(0, 0);
                       }}
                     >
                       로그아웃
@@ -495,6 +507,7 @@ export default function Header() {
                   setIsUserToggled(false);
                   dispatch(userLogout());
                   navigate("/");
+                  window.scrollTo(0, 0);
                 }}
               >
                 <span>로그아웃</span>

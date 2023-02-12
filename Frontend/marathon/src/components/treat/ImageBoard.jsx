@@ -59,7 +59,7 @@ export default function ImageBoard({ channelId, stompClient, imageNo }) {
         alt="사진"
       />
       <button className={style.button} onClick={changeImage}>
-        <FontAwesomeIcon icon={faRepeat} />
+        <FontAwesomeIcon icon={faRepeat} className={style.refresh} />
       </button>
     </div>
   );

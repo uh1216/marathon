@@ -55,41 +55,39 @@
 }
 
 .interaction_menu {
-  width: auto;
-  height: auto;
+  width: 170px;
+  height: 0px;
   background-color: white;
-  border: 1px solid black;
   border-radius: 5px;
   padding: 0 10px;
+  transition: ease-in-out 0.2s;
 
   position: absolute;
   top: 40px;
-  right: 10px;
+  right: 0px;
 
-  display: none;
+  overflow: hidden;
   z-index: 20;
-}
-
-.blank_box {
-  display: none;
-  width: 150px;
-  height: 100px;
-  position: absolute;
-  right: 0;
-  top: 0;
 }
 
 .interaction_menu > div {
   margin: 10px 0;
   cursor: pointer;
+  transition: ease-in-out 0.2s;
+}
+
+.dropdown {
+  transition: ease-in-out 0.3s;
+  cursor: pointer;
+}
+
+.dropdown:hover .bars {
+  color: #1f5ba5;
 }
 
 .dropdown:hover .interaction_menu {
-  display: block;
-}
-
-.dropdown:hover .blank_box {
-  display: block;
+  height: 145px;
+  border: 1px solid black;
 }
 
 .interaction_menu div:hover {
@@ -120,11 +118,13 @@
   display: flex;
   align-items: center;
   padding-left: 10px;
+  transition: ease-in-out 0.2s;
 
   cursor: pointer;
   position: relative;
 }
 .preset:hover {
+  color: #0010c1;
   box-shadow: inset 2px 2px 2px 2px rgb(0, 0, 0, 25%);
 }
 
@@ -178,9 +178,16 @@
   justify-content: center;
   align-items: center;
   margin: 0 10px;
-
+  transition: ease-in-out 0.2s;
   height: 52px;
   box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 25%);
+}
+
+.btn_share:hover,
+.btn_comment:hover,
+.btn_x:hover {
+  background-color: rgb(217, 225, 255);
+  color: #3c3c3c;
 }
 
 .btn_video {
@@ -188,6 +195,7 @@
   background-color: white;
   width: 200px;
   border-radius: 20px;
+  transition: ease-in-out 0.2s;
   border: 1px solid rgb(101, 101, 101);
 }
 
@@ -196,6 +204,7 @@
   background-color: white;
   width: 200px;
   border-radius: 20px;
+  transition: ease-in-out 0.2s;
   border: 1px solid rgb(101, 101, 101);
 }
 
@@ -246,6 +255,10 @@
   box-shadow: 5px 5px 5px 1px rgb(0, 0, 0, 25%);
 }
 
+.vhidden {
+  display: none;
+}
+
 .notCheckMsgTail {
   width: 10px;
 
@@ -257,4 +270,10 @@
   position: absolute;
   right: 20px;
   bottom: -25px;
+}
+
+.btn_video:hover,
+.btn_mic:hover {
+  background-color: rgb(105, 129, 105);
+  color: #f4f4f4;
 }
