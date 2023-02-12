@@ -66,6 +66,7 @@ export default function Header() {
               setIsToggled(false);
               setIsUserToggled(false);
               navigate("/");
+              window.scrollTo(0, 0);
             }}
             src={logo}
             alt=""
@@ -313,6 +314,7 @@ export default function Header() {
                         setIsToggled(false);
                         setIsUserToggled(false);
                         navigate("/");
+                        window.scrollTo(0, 0);
                       }}
                     >
                       로그아웃
@@ -355,6 +357,7 @@ export default function Header() {
                         setIsToggled(false);
                         setIsUserToggled(false);
                         navigate("/");
+                        window.scrollTo(0, 0);
                       }}
                     >
                       로그아웃
@@ -390,6 +393,7 @@ export default function Header() {
                         setIsToggled(false);
                         setIsUserToggled(false);
                         navigate("/");
+                        window.scrollTo(0, 0);
                       }}
                     >
                       로그아웃
@@ -503,6 +507,7 @@ export default function Header() {
                   setIsUserToggled(false);
                   dispatch(userLogout());
                   navigate("/");
+                  window.scrollTo(0, 0);
                 }}
               >
                 <span>로그아웃</span>

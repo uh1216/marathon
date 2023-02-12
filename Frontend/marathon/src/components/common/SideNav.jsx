@@ -48,6 +48,7 @@ export default function SideNav(props) {
                 if (data === "로그아웃") {
                   dispatch(userLogout());
                   navigate("/");
+                  window.scrollTo(0, 0);
                 } else {
                   navigate(props.urls[i]);
                 }

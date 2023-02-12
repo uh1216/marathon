@@ -46,6 +46,7 @@ export default function Main() {
             );
           }
           navigate("/");
+          window.scrollTo(0, 0);
           return;
         }
       })
@@ -100,6 +101,7 @@ export default function Main() {
           sessionStorage.setItem("access-token", res.data.accessToken);
           dispatch(userLogin());
           navigate("/");
+          window.scrollTo(0, 0);
           return;
         }
       })
