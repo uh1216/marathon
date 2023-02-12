@@ -152,10 +152,13 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
         StringBuilder sb = new StringBuilder();
 
         String oldBitdate = reservation.getBitDate();
-        String[] arr = {"09:00:00", "10:00:00", "11:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00", "17:00:00"};
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  " + oldBitdate);
+        String[] arr = {"09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"};
 
         for (int i = 0; i < oldBitdate.length(); i++) {
-            if(arr[i].equals(treatment.getTime())) sb.append('1');
+
+            System.out.println(treatment.getTime());
+            if (arr[i].equals(treatment.getTime().toString())) sb.append('1');
             else sb.append(oldBitdate.charAt(i));
         }
         reservation.setBitDate(sb.toString());
