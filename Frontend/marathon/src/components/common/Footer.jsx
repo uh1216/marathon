@@ -19,6 +19,7 @@ export default function Footer() {
               className={style.marathon}
               onClick={() => {
                 navigate("/");
+                window.scrollTo(0, 0);
               }}
               alt=""
             />

@@ -210,6 +210,7 @@ export default function UserInformation() {
           alert("정상적으로 회원탈퇴 되었습니다.");
           dispatch(userLogout());
           navigate("/");
+          window.scrollTo(0, 0);
         })
         .catch((error) => console.log(error));
     }
