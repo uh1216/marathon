@@ -100,17 +100,13 @@ export default function NoticeBoard() {
                 </button>
               </div>
             </div>
-            {/** 보드 div입니다. 상단 버튼을 제외한 부분이며 다른 페이지에서 사용 시 해당 div영역과 style.css를 참고해 활용하면 됩니다.
-             * grid 비율과 개수가 다를 수 있으니 수정 시 주의해주세요.
-             */}
             <div>
               <div className={style.notice_header_container}>
                 <div className={style.only_title}>No.</div>
                 <div className={style.only_title}>제목</div>
-                <div className={style.only_title}>등록일</div>
+                <div className={style.date_hidden}>등록일</div>
                 <div className={style.count_hidden}>조회수</div>
               </div>
-              {/** 현재는 더미데이터, 백엔드와 연결 후 서버에서 값 가져와서 출력 */}
               {!isLoading &&
                 data.data.content.map((content) => {
                   return (
@@ -128,7 +124,13 @@ export default function NoticeBoard() {
                             {content.title}
                           </Link>
                         </div>
-                        <div>{content.registDate}</div>
+                        <div className={style.registDate_bottom}>등록일</div>
+                        <div className={style.registDate_bottom}>
+                          {content.registDate}
+                        </div>
+                        <div className={style.registDate}>
+                          {content.registDate}
+                        </div>
                         <div className={style.count_hidden}>
                           {content.viewCnt}
                         </div>

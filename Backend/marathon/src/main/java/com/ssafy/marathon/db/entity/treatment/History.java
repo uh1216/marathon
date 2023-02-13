@@ -5,14 +5,9 @@ import com.ssafy.marathon.db.entity.user.Patient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import lombok.*;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.*;
 
 @Getter
 @Setter

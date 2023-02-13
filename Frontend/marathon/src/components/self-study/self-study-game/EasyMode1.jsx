@@ -106,7 +106,7 @@ export default function EasyMode1() {
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
-        <div className={commonStyle.title} style={{ marginBottom: "20px" }}>
+        <div className={style.title}>
           다음 화면에서 색칠된 곳을 기억해주세요
         </div>
         <div className={style.content}>
@@ -138,9 +138,7 @@ export default function EasyMode1() {
     return (
       <>
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
-        <div className={commonStyle.title} style={{ marginBottom: "20px" }}>
-          색칠되었던 곳을 클릭해주세요
-        </div>
+        <div className={style.title}>색칠되었던 곳을 클릭해주세요</div>
         <div className={style.content}>
           <div className={style.board}>{button_arr2}</div>
         </div>

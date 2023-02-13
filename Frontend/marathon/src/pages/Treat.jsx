@@ -67,8 +67,12 @@ export default function Treat() {
   const [isNotChkMessage, setIsNotChkMessage] = useState(false);
 
   // 웹 소켓에 쓰이는 아이디
-  // const channelId = sessionId;
   const channelId = sessionId;
+
+  /** 채팅창 보이기 or 끄기 */
+  const showChatting = () => {
+    setIsChatting(!isChatting);
+  };
 
   /** 상호작용 보드 바꾸기
    * idx : 몇 번째 상호작용 보드를 골랐는지
@@ -556,6 +560,7 @@ export default function Treat() {
             stompClient={stompClient}
             channelId={channelId}
             chatList={chatList}
+            setIsChatting={showChatting}
           />
         )}
       </div>

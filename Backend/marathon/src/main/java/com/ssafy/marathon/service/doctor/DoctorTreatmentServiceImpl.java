@@ -120,8 +120,8 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
 
     @Override
     public List<DayOfTreatmentResDto> getTreatments(Long doctorSeq) {
-        List<Treatment> list = treatmentRepository.findByDateBetween(MilliFunc.getStartDate(),
-                MilliFunc.getEndDate());
+        List<Treatment> list = treatmentRepository.findByDateBetweenAndDoctor_Seq(
+                        MilliFunc.getStartDate(), MilliFunc.getEndDate(), doctorSeq);
         List<DayOfTreatmentResDto> dtoList = new ArrayList<>();
 
         for (Treatment treatment : list) {
@@ -152,7 +152,6 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
         StringBuilder sb = new StringBuilder();
 
         String oldBitdate = reservation.getBitDate();
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  " + oldBitdate);
         String[] arr = {"09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"};
 
         for (int i = 0; i < oldBitdate.length(); i++) {
