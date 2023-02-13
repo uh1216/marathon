@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faShareFromSquare,
   faComment,
   faXmark,
   faVideo,
@@ -515,9 +514,6 @@ export default function Treat() {
           </button>
         )}
 
-        <button className={style.btn_share}>
-          <FontAwesomeIcon icon={faShareFromSquare} />
-        </button>
         <button
           className={style.btn_comment}
           onClick={() => setIsChatting(!isChatting)}
