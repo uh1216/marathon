@@ -239,13 +239,24 @@ class VideoCam extends Component {
   }
 
   async createSession(sessionId) {
-    const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions",
-      { customSessionId: sessionId },
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const response = await axios
+      .post(
+        APPLICATION_SERVER_URL + "api/sessions",
+        { customSessionId: sessionId },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Token": sessionStorage.getItem("access-token"),
+          },
+        }
+      )
+      .catch((error) => {
+        if (error.response.status === 400 || error.response.status === 401) {
+          alert("권한 없는 접근입니다!");
+          window.close();
+          window.history.back();
+        }
+      });
     return response.data; // The sessionId
   }
 
@@ -254,7 +265,10 @@ class VideoCam extends Component {
       APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
       {},
       {
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Token": sessionStorage.getItem("access-token"),
+        },
       }
     );
     return response.data; // The token

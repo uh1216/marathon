@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faShareFromSquare,
   faComment,
   faXmark,
   faVideo,
@@ -76,6 +75,7 @@ export default function Consult() {
         "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
       );
       window.location.href = "/";
+      return;
     }
 
     // 웹소켓
@@ -196,10 +196,6 @@ export default function Consult() {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;음&nbsp;&nbsp;소&nbsp;&nbsp;거
           </button>
         )}
-
-        <button className={style.btn_share}>
-          <FontAwesomeIcon icon={faShareFromSquare} />
-        </button>
 
         <button className={style.btn_comment} onClick={showChatting}>
           <div

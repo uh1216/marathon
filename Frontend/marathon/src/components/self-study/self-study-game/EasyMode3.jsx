@@ -9,6 +9,10 @@ import style from "./Game3.module.css";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
+import clickSound from "sound/click.mp3";
+import correctSound from "sound/correct.mp3";
+import wrongSound from "sound/wrong.mp3";
+
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
@@ -147,7 +151,7 @@ export default function EasyMode1() {
                 x={x}
                 key={uuidv4()}
               >
-                {/* {animals[myAnswer[y][x]]} */}
+                {animals[myAnswer[y][x]]}
                 <div className={style.result}>❌</div>
               </td>
             );
@@ -162,7 +166,7 @@ export default function EasyMode1() {
                 x={x}
                 key={uuidv4()}
               >
-                {/* {animals[myAnswer[y][x]]} */}
+                {animals[myAnswer[y][x]]}
                 <div className={style.result}>⭕</div>
               </td>
             );
@@ -370,6 +374,11 @@ export default function EasyMode1() {
   } else {
     return (
       <>
+        {stageResult ? (
+          <audio src={correctSound} autoPlay />
+        ) : (
+          <audio src={wrongSound} autoPlay />
+        )}
         <div className={commonStyle.stage}>{gameState.stage} /10</div>
         <div className={commonStyle.title}>
           {stageResult ? "정답입니다 😊" : "틀렸습니다 😥"}
