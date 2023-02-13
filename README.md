@@ -77,7 +77,7 @@
 
 1. 데이터베이스를 설정합니다.
 
-   - [marathon.sql](https://github.com/YongjoonSeo/1st_pjt_301/blob/master/docs/honey-combo.sql)을 참고해서 데이터베이스를 생성합니다. ([여기](https://d1v10kml6l14kq.cloudfront.net/marathon_ERD.png)를 눌러 erd를 확인하세요.)
+   - [marathon.sql](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A304/-/blob/dev/Docs/marathon.sql)을 참고해서 데이터베이스를 생성합니다. ([여기](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A304/-/blob/dev/Docs/marathon_ERD.png)를 눌러 erd를 확인하세요.)
 
    - `application.yml`에 데이터베이스 설정을 추가합니다.
 
@@ -153,7 +153,7 @@
 
 ## 🖥️ ​사용된 기술
 
-<img src="https://user-images.githubusercontent.com/19357410/91040283-e7d8cb80-e648-11ea-8724-e20afcbefcc4.png" width=850>
+<img src="https://d1v10kml6l14kq.cloudfront.net/spec.png" width=850>
 
 #### 프론트엔드
 
