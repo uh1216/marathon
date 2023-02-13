@@ -13,7 +13,6 @@ class VideoCam extends Component {
 
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
-      // mySessionId: this.props.sessionId,
       mySessionId: this.props.sessionId,
       myUserName: this.props.name,
       session: undefined,
@@ -239,13 +238,28 @@ class VideoCam extends Component {
   }
 
   async createSession(sessionId) {
-    const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions",
-      { customSessionId: sessionId },
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const response = await axios
+      .post(
+        APPLICATION_SERVER_URL + "api/sessions",
+        {
+          customSessionId: sessionId,
+          historySeq: localStorage.getItem("historySeq"),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Token": sessionStorage.getItem("access-token"),
+          },
+        }
+      )
+      .catch((error) => {
+        if (error.response.status === 400 || error.response.status === 401) {
+          alert("권한 없는 접근입니다!");
+          window.close();
+          window.history.back();
+        }
+      });
+    localStorage.clear("historySeq");
     return response.data; // The sessionId
   }
 
@@ -254,7 +268,10 @@ class VideoCam extends Component {
       APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
       {},
       {
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Token": sessionStorage.getItem("access-token"),
+        },
       }
     );
     return response.data; // The token

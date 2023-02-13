@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faShareFromSquare,
   faComment,
   faXmark,
   faVideo,
@@ -195,13 +194,14 @@ export default function Treat() {
   // let headers = { Authorization: sessionStorage.getItem("access-token") };
 
   useEffect(() => {
+    console.log("나는 들림");
     if (isMobile()) {
       alert(
         "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
       );
       window.location.href = "/";
+      return;
     }
-
     // 웹소켓
     stompClient.connect({}, () => {
       console.log("websocket connect");
@@ -220,11 +220,6 @@ export default function Treat() {
             let payload = Buffer.from(base64Payload, "base64");
             let result = JSON.parse(payload.toString());
             addMessage({
-              senderImg: result.img,
-              senderName: result.name,
-              content: newMessage.content,
-            });
-            console.log({
               senderImg: result.img,
               senderName: result.name,
               content: newMessage.content,
@@ -515,9 +510,6 @@ export default function Treat() {
           </button>
         )}
 
-        <button className={style.btn_share}>
-          <FontAwesomeIcon icon={faShareFromSquare} />
-        </button>
         <button
           className={style.btn_comment}
           onClick={() => setIsChatting(!isChatting)}

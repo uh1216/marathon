@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRecord, resetRecord, setType } from "stores/game.store";
 import commonStyle from "./Game.module.css";
@@ -8,6 +8,10 @@ import GIF from "img/gif/game3_easy.gif";
 import style from "./Game3.module.css";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+
+import clickSound from "sound/click.mp3";
+import correctSound from "sound/correct.mp3";
+import wrongSound from "sound/wrong.mp3";
 
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
@@ -20,12 +24,18 @@ export default function EasyMode1() {
   const [myAnswer, setMyAnswer] = useState([]);
   const [stageResult, setStageResult] = useState();
   const navigate = useNavigate();
+  const refClickSound = useRef();
 
   // 모바일일때 돌아가게 만들기
   const isMobile = () => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     );
+  };
+
+  /** 클릭 시 효과음 */
+  const playClickSound = () => {
+    refClickSound.current.play();
   };
 
   /** (min <= 값 < max) 랜덤숫자 뽑기 */
@@ -147,7 +157,7 @@ export default function EasyMode1() {
                 x={x}
                 key={uuidv4()}
               >
-                {/* {animals[myAnswer[y][x]]} */}
+                {animals[myAnswer[y][x]]}
                 <div className={style.result}>❌</div>
               </td>
             );
@@ -162,7 +172,7 @@ export default function EasyMode1() {
                 x={x}
                 key={uuidv4()}
               >
-                {/* {animals[myAnswer[y][x]]} */}
+                {animals[myAnswer[y][x]]}
                 <div className={style.result}>⭕</div>
               </td>
             );
@@ -342,6 +352,7 @@ export default function EasyMode1() {
   } else if (gameState.isReady === 1) {
     return (
       <>
+        <audio ref={refClickSound} src={clickSound} />
         <div className={commonStyle.stage}>{gameState.stage} /10</div>
         <div className={commonStyle.title}>
           원래 위치로 동물을 가져다 놓으세요!
@@ -359,6 +370,7 @@ export default function EasyMode1() {
                 draggable
                 pre_y="-1"
                 pre_x="-1"
+                onClick={playClickSound}
               >
                 {animals[i]}
               </button>
@@ -370,6 +382,11 @@ export default function EasyMode1() {
   } else {
     return (
       <>
+        {stageResult ? (
+          <audio src={correctSound} autoPlay />
+        ) : (
+          <audio src={wrongSound} autoPlay />
+        )}
         <div className={commonStyle.stage}>{gameState.stage} /10</div>
         <div className={commonStyle.title}>
           {stageResult ? "정답입니다 😊" : "틀렸습니다 😥"}

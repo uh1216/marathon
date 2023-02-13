@@ -14,7 +14,7 @@ export default function NoticeDetail() {
   const res_delete = () =>
     $.delete(`/admin-board/notice/${location.state.seq}`);
 
-  const { isLoading, data, isError, error } = useQuery(
+  const { isLoading, data } = useQuery(
     ["NoticeDetail", location.state.seq],
     () => {
       return $.get(`/user-board/${location.state.seq}`);
@@ -85,7 +85,8 @@ export default function NoticeDetail() {
                   </div>
                   <div className={style.notice_detail_body_header_item2}>
                     <p className={style.font_gray}>
-                      작성일 &nbsp;&nbsp;&nbsp;{data.data.registDate}
+                      작성일 &nbsp;&nbsp;&nbsp;
+                      {location.state.date}
                     </p>
                   </div>
                   <div className={style.notice_detail_body_header_item3}></div>
@@ -97,7 +98,6 @@ export default function NoticeDetail() {
                   <div className={style.notice_detail_body_header_item5}></div>
                 </div>
                 <hr />
-                {/** 내용이 들어가는 태그 */}
                 <div className={style.notice_detail_body_content}>
                   <p className={style.notice_detail_body_content_text}>
                     {data.data.content}

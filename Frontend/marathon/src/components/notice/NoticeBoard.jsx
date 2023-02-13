@@ -44,12 +44,10 @@ export default function NoticeBoard() {
   };
 
   /** 공지사항 접속시 최초 get 호출 */
-  const { isLoading, data, isError, error, refetch } = useQuery(
-    ["NoticeBoard", pageNum],
-    () =>
-      $.get(
-        `/user-board/list?pageNum=${pageNum}&contentCondition=${searchTitle}&titleCondition=${searchContent}`
-      )
+  const { isLoading, data, refetch } = useQuery(["NoticeBoard", pageNum], () =>
+    $.get(
+      `/user-board/list?pageNum=${pageNum}&contentCondition=${searchTitle}&titleCondition=${searchContent}`
+    )
   );
 
   return (
@@ -109,6 +107,39 @@ export default function NoticeBoard() {
               </div>
               {!isLoading &&
                 data.data.content.map((content) => {
+                  let amPm =
+                    Number(content.registDate.slice(11, 13)) < 12
+                      ? "오전"
+                      : "오후";
+
+                  let hour = "";
+                  if (Number(content.registDate.slice(11, 13)) > 12) {
+                    if (Number(content.registDate.slice(11, 13)) - 12 < 10) {
+                      hour =
+                        "0" +
+                        String(Number(content.registDate.slice(11, 13)) - 12);
+                    } else {
+                      hour = String(
+                        Number(content.registDate.slice(11, 13)) - 12
+                      );
+                    }
+                  } else {
+                    if (Number(content.registDate.slice(11, 13)) < 10) {
+                      hour =
+                        "0" + String(Number(content.registDate.slice(11, 13)));
+                    } else {
+                      hour = String(Number(content.registDate.slice(11, 13)));
+                    }
+                  }
+
+                  let date =
+                    content.registDate.slice(0, 10) +
+                    " " +
+                    amPm +
+                    " " +
+                    hour +
+                    content.registDate.slice(13, 16);
+
                   return (
                     <div key={content.boardSeq}>
                       <div className={style.notice_header_item}>
@@ -118,6 +149,7 @@ export default function NoticeBoard() {
                             to={`../detail/${content.boardSeq}`}
                             state={{
                               seq: content.boardSeq,
+                              date: date,
                             }}
                             className={style.notice_link}
                           >
@@ -125,12 +157,8 @@ export default function NoticeBoard() {
                           </Link>
                         </div>
                         <div className={style.registDate_bottom}>등록일</div>
-                        <div className={style.registDate_bottom}>
-                          {content.registDate}
-                        </div>
-                        <div className={style.registDate}>
-                          {content.registDate}
-                        </div>
+                        <div className={style.registDate_bottom}>{date}</div>
+                        <div className={style.registDate}>{date}</div>
                         <div className={style.count_hidden}>
                           {content.viewCnt}
                         </div>

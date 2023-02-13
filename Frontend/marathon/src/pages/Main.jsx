@@ -3,6 +3,7 @@ import style from "./Main.module.css";
 import Main2 from "img/main_2.png";
 import Main3 from "img/main_3.png";
 import Main4 from "img/main_4.png";
+import Main5 from "img/main_5.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteRight, faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ export default function Main() {
   const navigate = useNavigate();
   return (
     <>
+      <div className={style.banner_background}></div>
       <div className={style.main_banner}>
         <div
           className={style.main_banner_words}
@@ -48,21 +50,23 @@ export default function Main() {
               복귀로의 완주까지 곁에서 도와드리겠습니다.
             </p>
           </div>
-          <div className={style.page_card + " " + style.fl}>
-            <img className={style.card} src={Main2} alt="" />
-            <h3 style={{ textAlign: "center" }}>혼자하는 단계별 재활 훈련</h3>
-            <p>
-              스스로 진단하면서 자신의 인지력과 기억력을 훈련하고 단계별로
-              나누어 흥미를 잃지 않도록 구성했습니다.
-            </p>
-          </div>
-          <div className={style.page_card + " " + style.fr}>
-            <img className={style.card} src={Main2} alt="" />
-            <h3 style={{ textAlign: "center" }}>반응성 높은 화상 재활</h3>
-            <p>
-              단순히 화상 연결에 그치지 않고 재활의 효율을 높일 수 있도록
-              상호작용 할 수 있는 훈련용 도구들을 지원합니다.
-            </p>
+          <div>
+            <div className={style.page_card + " " + style.fl}>
+              <img className={style.card} src={Main5} alt="" />
+              <h3 style={{ textAlign: "center" }}>혼자하는 단계별 재활 훈련</h3>
+              <p>
+                스스로 진단하면서 자신의 인지력과 기억력을 훈련하고 단계별로
+                나누어 흥미를 잃지 않도록 구성했습니다.
+              </p>
+            </div>
+            <div className={style.page_card + " " + style.fr}>
+              <img className={style.card} src={Main2} alt="" />
+              <h3 style={{ textAlign: "center" }}>반응성 높은 화상 재활</h3>
+              <p>
+                단순히 화상 연결에 그치지 않고 재활의 효율을 높일 수 있도록
+                상호작용 할 수 있는 훈련용 도구들을 지원합니다.
+              </p>
+            </div>
           </div>
           <div style={{ clear: "both" }} />
           <div className={style.main_img_board}>

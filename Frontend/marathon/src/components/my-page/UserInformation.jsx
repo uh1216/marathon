@@ -349,7 +349,13 @@ export default function UserInformation() {
           {/* 프로필 사진 */}
           <img
             className={style.profile_img}
-            src={!newImgUrl ? imgUrl : newImgUrl}
+            src={
+              newImgUrl
+                ? newImgUrl
+                : imgUrl
+                ? imgUrl
+                : "https://d1v10kml6l14kq.cloudfront.net/default.jpg"
+            }
             alt="프로필 사진"
           />
           <div className={style.user_name}>{userName} 님</div>

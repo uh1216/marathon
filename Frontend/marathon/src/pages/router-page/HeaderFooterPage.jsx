@@ -5,10 +5,13 @@ import { Outlet } from "react-router-dom";
 
 export default function HeaderFooterPage() {
   return (
-    <>
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       <Header />
-      <Outlet />
+      <div style={{ flex: 1 }}>
+        <Outlet />
+      </div>
+
       <Footer />
-    </>
+    </div>
   );
 }

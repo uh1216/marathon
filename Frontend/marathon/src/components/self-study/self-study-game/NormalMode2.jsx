@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRecord, resetRecord } from "stores/game.store";
 import commonStyle from "./Game.module.css";
@@ -8,9 +8,14 @@ import GIF from "img/gif/game2_normal.gif";
 import CARD_BACK from "img/card_back.jpg";
 import style from "./Game2.module.css";
 
+import clickSound from "sound/click.mp3";
+import correctSound from "sound/correct.mp3";
+import wrongSound from "sound/wrong.mp3";
+
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
+  const refClickSound = useRef();
   const gameData = [
     {
       url: "https://cdn.pixabay.com/photo/2020/06/12/22/04/lion-5292016_960_720.jpg",
@@ -69,6 +74,11 @@ export default function EasyMode1() {
 
   /** 스테이지가 넘어갈 때 중복하지 않는 선지를 고르기 위함*/
   const [nineArr, setNineArr] = useState(["", "", "", "", "", "", "", "", ""]);
+
+  /** 클릭 시 효과음 */
+  const playClickSound = () => {
+    refClickSound.current.play();
+  };
 
   /** 인트로 단계에서 어떤 문제를 고를지 세팅*/
   const craeteQuiz = () => {
@@ -323,9 +333,10 @@ export default function EasyMode1() {
         </div>
       </>
     );
-  } else if (gameState.isReady == 1) {
+  } else if (gameState.isReady === 1) {
     return (
       <>
+        <audio ref={refClickSound} src={clickSound} />
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
           그림카드를 보고 알맞은 단어를 골라주세요
@@ -392,6 +403,7 @@ export default function EasyMode1() {
                   <td
                     onClick={() => {
                       setSelected(inputSelect(nineArr[0]));
+                      playClickSound();
                     }}
                   >
                     {nineArr[0]}
@@ -399,6 +411,7 @@ export default function EasyMode1() {
                   <td
                     onClick={() => {
                       setSelected(inputSelect(nineArr[1]));
+                      playClickSound();
                     }}
                   >
                     {nineArr[1]}
@@ -406,6 +419,7 @@ export default function EasyMode1() {
                   <td
                     onClick={() => {
                       setSelected(inputSelect(nineArr[2]));
+                      playClickSound();
                     }}
                   >
                     {nineArr[2]}
@@ -415,6 +429,7 @@ export default function EasyMode1() {
                   <td
                     onClick={() => {
                       setSelected(inputSelect(nineArr[3]));
+                      playClickSound();
                     }}
                   >
                     {nineArr[3]}
@@ -422,6 +437,7 @@ export default function EasyMode1() {
                   <td
                     onClick={() => {
                       setSelected(inputSelect(nineArr[4]));
+                      playClickSound();
                     }}
                   >
                     {nineArr[4]}
@@ -429,6 +445,7 @@ export default function EasyMode1() {
                   <td
                     onClick={() => {
                       setSelected(inputSelect(nineArr[5]));
+                      playClickSound();
                     }}
                   >
                     {nineArr[5]}
@@ -438,6 +455,7 @@ export default function EasyMode1() {
                   <td
                     onClick={() => {
                       setSelected(inputSelect(nineArr[6]));
+                      playClickSound();
                     }}
                   >
                     {nineArr[6]}
@@ -445,6 +463,7 @@ export default function EasyMode1() {
                   <td
                     onClick={() => {
                       setSelected(inputSelect(nineArr[7]));
+                      playClickSound();
                     }}
                   >
                     {nineArr[7]}
@@ -452,6 +471,7 @@ export default function EasyMode1() {
                   <td
                     onClick={() => {
                       setSelected(inputSelect(nineArr[8]));
+                      playClickSound();
                     }}
                   >
                     {nineArr[8]}
@@ -466,6 +486,11 @@ export default function EasyMode1() {
   } else {
     return (
       <>
+        {stageResult ? (
+          <audio src={correctSound} autoPlay />
+        ) : (
+          <audio src={wrongSound} autoPlay />
+        )}
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
           {stageResult ? (

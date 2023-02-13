@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRecord, resetRecord, setType } from "stores/game.store";
 import commonStyle from "./Game.module.css";
@@ -7,6 +7,10 @@ import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode } from "stores/game.store";
 import GIF from "img/gif/game1_easy.gif";
 import { v4 as uuidv4 } from "uuid";
+
+import clickSound from "sound/click.mp3";
+import correctSound from "sound/correct.mp3";
+import wrongSound from "sound/wrong.mp3";
 
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
@@ -23,6 +27,12 @@ export default function EasyMode1() {
     "0",
     "0",
   ]);
+  const refClickSound = useRef();
+
+  /** 클릭 시 효과음 */
+  const playClickSound = () => {
+    refClickSound.current.play();
+  };
 
   // 인트로 화면 띄울 때 세팅할 것
   useEffect(() => {
@@ -65,6 +75,7 @@ export default function EasyMode1() {
 
   /** 버튼 클릭 시 상태 바뀌는 함수 */
   const onChange = (e) => {
+    playClickSound();
     let index = e.target.value;
     let arr = [...mySelect];
     index[index.length - 1] === "0"
@@ -137,6 +148,7 @@ export default function EasyMode1() {
     });
     return (
       <>
+        <audio ref={refClickSound} src={clickSound} />
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={style.title}>색칠되었던 곳을 클릭해주세요</div>
         <div className={style.content}>
@@ -191,6 +203,11 @@ export default function EasyMode1() {
 
     return (
       <>
+        {JSON.stringify(quiz) === JSON.stringify(mySelect) ? (
+          <audio src={correctSound} autoPlay />
+        ) : (
+          <audio src={wrongSound} autoPlay />
+        )}
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         {JSON.stringify(quiz) === JSON.stringify(mySelect) ? (
           <div className={style.title}>
