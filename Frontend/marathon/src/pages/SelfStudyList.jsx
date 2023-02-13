@@ -2,13 +2,18 @@ import style from "./SelfStudyList.module.css";
 import Game1 from "img/game1.png";
 import Game2 from "img/game2.png";
 import Game3 from "img/game3.png";
+import Fade from "react-reveal/Fade";
 
 export default function SelfStudyList() {
   return (
     <>
       <div
+        className={style.banner_background}
+        // style={{ animation: "3s ease-in-out loadEffect3" }}
+      ></div>
+      <div
         className={style.main_banner}
-        style={{ animation: "1s ease-in-out loadEffect1" }}
+        // style={{ animation: "1s ease-in-out loadEffect1" }}
       >
         <div
           className={style.main_banner_words}
@@ -111,7 +116,7 @@ export default function SelfStudyList() {
               </div>
             </div>
             <img className={style.img_game} src={Game2} alt="학습 이미지" />
-          </div>
+          </div>{" "}
           <div
             className={style.container_game}
             style={{ animation: "1s ease-in-out loadEffect3" }}

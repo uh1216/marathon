@@ -1,5 +1,6 @@
 import { useState } from "react";
 import style from "./FindPwd.module.css";
+import Swal from "sweetalert2";
 import { $ } from "util/axios";
 
 export default function FindId({ setModalOpen }) {
@@ -12,7 +13,12 @@ export default function FindId({ setModalOpen }) {
       id: userId,
       email: email,
     });
-    alert("새 비밀번호를 이메일로 전송하였습니다.");
+    Swal.fire({
+      icon: "info",
+      title: "",
+      text: "새 비밀번호를 이메일로 전송하였습니다.",
+      confirmButtonText: "닫기",
+    });
     setModalOpen(false);
   };
 

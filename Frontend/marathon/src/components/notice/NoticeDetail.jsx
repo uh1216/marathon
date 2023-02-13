@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import style from "./NoticeDetail.module.css";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -23,16 +24,40 @@ export default function NoticeDetail() {
 
   const { mutate: deleteArticle } = useMutation(res_delete, {
     onSuccess: () => {
-      if (window.confirm("삭제하시겠습니까?")) {
-        alert("삭제되었습니다.");
-        navigate(`/notice/${1}`);
-      }
+      Swal.fire({
+        icon: "success",
+        text: "삭제되었습니다.",
+      });
+      navigate(`/notice/${1}`);
     },
 
     onError: (err) => {
-      alert("실패");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "실패했습니다.",
+        confirmButtonText: "닫기",
+      });
     },
   });
+
+  const onDelete = () => {
+    Swal.fire({
+      icon: "warning",
+      title: "",
+      text: "삭제하시겠습니까?",
+
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteArticle();
+      }
+    });
+  };
 
   return (
     <>
@@ -59,7 +84,7 @@ export default function NoticeDetail() {
                     </button>
                     <button
                       className={style.notice_button_delete}
-                      onClick={deleteArticle}
+                      onClick={onDelete}
                     >
                       삭제하기
                     </button>

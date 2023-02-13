@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "./Messenger.module.css";
+import Swal from "sweetalert2";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { faXmark, faBell } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
@@ -115,77 +116,89 @@ export default function Messenger() {
   };
 
   return (
-    <>
-      <div className="container">
-        <div className={style.btn_container}>
-          <button
-            className={style.btn_new_message}
+    <div className="container">
+      <div className={style.btn_container}>
+        <button
+          className={style.btn_new_message}
+          onClick={() => {
+            showModalMessage(0);
+          }}
+        >
+          <FontAwesomeIcon icon={faPaperPlane} /> 새 메시지
+        </button>
+      </div>
+      {list.length === 0 ? (
+        <div className={style.not_message}>
+          <div style={{ fontSize: "40px" }}>❌</div>
+          <div>
+            알림 / 메시지가 존재하지 않습니다.
+            <br /> 새 메시지를 작성해보세요!
+          </div>
+        </div>
+      ) : (
+        list.map((item, idx) => (
+          <div
+            className={
+              item.checked
+                ? style.message_checked + " " + style.message_box
+                : style.message_box
+            }
+            key={idx}
             onClick={() => {
-              showModalMessage(0);
+              setChecked(item.commuSeq, idx);
             }}
           >
-            <FontAwesomeIcon icon={faPaperPlane} /> 새 메시지
-          </button>
-        </div>
-        {list.length === 0 ? (
-          <div className={style.not_message}>
-            <div style={{ fontSize: "40px" }}>❌</div>
-            <div>
-              알림 / 메시지가 존재하지 않습니다.
-              <br /> 새 메시지를 작성해보세요!
-            </div>
-          </div>
-        ) : (
-          list.map((item, idx) => (
-            <div
-              className={
-                item.checked
-                  ? style.message_checked + " " + style.message_box
-                  : style.message_box
-              }
-              key={idx}
-              onClick={() => {
-                setChecked(item.commuSeq, idx);
-              }}
-            >
-              {/* content가 null이면 알림, null이 아니면 메시지 */}
-              {item.content !== null && (
-                <FontAwesomeIcon
-                  icon={faXmark}
-                  className={style.icon_x}
-                  onClick={() => {
-                    removeMessage(item.commuSeq, idx);
-                  }}
-                />
-              )}
+            {/* content가 null이면 알림, null이 아니면 메시지 */}
+            {item.content !== null && (
               <FontAwesomeIcon
-                icon={item.content !== null ? faPaperPlane : faBell}
-                className={style.icon}
+                icon={faXmark}
+                className={style.icon_x}
+                onClick={() => {
+                  removeMessage(item.commuSeq, idx);
+                }}
               />
-              <div className={style.content_box}>
-                <div className={style.message_content}>
-                  {item.content !== null ? item.content : "방이 생성되었습니다"}
-                </div>
-                <div className={style.sub_content_box}>
-                  <div className={style.sub_content}>
-                    {dateToString(item.date)}
-                  </div>
-                  {item.content !== null ? (
-                    <div className={style.sub_content}>
-                      from. {item.senderName} 선생님
-                    </div>
-                  ) : null}
-                </div>
+            )}
+            <FontAwesomeIcon
+              icon={item.content !== null ? faPaperPlane : faBell}
+              className={style.icon}
+            />
+            <div className={style.content_box}>
+              <div className={style.message_content}>
+                {item.content !== null ? item.content : "방이 생성되었습니다"}
               </div>
-              <div className={style.btn_box}>
-                {item.content !== null && (
-                  <button
-                    className={style.btn}
-                    onClick={() => {
-                      showModalMessage(
-                        item.commuSeq,
-                        item.senderSeq,
-                        item.senderName
+              <div className={style.sub_content_box}>
+                <div className={style.sub_content}>
+                  {dateToString(item.date)}
+                </div>
+                {item.content !== null ? (
+                  <div className={style.sub_content}>
+                    from. {item.senderName} 선생님
+                  </div>
+                ) : null}
+              </div>
+            </div>
+            <div className={style.btn_box}>
+              {item.content !== null && (
+                <button
+                  className={style.btn}
+                  onClick={() => {
+                    showModalMessage(
+                      item.commuSeq,
+                      item.senderSeq,
+                      item.senderName
+                    );
+                  }}
+                >
+                  답장 쓰기
+                </button>
+              )}
+              {item.content === null && isJoinable(item.link) && (
+                <button
+                  className={style.btn}
+                  onClick={() => {
+                    if (isMobile()) {
+                      alert(
+                        "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
                       );
                     }}
                   >
@@ -197,9 +210,12 @@ export default function Messenger() {
                     className={style.btn}
                     onClick={() => {
                       if (isMobile()) {
-                        alert(
-                          "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
-                        );
+                        Swal.fire({
+                          icon: "error",
+                          title: "",
+                          text: "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!",
+                          confirmButtonText: "닫기",
+                        });
                       } else {
                         window.open(
                           `/treat/${item.link}`,
@@ -214,16 +230,15 @@ export default function Messenger() {
                 )}
               </div>
             </div>
-          ))
-        )}
-        {list.length !== 0 && list.length % 5 === 0 && (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <button className={style.btn_more} onClick={() => getMoreMessage()}>
-              ▼ 더보기
-            </button>
-          </div>
-        )}
-      </div>
+        ))
+      )}
+      {list.length !== 0 && list.length % 5 === 0 && (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <button className={style.btn_more} onClick={() => getMoreMessage()}>
+            ▼ 더보기
+          </button>
+        </div>
+      )}
       {isModalOpen && (
         <Modal setModalOpen={setIsModalOpen}>
           <SendMessage
@@ -234,6 +249,6 @@ export default function Messenger() {
           />
         </Modal>
       )}
-    </>
+    </div>
   );
 }

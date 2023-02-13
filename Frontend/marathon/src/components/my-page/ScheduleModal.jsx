@@ -1,4 +1,5 @@
 import style from "./ScheduleModal.module.css";
+import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -117,9 +118,12 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                   style={{ marginRight: "10px" }}
                   onClick={() => {
                     if (isMobile()) {
-                      alert(
-                        "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
-                      );
+                      Swal.fire({
+                        icon: "error",
+                        title: "",
+                        text: "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!",
+                        confirmButtonText: "닫기",
+                      });
                     } else {
                       let sessionId =
                         new Date().getTime() + "marathon" + uuidv4();
@@ -129,7 +133,7 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                         sessionId: sessionId,
                       }).then((data) => {
                         //로컬 스토리지에 저장
-                        localStorage.setItem("historySeq", data.data);
+                        localStorage.setItem("historySeq", data.historySeq);
                         window.open(
                           `/treat/${sessionId}`,
                           `Marathon - 화상제활`,
@@ -145,10 +149,26 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                 <button
                   className={style.button + " " + style.button_cancel}
                   onClick={() => {
-                    if (window.confirm("정말로 취소하시겠습니까?")) {
-                      mutate();
-                      setIsModalOpen(false);
-                    }
+                    Swal.fire({
+                      icon: "warning",
+                      title: "",
+                      text: "정말로 취소하시겠습니까?",
+
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "확인",
+                      cancelButtonText: "취소",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        Swal.fire({
+                          icon: "success",
+                          text: "취소가 완료되었습니다.",
+                        });
+                        mutate();
+                        setIsModalOpen(false);
+                      }
+                    });
                   }}
                 >
                   예약 취소

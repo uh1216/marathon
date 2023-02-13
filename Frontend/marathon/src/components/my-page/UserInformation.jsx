@@ -1,4 +1,5 @@
 import SelectBox from "components/common/SelectBox";
+import Swal from "sweetalert2";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
@@ -203,61 +204,120 @@ export default function UserInformation() {
 
   /** 회원탈퇴 버튼을 누르면 실행되는 함수 */
   const unregister = () => {
-    const check = window.confirm("정말로 탈퇴하시겠습니까?");
-    if (check) {
-      $.delete(`/user-sign/withdraw`)
-        .then(() => {
-          alert("정상적으로 회원탈퇴 되었습니다.");
-          dispatch(userLogout());
-          navigate("/");
-          window.scrollTo(0, 0);
-        })
-        .catch((error) => console.log(error));
-    }
+    Swal.fire({
+      icon: "warning",
+      title: "",
+      text: "정말로 탈퇴하시겠습니까?",
+
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          $.delete(`/user-sign/withdraw`).then(() => {
+            Swal.fire({
+              icon: "success",
+              text: "정상적으로 회원탈퇴 되었습니다.",
+            });
+            dispatch(userLogout());
+            navigate("/");
+            window.scrollTo(0, 0);
+          });
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   /** 수정완료 버튼을 누르면 실행되는 함수 */
   const modify = () => {
     if (!isPwdValid) {
-      alert("비밀번호가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비밀번호가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserPwd.current.focus();
     } else if (!isPwdChkValid) {
-      alert("비밀번호 확인이 일치하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비밀번호 확인이 일치하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserPwdChk.current.focus();
     } else if (userEmailId === "" || userEmailId === null) {
-      alert("이메일을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이메일을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserEmailId.current.focus();
     } else if (
       userEmailHost === "" ||
       userEmailHost === null ||
       userEmailHost === "none"
     ) {
-      alert("이메일을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이메일을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserEmailHost.current.focus();
     } else if (userPhone === "" || userPhone === null) {
-      alert("연락처를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserPhone.current.focus();
     } else if (!chkPhone(userPhone)) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserPhone.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
       (userFirstResponder === "" || userFirstResponder === null)
     ) {
-      alert("비상 연락처 1을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 1을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponder.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
       !chkPhone(userFirstResponder)
     ) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponder.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
       (userFirstResponderRelationship === "none" ||
         userFirstResponderRelationship === null)
     ) {
-      alert("비상 연락처 1의 관계를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 1의 관계를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponderRelationship.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
@@ -265,14 +325,24 @@ export default function UserInformation() {
       userSecondResponderRelationship !== null &&
       (userSecondResponder === "" || userSecondResponder === null)
     ) {
-      alert("비상 연락처 2를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 2를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponder.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
       userSecondResponder.length > 0 &&
       !chkPhone(userSecondResponder)
     ) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponder.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
@@ -280,7 +350,12 @@ export default function UserInformation() {
       (userSecondResponderRelationship === "none" ||
         userSecondResponderRelationship === null)
     ) {
-      alert("비상 연락처 2의 관계를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 2의 관계를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponderRelationship.current.focus();
     } else {
       let userInfo = {
@@ -308,7 +383,12 @@ export default function UserInformation() {
 
       $.put(`/${state.loginUser.userRole}-sign/modify`, formData)
         .then((res) => {
-          alert("수정 완료되었습니다.");
+          Swal.fire({
+            icon: "success",
+            title: "",
+            text: "수정 완료되었습니다.",
+            confirmButtonText: "닫기",
+          });
           console.log(res);
           sessionStorage.setItem("access-token", res.data.accessToken);
           setUserPwd("");
@@ -341,246 +421,248 @@ export default function UserInformation() {
   };
 
   return (
-    <div className={style.side_right_board}>
-      <h2>나의 정보</h2>
-      <div className={style.information_box}>
-        {/* 왼쪽 박스 */}
-        <div className={style.left_box}>
-          {/* 프로필 사진 */}
-          <img
-            className={style.profile_img}
-            src={
-              newImgUrl
-                ? newImgUrl
-                : imgUrl
-                ? imgUrl
-                : "https://d1v10kml6l14kq.cloudfront.net/default.jpg"
-            }
-            alt="프로필 사진"
-          />
-          <div className={style.user_name}>{userName} 님</div>
-          <div className={style.welcome}>환영합니다.</div>
-          <label className={style.btn_upload}>
-            사진 업로드
-            <input
-              className={style.btn_upload}
-              type="file"
-              id="fileImgInput"
-              accept="image/*"
-              onChange={(e) => {
-                encodeFileToBase64(e.target.files[0]);
-              }}
+    <div className="container">
+      <div className={style.side_right_board}>
+        <h2>나의 정보</h2>
+        <div className={style.information_box}>
+          {/* 왼쪽 박스 */}
+          <div className={style.left_box}>
+            {/* 프로필 사진 */}
+            <img
+              className={style.profile_img}
+              src={
+                newImgUrl
+                  ? newImgUrl
+                  : imgUrl
+                  ? imgUrl
+                  : "https://d1v10kml6l14kq.cloudfront.net/default.jpg"
+              }
+              alt="프로필 사진"
             />
-          </label>
+            <div className={style.user_name}>{userName} 님</div>
+            <div className={style.welcome}>환영합니다.</div>
+            <label className={style.btn_upload}>
+              사진 업로드
+              <input
+                className={style.btn_upload}
+                type="file"
+                id="fileImgInput"
+                accept="image/*"
+                onChange={(e) => {
+                  encodeFileToBase64(e.target.files[0]);
+                }}
+              />
+            </label>
 
-          <hr className={style.left_center_line} />
-          <div className={style.sub_title}>아이디</div>
-          <div className={style.sub_content}>{userId}</div>
-          <div className={style.sub_title}>가입 날짜</div>
-          <div className={style.sub_content}>{userSignUpDate}</div>
-        </div>
-        <hr className={style.center_line} />
-        {/* 오른쪽 박스 */}
-        <div className={style.right_box}>
-          {/* input */}
-          <div>
-            {/* 비밀번호 */}
-            <div className={style.input_div}>
-              <label className={style.input_label} htmlFor="user_pwd">
-                비밀번호
-              </label>
-              <input
-                className={style.input_long}
-                type="password"
-                id="user_pwd"
-                maxLength="16"
-                value={userPwd}
-                onChange={(e) => {
-                  setUserPwd(e.target.value);
-                }}
-                ref={inputUserPwd}
-              />
-              <div
-                className={`${style.sub_information}`}
-                style={
-                  userPwd === ""
-                    ? { color: "#858585" }
-                    : isPwdValid
-                    ? { color: "blue" }
-                    : { color: "red" }
-                }
-              >
-                {userPwdMsg}
-              </div>
-            </div>
-            {/* 비밀번호 확인 */}
-            <div className={style.input_div}>
-              <label className={style.input_label} htmlFor="user_pwd_chk">
-                비밀번호 확인
-              </label>
-              <input
-                className={style.input_long}
-                type="password"
-                id="user_pwd_chk"
-                maxLength="16"
-                value={userPwdChk}
-                onChange={(e) => {
-                  setUserPwdChk(e.target.value);
-                }}
-                ref={inputUserPwdChk}
-              />
-              <div
-                className={`${style.sub_information}`}
-                style={
-                  userPwdChk === ""
-                    ? { color: "#858585" }
-                    : isPwdChkValid
-                    ? { color: "blue" }
-                    : { color: "red" }
-                }
-              >
-                {userPwdChkMsg}
-              </div>
-            </div>
-            {/* 이메일 */}
-            <div className={style.input_div}>
-              <label className={style.input_label} htmlFor="user_email_id">
-                이메일
-              </label>
-              <input
-                className={`${style.input_email_id}`}
-                type="text"
-                id="user_email_id"
-                value={userEmailId}
-                onChange={(e) => {
-                  setUserEmailId(e.target.value);
-                }}
-                ref={inputUserEmailId}
-              />
-              <span className={style.at}>@</span>
-
-              <input
-                className={style.input_email_host}
-                type="text"
-                id="input_email_host"
-                readOnly={isReadOnly}
-                value={userEmailHost === "none" ? "" : userEmailHost}
-                onChange={(e) => setUserEmailHost(e.target.value)}
-                ref={inputUserEmailHost}
-              />
-              <SelectBox
-                options={optionEmailHost}
-                onChange={(x) => selectEmailHost(x)}
-              />
-            </div>
-            {/* (주) 연락처 */}
-            <div className={style.input_div}>
-              <label className={style.input_label} htmlFor="user_phone">
-                {state.loginUser.userRole === "patient" ? (
-                  <>주 연락처</>
-                ) : (
-                  <>연락처</>
-                )}
-              </label>
-              <input
-                className={`${style.input_number} ${style.input_long}`}
-                type="text"
-                id="user_phone"
-                placeholder="'-'를 제외한 숫자만 입력해 주세요."
-                value={userPhone}
-                onChange={(e) => {
-                  setUserPhone(e.target.value);
-                }}
-                ref={inputUserPhone}
-              />
-            </div>
-            {/* userRole에 따라서 달라지는 내용 */}
-            {state.loginUser.userRole === "patient" ? (
-              <>
-                <div className={style.input_div}>
-                  <label
-                    className={style.input_label}
-                    htmlFor="user_first_responder"
-                  >
-                    비상 연락처 1
-                  </label>
-                  <input
-                    className={`${style.input_number} ${style.input_middle}`}
-                    type="text"
-                    id="user_first_responder"
-                    placeholder="'-'를 제외한 숫자만 입력해 주세요."
-                    value={userFirstResponder}
-                    onChange={(e) => {
-                      setUserFirstResponder(e.target.value);
-                    }}
-                    ref={inputUserFirstResponder}
-                  />
-                  <SelectBox
-                    options={optionsRelationship}
-                    onChange={(x) => {
-                      setUserFirstResponderRelationship(x);
-                    }}
-                    defaultValue={userFirstResponderRelationship}
-                    ref={inputUserFirstResponderRelationship}
-                  />
-                </div>
-                <div className={style.input_div}>
-                  <label
-                    className={style.input_label}
-                    htmlFor="user_second_responder"
-                  >
-                    비상 연락처 2 (선택)
-                  </label>
-                  <input
-                    className={`${style.input_number} ${style.input_middle}`}
-                    type="text"
-                    id="user_second_responder"
-                    placeholder="'-'를 제외한 숫자만 입력해 주세요."
-                    value={userSecondResponder}
-                    onChange={(e) => {
-                      setUserSecondResponder(e.target.value);
-                    }}
-                    ref={inputUserSecondResponder}
-                  />
-                  <SelectBox
-                    options={optionsRelationship}
-                    onChange={(x) => setUserSecondResponderRelationship(x)}
-                    defaultValue={userSecondResponderRelationship}
-                    ref={inputUserSecondResponderRelationship}
-                  />
-                </div>
-              </>
-            ) : state.loginUser.userRole === "doctor" ? (
-              <>
-                <div className={style.input_div}>
-                  <label
-                    className={style.input_label}
-                    htmlFor="user_self_introduce"
-                  >
-                    자기소개
-                  </label>
-                  <textarea
-                    className={style.input_textarea}
-                    onChange={(e) => {
-                      setUserSelfIntroduce(e.target.value);
-                    }}
-                    id="user_self_introduce"
-                    ref={inputUserSelfIntroduce}
-                    maxLength="174"
-                    value={userSelfIntroduce}
-                    placeholder="이용자들에게 보여질 자기소개 글을 작성해주세요."
-                  ></textarea>
-                </div>
-              </>
-            ) : null}
+            <hr className={style.left_center_line} />
+            <div className={style.sub_title}>아이디</div>
+            <div className={style.sub_content}>{userId}</div>
+            <div className={style.sub_title}>가입 날짜</div>
+            <div className={style.sub_content}>{userSignUpDate}</div>
           </div>
-          <div className={style.btns}>
-            <button className={style.btn_unregister} onClick={unregister}>
-              회원탈퇴
-            </button>
-            <button className={style.btn_modify} onClick={modify}>
-              수정완료
-            </button>
+          <hr className={style.center_line} />
+          {/* 오른쪽 박스 */}
+          <div className={style.right_box}>
+            {/* input */}
+            <div>
+              {/* 비밀번호 */}
+              <div className={style.input_div}>
+                <label className={style.input_label} htmlFor="user_pwd">
+                  비밀번호
+                </label>
+                <input
+                  className={style.input_long}
+                  type="password"
+                  id="user_pwd"
+                  maxLength="16"
+                  value={userPwd}
+                  onChange={(e) => {
+                    setUserPwd(e.target.value);
+                  }}
+                  ref={inputUserPwd}
+                />
+                <div
+                  className={`${style.sub_information}`}
+                  style={
+                    userPwd === ""
+                      ? { color: "#858585" }
+                      : isPwdValid
+                      ? { color: "blue" }
+                      : { color: "red" }
+                  }
+                >
+                  {userPwdMsg}
+                </div>
+              </div>
+              {/* 비밀번호 확인 */}
+              <div className={style.input_div}>
+                <label className={style.input_label} htmlFor="user_pwd_chk">
+                  비밀번호 확인
+                </label>
+                <input
+                  className={style.input_long}
+                  type="password"
+                  id="user_pwd_chk"
+                  maxLength="16"
+                  value={userPwdChk}
+                  onChange={(e) => {
+                    setUserPwdChk(e.target.value);
+                  }}
+                  ref={inputUserPwdChk}
+                />
+                <div
+                  className={`${style.sub_information}`}
+                  style={
+                    userPwdChk === ""
+                      ? { color: "#858585" }
+                      : isPwdChkValid
+                      ? { color: "blue" }
+                      : { color: "red" }
+                  }
+                >
+                  {userPwdChkMsg}
+                </div>
+              </div>
+              {/* 이메일 */}
+              <div className={style.input_div}>
+                <label className={style.input_label} htmlFor="user_email_id">
+                  이메일
+                </label>
+                <input
+                  className={`${style.input_email_id}`}
+                  type="text"
+                  id="user_email_id"
+                  value={userEmailId}
+                  onChange={(e) => {
+                    setUserEmailId(e.target.value);
+                  }}
+                  ref={inputUserEmailId}
+                />
+                <span className={style.at}>@</span>
+
+                <input
+                  className={style.input_email_host}
+                  type="text"
+                  id="input_email_host"
+                  readOnly={isReadOnly}
+                  value={userEmailHost === "none" ? "" : userEmailHost}
+                  onChange={(e) => setUserEmailHost(e.target.value)}
+                  ref={inputUserEmailHost}
+                />
+                <SelectBox
+                  options={optionEmailHost}
+                  onChange={(x) => selectEmailHost(x)}
+                />
+              </div>
+              {/* (주) 연락처 */}
+              <div className={style.input_div}>
+                <label className={style.input_label} htmlFor="user_phone">
+                  {state.loginUser.userRole === "patient" ? (
+                    <>주 연락처</>
+                  ) : (
+                    <>연락처</>
+                  )}
+                </label>
+                <input
+                  className={`${style.input_number} ${style.input_long}`}
+                  type="text"
+                  id="user_phone"
+                  placeholder="'-'를 제외한 숫자만 입력해 주세요."
+                  value={userPhone}
+                  onChange={(e) => {
+                    setUserPhone(e.target.value);
+                  }}
+                  ref={inputUserPhone}
+                />
+              </div>
+              {/* userRole에 따라서 달라지는 내용 */}
+              {state.loginUser.userRole === "patient" ? (
+                <>
+                  <div className={style.input_div}>
+                    <label
+                      className={style.input_label}
+                      htmlFor="user_first_responder"
+                    >
+                      비상 연락처 1
+                    </label>
+                    <input
+                      className={`${style.input_number} ${style.input_middle}`}
+                      type="text"
+                      id="user_first_responder"
+                      placeholder="'-'를 제외한 숫자만 입력해 주세요."
+                      value={userFirstResponder}
+                      onChange={(e) => {
+                        setUserFirstResponder(e.target.value);
+                      }}
+                      ref={inputUserFirstResponder}
+                    />
+                    <SelectBox
+                      options={optionsRelationship}
+                      onChange={(x) => {
+                        setUserFirstResponderRelationship(x);
+                      }}
+                      defaultValue={userFirstResponderRelationship}
+                      ref={inputUserFirstResponderRelationship}
+                    />
+                  </div>
+                  <div className={style.input_div}>
+                    <label
+                      className={style.input_label}
+                      htmlFor="user_second_responder"
+                    >
+                      비상 연락처 2 (선택)
+                    </label>
+                    <input
+                      className={`${style.input_number} ${style.input_middle}`}
+                      type="text"
+                      id="user_second_responder"
+                      placeholder="'-'를 제외한 숫자만 입력해 주세요."
+                      value={userSecondResponder}
+                      onChange={(e) => {
+                        setUserSecondResponder(e.target.value);
+                      }}
+                      ref={inputUserSecondResponder}
+                    />
+                    <SelectBox
+                      options={optionsRelationship}
+                      onChange={(x) => setUserSecondResponderRelationship(x)}
+                      defaultValue={userSecondResponderRelationship}
+                      ref={inputUserSecondResponderRelationship}
+                    />
+                  </div>
+                </>
+              ) : state.loginUser.userRole === "doctor" ? (
+                <>
+                  <div className={style.input_div}>
+                    <label
+                      className={style.input_label}
+                      htmlFor="user_self_introduce"
+                    >
+                      자기소개
+                    </label>
+                    <textarea
+                      className={style.input_textarea}
+                      onChange={(e) => {
+                        setUserSelfIntroduce(e.target.value);
+                      }}
+                      id="user_self_introduce"
+                      ref={inputUserSelfIntroduce}
+                      maxLength="174"
+                      value={userSelfIntroduce}
+                      placeholder="이용자들에게 보여질 자기소개 글을 작성해주세요."
+                    ></textarea>
+                  </div>
+                </>
+              ) : null}
+            </div>
+            <div className={style.btns}>
+              <button className={style.btn_unregister} onClick={unregister}>
+                회원탈퇴
+              </button>
+              <button className={style.btn_modify} onClick={modify}>
+                수정완료
+              </button>
+            </div>
           </div>
         </div>
       </div>
