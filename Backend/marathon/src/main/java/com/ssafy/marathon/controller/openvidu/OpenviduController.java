@@ -1,6 +1,7 @@
 package com.ssafy.marathon.controller.openvidu;
 
 import com.ssafy.marathon.config.security.JwtTokenProvider;
+import com.ssafy.marathon.db.entity.treatment.History;
 import com.ssafy.marathon.db.repository.HistoryRepository;
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;
@@ -68,11 +69,25 @@ public class OpenviduController {
 
         SessionProperties properties = new SessionProperties.Builder()
             .customSessionId((String) params.get("customSessionId"))
-            .recordingMode(role.equals("[ROLE_ADMIN]") ? RecordingMode.MANUAL : RecordingMode.ALWAYS)
+            .recordingMode(
+                role.equals("[ROLE_ADMIN]") ? RecordingMode.MANUAL : RecordingMode.ALWAYS)
             .defaultRecordingProperties(recordingProperties)
             .build();
 
         Session session = openvidu.createSession(properties);
+
+        if (session.getConnections().size() == 0 &&
+            !(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]"))
+        ) {
+            return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
+        }
+
+        if (role.equals("[ROLE_DOCTOR]")) {
+            History history = historyRepository.findBySeq((Long) params.get("historySeq"));
+            history.setVideoUrl(session.getSessionId() + "/" + session.getSessionId());
+            historyRepository.save(history);
+        }
+
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }
 

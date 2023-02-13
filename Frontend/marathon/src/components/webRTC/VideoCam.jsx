@@ -250,14 +250,14 @@ class VideoCam extends Component {
           "Access-Token": sessionStorage.getItem("access-token"),
         },
       }
-    );
-    // .catch((error) => {
-    //   if (error.response.status === 400 || error.response.status === 401) {
-    //     alert("권한 없는 접근입니다!");
-    //     window.close();
-    //     window.history.back();
-    //   }
-    // });
+    )
+     .catch((error) => {
+       if (error.response.status === 401) {
+         alert("권한 없는 접근입니다!");
+         window.close();
+         window.history.back();
+       }
+     });
     localStorage.clear("historySeq");
     return response.data; // The sessionId
   }
