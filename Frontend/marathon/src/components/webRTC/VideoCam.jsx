@@ -242,7 +242,10 @@ class VideoCam extends Component {
     const response = await axios
       .post(
         APPLICATION_SERVER_URL + "api/sessions",
-        { customSessionId: sessionId },
+        {
+          customSessionId: sessionId,
+          historySeq: localStorage.getItem("historySeq"),
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -257,6 +260,7 @@ class VideoCam extends Component {
           window.history.back();
         }
       });
+    localStorage.clear("historySeq");
     return response.data; // The sessionId
   }
 
