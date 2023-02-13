@@ -241,7 +241,7 @@ class VideoCam extends Component {
   async createSession(sessionId) {
     const response = await axios.post(
       APPLICATION_SERVER_URL + "api/sessions",
-      { custemSessionId: sessionId },
+      { customSessionId: sessionId },
       {
         headers: {
           "Content-Type": "application/json",
@@ -258,22 +258,19 @@ class VideoCam extends Component {
   }
 
   async createToken(sessionId) {
-    let postHead = {
-      "Content-Type": "application/json",
-      "Access-Token": sessionStorage.getItem("access-token"),
-      "History-Seq": localStorage.getItem("historySeq"),
-    };
-
     console.log(sessionId);
     console.log(sessionId);
-    console.log(postHead);
 
     const response = await axios
       .post(
         APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
         {},
         {
-          headers: postHead,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Token": sessionStorage.getItem("access-token"),
+            "History-Seq": localStorage.getItem("historySeq"),
+          },
         }
       )
       .catch((error) => {
