@@ -127,13 +127,15 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                       $.post("/doctor-treatment/alarm", {
                         treatmentSeq: modalData.reservedDay.treatmentSeq,
                         sessionId: sessionId,
-                      }).then(
+                      }).then((data) => {
+                        //로컬 스토리지에 저장
+                        localStorage.setItem("historySeq", data.historySeq);
                         window.open(
                           `/treat/${sessionId}`,
                           `Marathon - 화상제활`,
                           "fullscreen, menubar=no, status=no, toolbar=no, location=no"
-                        )
-                      );
+                        );
+                      });
                       setIsModalOpen(false);
                     }
                   }}
