@@ -34,6 +34,7 @@ public class UserInit {
             .password(passwordEncoder.encode("ssafy"))
             .roles(Collections.singletonList("ROLE_ADMIN"))
             .name("관리자").img(defaultImg)
+            .registDate(LocalDate.now())
             .build();
         adminRepository.save(admin);
         LOGGER.info("[init] admin 유저생성 완료 id : {}", admin.getId());
