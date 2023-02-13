@@ -241,15 +241,34 @@ class VideoCam extends Component {
   async createSession(sessionId) {
     let postBody = {
       custemSessionId: sessionId,
-      historySeq: localStorage.getItem("historySeq"),
     };
-    const response = await axios
-      .post(APPLICATION_SERVER_URL + "api/sessions", postBody, {
+    const response = await axios.post(
+      APPLICATION_SERVER_URL + "api/sessions",
+      postBody,
+      {
         headers: {
           "Content-Type": "application/json",
           "Access-Token": sessionStorage.getItem("access-token"),
         },
-      })
+      }
+    );
+    return response.data; // The sessionId
+  }
+
+  async createToken(sessionId) {
+    let postHead = {
+      "Content-Type": "application/json",
+      "Access-Token": sessionStorage.getItem("access-token"),
+      historySeq: localStorage.getItem("historySeq"),
+    };
+    const response = await axios
+      .post(
+        APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
+        {},
+        {
+          headers: postHead,
+        }
+      )
       .catch((error) => {
         if (error.response.status === 401) {
           Swal.fire({
@@ -265,20 +284,6 @@ class VideoCam extends Component {
       .finally(() => {
         localStorage.clear("historySeq");
       });
-    return response.data; // The sessionId
-  }
-
-  async createToken(sessionId) {
-    const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
-      {},
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Token": sessionStorage.getItem("access-token"),
-        },
-      }
-    );
     return response.data; // The token
   }
 }
