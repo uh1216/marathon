@@ -63,15 +63,18 @@ public class OpenviduController {
 													@RequestHeader("Access-Token") String accessToken)
 			throws OpenViduJavaClientException, OpenViduHttpException {
 
-		String role = jwtTokenProvider.getUserRole(accessToken);
+		String role = accessToken == null ? null : jwtTokenProvider.getUserRole(accessToken);
 		System.out.println(role);
 
 
 		SessionProperties properties = SessionProperties.fromJson(params).build();
 		Session session = openvidu.createSession(properties);
 
-		if(session.getConnections().size() == 0 &&
-				!(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]")))
+		if(role == null ||
+				(session.getConnections().size() == 0 &&
+					!(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]"))
+				)
+		)
 			return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
 
 		History history = historyRepository.findBySeq((Long) params.get("historySeq"));
@@ -81,22 +84,6 @@ public class OpenviduController {
 		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
 	}
 
-	/**
-	 * @param sessionId The Session in which to create the Connection
-	 * @param params    The Connection properties
-	 * @return The Token associated to the Connection
-	 */
-	@PostMapping("/sessions/{sessionId}/connections")
-	public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
-			@RequestBody(required = false) Map<String, Object> params)
-			throws OpenViduJavaClientException, OpenViduHttpException {
-		Session session = openvidu.getActiveSession(sessionId);
-		if (session == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-
-        return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
-    }
 
     /**
      * @param sessionId The Session in which to create the Connection
