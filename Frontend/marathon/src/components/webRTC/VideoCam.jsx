@@ -269,6 +269,11 @@ console.log(temp);
   }
 
   async createToken(sessionId) {
+	console.log(sessionId)
+	console.log(sessionId)
+	console.log(sessionId)
+	console.log(sessionId)
+	console.log(sessionId)
     const response = await axios.post(
       APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
       {},
