@@ -61,7 +61,7 @@ public class OpenviduController {
     @PostMapping("/sessions")
     public ResponseEntity<String> initializeSession(
         @RequestBody(required = false) Map<String, Object> params,
-        @RequestHeader(name = "Access-Token") String accessToken)
+        @RequestHeader(required = false, name = "Access-Token") String accessToken)
         throws OpenViduJavaClientException, OpenViduHttpException {
 
         String role = (accessToken == null) ? "" : jwtTokenProvider.getUserRole(accessToken);
