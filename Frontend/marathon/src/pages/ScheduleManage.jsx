@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 import { $ } from "util/axios";
 import style from "./ScheduleManage.module.css";
 
@@ -24,10 +25,20 @@ export default function ScheduleManage() {
 
   const { mutate: onSubmit } = useMutation(res_put, {
     onSuccess: () => {
-      alert("저장되었습니다.");
+      Swal.fire({
+        icon: "success",
+        title: "",
+        text: "저장되었습니다.",
+        confirmButtonText: "닫기",
+      });
     },
     onError: () => {
-      alert("실패했습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "실패했습니다.",
+        confirmButtonText: "닫기",
+      });
     },
   });
 

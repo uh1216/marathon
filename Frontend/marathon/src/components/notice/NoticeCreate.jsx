@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import style from "./NoticeCreate.module.css";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { $ } from "util/axios";
@@ -27,7 +28,12 @@ export default function NoticeCreate() {
   const res_post = () => $.post(`/admin-board/notice`, newData);
   const { mutate: onSubmit } = useMutation(res_post, {
     onSuccess: (data) => {
-      alert("작성되었습니다.");
+      Swal.fire({
+        icon: "success",
+        title: "",
+        text: "작성되었습니다.",
+        confirmButtonText: "닫기",
+      });
       navigate(`/notice/${1}`);
     },
   });
@@ -35,9 +41,19 @@ export default function NoticeCreate() {
   // 유효성 검사
   const isValid = () => {
     if (title === "") {
-      alert("제목을 입력해주세요");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "제목을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
     } else if (content === "") {
-      alert("내용을 입력해주세요");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "내용을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
     } else {
       onSubmit(newData);
     }

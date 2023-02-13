@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "./Messenger.module.css";
+import Swal from "sweetalert2";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { faXmark, faBell } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
@@ -199,20 +200,36 @@ export default function Messenger() {
                       alert(
                         "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
                       );
-                    } else {
-                      window.open(
-                        `/treat/${item.link}`,
-                        `Marathon - 화상제활`,
-                        "fullscreen, menubar=no, status=no, toolbar=no, location=no"
-                      );
-                    }
-                  }}
-                >
-                  수업 입장
-                </button>
-              )}
+                    }}
+                  >
+                    답장 쓰기
+                  </button>
+                )}
+                {item.content === null && isJoinable(item.link) && (
+                  <button
+                    className={style.btn}
+                    onClick={() => {
+                      if (isMobile()) {
+                        Swal.fire({
+                          icon: "error",
+                          title: "",
+                          text: "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!",
+                          confirmButtonText: "닫기",
+                        });
+                      } else {
+                        window.open(
+                          `/treat/${item.link}`,
+                          `Marathon - 화상제활`,
+                          "fullscreen, menubar=no, status=no, toolbar=no, location=no"
+                        );
+                      }
+                    }}
+                  >
+                    수업 입장
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
         ))
       )}
       {list.length !== 0 && list.length % 5 === 0 && (

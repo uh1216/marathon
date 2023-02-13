@@ -1,5 +1,6 @@
 import { React, useEffect, useRef, useState } from "react";
 import style from "./ConsultEnroll.module.css";
+import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFileLines,
@@ -143,88 +144,188 @@ export default function ConsultEnroll() {
   /** 신청하기 버튼을 누를 때 실행되는 함수 */
   const checkUp = () => {
     if (userName === "" || userName === null) {
-      alert("이름을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이름을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserName.current.focus();
     } else if (userGender === "none" || userGender === null) {
-      alert("성별을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "성별을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserGender.current.focus();
     } else if (userYear === "none" || userYear === null) {
-      alert("생년월일을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "생년월일을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserYear.current.focus();
     } else if (userMonth === "none" || userMonth === null) {
-      alert("생년월일을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "생년월일을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserMonth.current.focus();
     } else if (userDay === "none" || userDay === null) {
-      alert("생년월일을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "생년월일을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserDay.current.focus();
     } else if (userEmailId === "" || userEmailId === null) {
-      alert("이메일을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이메일을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserEmailId.current.focus();
     } else if (
       userEmailHost === "" ||
       userEmailHost === null ||
       userEmailHost === "none"
     ) {
-      alert("이메일을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이메일을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserEmailHost.current.focus();
     } else if (userPhone === "" || userPhone === null) {
-      alert("연락처를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserPhone.current.focus();
     } else if (!chkPhone(userPhone)) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserPhone.current.focus();
     } else if (userFirstResponder === "" || userFirstResponder === null) {
-      alert("비상 연락처 1을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 1을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponder.current.focus();
     } else if (!chkPhone(userFirstResponder)) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponder.current.focus();
     } else if (
       userFirstResponderRelationship === "none" ||
       userFirstResponderRelationship === null
     ) {
-      alert("비상 연락처 1의 관계를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 1의 관계를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponderRelationship.current.focus();
     } else if (
       userSecondResponderRelationship !== "none" &&
       userSecondResponderRelationship !== null &&
       (userSecondResponder === "" || userSecondResponder === null)
     ) {
-      alert("비상 연락처 2를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 2를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponder.current.focus();
     } else if (
       userSecondResponder.length > 0 &&
       !chkPhone(userSecondResponder)
     ) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponder.current.focus();
     } else if (
       userSecondResponder.length > 0 &&
       (userSecondResponderRelationship === "none" ||
         userSecondResponderRelationship === null)
     ) {
-      alert("비상 연락처 2의 관계를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 2의 관계를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponderRelationship.current.focus();
     } else if (
       !diseaseTos &&
       (diseaseYear === "none" || diseaseYear === null)
     ) {
-      alert("발병일을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "발병일을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputDiseaseYear.current.focus();
     } else if (
       (!diseaseTos && diseaseMonth === "none") ||
       diseaseMonth === null
     ) {
-      alert("발병일을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "발병일을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputDiseaseMonth.current.focus();
     } else if ((!diseaseTos && diseaseDay === "none") || diseaseDay === null) {
-      alert("발병일을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "발병일을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputDiseaseDay.current.focus();
     } else if (!desTextarea) {
-      alert("소통에 어려움 점을 입력해 주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "소통에 어려움 점을 입력해 주세요.",
+        confirmButtonText: "닫기",
+      });
       inputDesTextarea.current.focue();
     } else if (!userTos) {
-      alert("이용약관 및 개인정보 처리방침에 동의해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이용약관 및 개인정보 처리방침에 동의해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserTos.current.focue();
     } else {
       let hopeY = calenderDay.getFullYear();
@@ -254,12 +355,22 @@ export default function ConsultEnroll() {
         hopeDate: hopeY + "-" + hopeM + "-" + hopeD,
       })
         .then(() => {
-          alert("상담신청 완료");
+          Swal.fire({
+            icon: "success",
+            title: "",
+            text: "상담신청 완료",
+            confirmButtonText: "닫기",
+          });
           navigate("/");
           window.scrollTo(0, 0);
         })
         .catch((error) => {
-          alert("에러가 발생했습니다. 다시 신청해 주세요");
+          Swal.fire({
+            icon: "error",
+            title: "",
+            text: "에러가 발생했습니다. 다시 신청해 주세요.",
+            confirmButtonText: "닫기",
+          });
           console.log(error);
         });
     }
@@ -323,7 +434,12 @@ export default function ConsultEnroll() {
       (calenderDay.getMonth() === today_month &&
         calenderDay.getDate() < today_day)
     ) {
-      alert("유효한 날짜가 아닙니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "유효한 날짜가 아닙니다.",
+        confirmButtonText: "닫기",
+      });
       setCalenderDay(new Date());
     }
   }, [calenderDay]);
