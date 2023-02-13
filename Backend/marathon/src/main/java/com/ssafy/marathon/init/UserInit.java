@@ -44,6 +44,7 @@ public class UserInit {
             .name("이연학").img(defaultImg)
             .sex(true)
             .registDate(LocalDate.now())
+            .img("https://d1v10kml6l14kq.cloudfront.net/dusgkr.png")
             .build();
         doctorRepository.save(doctor1);
         Doctor doctor2 = Doctor.builder()
@@ -53,6 +54,7 @@ public class UserInit {
             .name("김정수").img(defaultImg)
             .sex(true)
             .registDate(LocalDate.now())
+            .img("https://d1v10kml6l14kq.cloudfront.net/wjdtn.png")
             .build();
         doctorRepository.save(doctor2);
         Doctor doctor3 = Doctor.builder()
@@ -62,6 +64,7 @@ public class UserInit {
             .name("최준아").img(defaultImg)
             .sex(false)
             .registDate(LocalDate.now())
+            .img("https://d1v10kml6l14kq.cloudfront.net/wnsdk.png")
             .build();
         doctorRepository.save(doctor3);
         Patient patient1 = Patient.builder()
@@ -71,6 +74,7 @@ public class UserInit {
             .name("조웅희").img(defaultImg)
             .sex(true)
             .registDate(LocalDate.now())
+            .img("https://d1v10kml6l14kq.cloudfront.net/dndgml.png")
             .build();
         patientRepository.save(patient1);
         Patient patient2 = Patient.builder()
@@ -80,6 +84,7 @@ public class UserInit {
             .name("윤호산").img(defaultImg)
             .sex(true)
             .registDate(LocalDate.now())
+            .img("https://d1v10kml6l14kq.cloudfront.net/ghtks.png")
             .build();
         patientRepository.save(patient2);
         Patient patient3 = Patient.builder()
@@ -89,6 +94,7 @@ public class UserInit {
             .name("김동연").img(defaultImg)
             .sex(true)
             .registDate(LocalDate.now())
+            .img("https://d1v10kml6l14kq.cloudfront.net/ehddus.png")
             .build();
         patientRepository.save(patient3);
     }
