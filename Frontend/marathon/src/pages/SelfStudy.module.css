@@ -19,13 +19,15 @@
 
 .white_container {
   width: 931px;
+  min-height: 620px;
   height: auto;
-  max-height: 600px;
   background-color: white;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
 
-  margin: 0 auto;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
