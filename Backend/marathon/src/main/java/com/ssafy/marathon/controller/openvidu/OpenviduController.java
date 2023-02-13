@@ -113,7 +113,7 @@ public class OpenviduController {
         }
 
         if (role.equals("[ROLE_DOCTOR]")) {
-            History history = historyRepository.findBySeq(Long.parseLong((String)historySeq));
+            History history = historyRepository.findBySeq(Long.parseLong(historySeq));
             history.setVideoUrl(sessionId + "/" + sessionId);
             System.out.println("--------------------------------------------------------------------------");
             System.out.println(history.getVideoUrl());
