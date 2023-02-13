@@ -64,13 +64,25 @@ public class OpenviduController {
 
         SessionProperties sessionProperties = SessionProperties.fromJson(params).build();
 
-        System.out.println(sessionProperties);
+        System.out.println(sessionProperties.customSessionId());
+        System.out.println(sessionProperties.recordingMode());
+        System.out.println(sessionProperties.defaultRecordingProperties());
+        System.out.println(sessionProperties.defaultRecordingProperties().outputMode());
+        System.out.println(sessionProperties.defaultRecordingProperties().resolution());
+        System.out.println(sessionProperties.mediaNode());
 
         SessionProperties properties = new SessionProperties.Builder()
             .recordingMode(RecordingMode.ALWAYS)
             .defaultRecordingProperties(recordingProperties)
             .build();
-        System.out.println(properties);
+
+        System.out.println(properties.customSessionId());
+        System.out.println(properties.recordingMode());
+        System.out.println(properties.defaultRecordingProperties());
+        System.out.println(properties.defaultRecordingProperties().outputMode());
+        System.out.println(properties.defaultRecordingProperties().resolution());
+        System.out.println(properties.mediaNode());
+
         Session session = openvidu.createSession(properties);
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }
