@@ -49,32 +49,51 @@ public class OpenviduController {
     @PostConstruct
     public void init() {
         this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
-
-        this.recordingProperties = new RecordingProperties.Builder()
-                .outputMode(OutputMode.COMPOSED)
-                .resolution("560x600")
-                .frameRate(30)
-                .build();
     }
 
     /**
      * @param params The Session properties
      * @return The Session ID
      */
-    @PostMapping("/sessions")
-    public ResponseEntity<String> initializeSession(
-            @RequestBody(required = false) Map<String, Object> params)
-            throws OpenViduJavaClientException, OpenViduHttpException {
+    @PostMapping("/api/sessions")
+    public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
+        throws OpenViduJavaClientException, OpenViduHttpException {
+        SessionProperties properties = SessionProperties.fromJson(params).build();
+        Session session = openvidu.createSession(properties);
+        return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
+    }
+
+//    @PostConstruct
+//    public void init() {
+//        this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
+//
+//        this.recordingProperties = new RecordingProperties.Builder()
+//                .outputMode(OutputMode.COMPOSED)
+//                .resolution("560x600")
+//                .frameRate(30)
+//                .build();
+//    }
+
+    /**
+     * @param params The Session properties
+     * @return The Session ID
+     */
+//    @PostMapping("/sessions")
+//    public ResponseEntity<String> initializeSession(
+//            @RequestBody(required = false) Map<String, Object> params)
+//            throws OpenViduJavaClientException, OpenViduHttpException {
+//
+
 
 //        String role = (accessToken == null) ? "" : jwtTokenProvider.getUserRole(accessToken);
 //        System.out.println(role);
 
-        sessionProperties = new SessionProperties.Builder()
+//        sessionProperties = new SessionProperties.Builder()
 //                .recordingMode(role.equals("[ROLE_ADMIN]") ? RecordingMode.MANUAL : RecordingMode.ALWAYS)
-                .recordingMode(RecordingMode.ALWAYS)
-                .defaultRecordingProperties(recordingProperties)
-                .build();
-        Session session = openvidu.createSession(sessionProperties);
+//                .recordingMode(RecordingMode.ALWAYS)
+//                .defaultRecordingProperties(recordingProperties)
+//                .build();
+//        Session session = openvidu.createSession(sessionProperties);
 
 //        if (session.getConnections().size() == 0 &&
 //                        !(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]"))
@@ -88,8 +107,8 @@ public class OpenviduController {
 //            historyRepository.save(history);
 //        }
 
-        return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
-    }
+//        return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
+//    }
 
 
     /**
