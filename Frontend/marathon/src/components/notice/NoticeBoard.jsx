@@ -108,7 +108,7 @@ export default function NoticeBoard() {
               {!isLoading &&
                 data.data.content.map((content) => {
                   let amPm =
-                    Number(content.registDate.slice(11, 13)) <= 12
+                    Number(content.registDate.slice(11, 13)) < 12
                       ? "오전"
                       : "오후";
 
