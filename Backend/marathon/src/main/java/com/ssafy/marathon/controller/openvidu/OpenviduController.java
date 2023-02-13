@@ -49,6 +49,12 @@ public class OpenviduController {
     @PostConstruct
     public void init() {
         this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
+
+		this.recordingProperties = new RecordingProperties.Builder()
+                .outputMode(OutputMode.COMPOSED)
+                .resolution("560x600")
+                .frameRate(30)
+                .build();
     }
 
     /**
@@ -62,17 +68,6 @@ public class OpenviduController {
         Session session = openvidu.createSession(properties);
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }
-
-//    @PostConstruct
-//    public void init() {
-//        this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
-//
-//        this.recordingProperties = new RecordingProperties.Builder()
-//                .outputMode(OutputMode.COMPOSED)
-//                .resolution("560x600")
-//                .frameRate(30)
-//                .build();
-//    }
 
     /**
      * @param params The Session properties
