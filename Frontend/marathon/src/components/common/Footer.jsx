@@ -10,7 +10,7 @@ import notion from "img/notion.png";
 export default function Footer() {
   const navigate = useNavigate();
   return (
-    <div style={{ backgroundColor: "#f3efef" }}>
+    <div style={{ backgroundColor: "#f3efef", marginTop: "100px" }}>
       <footer className={style.footer}>
         <div className={style.inner_footer}>
           <div className={style.left_div}>

@@ -338,10 +338,10 @@ export default function ConsultEnroll() {
           >
             신청절차
           </div>
-          <h4 style={{ animation: "0.7s ease-in-out loadEffect1" }}>
+          <h5 style={{ animation: "0.7s ease-in-out loadEffect1" }}>
             먼저 상담을 통해서 환자의 상태와 원격 재활이 가능한 지 논의해
             보세요!
-          </h4>
+          </h5>
           <div className={style.icon_contain_box}>
             <div style={{ animation: "1s ease-in-out loadEffect2" }}>
               <FontAwesomeIcon className={style.icon_box} icon={faFileLines} />
@@ -361,7 +361,16 @@ export default function ConsultEnroll() {
           </div>
         </div>
       </div>
-      <div className="inner_container" style={{ width: "100%" }}>
+      <div
+        className="inner_container"
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <div
           className={style.inner_container}
           style={{ animation: "0.8s ease-in-out loadEffect1" }}
@@ -377,21 +386,24 @@ export default function ConsultEnroll() {
             <label className={style.input_label} htmlFor="user_name">
               대상자 성명
             </label>
-            <input
-              className={style.input_middle}
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
-              value={userName}
-              type="text"
-              id="user_name"
-              ref={inputUserName}
-            />
-            <SelectBox
-              options={optionsGender}
-              onChange={(x) => setUserGender(x)}
-              ref={inputUserGender}
-            />
+            <div className={style.display_flex}>
+              <input
+                className={style.input_middle}
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
+                value={userName}
+                type="text"
+                id="user_name"
+                ref={inputUserName}
+              />
+              <SelectBox
+                options={optionsGender}
+                onChange={(x) => setUserGender(x)}
+                ref={inputUserGender}
+                width="28%"
+              />
+            </div>
           </div>
 
           {/* 생년월일 */}
@@ -402,24 +414,25 @@ export default function ConsultEnroll() {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
+                width: "100%",
               }}
             >
               <SelectBox
                 options={optionsYear}
                 onChange={(x) => setUserYear(x)}
-                width="30%"
+                width="32%"
                 ref={inputUserYear}
               />
               <SelectBox
                 options={optionsMonth}
                 onChange={(x) => setUserMonth(x)}
-                width="30%"
+                width="32%"
                 ref={inputUserMonth}
               />
               <SelectBox
                 options={optionsDay}
                 onChange={(x) => setUserDay(x)}
-                width="30%"
+                width="32%"
                 ref={inputUserDay}
               />
             </div>
@@ -430,31 +443,34 @@ export default function ConsultEnroll() {
             <label className={style.input_label} htmlFor="user_email_id">
               이메일
             </label>
-            <input
-              className={`${style.input_email_id}`}
-              type="text"
-              id="user_email_id"
-              value={userEmailId}
-              onChange={(e) => {
-                setUserEmailId(e.target.value);
-              }}
-              ref={inputUserEmailId}
-            />
-            <span className={style.at}>@</span>
+            <div className={style.display_flex}>
+              <input
+                className={`${style.input_email_id}`}
+                type="text"
+                id="user_email_id"
+                value={userEmailId}
+                onChange={(e) => {
+                  setUserEmailId(e.target.value);
+                }}
+                ref={inputUserEmailId}
+              />
+              <span className={style.at}>@</span>
 
-            <input
-              className={style.input_email_host}
-              type="text"
-              id="input_email_host"
-              readOnly={isReadOnly}
-              value={userEmailHost === "none" ? "" : userEmailHost}
-              onChange={(e) => setUserEmailHost(e.target.value)}
-              ref={inputUserEmailHost}
-            />
-            <SelectBox
-              options={optionHost}
-              onChange={(x) => selectEmailHost(x)}
-            />
+              <input
+                className={style.input_email_host}
+                type="text"
+                id="input_email_host"
+                readOnly={isReadOnly}
+                value={userEmailHost === "none" ? "" : userEmailHost}
+                onChange={(e) => setUserEmailHost(e.target.value)}
+                ref={inputUserEmailHost}
+              />
+              <SelectBox
+                options={optionHost}
+                onChange={(x) => selectEmailHost(x)}
+                width="40%"
+              />
+            </div>
           </div>
 
           {/* (주) 연락처 */}
@@ -480,24 +496,27 @@ export default function ConsultEnroll() {
             <label className={style.input_label} htmlFor="user_first_responder">
               비상 연락처 1
             </label>
-            <input
-              className={`${style.input_number} ${style.input_middle}`}
-              type="text"
-              id="user_first_responder"
-              placeholder="'-'를 제외한 숫자만 입력해 주세요."
-              value={userFirstResponder}
-              onChange={(e) => {
-                setUserFirstResponder(e.target.value);
-              }}
-              ref={inputUserFirstResponder}
-            />
-            <SelectBox
-              options={optionsRelationship}
-              onChange={(x) => {
-                setUserFirstResponderRelationship(x);
-              }}
-              ref={inputUserFirstResponderRelationship}
-            />
+            <div className={style.display_flex}>
+              <input
+                className={`${style.input_number} ${style.input_middle}`}
+                type="text"
+                id="user_first_responder"
+                placeholder="'-'를 제외한 숫자만 입력해 주세요."
+                value={userFirstResponder}
+                onChange={(e) => {
+                  setUserFirstResponder(e.target.value);
+                }}
+                ref={inputUserFirstResponder}
+              />
+              <SelectBox
+                options={optionsRelationship}
+                onChange={(x) => {
+                  setUserFirstResponderRelationship(x);
+                }}
+                ref={inputUserFirstResponderRelationship}
+                width="28%"
+              />
+            </div>
             <div className={`${style.sub_information}`}>
               참관 링크 메시지가 발송되는 연락처입니다.
             </div>
@@ -509,22 +528,25 @@ export default function ConsultEnroll() {
             >
               비상 연락처 2 (선택)
             </label>
-            <input
-              className={`${style.input_number} ${style.input_middle}`}
-              type="text"
-              id="user_second_responder"
-              placeholder="'-'를 제외한 숫자만 입력해 주세요."
-              value={userSecondResponder}
-              onChange={(e) => {
-                setUserSecondResponder(e.target.value);
-              }}
-              ref={inputUserSecondResponder}
-            />
-            <SelectBox
-              options={optionsRelationship}
-              onChange={(x) => setUserSecondResponderRelationship(x)}
-              ref={inputUserSecondResponderRelationship}
-            />
+            <div className={style.display_flex}>
+              <input
+                className={`${style.input_number} ${style.input_middle}`}
+                type="text"
+                id="user_second_responder"
+                placeholder="'-'를 제외한 숫자만 입력해 주세요."
+                value={userSecondResponder}
+                onChange={(e) => {
+                  setUserSecondResponder(e.target.value);
+                }}
+                ref={inputUserSecondResponder}
+              />
+              <SelectBox
+                options={optionsRelationship}
+                onChange={(x) => setUserSecondResponderRelationship(x)}
+                ref={inputUserSecondResponderRelationship}
+                width="28%"
+              />
+            </div>
           </div>
 
           {/* 발병일 */}
@@ -555,24 +577,25 @@ export default function ConsultEnroll() {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
+                width: "100%",
               }}
             >
               <SelectBox
                 options={optionsYear}
                 onChange={(x) => setDiseaseYear(x)}
-                width="30%"
+                width="32%"
                 ref={inputDiseaseYear}
               />
               <SelectBox
                 options={optionsMonth}
                 onChange={(x) => setDiseaseMonth(x)}
-                width="30%"
+                width="32%"
                 ref={inputDiseaseMonth}
               />
               <SelectBox
                 options={optionsDay2}
                 onChange={(x) => setDiseaseDay(x)}
-                width="30%"
+                width="32%"
                 ref={inputDiseaseDay}
               />
             </div>
