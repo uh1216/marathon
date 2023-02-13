@@ -79,6 +79,7 @@ export default function Consult() {
         confirmButtonText: "닫기",
       });
       window.location.href = "/";
+      return;
     }
 
     // 웹소켓

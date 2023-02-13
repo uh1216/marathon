@@ -1,5 +1,11 @@
 .react-calendar {
-  width: 420px;
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   background: white;
   border-radius: 10px;
   border: 1px solid #a0a096;
@@ -118,7 +124,7 @@
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
 }
-@media screen and (max-width: 500px) {
+/* @media screen and (max-width: 500px) {
   .react-calendar {
     width: 90%;
     min-width: 340px;
@@ -148,4 +154,4 @@
   .react-calendar__month-view__days__day {
     font-size: 0.9em;
   }
-}
+} */

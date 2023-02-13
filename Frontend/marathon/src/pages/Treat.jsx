@@ -195,6 +195,7 @@ export default function Treat() {
   // let headers = { Authorization: sessionStorage.getItem("access-token") };
 
   useEffect(() => {
+    console.log("나는 들림");
     if (isMobile()) {
       Swal.fire({
         icon: "warning",
@@ -203,8 +204,8 @@ export default function Treat() {
         confirmButtonText: "닫기",
       });
       window.location.href = "/";
+      return;
     }
-
     // 웹소켓
     stompClient.connect({}, () => {
       console.log("websocket connect");

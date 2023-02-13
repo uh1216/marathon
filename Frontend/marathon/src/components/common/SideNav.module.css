@@ -3,6 +3,8 @@
   min-width: 188px;
   height: auto;
   font-size: 1.1em;
+  top: 50px;
+  position: sticky;
 }
 
 .side_board hr {

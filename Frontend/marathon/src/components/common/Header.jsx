@@ -62,6 +62,7 @@ export default function Header() {
 
         <div className={style.logo}>
           <img
+            style={{ height: "47px", marginBottom: "3px" }}
             onClick={() => {
               setIsToggled(false);
               setIsUserToggled(false);

@@ -8,14 +8,15 @@ import style from "./Notice.module.css";
 
 export default function Notice() {
   return (
-    <div>
+    <>
+      <div className={style.banner_background}></div>
       <div
         className={style.banner}
-        style={{ animation: "1s ease-in-out loadEffect1" }}
+        // style={{ animation: "1s ease-in-out loadEffect1" }}
       >
         <p
           className={style.title}
-          style={{ animation: "1s ease-in-out loadEffect2" }}
+          style={{ animation: "1s ease-in-out loadEffect1" }}
         >
           공지사항
         </p>
@@ -26,6 +27,6 @@ export default function Notice() {
         <Route path="detail/:num" element={<NoticeDetail />} />
         <Route path="detail/:num/update" element={<NoticeUpdate />} />
       </Routes>
-    </div>
+    </>
   );
 }

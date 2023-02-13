@@ -25,7 +25,7 @@ export default function NormalMode3() {
   const [myAnswer, setMyAnswer] = useState([]);
   const [stageResult, setStageResult] = useState();
   const navigate = useNavigate();
-  const clickSound = useRef();
+  const refClickSound = useRef();
 
   // 모바일일때 돌아가게 만들기
   const isMobile = () => {
@@ -34,11 +34,9 @@ export default function NormalMode3() {
     );
   };
 
+  /** 클릭 시 효과음 */
   const playClickSound = () => {
-    // var audio = document.getElementById("audio_play");
-    console.log(clickSound);
-    // clickSound.current.autoPlay = true;
-    clickSound.current.play();
+    refClickSound.current.play();
   };
 
   /** (min <= 값 < max) 랜덤숫자 뽑기 */
@@ -358,7 +356,7 @@ export default function NormalMode3() {
   } else if (gameState.isReady === 1) {
     return (
       <>
-        <audio ref={clickSound} src={clickSound} />
+        <audio ref={refClickSound} src={clickSound} />
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
           원래 위치로 동물을 가져다 놓으세요!

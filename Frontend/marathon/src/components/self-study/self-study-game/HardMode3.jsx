@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { addRecord, resetRecord, setType } from "stores/game.store";
@@ -25,6 +25,12 @@ export default function EasyMode1() {
   const [myAnswer, setMyAnswer] = useState([]);
   const [stageResult, setStageResult] = useState();
   const navigate = useNavigate();
+  const refClickSound = useRef();
+
+  /** 클릭 시 효과음 */
+  const playClickSound = () => {
+    refClickSound.current.play();
+  };
 
   // 모바일일때 돌아가게 만들기
   const isMobile = () => {
@@ -350,6 +356,7 @@ export default function EasyMode1() {
   } else if (gameState.isReady === 1) {
     return (
       <>
+        <audio ref={refClickSound} src={clickSound} />
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
           원래 위치로 동물을 가져다 놓으세요!
@@ -367,6 +374,7 @@ export default function EasyMode1() {
                 draggable
                 pre_y="-1"
                 pre_x="-1"
+                onClick={playClickSound}
               >
                 {animals[i]}
               </button>
