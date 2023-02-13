@@ -276,7 +276,6 @@ class VideoCam extends Component {
             confirmButtonText: "닫기",
           })
             .then(() => {
-              setIsIn(false);
               window.close();
               window.history.back();
             })
