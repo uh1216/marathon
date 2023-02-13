@@ -70,6 +70,7 @@ public class OpenviduController {
             .build();
         sessionProperties.recordingMode();
         Session session = openvidu.createSession(sessionProperties);
+        System.out.println(session.getSessionId());
 
 		if (session.getConnections().size() == 0 &&
 			!(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]"))) {
