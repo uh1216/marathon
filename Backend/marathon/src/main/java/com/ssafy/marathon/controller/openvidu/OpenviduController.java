@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
@@ -59,15 +60,15 @@ public class OpenviduController {
      */
     @PostMapping("/sessions")
     public ResponseEntity<String> initializeSession(
-        @RequestBody(required = false) Map<String, Object> params)
+        @RequestBody(required = false) Map<String, Object> params,
+        @RequestHeader(name = "Access-Token") String accessToken)
         throws OpenViduJavaClientException, OpenViduHttpException {
 
-        System.out.println(params.get("mediaMode"));
-        System.out.println(params.get("mediaNode"));
+        String role = (accessToken == null) ? "" : jwtTokenProvider.getUserRole(accessToken);
 
         SessionProperties properties = new SessionProperties.Builder()
             .customSessionId((String) params.get("customSessionId"))
-            .recordingMode(RecordingMode.ALWAYS)
+            .recordingMode(role.equals("[ROLE_ADMIN]") ? RecordingMode.MANUAL : RecordingMode.ALWAYS)
             .defaultRecordingProperties(recordingProperties)
             .build();
 
