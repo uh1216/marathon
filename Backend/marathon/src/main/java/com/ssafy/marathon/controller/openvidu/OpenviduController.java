@@ -53,7 +53,7 @@ public class OpenviduController {
 
 		if(
 				!(
-						role.equals("ROLE_DOCTOR") || role.equals("ROLE_ADMIN")
+						role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]")
 				)
 		) return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
 
