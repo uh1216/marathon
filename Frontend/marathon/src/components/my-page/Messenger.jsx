@@ -197,39 +197,26 @@ export default function Messenger() {
                   className={style.btn}
                   onClick={() => {
                     if (isMobile()) {
-                      alert(
-                        "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
+                      Swal.fire({
+                        icon: "error",
+                        title: "",
+                        text: "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!",
+                        confirmButtonText: "닫기",
+                      });
+                    } else {
+                      window.open(
+                        `/treat/${item.link}`,
+                        `Marathon - 화상제활`,
+                        "fullscreen, menubar=no, status=no, toolbar=no, location=no"
                       );
-                    }}
-                  >
-                    답장 쓰기
-                  </button>
-                )}
-                {item.content === null && isJoinable(item.link) && (
-                  <button
-                    className={style.btn}
-                    onClick={() => {
-                      if (isMobile()) {
-                        Swal.fire({
-                          icon: "error",
-                          title: "",
-                          text: "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!",
-                          confirmButtonText: "닫기",
-                        });
-                      } else {
-                        window.open(
-                          `/treat/${item.link}`,
-                          `Marathon - 화상제활`,
-                          "fullscreen, menubar=no, status=no, toolbar=no, location=no"
-                        );
-                      }
-                    }}
-                  >
-                    수업 입장
-                  </button>
-                )}
-              </div>
+                    }
+                  }}
+                >
+                  수업 입장
+                </button>
+              )}
             </div>
+          </div>
         ))
       )}
       {list.length !== 0 && list.length % 5 === 0 && (
