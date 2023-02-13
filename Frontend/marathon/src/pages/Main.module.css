@@ -5,13 +5,24 @@
 .fl {
   float: left;
 }
+.banner_background {
+  position: absolute;
+  width: 100vw;
+  height: 400px;
+  background: linear-gradient(
+    to left,
+    rgb(103, 80, 148) 20%,
 
+    rgba(39, 81, 111, 1) 80%
+  );
+}
 .main_banner {
   background: linear-gradient(
       to left,
-      rgba(39, 81, 111, 0) 50%,
-      rgba(39, 81, 111, 0.5) 60%,
-      rgba(39, 81, 111, 0.75) 75%,
+      rgb(103, 80, 148) 1%,
+      rgba(39, 81, 111, 0) 10%,
+      rgba(39, 81, 111, 0.2) 60%,
+      rgba(39, 81, 111, 0.5) 75%,
       rgba(39, 81, 111, 1) 100%
     ),
     url(../../public/img/mainBanner.png.png);
@@ -59,17 +70,27 @@
   font-weight: bold;
   margin-bottom: 40px;
 }
+.cards {
+  display: flex;
+  justify-content: center;
+}
 
 .page_card {
   width: 48%;
   min-width: 338px;
   height: 480px;
+  min-height: 340px;
   padding: 40px;
-  margin-top: 0px;
+  /* margin-top: 0px; */
+  margin: 0 10px;
   position: relative;
   margin-bottom: 30px;
-  border: 1px solid gray;
-  box-shadow: 3px 3px 2px 2px rgb(112, 112, 110);
+  border: 1px solid rgb(192, 192, 192);
+  border-radius: 5px;
+  /* box-shadow: 20px 20px 3px 7px rgba(0, 0, 0, 0.2); */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .page_card p {
@@ -79,12 +100,14 @@
 
 .card {
   display: block;
-  width: 90%;
+  width: 70%;
   min-width: 200px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 .main_img_board {

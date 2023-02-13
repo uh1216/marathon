@@ -17,4 +17,6 @@ public interface DoctorHistoryService {
     HistoryResDto getHistoryDetail(Long historySeq);
 
     void makeHistory(Long doctorSeq, Long treatmentSeq);
+
+    Long getHistorySeq(Long treatmentSeq);
 }
