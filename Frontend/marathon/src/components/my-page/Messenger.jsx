@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "./Messenger.module.css";
+import Swal from "sweetalert2";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { faXmark, faBell } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
@@ -197,9 +198,12 @@ export default function Messenger() {
                     className={style.btn}
                     onClick={() => {
                       if (isMobile()) {
-                        alert(
-                          "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
-                        );
+                        Swal.fire({
+                          icon: "error",
+                          title: "",
+                          text: "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!",
+                          confirmButtonText: "닫기",
+                        });
                       } else {
                         window.open(
                           `/treat/${item.link}`,

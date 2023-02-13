@@ -1,5 +1,6 @@
 import style from "./FindId.module.css";
 import { useState } from "react";
+import Swal from "sweetalert2";
 import { $ } from "util/axios";
 
 export default function FindId({ setModalOpen }) {
@@ -12,7 +13,12 @@ export default function FindId({ setModalOpen }) {
         email: email,
       },
     });
-    alert("아이디를 이메일로 전송하였습니다.");
+    Swal.fire({
+      icon: "info",
+      title: "",
+      text: "아이디를 이메일로 전송하였습니다.",
+      confirmButtonText: "닫기",
+    });
     setModalOpen(false);
   };
 

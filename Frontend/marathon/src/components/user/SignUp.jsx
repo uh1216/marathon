@@ -183,63 +183,137 @@ export default function SignIn() {
         icon: "error",
         title: "",
         text: "이름을 입력해주세요",
+        confirmButtonText: "닫기",
       });
-      inputUserName.current.focus();
     } else if (userGender === "none" || userGender === null) {
-      alert("성별을 선택해주세요.");
-      inputUserGender.current.focus();
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "성별을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
     } else if (userYear === "none" || userYear === null) {
-      alert("생년월일을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "생년월일을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserYear.current.focus();
     } else if (userMonth === "none" || userMonth === null) {
-      alert("생년월일을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "생년월일을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserMonth.current.focus();
     } else if (userDay === "none" || userDay === null) {
-      alert("생년월일을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "생년월일을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserDay.current.focus();
     } else if (!isIdValid) {
-      alert("아이디가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "아이디가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserId.current.focus();
     } else if (!isNotIdDuplicated) {
-      alert("아이디 중복확인을 해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "아이디 중복확인을 해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserId.current.focus();
     } else if (!isPwdValid) {
-      alert("비밀번호가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비밀번호가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserPwd.current.focus();
     } else if (!isPwdChkValid) {
-      alert("비밀번호 확인이 일치하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비밀번호 확인이 일치하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserPwdChk.current.focus();
     } else if (userEmailId === "" || userEmailId === null) {
-      alert("이메일을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이메일을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserEmailId.current.focus();
     } else if (
       userEmailHost === "" ||
       userEmailHost === null ||
       userEmailHost === "none"
     ) {
-      alert("이메일을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이메일을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserEmailHost.current.focus();
     } else if (userPhone === "" || userPhone === null) {
-      alert("연락처를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserPhone.current.focus();
     } else if (!chkPhone(userPhone)) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserPhone.current.focus();
     } else if (
       type === "normal" &&
       (userFirstResponder === "" || userFirstResponder === null)
     ) {
-      alert("비상 연락처 1을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 1을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponder.current.focus();
     } else if (type === "normal" && !chkPhone(userFirstResponder)) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponder.current.focus();
     } else if (
       type === "normal" &&
       (userFirstResponderRelationship === "none" ||
         userFirstResponderRelationship === null)
     ) {
-      alert("비상 연락처 1의 관계를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 1의 관계를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponderRelationship.current.focus();
     } else if (
       type === "normal" &&
@@ -247,14 +321,24 @@ export default function SignIn() {
       userSecondResponderRelationship !== null &&
       (userSecondResponder === "" || userSecondResponder === null)
     ) {
-      alert("비상 연락처 2를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 2를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponder.current.focus();
     } else if (
       type === "normal" &&
       userSecondResponder.length > 0 &&
       !chkPhone(userSecondResponder)
     ) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponder.current.focus();
     } else if (
       type === "normal" &&
@@ -262,22 +346,42 @@ export default function SignIn() {
       (userSecondResponderRelationship === "none" ||
         userSecondResponderRelationship === null)
     ) {
-      alert("비상 연락처 2의 관계를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 2의 관계를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponderRelationship.current.focus();
     } else if (
       type === "doctor" &&
       (userLicense === "none" || userLicense === null)
     ) {
-      alert("자격증을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "자격증을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserLicense.current.focus();
     } else if (
       type === "doctor" &&
       (userEducation === "none" || userEducation === null)
     ) {
-      alert("최종학력을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "최종학력을 선택해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserEducation.current.focus();
     } else if (!userTos) {
-      alert("이용약관 및 개인정보 처리방침에 동의해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이용약관 및 개인정보 처리방침에 동의해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserTos.current.focue();
     } else {
       let user = {
@@ -302,12 +406,22 @@ export default function SignIn() {
 
         $.post(`/patient-sign/signup`, user)
           .then(() => {
-            alert("회원가입에 성공하였습니다.");
+            Swal.fire({
+              icon: "success",
+              title: "",
+              text: "회원가입에 성공하였습니다.",
+              confirmButtonText: "닫기",
+            });
             navigate("/");
             window.scrollTo(0, 0);
           })
           .catch((error) => {
-            alert("회원가입에 실패하였습니다.");
+            Swal.fire({
+              icon: "error",
+              title: "",
+              text: "회원가입에 실패하였습니다.",
+              confirmButtonText: "닫기",
+            });
             console.log(error);
           });
       } else if (type === "doctor") {
@@ -316,12 +430,22 @@ export default function SignIn() {
 
         $.post(`/doctor-sign/signup`, user)
           .then(() => {
-            alert("회원가입에 성공하였습니다.");
+            Swal.fire({
+              icon: "success",
+              title: "",
+              text: "회원가입에 성공하였습니다.",
+              confirmButtonText: "닫기",
+            });
             navigate("/");
             window.scrollTo(0, 0);
           })
           .catch((error) => {
-            alert("회원가입에 실패하였습니다.");
+            Swal.fire({
+              icon: "error",
+              title: "",
+              text: "회원가입에 실패하였습니다.",
+              confirmButtonText: "닫기",
+            });
             console.log(error);
           });
       }
@@ -352,12 +476,22 @@ export default function SignIn() {
     $.get(`/user-sign/checkid/${userId}`)
       .then(() => {
         setIsNotIdDuplicated(true);
-        alert("사용 가능한 아이디입니다.");
+        Swal.fire({
+          icon: "success",
+          title: "",
+          text: "사용 가능한 아이디입니다.",
+          confirmButtonText: "닫기",
+        });
       })
       .catch((error) => {
         console.log(error);
         setIsNotIdDuplicated(false);
-        alert("이미 존재하는 아이디입니다.");
+        Swal.fire({
+          icon: "error",
+          title: "",
+          text: "이미 존재하는 아이디입니다.",
+          confirmButtonText: "닫기",
+        });
       });
   };
 

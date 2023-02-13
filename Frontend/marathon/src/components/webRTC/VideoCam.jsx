@@ -1,5 +1,6 @@
 import { OpenVidu } from "openvidu-browser";
 import { Component } from "react";
+import Swal from "sweetalert2";
 import axios from "axios";
 import UserVideoComponent from "./UserVideoComponent";
 import style from "./VideoCam.moduel.css";
@@ -249,7 +250,12 @@ class VideoCam extends Component {
       )
       .catch((error) => {
         if (error.response.status === 401) {
-          alert("권한 없는 접근입니다!");
+          Swal.fire({
+            icon: "error",
+            title: "",
+            text: "권한 없는 접근입니다!",
+            confirmButtonText: "닫기",
+          });
           window.close();
           window.history.back();
         }

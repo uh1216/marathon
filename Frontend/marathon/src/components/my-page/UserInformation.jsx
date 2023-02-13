@@ -1,4 +1,5 @@
 import SelectBox from "components/common/SelectBox";
+import Swal from "sweetalert2";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
@@ -203,61 +204,120 @@ export default function UserInformation() {
 
   /** 회원탈퇴 버튼을 누르면 실행되는 함수 */
   const unregister = () => {
-    const check = window.confirm("정말로 탈퇴하시겠습니까?");
-    if (check) {
-      $.delete(`/user-sign/withdraw`)
-        .then(() => {
-          alert("정상적으로 회원탈퇴 되었습니다.");
-          dispatch(userLogout());
-          navigate("/");
-          window.scrollTo(0, 0);
-        })
-        .catch((error) => console.log(error));
-    }
+    Swal.fire({
+      icon: "warning",
+      title: "",
+      text: "정말로 탈퇴하시겠습니까?",
+
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          $.delete(`/user-sign/withdraw`).then(() => {
+            Swal.fire({
+              icon: "success",
+              text: "정상적으로 회원탈퇴 되었습니다.",
+            });
+            dispatch(userLogout());
+            navigate("/");
+            window.scrollTo(0, 0);
+          });
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   /** 수정완료 버튼을 누르면 실행되는 함수 */
   const modify = () => {
     if (!isPwdValid) {
-      alert("비밀번호가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비밀번호가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserPwd.current.focus();
     } else if (!isPwdChkValid) {
-      alert("비밀번호 확인이 일치하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비밀번호 확인이 일치하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserPwdChk.current.focus();
     } else if (userEmailId === "" || userEmailId === null) {
-      alert("이메일을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이메일을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserEmailId.current.focus();
     } else if (
       userEmailHost === "" ||
       userEmailHost === null ||
       userEmailHost === "none"
     ) {
-      alert("이메일을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이메일을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserEmailHost.current.focus();
     } else if (userPhone === "" || userPhone === null) {
-      alert("연락처를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserPhone.current.focus();
     } else if (!chkPhone(userPhone)) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserPhone.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
       (userFirstResponder === "" || userFirstResponder === null)
     ) {
-      alert("비상 연락처 1을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 1을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponder.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
       !chkPhone(userFirstResponder)
     ) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponder.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
       (userFirstResponderRelationship === "none" ||
         userFirstResponderRelationship === null)
     ) {
-      alert("비상 연락처 1의 관계를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 1의 관계를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserFirstResponderRelationship.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
@@ -265,14 +325,24 @@ export default function UserInformation() {
       userSecondResponderRelationship !== null &&
       (userSecondResponder === "" || userSecondResponder === null)
     ) {
-      alert("비상 연락처 2를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 2를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponder.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
       userSecondResponder.length > 0 &&
       !chkPhone(userSecondResponder)
     ) {
-      alert("연락처가 유효하지 않습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "연락처가 유효하지 않습니다.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponder.current.focus();
     } else if (
       state.loginUser.userRole === "patient" &&
@@ -280,7 +350,12 @@ export default function UserInformation() {
       (userSecondResponderRelationship === "none" ||
         userSecondResponderRelationship === null)
     ) {
-      alert("비상 연락처 2의 관계를 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "비상 연락처 2의 관계를 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
       inputUserSecondResponderRelationship.current.focus();
     } else {
       let userInfo = {
@@ -308,7 +383,12 @@ export default function UserInformation() {
 
       $.put(`/${state.loginUser.userRole}-sign/modify`, formData)
         .then((res) => {
-          alert("수정 완료되었습니다.");
+          Swal.fire({
+            icon: "success",
+            title: "",
+            text: "수정 완료되었습니다.",
+            confirmButtonText: "닫기",
+          });
           console.log(res);
           sessionStorage.setItem("access-token", res.data.accessToken);
           setUserPwd("");

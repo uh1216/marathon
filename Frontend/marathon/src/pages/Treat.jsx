@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Swal from "sweetalert2";
 import {
   faComment,
   faXmark,
@@ -195,9 +196,12 @@ export default function Treat() {
 
   useEffect(() => {
     if (isMobile()) {
-      alert(
-        "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
-      );
+      Swal.fire({
+        icon: "warning",
+        title: "",
+        text: "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!",
+        confirmButtonText: "닫기",
+      });
       window.location.href = "/";
     }
 
@@ -535,11 +539,23 @@ export default function Treat() {
         <button
           className={style.btn_x}
           onClick={() => {
-            if (window.confirm("정말로 나가시겠습니까?")) {
-              setIsIn(false);
-              window.close();
-              window.history.back();
-            }
+            Swal.fire({
+              icon: "warning",
+              title: "",
+              text: "정말로 나가시겠습니까",
+
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "확인",
+              cancelButtonText: "취소",
+            })
+              .then(() => {
+                setIsIn(false);
+                window.close();
+                window.history.back();
+              })
+              .catch((error) => console.log(error));
           }}
         >
           <FontAwesomeIcon icon={faXmark} />
