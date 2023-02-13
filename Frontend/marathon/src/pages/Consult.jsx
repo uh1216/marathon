@@ -75,6 +75,7 @@ export default function Consult() {
         "모바일에서는 지원하지 않는 기능입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
       );
       window.location.href = "/";
+      return;
     }
 
     // 웹소켓
