@@ -24,7 +24,7 @@ export default function SelectSchedule({ name, seq }) {
 
   const { mutate: onPut } = useMutation(res_put, {
     onSuccess: () => {
-      alert("예악 되었습니다.");
+      alert("예약 되었습니다.");
     },
     onError: () => {
       alert("실패했습니다.");
