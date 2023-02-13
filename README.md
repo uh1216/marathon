@@ -79,7 +79,7 @@
 
    - [marathon.sql](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A304/-/blob/dev/Docs/marathon.sql)을 참고해서 데이터베이스를 생성합니다. ([여기](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A304/-/blob/dev/Docs/marathon_ERD.png)를 눌러 erd를 확인하세요.)
 
-   - `application.yml`에 데이터베이스 설정을 추가합니다.
+   - `application.properties`에 데이터베이스 설정을 추가합니다.
 
      ```
      spring:
@@ -123,7 +123,7 @@
 3. DB 설치 (해당 프로젝트에서 MySQL 사용)
 4. gradle wrapper을 위한 버전 설정 (6.0.0 이상)
 5. gradle clean build 실행 (war 파일 생성)
-6. yarn build (dist 폴더 생성)
+6. npm build (dist 폴더 생성)
 7. Nginx (front-end, back-end 경로 설정)
 
 ### 데모
