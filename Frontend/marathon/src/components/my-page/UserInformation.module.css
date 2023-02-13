@@ -1,13 +1,13 @@
 /* 박스 틀 */
 .side_right_board {
-  width: 85%;
+  width: 100%;
   height: 100%;
-  padding-left: 40px;
+  /* padding-left: 40px; */
   font-size: 1em;
 }
 
 .information_box {
-  width: 927px;
+  width: 100%;
   height: 747px;
   border: solid 1px #858585;
   border-radius: 10px;
