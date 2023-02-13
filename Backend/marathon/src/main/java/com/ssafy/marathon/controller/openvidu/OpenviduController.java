@@ -5,6 +5,9 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import com.ssafy.marathon.config.security.JwtTokenProvider;
+import com.ssafy.marathon.db.entity.treatment.History;
+import com.ssafy.marathon.db.repository.HistoryRepository;
+import com.ssafy.marathon.db.repository.TreatmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -33,6 +36,7 @@ public class OpenviduController {
 	private OpenVidu openvidu;
 
 	private final JwtTokenProvider jwtTokenProvider;
+	private final HistoryRepository historyRepository;
 
 	@PostConstruct
 	public void init() {
@@ -58,6 +62,11 @@ public class OpenviduController {
 		if(session.getConnections().size() == 0 &&
 				!(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]")))
 			return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
+
+		History history = historyRepository.findBySeq((Long) params.get("historySeq"));
+		history.setVideoUrl(session.getSessionId());
+		historyRepository.save(history);
+
 		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
 	}
 

@@ -87,9 +87,12 @@ public class DoctorTreatmentController {
 
         doctorTreatmentService.makeAlarm(treatmentSeq, sessionId, doctorSeq);
         doctorHistoryService.makeHistory(doctorSeq, treatmentSeq);
+
+        long historySeq =  doctorHistoryService.getHistorySeq(treatmentSeq);
+
         doctorTreatmentService.deleteTreatment(treatmentSeq);
 
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<Long>(historySeq, HttpStatus.OK);
     }
 
 }

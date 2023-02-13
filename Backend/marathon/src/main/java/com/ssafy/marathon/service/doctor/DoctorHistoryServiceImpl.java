@@ -122,6 +122,18 @@ public class DoctorHistoryServiceImpl implements DoctorHistoryService {
         historyRepository.save(history);
     }
 
+    @Override
+    public Long getHistorySeq(Long treatmentSeq) {
+        Treatment treatment = treatmentRepository.findBySeq(treatmentSeq);
+        History history = historyRepository.findByDoctor_SeqAndPatient_SeqAndDateAndTime(
+                treatment.getDoctor().getSeq(),
+                treatment.getPatient().getSeq(),
+                treatment.getDate(),
+                treatment.getTime()
+        );
+        return history.getSeq();
+    }
+
     public Page<HistoryResDto> searchPaitentHistory(Long doctorSeq, String name, int page) {
         List<History> list = historyRepository.findAllByDoctor_SeqAndPatient_NameContaining(doctorSeq, name);
 
