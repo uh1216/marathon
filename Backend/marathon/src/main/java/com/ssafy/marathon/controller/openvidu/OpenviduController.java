@@ -13,8 +13,10 @@ import io.openvidu.java.client.RecordingMode;
 import io.openvidu.java.client.RecordingProperties;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
+
 import java.util.Map;
 import javax.annotation.PostConstruct;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -49,10 +51,10 @@ public class OpenviduController {
         this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
 
         this.recordingProperties = new RecordingProperties.Builder()
-            .outputMode(OutputMode.COMPOSED)
-            .resolution("560x600")
-            .frameRate(30)
-            .build();
+                .outputMode(OutputMode.COMPOSED)
+                .resolution("560x600")
+                .frameRate(30)
+                .build();
     }
 
     /**
@@ -61,28 +63,26 @@ public class OpenviduController {
      */
     @PostMapping("/sessions")
     public ResponseEntity<String> initializeSession(
-        @RequestBody(required = false) Map<String, Object> params,
-        @RequestHeader("Access-Token") String accessToken)
-        throws OpenViduJavaClientException, OpenViduHttpException {
+            @RequestBody(required = false) Map<String, Object> params,
+            @RequestHeader("Access-Token") String accessToken)
+            throws OpenViduJavaClientException, OpenViduHttpException {
 
         String role = (accessToken == null) ? "" : jwtTokenProvider.getUserRole(accessToken);
         System.out.println(role);
 
         sessionProperties = new SessionProperties.Builder()
-            .recordingMode(role.equals("[ROLE_ADMIN]") ? RecordingMode.MANUAL : RecordingMode.ALWAYS)
-            .defaultRecordingProperties(recordingProperties)
-            .build();
+                .recordingMode(role.equals("[ROLE_ADMIN]") ? RecordingMode.MANUAL : RecordingMode.ALWAYS)
+                .defaultRecordingProperties(recordingProperties)
+                .build();
         Session session = openvidu.createSession(sessionProperties);
 
-		if (role.length() == 0 ||
-			(session.getConnections().size() == 0 &&
-				!(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]"))
-			)
-		) {
-			return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
-		}
+        if (session.getConnections().size() == 0 &&
+                        !(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]"))
+        ) {
+            return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
+        }
 
-        if(role.equals("[ROLE_DOCTOR]")){
+        if (role.equals("[ROLE_DOCTOR]")) {
             History history = historyRepository.findBySeq((Long) params.get("historySeq"));
             history.setVideoUrl(session.getSessionId());
             historyRepository.save(history);
@@ -99,8 +99,8 @@ public class OpenviduController {
      */
     @PostMapping("/sessions/{sessionId}/connections")
     public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
-        @RequestBody(required = false) Map<String, Object> params)
-        throws OpenViduJavaClientException, OpenViduHttpException {
+                                                   @RequestBody(required = false) Map<String, Object> params)
+            throws OpenViduJavaClientException, OpenViduHttpException {
         Session session = openvidu.getActiveSession(sessionId);
         if (session == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
