@@ -7,6 +7,10 @@ import SelfStudyIntro from "../SelfStudyIntro";
 import { setStage, setIsReady, setMode } from "stores/game.store";
 import GIF from "img/gif/game1_normal.gif";
 
+import clickSound from "sound/click.mp3";
+import correctSound from "sound/correct.mp3";
+import wrongSound from "sound/wrong.mp3";
+
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
@@ -206,6 +210,11 @@ export default function EasyMode1() {
     });
     return (
       <>
+        {JSON.stringify(quiz) === JSON.stringify(mySelect) ? (
+          <audio src={correctSound} autoPlay />
+        ) : (
+          <audio src={wrongSound} autoPlay />
+        )}
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         {JSON.stringify(quiz) === JSON.stringify(mySelect) ? (
           <div className={style.title}>

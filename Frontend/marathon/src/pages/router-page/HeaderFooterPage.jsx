@@ -7,7 +7,10 @@ export default function HeaderFooterPage() {
   return (
     <>
       <Header />
+      {/* <div style={{minHeight}}> */}
       <Outlet />
+      {/* </div> */}
+
       <Footer />
     </>
   );

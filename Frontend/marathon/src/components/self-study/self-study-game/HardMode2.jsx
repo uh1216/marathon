@@ -10,6 +10,10 @@ import style from "./Game2.module.css";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
+import clickSound from "sound/click.mp3";
+import correctSound from "sound/correct.mp3";
+import wrongSound from "sound/wrong.mp3";
+
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
@@ -216,6 +220,11 @@ export default function EasyMode1() {
   } else {
     return (
       <>
+        {stageResult ? (
+          <audio src={correctSound} autoPlay />
+        ) : (
+          <audio src={wrongSound} autoPlay />
+        )}
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
           {stageResult ? (

@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faShareFromSquare,
   faComment,
   faXmark,
   faVideo,
@@ -220,11 +219,6 @@ export default function Treat() {
             let payload = Buffer.from(base64Payload, "base64");
             let result = JSON.parse(payload.toString());
             addMessage({
-              senderImg: result.img,
-              senderName: result.name,
-              content: newMessage.content,
-            });
-            console.log({
               senderImg: result.img,
               senderName: result.name,
               content: newMessage.content,
@@ -515,9 +509,6 @@ export default function Treat() {
           </button>
         )}
 
-        <button className={style.btn_share}>
-          <FontAwesomeIcon icon={faShareFromSquare} />
-        </button>
         <button
           className={style.btn_comment}
           onClick={() => setIsChatting(!isChatting)}

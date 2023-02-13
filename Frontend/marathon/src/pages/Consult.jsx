@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faShareFromSquare,
   faComment,
   faXmark,
   faVideo,
@@ -196,10 +195,6 @@ export default function Consult() {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;음&nbsp;&nbsp;소&nbsp;&nbsp;거
           </button>
         )}
-
-        <button className={style.btn_share}>
-          <FontAwesomeIcon icon={faShareFromSquare} />
-        </button>
 
         <button className={style.btn_comment} onClick={showChatting}>
           <div

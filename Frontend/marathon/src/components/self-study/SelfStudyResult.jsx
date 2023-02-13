@@ -4,6 +4,7 @@ import O from "img/icon/green_check.png";
 import X from "img/icon/red_x.png";
 import { useEffect, useState } from "react";
 import { $ } from "util/axios.js";
+import resultSount from "sound/result.mp3";
 
 export default function SelfStudyResult() {
   const gameState = useSelector((state) => state).gameState;
@@ -45,6 +46,7 @@ export default function SelfStudyResult() {
 
   return (
     <div className={style.container}>
+      <audio src={resultSount} autoPlay />
       <div className={style.title}>
         10문제 중 <h2>{ansCnt}문제</h2> 를 맞추셨습니다!
       </div>
