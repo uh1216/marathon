@@ -78,6 +78,7 @@ public class OpenviduController {
 			return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
 
 		History history = historyRepository.findBySeq((Long) params.get("historySeq"));
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + session.getSessionId());
 		history.setVideoUrl(session.getSessionId());
 		historyRepository.save(history);
 
