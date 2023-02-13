@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BoardInit {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(AdminInit.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(UserInit.class);
 
     private final BoardRepository boardRepository;
 
