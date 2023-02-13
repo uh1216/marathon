@@ -239,12 +239,10 @@ class VideoCam extends Component {
   }
 
   async createSession(sessionId) {
-    let postBody = {
-      custemSessionId: sessionId,
-    };
+    console.log(sessionId);
     const response = await axios.post(
       APPLICATION_SERVER_URL + "api/sessions",
-      postBody,
+      { custemSessionId: sessionId },
       {
         headers: {
           "Content-Type": "application/json",
