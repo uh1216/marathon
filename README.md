@@ -212,7 +212,7 @@
 ## 👤 저자
 
 * 김동연 - Sehoon Kim - kimsae123@naver.com
-* 김정수 - Soonbeen Kim - ksb940925@gmail.com
+* 김정수 - jumgsu Kim - kjskjs356@gmail.com
 * 윤호산 - Hosan Yoon - yoonhosan@naver.com
 * 이연학 - Sunsoo Lee - tjstn921030@gmail.com
 * 조웅희 - Yongjoon Seo - koreakkrea12@naver.com
