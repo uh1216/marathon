@@ -92,7 +92,7 @@ public class OpenviduController {
             @PathVariable("sessionId") String sessionId,
             @RequestBody(required = false) Map<String, Object> params,
             @RequestHeader(required = false, name = "Access-Token") String accessToken,
-            @RequestHeader(required = false, name = "historySeq") String historySeq
+            @RequestHeader(required = false, name = "History-Seq") String historySeq
             )
             throws OpenViduJavaClientException, OpenViduHttpException {
 

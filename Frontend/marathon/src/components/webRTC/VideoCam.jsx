@@ -257,7 +257,7 @@ class VideoCam extends Component {
     let postHead = {
       "Content-Type": "application/json",
       "Access-Token": sessionStorage.getItem("access-token"),
-      historySeq: localStorage.getItem("historySeq"),
+      "History-Seq": localStorage.getItem("historySeq"),
     };
     const response = await axios
       .post(
