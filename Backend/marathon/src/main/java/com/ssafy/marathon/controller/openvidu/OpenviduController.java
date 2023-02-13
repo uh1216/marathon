@@ -4,15 +4,12 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import com.ssafy.marathon.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;
@@ -35,7 +32,7 @@ public class OpenviduController {
 
 	private OpenVidu openvidu;
 
-
+	private final JwtTokenProvider jwtTokenProvider;
 
 	@PostConstruct
 	public void init() {
@@ -47,12 +44,15 @@ public class OpenviduController {
 	 * @return The Session ID
 	 */
 	@PostMapping("/sessions")
-	public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
+	public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params,
+													@RequestHeader("Access-Token") String accessToken)
 			throws OpenViduJavaClientException, OpenViduHttpException {
+		String role = jwtTokenProvider.getUserRole(accessToken);
+
+		if(!(role.equals("DOCTOR") || role.equals("ADMIN"))) return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+
 		SessionProperties properties = SessionProperties.fromJson(params).build();
 		Session session = openvidu.createSession(properties);
-
-
 
 		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
 	}
