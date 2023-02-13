@@ -8,6 +8,10 @@ import GIF from "img/gif/game2_easy.gif";
 import CARD_BACK from "img/card_back.jpg";
 import style from "./Game2.module.css";
 
+import clickSound from "sound/click.mp3";
+import correctSound from "sound/correct.mp3";
+import wrongSound from "sound/wrong.mp3";
+
 export default function EasyMode1() {
   const gameState = useSelector((state) => state.gameState);
   const dispatch = useDispatch();
@@ -358,6 +362,11 @@ export default function EasyMode1() {
   } else {
     return (
       <>
+        {stageResult ? (
+          <audio src={correctSound} autoPlay />
+        ) : (
+          <audio src={wrongSound} autoPlay />
+        )}
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
           {stageResult ? "정답입니다😊" : "틀렸습니다😥"}

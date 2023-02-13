@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRecord, resetRecord, setType } from "stores/game.store";
 import commonStyle from "./Game.module.css";
@@ -7,6 +7,11 @@ import { setStage, setIsReady, setMode } from "stores/game.store";
 import GIF from "img/gif/game3_normal.gif";
 import { useNavigate } from "react-router-dom";
 import style from "./Game3.module.css";
+import { v4 as uuidv4 } from "uuid";
+
+import clickSound from "sound/click.mp3";
+import correctSound from "sound/correct.mp3";
+import wrongSound from "sound/wrong.mp3";
 
 export default function NormalMode3() {
   const gameState = useSelector((state) => state.gameState);
@@ -19,12 +24,20 @@ export default function NormalMode3() {
   const [myAnswer, setMyAnswer] = useState([]);
   const [stageResult, setStageResult] = useState();
   const navigate = useNavigate();
+  const clickSound = useRef();
 
   // 모바일일때 돌아가게 만들기
   const isMobile = () => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     );
+  };
+
+  const playClickSound = () => {
+    // var audio = document.getElementById("audio_play");
+    console.log(clickSound);
+    // clickSound.current.autoPlay = true;
+    clickSound.current.play();
   };
 
   /** (min <= 값 < max) 랜덤숫자 뽑기 */
@@ -59,7 +72,7 @@ export default function NormalMode3() {
 
     const result = [];
     for (let y = 0; y < row; y++) {
-      result.push(<tr key={y}>{renderingCol(y, idx)}</tr>);
+      result.push(<tr key={uuidv4()}>{renderingCol(y, idx)}</tr>);
     }
     return result;
   };
@@ -71,7 +84,9 @@ export default function NormalMode3() {
     // 문제 풀기 세팅
     if (idx === 1) {
       for (let x = 0; x < col; x++) {
-        result.push(<td className="drag_container" y={y} x={x} key={x}></td>);
+        result.push(
+          <td className="drag_container" y={y} x={x} key={uuidv4()}></td>
+        );
       }
     }
     // 문제 세팅
@@ -83,7 +98,7 @@ export default function NormalMode3() {
             style={{ fontSize: "40px" }}
             y={y}
             x={x}
-            key={x}
+            key={uuidv4()}
           >
             {animals[answer[y][x]]}
           </td>
@@ -102,7 +117,7 @@ export default function NormalMode3() {
                 style={{ fontSize: "40px", position: "relative" }}
                 y={y}
                 x={x}
-                key={x}
+                key={uuidv4()}
               >
                 {animals[answer[y][x]]}
                 <div className={style.result}>❌</div>
@@ -128,7 +143,7 @@ export default function NormalMode3() {
                 }}
                 y={y}
                 x={x}
-                key={x}
+                key={uuidv4()}
               >
                 {animals[answer[y][x]]}
               </td>
@@ -142,9 +157,9 @@ export default function NormalMode3() {
                 style={{ fontSize: "40px", position: "relative" }}
                 y={y}
                 x={x}
-                key={x}
+                key={uuidv4()}
               >
-                {/* {animals[myAnswer[y][x]]} */}
+                {animals[myAnswer[y][x]]}
                 <div className={style.result}>❌</div>
               </td>
             );
@@ -157,9 +172,9 @@ export default function NormalMode3() {
                 style={{ fontSize: "40px", position: "relative" }}
                 y={y}
                 x={x}
-                key={x}
+                key={uuidv4()}
               >
-                {/* {animals[myAnswer[y][x]]} */}
+                {animals[myAnswer[y][x]]}
                 <div className={style.result}>⭕</div>
               </td>
             );
@@ -339,6 +354,7 @@ export default function NormalMode3() {
   } else if (gameState.isReady === 1) {
     return (
       <>
+        <audio ref={clickSound} src={clickSound} />
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
           원래 위치로 동물을 가져다 놓으세요!
@@ -356,6 +372,7 @@ export default function NormalMode3() {
                 draggable
                 pre_y="-1"
                 pre_x="-1"
+                onClick={playClickSound}
               >
                 {animals[i]}
               </button>
@@ -367,6 +384,11 @@ export default function NormalMode3() {
   } else {
     return (
       <>
+        {stageResult ? (
+          <audio src={correctSound} autoPlay />
+        ) : (
+          <audio src={wrongSound} autoPlay />
+        )}
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
           {stageResult ? "정답입니다😊" : "틀렸습니다😥"}

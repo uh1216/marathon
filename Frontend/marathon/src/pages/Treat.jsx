@@ -224,11 +224,6 @@ export default function Treat() {
               senderName: result.name,
               content: newMessage.content,
             });
-            console.log({
-              senderImg: result.img,
-              senderName: result.name,
-              content: newMessage.content,
-            });
           }
         }
       });
