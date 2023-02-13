@@ -63,15 +63,15 @@ public class OpenviduController {
      */
     @PostMapping("/sessions")
     public ResponseEntity<String> initializeSession(
-            @RequestBody(required = false) Map<String, Object> params,
-            @RequestHeader("Access-Token") String accessToken)
+            @RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
 
-        String role = (accessToken == null) ? "" : jwtTokenProvider.getUserRole(accessToken);
+//        String role = (accessToken == null) ? "" : jwtTokenProvider.getUserRole(accessToken);
 //        System.out.println(role);
 
         sessionProperties = new SessionProperties.Builder()
-                .recordingMode(role.equals("[ROLE_ADMIN]") ? RecordingMode.MANUAL : RecordingMode.ALWAYS)
+//                .recordingMode(role.equals("[ROLE_ADMIN]") ? RecordingMode.MANUAL : RecordingMode.ALWAYS)
+                .recordingMode(RecordingMode.ALWAYS)
                 .defaultRecordingProperties(recordingProperties)
                 .build();
         Session session = openvidu.createSession(sessionProperties);
