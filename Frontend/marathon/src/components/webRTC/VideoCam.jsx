@@ -289,5 +289,5 @@ class VideoCam extends Component {
     return response.data; // The token
   }
 }
-//아무튼 뭔가를 존나 추가한다.
+
 export default VideoCam;
