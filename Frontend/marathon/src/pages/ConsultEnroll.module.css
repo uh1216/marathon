@@ -14,7 +14,7 @@
   text-decoration: none;
   font-size: 1.2em;
   font-weight: 500;
-  background-color: #bdd7d5;
+  background-color: #ffffff;
   color: black;
   margin-bottom: 10px;
 }
@@ -42,6 +42,7 @@
 /* 제목 */
 .inner_container {
   min-width: 390px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,6 +81,8 @@
 /* input div */
 .input_div {
   margin-top: 30px;
+  max-width: 600px;
+  width: 100%;
 }
 
 /* input label */
@@ -91,7 +94,7 @@
 /* input */
 .input_middle {
   padding: 0 13px;
-  width: 307px;
+  width: 70%;
   height: 40px;
   border-radius: 5px;
   border: 0.2px solid rgb(189, 189, 189);
@@ -100,7 +103,7 @@
 
 .input_long {
   padding: 0 13px;
-  width: 412px;
+  width: 100%;
   height: 40px;
   border-radius: 5px;
   border: 0.2px solid rgb(189, 189, 189);
@@ -133,10 +136,16 @@
   vertical-align: middle;
 }
 
+.display_flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* input 이메일 */
 .input_email_id {
   padding: 0 13px;
-  width: 114px;
+  width: 20%;
   height: 40px;
   border-radius: 5px;
   border: 0.2px solid rgb(189, 189, 189);
@@ -145,7 +154,7 @@
 
 .input_email_host {
   padding: 0 13px;
-  width: 153px;
+  width: 30%;
   height: 40px;
   border-radius: 5px;
   border: 0.2px solid rgb(189, 189, 189);
@@ -169,6 +178,7 @@
 .enroll_btn {
   display: inline-block;
   width: 50%;
+  max-width: 600px;
   height: 52px;
   border-radius: 10px;
   background-color: #989cff;
@@ -218,7 +228,7 @@ input[type="password"] {
 
 .input_textarea {
   padding: 8px;
-  width: 417px;
+  width: 100%;
   height: 187px;
   border-radius: 5px;
   border: 0.2px solid rgb(189, 189, 189);
@@ -226,7 +236,8 @@ input[type="password"] {
 }
 
 .private_info_box {
-  width: 80%;
+  width: 100%;
+  max-width: 600px;
   min-width: 390px;
   padding: 5%;
   margin-top: 40px;
@@ -271,7 +282,7 @@ input[type="password"] {
     margin-bottom: 40px;
   }
 
-  .inner_container {
+  /* .inner_container {
     min-width: 375px;
   }
 
@@ -313,5 +324,5 @@ input[type="password"] {
     margin: 0px;
     font-size: 1em;
     word-wrap: break-word;
-  }
+  } */
 }
