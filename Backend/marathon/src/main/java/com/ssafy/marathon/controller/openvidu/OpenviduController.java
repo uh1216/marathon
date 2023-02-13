@@ -51,15 +51,13 @@ public class OpenviduController {
 		String role = jwtTokenProvider.getUserRole(accessToken);
 		System.out.println(role);
 
-		if(
-				!(
-						role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]")
-				)
-		) return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
 
 		SessionProperties properties = SessionProperties.fromJson(params).build();
 		Session session = openvidu.createSession(properties);
 
+		if(session.getConnections().size() == 0 &&
+				!(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]")))
+			return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
 		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
 	}
 
