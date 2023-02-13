@@ -106,7 +106,7 @@ public class OpenviduController {
         ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
         Connection connection = session.createConnection(properties);
 
-        if (session.getConnections().size() == 0 &&
+        if (session.getConnections().size() == 1 &&
                 !(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]"))
         ) {
             return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
