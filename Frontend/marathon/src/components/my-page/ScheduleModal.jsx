@@ -134,6 +134,8 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                       }).then((data) => {
                         //로컬 스토리지에 저장
                         localStorage.setItem("historySeq", data.historySeq);
+                        console.log("이거는 히스토리여");
+                        console.log(localStorage.getItem("historySeq"));
                         window.open(
                           `/treat/${sessionId}`,
                           `Marathon - 화상제활`,

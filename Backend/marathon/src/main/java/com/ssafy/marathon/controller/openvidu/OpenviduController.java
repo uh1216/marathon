@@ -112,13 +112,13 @@ public class OpenviduController {
             return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
         }
 
-//        if (role.equals("[ROLE_DOCTOR]")) {
-//            History history = historyRepository.findBySeq(Long.parseLong((String)historySeq));
-//            history.setVideoUrl(sessionId + "/" + sessionId);
-//            System.out.println("--------------------------------------------------------------------------");
-//            System.out.println(history.getVideoUrl());
-//            historyRepository.save(history);
-//        }
+        if (role.equals("[ROLE_DOCTOR]")) {
+            History history = historyRepository.findBySeq(Long.parseLong((String)historySeq));
+            history.setVideoUrl(sessionId + "/" + sessionId);
+            System.out.println("--------------------------------------------------------------------------");
+            System.out.println(history.getVideoUrl());
+            historyRepository.save(history);
+        }
 
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<");
         System.out.println(session.getConnections().size());
