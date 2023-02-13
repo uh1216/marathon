@@ -77,7 +77,7 @@ public class OpenviduController {
         Session session = openvidu.createSession(properties);
 
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println(session.getConnections().size());
+        System.out.println(session);
         System.out.println(role);
 
         if (session.getConnections().size() == 0 &&
@@ -85,7 +85,6 @@ public class OpenviduController {
         ) {
             return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
         }
-
 
         if (role.equals("[ROLE_DOCTOR]")) {
             History history = historyRepository.findBySeq(Long.parseLong((String) params.get("historySeq")));
@@ -109,11 +108,14 @@ public class OpenviduController {
         @RequestBody(required = false) Map<String, Object> params)
         throws OpenViduJavaClientException, OpenViduHttpException {
         Session session = openvidu.getActiveSession(sessionId);
+        System.out.println(session.getSessionId());
         if (session == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
         Connection connection = session.createConnection(properties);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<");
+        System.out.println(session.getConnections().size());
         return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
     }
 
