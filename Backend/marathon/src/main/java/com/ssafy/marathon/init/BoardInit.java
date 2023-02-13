@@ -4,6 +4,8 @@ import com.ssafy.marathon.db.entity.board.Board;
 import com.ssafy.marathon.db.entity.user.Admin;
 import com.ssafy.marathon.db.repository.AdminRepository;
 import com.ssafy.marathon.db.repository.BoardRepository;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,10 @@ public class BoardInit {
     protected void init() {
         LOGGER.info("[init] 공지사항 생성 시작");
         for (int i = 0; i < 30; i++) {
-            Board board = Board.builder().title(i + "번째 공지").content(i + "번째 내용").build();
+            Board board = Board.builder()
+                .title(i + "번째 공지")
+                .registDate(LocalDateTime.now())
+                .content(i + "번째 내용").build();
             boardRepository.save(board);
         }
         LOGGER.info("[init] 공지사항 완료 ");
