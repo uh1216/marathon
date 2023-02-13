@@ -239,32 +239,32 @@ class VideoCam extends Component {
   }
 
   async createSession(sessionId) {
-    const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions",
-      {
-        customSessionId: sessionId,
-        historySeq: localStorage.getItem("historySeq"),
-      },
-      {
+    let postBody = {
+      custemSessionId: sessionId,
+      historySeq: localStorage.getItem("historySeq"),
+    };
+    const response = await axios
+      .post(APPLICATION_SERVER_URL + "api/sessions", postBody, {
         headers: {
           "Content-Type": "application/json",
           "Access-Token": sessionStorage.getItem("access-token"),
         },
-      }
-    );
-    // .catch((error) => {
-    //   if (error.response.status === 401) {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "",
-    //       text: "권한 없는 접근입니다!",
-    //       confirmButtonText: "닫기",
-    //     });
-    //     window.close();
-    //     window.history.back();
-    //   }
-    // });
-    localStorage.clear("historySeq");
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          Swal.fire({
+            icon: "error",
+            title: "",
+            text: "권한 없는 접근입니다!",
+            confirmButtonText: "닫기",
+          });
+          window.close();
+          window.history.back();
+        }
+      })
+      .finally(() => {
+        localStorage.clear("historySeq");
+      });
     return response.data; // The sessionId
   }
 
