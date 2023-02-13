@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import SelectBox from "components/common/SelectBox";
 import style from "./SignUp.module.css";
 import { useState } from "react";
@@ -178,7 +179,11 @@ export default function SignIn() {
   /** 회원가입 버튼을 누를 때 실행되는 함수 */
   const signUp = () => {
     if (userName === "" || userName === null) {
-      alert("이름을 입력해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이름을 입력해주세요",
+      });
       inputUserName.current.focus();
     } else if (userGender === "none" || userGender === null) {
       alert("성별을 선택해주세요.");
