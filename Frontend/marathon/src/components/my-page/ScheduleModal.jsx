@@ -129,7 +129,7 @@ export default function ScheduleModal({ modalData, setIsModalOpen }) {
                         sessionId: sessionId,
                       }).then((data) => {
                         //로컬 스토리지에 저장
-                        localStorage.setItem("historySeq", data.historySeq);
+                        localStorage.setItem("historySeq", data.data);
                         window.open(
                           `/treat/${sessionId}`,
                           `Marathon - 화상제활`,
