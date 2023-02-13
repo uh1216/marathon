@@ -38,7 +38,7 @@
 .my_bubble_container {
   min-height: 32px;
   height: auto;
-  margin: 10px;
+  margin: 3px 10px;
   display: flex;
   justify-content: flex-end;
 }
@@ -48,8 +48,10 @@
   width: auto;
 }
 .my_bubble_content {
-  text-align: center;
-  width: auto;
+  text-align: left;
+  max-width: 200px;
+  word-wrap: break-word;
+  word-break: keep-all;
   height: auto;
   background-color: #faff00;
   position: relative;
@@ -76,6 +78,7 @@
 /* 너의 말풍선 */
 .your_wrapper {
   display: flex;
+  margin: 5px 0;
 }
 .your_name {
   font-size: 0.8em;
@@ -84,7 +87,7 @@
 .your_bubble_container {
   min-height: 32px;
   height: auto;
-  margin: 10px;
+  margin: 5px 10px;
   display: flex;
   justify-content: flex-start;
 }
@@ -94,8 +97,10 @@
   width: auto;
 }
 .your_bubble_content {
-  text-align: center;
-  width: auto;
+  text-align: left;
+  max-width: 180px;
+  word-wrap: break-word;
+  word-break: keep-all;
   height: auto;
   background-color: #ffffff;
   position: relative;
@@ -119,8 +124,8 @@
   border-right: 15px solid transparent;
 }
 .your_bubble_profile {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 100%;
   object-fit: cover;
 }
@@ -147,4 +152,29 @@
   bottom: 5px;
   font-size: 0.8em;
   color: grey;
+}
+
+/* 닫기 버튼 */
+.close {
+  position: absolute;
+  right: 350px;
+  top: 50%;
+
+  width: 22px;
+  height: 100px;
+
+  margin-top: -50px; /* height의 50% */
+  padding-left: 5px;
+
+  box-shadow: -10px 0 10px 1px rgb(0, 0, 0, 25%);
+  background-color: #fbf9f9;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #a19595;
+  font-weight: 900;
+
+  border-radius: 5px 0 0 5px;
+  cursor: pointer;
 }

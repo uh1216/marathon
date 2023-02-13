@@ -183,3 +183,22 @@ input[type="password"] {
   width: 100px;
   height: 100px;
 }
+
+@media (max-width: 540px) {
+  .user_box {
+    width: 360px;
+    /* padding: 60px 0; */
+  }
+
+  .inner_container,
+  .input_long,
+  .information {
+    width: 320px;
+  }
+  .input_middle {
+    width: 212px;
+  }
+  .input_email_host {
+    width: 159px;
+  }
+}
