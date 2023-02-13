@@ -1,7 +1,6 @@
 package com.ssafy.marathon.controller.openvidu;
 
 import com.ssafy.marathon.config.security.JwtTokenProvider;
-import com.ssafy.marathon.db.entity.treatment.History;
 import com.ssafy.marathon.db.repository.HistoryRepository;
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;
@@ -13,10 +12,8 @@ import io.openvidu.java.client.RecordingMode;
 import io.openvidu.java.client.RecordingProperties;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
-
 import java.util.Map;
 import javax.annotation.PostConstruct;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -25,7 +22,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
@@ -50,11 +46,11 @@ public class OpenviduController {
     public void init() {
         this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
 
-		this.recordingProperties = new RecordingProperties.Builder()
-                .outputMode(OutputMode.COMPOSED)
-                .resolution("560x600")
-                .frameRate(30)
-                .build();
+        this.recordingProperties = new RecordingProperties.Builder()
+            .outputMode(OutputMode.COMPOSED)
+            .resolution("560x600")
+            .frameRate(30)
+            .build();
     }
 
     /**
@@ -62,14 +58,19 @@ public class OpenviduController {
      * @return The Session ID
      */
     @PostMapping("/sessions")
-    public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
+    public ResponseEntity<String> initializeSession(
+        @RequestBody(required = false) Map<String, Object> params)
         throws OpenViduJavaClientException, OpenViduHttpException {
 
+        SessionProperties sessionProperties = SessionProperties.fromJson(params).build();
+
+        System.out.println(sessionProperties);
+
         SessionProperties properties = new SessionProperties.Builder()
-//            .recordingMode(role.equals("[ROLE_ADMIN]") ? RecordingMode.MANUAL : RecordingMode.ALWAYS)
-                .recordingMode(RecordingMode.ALWAYS)
-                .defaultRecordingProperties(recordingProperties)
-                .build();
+            .recordingMode(RecordingMode.ALWAYS)
+            .defaultRecordingProperties(recordingProperties)
+            .build();
+        System.out.println(properties);
         Session session = openvidu.createSession(properties);
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }
@@ -83,7 +84,6 @@ public class OpenviduController {
 //            @RequestBody(required = false) Map<String, Object> params)
 //            throws OpenViduJavaClientException, OpenViduHttpException {
 //
-
 
 //        String role = (accessToken == null) ? "" : jwtTokenProvider.getUserRole(accessToken);
 //        System.out.println(role);
@@ -118,8 +118,8 @@ public class OpenviduController {
      */
     @PostMapping("/sessions/{sessionId}/connections")
     public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
-                                                   @RequestBody(required = false) Map<String, Object> params)
-            throws OpenViduJavaClientException, OpenViduHttpException {
+        @RequestBody(required = false) Map<String, Object> params)
+        throws OpenViduJavaClientException, OpenViduHttpException {
         Session session = openvidu.getActiveSession(sessionId);
         if (session == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
