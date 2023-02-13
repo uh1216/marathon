@@ -260,6 +260,8 @@ class VideoCam extends Component {
   async createToken(sessionId) {
     console.log(sessionId);
     console.log(sessionId);
+    let temp = localStorage.getItem("historySeq");
+    console.log(temp);
 
     const response = await axios
       .post(
