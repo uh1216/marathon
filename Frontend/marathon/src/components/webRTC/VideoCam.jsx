@@ -1,5 +1,6 @@
 import { OpenVidu } from "openvidu-browser";
 import { Component } from "react";
+import Swal from "sweetalert2";
 import axios from "axios";
 import UserVideoComponent from "./UserVideoComponent";
 import style from "./VideoCam.moduel.css";
@@ -237,43 +238,37 @@ class VideoCam extends Component {
     return await this.createToken(sessionId);
   }
 
- async createSession(sessionId) {
-let postBody = {
-	custemSessionId: sessionId,
-	historySeq: localStorage.getItem("historySeq")
-}
-console.log(postBody);
-
-let temp = localStorage.getItem("historySeq");
-console.log(temp);
-    const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions",
-      postBody,
-      {
+  async createSession(sessionId) {
+    let postBody = {
+      custemSessionId: sessionId,
+      historySeq: localStorage.getItem("historySeq"),
+    };
+    const response = await axios
+      .post(APPLICATION_SERVER_URL + "api/sessions", postBody, {
         headers: {
           "Content-Type": "application/json",
           "Access-Token": sessionStorage.getItem("access-token"),
         },
-      }
-    )
-     .catch((error) => {
-       if (error.response.status === 401) {
-         alert("권한 없는 접근입니다!");
-         window.close();
-         window.history.back();
-       }
-     })  .finally(() => {
-    localStorage.clear("historySeq");
-  });
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          Swal.fire({
+            icon: "error",
+            title: "",
+            text: "권한 없는 접근입니다!",
+            confirmButtonText: "닫기",
+          });
+          window.close();
+          window.history.back();
+        }
+      })
+      .finally(() => {
+        localStorage.clear("historySeq");
+      });
     return response.data; // The sessionId
   }
 
   async createToken(sessionId) {
-	console.log(sessionId)
-	console.log(sessionId)
-	console.log(sessionId)
-	console.log(sessionId)
-	console.log(sessionId)
     const response = await axios.post(
       APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
       {},
@@ -287,5 +282,5 @@ console.log(temp);
     return response.data; // The token
   }
 }
-
+//아무튼 뭔가를 존나 추가한다.
 export default VideoCam;

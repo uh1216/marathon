@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 import { $ } from "util/axios";
 import style from "./SelectSchedule.module.css";
 
@@ -24,10 +25,20 @@ export default function SelectSchedule({ name, seq }) {
 
   const { mutate: onPut } = useMutation(res_put, {
     onSuccess: () => {
-      alert("예약 되었습니다.");
+      Swal.fire({
+        icon: "success",
+        title: "",
+        text: "예약 되었습니다.",
+        confirmButtonText: "닫기",
+      });
     },
     onError: () => {
-      alert("실패했습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "실패했습니다.",
+        confirmButtonText: "닫기",
+      });
     },
   });
 

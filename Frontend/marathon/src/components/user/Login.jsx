@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import style from "./Login.module.css";
 import Kakao_login_medium_wide from "img/button/kakao_login_medium_wide.png";
+import Swal from "sweetalert2";
 import Modal from "components/common/Modal";
 import FindId from "./FindId";
 import FindPwd from "./FindPwd";
@@ -51,7 +52,12 @@ export default function Main() {
         }
       })
       .catch(() => {
-        alert("아이디와 비밀번호를 다시 확인해 주세요");
+        Swal.fire({
+          icon: "error",
+          title: "",
+          text: "아이디와 비밀번호를 다시 확인해 주세요",
+          confirmButtonText: "닫기",
+        });
       });
   };
 
@@ -112,7 +118,6 @@ export default function Main() {
 
   // 카카오 회원가입 한 적 없으면 회원가입 해야 됨
   const hiddenKakaoJoin = (response) => {
-    // alert("회원가입 해야됨!");
     console.log(response);
     dispatch(setInfo(response));
     navigate(`/user/sign-up-type/kakao`);

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import { addRecord, resetRecord, setType } from "stores/game.store";
 import commonStyle from "./Game.module.css";
 import SelfStudyIntro from "../SelfStudyIntro";
@@ -186,9 +187,12 @@ export default function NormalMode3() {
 
   useEffect(() => {
     if (isMobile()) {
-      alert(
-        "모바일에서는 지원하지 않는 게임입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!"
-      );
+      Swal.fire({
+        icon: "warning",
+        title: "",
+        text: "모바일에서는 지원하지 않는 게임입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!",
+        confirmButtonText: "닫기",
+      });
       navigate("/self-study-list");
     }
   }, []);

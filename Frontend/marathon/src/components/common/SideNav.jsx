@@ -22,7 +22,7 @@ export default function SideNav(props) {
   const dispatch = useDispatch();
 
   return (
-    <>
+    <div>
       <div
         className={style.side_board}
         style={{ animation: "1s ease-in-out loadEffect2" }}
@@ -60,6 +60,6 @@ export default function SideNav(props) {
         })}
         <hr />
       </div>
-    </>
+    </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 import style from "./NoticeUpdate.module.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { $ } from "util/axios";
@@ -32,12 +33,22 @@ export default function NoticeUpdate() {
   const { mutate: onSubmit } = useMutation(res_put, {
     onSuccess: () => {
       queryClient.invalidateQueries(`[NoticeDetail, ${location.state.seq}]`);
-      alert("성공");
+      Swal.fire({
+        icon: "success",
+        title: "",
+        text: "수정되었습니다.",
+        confirmButtonText: "닫기",
+      });
       navigate(-1);
     },
 
     onError: (err) => {
-      alert("실패");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "실패했습니다.",
+        confirmButtonText: "닫기",
+      });
       navigate(-1);
     },
   });
@@ -45,9 +56,19 @@ export default function NoticeUpdate() {
   // 유효성 검사
   const isValid = () => {
     if (title === "") {
-      alert("제목을 입력해주세요");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "제목을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
     } else if (content === "") {
-      alert("내용을 입력해주세요");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "내용을 입력해주세요.",
+        confirmButtonText: "닫기",
+      });
     } else {
       onSubmit();
     }

@@ -1,4 +1,5 @@
 import style from "./SendMessage.module.css";
+import Swal from "sweetalert2";
 import SelectBox from "components/common/SelectBox";
 import { $ } from "util/axios";
 import { useEffect, useState } from "react";
@@ -41,7 +42,12 @@ export default function SendMessage({
   /** 전송 버튼을 누르면 실행하는 함수 */
   const submitMessage = () => {
     if (receiverSeq === 0 && commuSeq === 0) {
-      alert("받을 사람을 선택해주세요.");
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "받을 사람을 선택해주세요",
+        confirmButtonText: "닫기",
+      });
       return;
     }
     console.log(receiverSeq, content);
@@ -50,7 +56,12 @@ export default function SendMessage({
       content: content,
     })
       .then((res) => {
-        alert("메시지가 성공적으로 전송되었습니다.");
+        Swal.fire({
+          icon: "success",
+          title: "",
+          text: "메시지가 성공적으로 전송되었습니다.",
+          confirmButtonText: "닫기",
+        });
         setModalOpen(false);
       })
       .catch((error) => {
