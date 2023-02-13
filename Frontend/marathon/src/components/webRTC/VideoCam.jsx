@@ -258,8 +258,9 @@ console.log(localStorage.getItem("historySeq"));
          window.close();
          window.history.back();
        }
-     });
+     })  .finally(() => {
     localStorage.clear("historySeq");
+  });
     return response.data; // The sessionId
   }
 
