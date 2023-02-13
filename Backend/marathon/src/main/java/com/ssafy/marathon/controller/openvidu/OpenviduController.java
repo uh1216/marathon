@@ -1,6 +1,15 @@
 package com.ssafy.marathon.controller.openvidu;
 
 import com.ssafy.marathon.config.security.JwtTokenProvider;
+import com.ssafy.marathon.db.entity.treatment.History;
+import com.ssafy.marathon.db.repository.HistoryRepository;
+import com.ssafy.marathon.db.repository.TreatmentRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.OpenVidu;
@@ -29,52 +38,61 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OpenviduController {
 
-    @Value("${OPENVIDU_URL}")
-    private String OPENVIDU_URL;
+	@Value("${OPENVIDU_URL}")
+	private String OPENVIDU_URL;
 
-    @Value("${OPENVIDU_SECRET}")
-    private String OPENVIDU_SECRET;
+	@Value("${OPENVIDU_SECRET}")
+	private String OPENVIDU_SECRET;
 
-    private OpenVidu openvidu;
-    private RecordingProperties recordingProperties;
-    private SessionProperties sessionProperties;
-    private final JwtTokenProvider jwtTokenProvider;
+	private OpenVidu openvidu;
 
-    @PostConstruct
-    public void init() {
-        this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
-    }
+	private final JwtTokenProvider jwtTokenProvider;
+	private final HistoryRepository historyRepository;
 
-    /**
-     * @param params The Session properties
-     * @return The Session ID
-     */
-    @PostMapping("/sessions")
-    public ResponseEntity<String> initializeSession(
-        @RequestBody(required = false) Map<String, Object> params,
-        @RequestHeader("Access-Token") String accessToken)
-        throws OpenViduJavaClientException, OpenViduHttpException {
+	@PostConstruct
+	public void init() {
+		this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
+	}
 
-        this.recordingProperties = new RecordingProperties.Builder()
-            .outputMode(OutputMode.COMPOSED)
-            .resolution("1280x720")
-            .frameRate(30)
-            .build();
+	/**
+	 * @param params The Session properties
+	 * @return The Session ID
+	 */
+	@PostMapping("/sessions")
+	public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params,
+													@RequestHeader("Access-Token") String accessToken)
+			throws OpenViduJavaClientException, OpenViduHttpException {
 
-        String role = jwtTokenProvider.getUserRole(accessToken);
-        System.out.println(role);
+		String role = jwtTokenProvider.getUserRole(accessToken);
+		System.out.println(role);
 
-        SessionProperties sessionProperties = new SessionProperties.Builder()
-            .recordingMode(RecordingMode.ALWAYS)
-            .defaultRecordingProperties(recordingProperties)
-            .build();
-        sessionProperties.recordingMode();
-        Session session = openvidu.createSession(sessionProperties);
-        System.out.println(session.getSessionId());
 
-		if (session.getConnections().size() == 0 &&
-			!(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]"))) {
+		SessionProperties properties = SessionProperties.fromJson(params).build();
+		Session session = openvidu.createSession(properties);
+
+		if(session.getConnections().size() == 0 &&
+				!(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]")))
 			return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
+
+		History history = historyRepository.findBySeq((Long) params.get("historySeq"));
+		history.setVideoUrl(session.getSessionId());
+		historyRepository.save(history);
+
+		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
+	}
+
+	/**
+	 * @param sessionId The Session in which to create the Connection
+	 * @param params    The Connection properties
+	 * @return The Token associated to the Connection
+	 */
+	@PostMapping("/sessions/{sessionId}/connections")
+	public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
+			@RequestBody(required = false) Map<String, Object> params)
+			throws OpenViduJavaClientException, OpenViduHttpException {
+		Session session = openvidu.getActiveSession(sessionId);
+		if (session == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
