@@ -239,11 +239,14 @@ class VideoCam extends Component {
 
   async createSession(sessionId) {
 console.log(localStorage.getItem("historySeq"));
+console.log(localStorage.getItem("historySeq"));
+console.log(localStorage.getItem("historySeq"));
+let temp = localStorage.getItem("historySeq");
     const response = await axios.post(
       APPLICATION_SERVER_URL + "api/sessions",
       {
         customSessionId: sessionId,
-        historySeq: localStorage.getItem("historySeq"),
+        historySeq: temp,
       },
       {
         headers: {
