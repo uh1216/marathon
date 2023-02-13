@@ -47,10 +47,15 @@ public class OpenviduController {
 	public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params,
 													@RequestHeader("Access-Token") String accessToken)
 			throws OpenViduJavaClientException, OpenViduHttpException {
+
 		String role = jwtTokenProvider.getUserRole(accessToken);
 		System.out.println(role);
 
-		if(!(role.equals("ROLE_DOCTOR") || role.equals("ROLE_ADMIN"))) return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+		if(
+				!(
+						role.equals("ROLE_DOCTOR") || role.equals("ROLE_ADMIN")
+				)
+		) return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
 
 		SessionProperties properties = SessionProperties.fromJson(params).build();
 		Session session = openvidu.createSession(properties);
