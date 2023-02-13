@@ -84,22 +84,6 @@ public class OpenviduController {
 		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
 	}
 
-	/**
-	 * @param sessionId The Session in which to create the Connection
-	 * @param params    The Connection properties
-	 * @return The Token associated to the Connection
-	 */
-	@PostMapping("/sessions/{sessionId}/connections")
-	public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
-			@RequestBody(required = false) Map<String, Object> params)
-			throws OpenViduJavaClientException, OpenViduHttpException {
-		Session session = openvidu.getActiveSession(sessionId);
-		if (session == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-
-        return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
-    }
 
     /**
      * @param sessionId The Session in which to create the Connection
