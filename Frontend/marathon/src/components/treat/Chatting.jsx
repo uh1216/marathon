@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import style from "./Chatting.module.css";
 import { v4 as uuidv4 } from "uuid";
+import { useEffect } from "react";
 
 export default function Chatting({
   stompClient,
@@ -11,6 +12,7 @@ export default function Chatting({
   anonymousId,
 }) {
   const [message, setMessage] = useState("");
+  const messageBoxRef = useRef();
 
   /** 전송 클릭 시 실행 */
   const submit = () => {
@@ -44,6 +46,17 @@ export default function Chatting({
     setMessage("");
   };
 
+  /** 스크롤을 맨 밑으로 고정 */
+  const scrollToBottom = () => {
+    if (messageBoxRef.current) {
+      messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatList]);
+
   return (
     <div className={style.wrapper}>
       <div
@@ -54,7 +67,7 @@ export default function Chatting({
       >
         〉
       </div>
-      <div className={style.chatting_container}>
+      <div className={style.chatting_container} ref={messageBoxRef}>
         {chatList.map((item) =>
           item.hasOwnProperty("senderImg") ? (
             <div className={style.your_wrapper} key={uuidv4()}>
