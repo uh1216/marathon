@@ -16,6 +16,7 @@ import SelfStudy from "pages/SelfStudy";
 import AuthRoute from "util/AuthRoute";
 import Consult from "pages/Consult";
 import Treat from "pages/Treat";
+import { useEffect, useRef } from "react";
 
 function App() {
   return (

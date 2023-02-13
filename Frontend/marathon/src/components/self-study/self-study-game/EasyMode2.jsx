@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRecord, resetRecord } from "stores/game.store";
 import commonStyle from "./Game.module.css";
@@ -61,6 +61,7 @@ export default function EasyMode1() {
       answer: "닭",
     },
   ];
+  const refClickSound = useRef();
 
   /** 인트로 단계에서 어떤 문제가 나올지 10문제를 저장한 배열*/
   const [quiz, setQuiz] = useState([]);
@@ -76,6 +77,11 @@ export default function EasyMode1() {
 
   /** 선택이 맞았는지 틀렸는지를 기록*/
   const [stageResult, setStageResult] = useState("");
+
+  /** 클릭 시 효과음 */
+  const playClickSound = () => {
+    refClickSound.current.play();
+  };
 
   /** 인트로 단계에서 어떤 문제를 고를지 세팅*/
   const craeteQuiz = () => {
@@ -262,6 +268,7 @@ export default function EasyMode1() {
   } else if (gameState.isReady == 1) {
     return (
       <>
+        <audio ref={refClickSound} src={clickSound} />
         <div className={commonStyle.stage}>{gameState.stage} / 10</div>
         <div className={commonStyle.title}>
           그림카드를 보고 알맞은 단어를 골라주세요
@@ -299,6 +306,7 @@ export default function EasyMode1() {
               className={style.cb}
               onClick={() => {
                 clickChoice(0);
+                playClickSound();
               }}
             >
               <div className={selectState[0] ? style.arrow : null} />
@@ -311,6 +319,7 @@ export default function EasyMode1() {
               className={style.cb}
               onClick={() => {
                 clickChoice(1);
+                playClickSound();
               }}
             >
               <div className={selectState[1] ? style.arrow : null} />
@@ -323,6 +332,7 @@ export default function EasyMode1() {
               className={style.cb}
               onClick={() => {
                 clickChoice(2);
+                playClickSound();
               }}
             >
               <div className={selectState[2] ? style.arrow : null} />
@@ -335,6 +345,7 @@ export default function EasyMode1() {
               className={style.cb}
               onClick={() => {
                 clickChoice(3);
+                playClickSound();
               }}
             >
               <div className={selectState[3] ? style.arrow : null} />
@@ -347,6 +358,7 @@ export default function EasyMode1() {
               className={style.cb}
               onClick={() => {
                 clickChoice(4);
+                playClickSound();
               }}
             >
               <div className={selectState[4] ? style.arrow : null} />
