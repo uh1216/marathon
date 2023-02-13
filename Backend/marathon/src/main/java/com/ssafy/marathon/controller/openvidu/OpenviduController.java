@@ -78,22 +78,6 @@ public class OpenviduController {
 
         Session session = openvidu.createSession(properties);
 
-
-//        if (session.getConnections().size() == 0 &&
-//                !(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]"))
-//        ) {
-//            return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);
-//        }
-//
-//        if (role.equals("[ROLE_DOCTOR]")) {
-//            History history = historyRepository.findBySeq(Long.parseLong((String) params.get("historySeq")));
-//            history.setVideoUrl(session.getSessionId() + "/" + session.getSessionId());
-//            System.out.println("--------------------------------------------------------------------------");
-//            System.out.println(history.getVideoUrl());
-//            historyRepository.save(history);
-//        }
-
-
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }
 
@@ -122,7 +106,7 @@ public class OpenviduController {
         ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
         Connection connection = session.createConnection(properties);
 
-        if (session.getConnections().size() == 1 &&
+        if (session.getConnections().size() == 0 &&
                 !(role.equals("[ROLE_DOCTOR]") || role.equals("[ROLE_ADMIN]"))
         ) {
             return new ResponseEntity<>("방을 생성할 권한 없음", HttpStatus.UNAUTHORIZED);

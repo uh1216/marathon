@@ -274,9 +274,13 @@ class VideoCam extends Component {
             title: "",
             text: "권한 없는 접근입니다!",
             confirmButtonText: "닫기",
-          });
-          window.close();
-          window.history.back();
+          })
+            .then(() => {
+              setIsIn(false);
+              window.close();
+              window.history.back();
+            })
+            .catch((error) => console.log(error));
         }
       })
       .finally(() => {
