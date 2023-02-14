@@ -633,7 +633,8 @@ export default function UserInformation() {
                     />
                   </div>
                 </>
-              ) : state.loginUser.userRole === "doctor" ? (
+              ) : null}
+              {state.loginUser.userRole === "doctor" ? (
                 <>
                   <div className={style.input_div}>
                     <label
