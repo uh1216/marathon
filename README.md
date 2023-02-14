@@ -211,12 +211,12 @@
 
 ## 👤 저자
 
-* 김동연 - Sehoon Kim - kimsae123@naver.com
+* 김동연 - DongYeon Kim - eastflow815@gmail.com
 * 김정수 - jumgsu Kim - kjskjs356@gmail.com
 * 윤호산 - Hosan Yoon - yoonhosan@naver.com
-* 이연학 - Sunsoo Lee - tjstn921030@gmail.com
-* 조웅희 - Yongjoon Seo - koreakkrea12@naver.com
-* 최준아 - Yongjoon Seo - koreakkrea12@naver.com
+* 이연학 - YeonHak Lee  - dldusgkr788@gmail.com
+* 조웅희 - Unghui Cho - paul9512@gmail.com
+* 최준아 - Juna Choi - jn307742@gmail.com
 
 
 
@@ -242,6 +242,3 @@ limitations under the License.
 
 ## 📚  참고
 
-* https://gist.github.com/taeukme/e004e01963190615d308a16bcd6e6040
-
-* https://github.com/naver/egjs-flicking
