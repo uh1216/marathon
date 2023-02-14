@@ -15,7 +15,7 @@ export default function NoticeBoard() {
   /** selectbox 옵션 */
   const optionSearch = [
     { value: "title", name: "제목" },
-    { value: "conetent", name: "내용" },
+    { value: "content", name: "내용" },
     { value: "title_content", name: "제목 + 내용" },
   ];
   const [searchOption, setSearchOption] = useState(optionSearch[0]);

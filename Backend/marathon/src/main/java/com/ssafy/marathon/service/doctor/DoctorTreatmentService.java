@@ -24,7 +24,9 @@ public interface DoctorTreatmentService {
 
     List<DayOfTreatmentResDto> getTreatments(Long doctorSeq);
 
-    void deleteTreatment(Long treatmentSeq);
+    void cancelTreatment(Long treatmentSeq);
 
     boolean makeAlarm(Long treatmentSeq, String sessionId, Long doctorSeq);
+
+    void deleteTreatment(Long treatmentSeq);
 }

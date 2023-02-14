@@ -193,7 +193,7 @@ export default function UserInformation() {
         if (state.loginUser.userRole === "patient") {
           setUserFirstResponder(data.mainPhone.replaceAll("-", ""));
           setUserFirstResponderRelationship(data.mainRelationship);
-          setUserSecondResponder(data.mainPhone.replaceAll("-", ""));
+          setUserSecondResponder(data.subPhone.replaceAll("-", ""));
           setUserSecondResponderRelationship(data.subRelationship);
         } else if (state.loginUser.userRole === "doctor") {
           setUserSelfIntroduce(data.introduce ? data.introduce : "");
