@@ -454,10 +454,15 @@ export default function ConsultEnroll() {
           >
             신청절차
           </div>
-          <h5 style={{ animation: "0.7s ease-in-out loadEffect1" }}>
-            먼저 상담을 통해서 환자의 상태와 원격 재활이 가능한 지 논의해
-            보세요!
-          </h5>
+          <div
+            style={{
+              fontSize: "1.1em",
+              animation: "0.7s ease-in-out loadEffect1",
+            }}
+          >
+            &nbsp;&nbsp; 먼저 상담을 통해서 환자의 상태와 원격 재활이 가능한 지
+            논의해 보세요!
+          </div>
           <div className={style.icon_contain_box}>
             <div style={{ animation: "1s ease-in-out loadEffect2" }}>
               <FontAwesomeIcon className={style.icon_box} icon={faFileLines} />

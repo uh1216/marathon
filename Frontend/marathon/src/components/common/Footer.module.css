@@ -1,4 +1,5 @@
 .footer {
+  width: 100%;
   max-width: 1600px;
   height: 200px;
   margin-left: auto;
@@ -112,7 +113,7 @@
 @media screen and (max-width: 768px) {
   .footer {
     height: auto;
-    min-width: 365px;
+    /* min-width: 365px; */
   }
 
   .inner_footer {

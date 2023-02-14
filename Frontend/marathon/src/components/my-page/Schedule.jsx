@@ -79,11 +79,14 @@ export default function Schedule() {
                 nowPage > 0 ? setNowPage(nowPage - 1) : setNowPage(nowPage);
               }}
             >
-              ◁이전
+              〈&nbsp; 이전
             </button>
-            {calDate(0).getFullYear()}.{calDate(0).getMonth() + 1}.
-            {calDate(0).getDate()} ~ {calDate(6).getFullYear()}.
-            {calDate(6).getMonth() + 1}.{calDate(6).getDate()}
+            <span className={style.date}>
+              {calDate(0).getFullYear()}.{calDate(0).getMonth() + 1}.
+              {calDate(0).getDate()} ~ {calDate(6).getFullYear()}.
+              {calDate(6).getMonth() + 1}.{calDate(6).getDate()}
+            </span>
+
             <button
               className={
                 nowPage !== 2
@@ -95,7 +98,7 @@ export default function Schedule() {
                 nowPage < 2 ? setNowPage(nowPage + 1) : setNowPage(nowPage);
               }}
             >
-              이후▷
+              이후 &nbsp;〉
             </button>
           </div>
           <div style={{ flexGrow: "1" }} />
@@ -308,7 +311,7 @@ export default function Schedule() {
           </div>
         </div>
         <div className={style.calender_div}>
-          <div className={style.calender_top_div} style={{ color: "blue" }}>
+          <div className={style.calender_top_div} style={{ color: "#3080f8" }}>
             {calDate(5).getDate()}일 (토)
           </div>
           <div className={style.calender_bottom_div}>
@@ -349,7 +352,7 @@ export default function Schedule() {
           </div>
         </div>
         <div className={style.calender_div}>
-          <div className={style.calender_top_div} style={{ color: "red" }}>
+          <div className={style.calender_top_div} style={{ color: "#ff6969" }}>
             {calDate(6).getDate()}일 (일)
           </div>
           <div

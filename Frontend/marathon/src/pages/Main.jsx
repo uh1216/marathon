@@ -81,7 +81,7 @@ export default function Main() {
             </div>{" "}
           </Fade>
           <div style={{ clear: "both" }} />
-          <Zoom>
+          <Fade bottom>
             <div className={style.main_img_board}>
               <img
                 className={style.card2 + " " + style.fl}
@@ -103,10 +103,10 @@ export default function Main() {
                 </div>
               </div>
             </div>
-          </Zoom>
+          </Fade>
 
           <div style={{ clear: "both" }} />
-          <Zoom>
+          <Fade bottom>
             <div className={style.main_img_board}>
               <img
                 className={style.card2 + " " + style.fr}
@@ -128,26 +128,24 @@ export default function Main() {
                 </div>
               </div>
             </div>
-          </Zoom>
+          </Fade>
 
           <div style={{ clear: "both" }} />
           <hr style={{ fontWeight: "bold" }} />
-          <Jello>
-            <div className={style.last_box}>
-              <h3 style={{ color: "blue" }}>재활의 시작에서 사회복귀 까지</h3>
-              <h3>성공적인 소통체계를 제공합니다</h3>
-              <button
-                className={style.button}
-                style={{ marginTop: "20px" }}
-                onClick={() => {
-                  navigate("/consult-enroll");
-                  window.scrollTo(0, 0);
-                }}
-              >
-                무료 상담 신청하기
-              </button>
-            </div>
-          </Jello>
+          <div className={style.last_box}>
+            <h3 style={{ color: "blue" }}>재활의 시작에서 사회복귀 까지</h3>
+            <h3>성공적인 소통체계를 제공합니다</h3>
+            <button
+              className={style.button}
+              style={{ marginTop: "20px" }}
+              onClick={() => {
+                navigate("/consult-enroll");
+                window.scrollTo(0, 0);
+              }}
+            >
+              무료 상담 신청하기
+            </button>
+          </div>
         </div>
       </div>
     </>
