@@ -133,4 +133,8 @@
   .video {
     margin-bottom: 30px;
   }
+
+  .sub_content {
+    font-size: 0.8em;
+  }
 }

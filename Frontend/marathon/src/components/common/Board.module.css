@@ -102,6 +102,19 @@
 
   .header_container3_title {
     height: 22px;
-    font-size: 15px;
+    font-size: 14px;
+  }
+
+  .content_container3 {
+    font-size: 0.7em;
+  }
+
+  .content_container4 {
+    font-size: 0.75em;
+  }
+
+  .button3 {
+    font-size: 0.95em;
+    padding: 6px 8px;
   }
 }

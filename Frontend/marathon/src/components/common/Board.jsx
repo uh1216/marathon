@@ -121,7 +121,9 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
             return (
               <div
                 key={content.historySeq}
-                className={style.content_container3}
+                className={
+                  style.content_container3 + " " + style.content_container4
+                }
                 style={{ gridTemplateColumns: grid }}
               >
                 <div>{content.patientName} 님</div>
@@ -134,7 +136,7 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
                 <div>{content.patientPhone}</div>
                 <div>
                   <button
-                    className={style.button + " " + style.button2}
+                    className={style.button + " " + style.button3}
                     onClick={() => {
                       navigate(
                         `/mypage/treatment-detail/${content.historySeq}`
