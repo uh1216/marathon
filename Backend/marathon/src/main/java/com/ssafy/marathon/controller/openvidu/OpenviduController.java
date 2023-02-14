@@ -52,7 +52,7 @@ public class OpenviduController {
 
         this.recordingProperties = new RecordingProperties.Builder()
                 .outputMode(OutputMode.COMPOSED)
-                .resolution("560x600")
+                .resolution("560x400")
                 .frameRate(30)
                 .build();
     }
