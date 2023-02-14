@@ -9,6 +9,7 @@
   transition: 0.25s;
   background-color: rgb(243, 243, 243);
   color: #112529;
+  height: 35px;
 }
 
 .button:hover {
@@ -16,12 +17,32 @@
   color: white;
 }
 
+.input_box {
+  display: inline-block;
+  max-width: 240px;
+  min-width: 120px;
+  width: 50%;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.top_head {
+  margin-top: 6px;
+  font-weight: bold;
+  display: inline-block;
+}
+
 @media screen and (max-width: 768px) {
   .top_head {
-    font-size: 1.1em;
+    font-size: 1em;
   }
 
   .button {
-    padding: 4px 20px;
+    padding: 4px 18px;
+    font-size: 0.9em;
+  }
+
+  .input_box {
+    width: 50%;
   }
 }

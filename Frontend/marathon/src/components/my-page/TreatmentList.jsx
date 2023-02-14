@@ -40,34 +40,21 @@ export default function TreatmentList() {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
             height: "48px",
           }}
         >
-          <h3
-            className={style.top_head}
-            style={{
-              marginTop: "6px",
-              fontWeight: "bold",
-              display: "inline-block",
-            }}
+          <h3 className={style.top_head}>수업 기록</h3>
+          <div style={{ flexGrow: "1" }} />
+          <div
+            style={{ display: "flex", justifyContent: "right", width: "60%" }}
           >
-            수업 기록
-          </h3>
-          <div>
-            <div
-              style={{
-                display: "inline-block",
-                width: "200px",
-                height: "20px",
-                marginRight: "8px",
-              }}
-            >
+            <div className={style.input_box}>
               <InputGroup className="mb-3">
                 <Form.Control
                   placeholder="환자명 검색"
                   aria-label="Username"
                   aria-describedby="basic-addon1"
+                  className={style.input_input}
                   onChange={(e) => {
                     setInput(e.target.value);
                   }}
