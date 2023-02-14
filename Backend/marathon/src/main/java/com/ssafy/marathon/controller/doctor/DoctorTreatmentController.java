@@ -90,7 +90,7 @@ public class DoctorTreatmentController {
 
         long historySeq =  doctorHistoryService.getHistorySeq(treatmentSeq);
 
-        doctorTreatmentService.cancelTreatment(treatmentSeq);
+        doctorTreatmentService.deleteTreatment(treatmentSeq);
 
         return new ResponseEntity<Long>(historySeq, HttpStatus.OK);
     }
