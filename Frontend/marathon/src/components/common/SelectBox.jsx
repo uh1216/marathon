@@ -1,5 +1,6 @@
 import style from "./SelectBox.module.css";
 import React, { forwardRef, useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * 부모 컴포넌트에서는 다음과 같이 사용하기 (참고)
@@ -24,16 +25,18 @@ const SelectBox = forwardRef((props, ref) => {
 
   return (
     <select
+      key={props.defaultValue}
       className={style.select_box}
       onChange={handleChange}
       style={{ width: props.width }}
       ref={ref}
+      defaultValue={props.defaultValue}
     >
       {props.options.map((option, idx) => (
         <option
-          key={idx}
+          key={uuidv4()}
           value={option.value}
-          defaultValue={props.defaultValue === option.value}
+          // selected={props.defaultValue === option.value}
           disabled={props.hasOwnProperty("readonly")}
         >
           {option.name}

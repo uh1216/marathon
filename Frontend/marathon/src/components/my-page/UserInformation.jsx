@@ -389,7 +389,7 @@ export default function UserInformation() {
       } else if (state.loginUser.userRole === "doctor") {
         userInfo.introduce = userSelfIntroduce;
       }
-
+      console.log(userInfo);
       if (imgFile) {
         const formData = new FormData();
         formData.append("image", imgFile);
