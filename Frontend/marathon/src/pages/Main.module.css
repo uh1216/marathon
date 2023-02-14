@@ -70,7 +70,7 @@
   margin-bottom: 40px;
 }
 .cards {
-  margin: 200px 0;
+  margin: 180px 0;
   display: flex;
   justify-content: center;
 }
@@ -235,6 +235,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 110px 0;
   }
 
   .card2,

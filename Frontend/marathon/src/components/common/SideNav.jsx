@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { changeNowSideNav } from "stores/toggle.store";
 import { userLogout } from "stores/user.store";
+import "animate.css";
 
 /**
  * 부모 컴포넌트에서는 다음과 같이 사용하기 (참고)
@@ -38,7 +39,11 @@ export default function SideNav(props) {
                 navigate(props.urls[i]);
               }}
             >
-              ▶ {data}
+              {" "}
+              <spen class="animate__animated animate__bounceInLeft">
+                ▶
+              </spen>{" "}
+              {data}
             </p>
           ) : (
             <p

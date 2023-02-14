@@ -73,7 +73,7 @@ export default function ServicePartner() {
         <div className={style.partner_color_board}>
           <h4 style={{ fontWeight: "bold" }}>
             💡 현재 20명이 넘는 재활사 분들이
-            <span style={{ color: "#52A068" }}>말</span>아톤과 함께하고
+            <span style={{ color: "#52A068" }}> 말</span>아톤과 함께하고
             계십니다!
           </h4>
           <p style={{ marginTop: "40px" }}>
