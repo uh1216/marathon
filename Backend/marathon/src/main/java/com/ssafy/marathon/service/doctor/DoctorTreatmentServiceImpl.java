@@ -143,7 +143,7 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
     }
 
     @Override
-    public void deleteTreatment(Long treatmentSeq) {
+    public void cancelTreatment(Long treatmentSeq) {
         Optional<Treatment> findTreatment = treatmentRepository.findById(treatmentSeq);
         Treatment treatment = findTreatment.orElseThrow();
 
@@ -179,6 +179,13 @@ public class DoctorTreatmentServiceImpl implements DoctorTreatmentService {
                 .dateTime(LocalDateTime.now())
                 .build();
         return communicationRepository.save(alarm) != null;
+    }
+
+    @Override
+    public void deleteTreatment(Long treatmentSeq) {
+        Optional<Treatment> findTreatment = treatmentRepository.findById(treatmentSeq);
+        Treatment treatment = findTreatment.orElseThrow();
+        treatmentRepository.delete(treatment);
     }
 
 

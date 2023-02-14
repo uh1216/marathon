@@ -72,7 +72,7 @@ public class DoctorTreatmentController {
 
     @DeleteMapping("/{treatmentSeq}")
     public void deleteTreatment(@PathVariable Long treatmentSeq) {
-        doctorTreatmentService.deleteTreatment(treatmentSeq);
+        doctorTreatmentService.cancelTreatment(treatmentSeq);
     }
 
     @PostMapping("/alarm")
