@@ -72,7 +72,7 @@ public class DoctorTreatmentController {
 
     @DeleteMapping("/{treatmentSeq}")
     public void deleteTreatment(@PathVariable Long treatmentSeq) {
-        doctorTreatmentService.deleteTreatment(treatmentSeq);
+        doctorTreatmentService.cancelTreatment(treatmentSeq);
     }
 
     @PostMapping("/alarm")
@@ -90,7 +90,7 @@ public class DoctorTreatmentController {
 
         long historySeq =  doctorHistoryService.getHistorySeq(treatmentSeq);
 
-        doctorTreatmentService.deleteTreatment(treatmentSeq);
+        doctorTreatmentService.cancelTreatment(treatmentSeq);
 
         return new ResponseEntity<Long>(historySeq, HttpStatus.OK);
     }
