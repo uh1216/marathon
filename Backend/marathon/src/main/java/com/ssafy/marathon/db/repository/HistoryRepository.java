@@ -20,8 +20,7 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     List<History> findDistinctByDoctor_SeqAndDateBetween(Long doctorSeq, LocalDate start,
         LocalDate end);
 
-    List<History> findDistinctByPatient_SeqAndDateBetween(Long patientSeq, LocalDate start,
-        LocalDate end);
+    List<History> findDistinctByPatient_Seq(Long patientSeq);
 
     List<History> findAllByPatient_Seq(Long patientSeq);
 
