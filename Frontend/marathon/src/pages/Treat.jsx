@@ -551,10 +551,12 @@ export default function Treat() {
               confirmButtonText: "확인",
               cancelButtonText: "취소",
             })
-              .then(() => {
-                setIsIn(false);
-                window.close();
-                window.history.back();
+              .then((result) => {
+                if (result.isConfirmed) {
+                  setIsIn(false);
+                  window.close();
+                  window.history.back();
+                }
               })
               .catch((error) => console.log(error));
           }}
