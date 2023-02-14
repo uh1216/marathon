@@ -82,7 +82,23 @@
 }
 
 @media screen and (max-width: 420px) {
+  .main_container {
+    height: 100%;
+  }
+
   .title_container h2 {
     font-size: 1.4em;
+  }
+
+  .game_container {
+    min-height: 0;
+  }
+
+  .btn_difficulty {
+    font-size: 0.8em;
+  }
+
+  .btn_selected {
+    font-size: 0.8em;
   }
 }
