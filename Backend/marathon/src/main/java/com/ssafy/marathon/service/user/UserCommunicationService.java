@@ -113,7 +113,7 @@ public class UserCommunicationService {
                     .build()).collect(Collectors.toList());
         } else if (userRole.equals(doctor)) {
             userResDtoList = treatmentRepository.findDistinctByDoctor_SeqAndDateBetween(userSeq,
-                    LocalDate.now(), LocalDate.now().minusYears(1))
+                    LocalDate.now().plusDays(1), LocalDate.now().minusYears(1))
                 .stream()
                 .map(treatment -> UserResDto.builder()
                     .seq(treatment.getPatient().getSeq())
@@ -124,7 +124,7 @@ public class UserCommunicationService {
                 .collect(Collectors.toList());
 
             userResDtoList.addAll(historyRepository.findDistinctByDoctor_SeqAndDateBetween(userSeq,
-                    LocalDate.now(), LocalDate.now().minusYears(1))
+                    LocalDate.now().plusDays(1), LocalDate.now().minusYears(1))
                 .stream()
                 .map(history -> UserResDto.builder()
                     .seq(history.getPatient().getSeq())
@@ -135,7 +135,7 @@ public class UserCommunicationService {
                 .collect(Collectors.toList()));
         } else {
             userResDtoList = treatmentRepository.findDistinctByPatient_SeqAndDateBetween(userSeq,
-                    LocalDate.now(), LocalDate.now().minusYears(1))
+                    LocalDate.now().plusDays(1), LocalDate.now().minusYears(1))
                 .stream()
                 .map(treatment -> UserResDto.builder()
                     .seq(treatment.getDoctor().getSeq())
@@ -146,7 +146,7 @@ public class UserCommunicationService {
                 .collect(Collectors.toList());
 
             userResDtoList.addAll(historyRepository.findDistinctByPatient_SeqAndDateBetween(userSeq,
-                    LocalDate.now(), LocalDate.now().minusYears(1))
+                    LocalDate.now().plusDays(1), LocalDate.now().minusYears(1))
                 .stream()
                 .map(history -> UserResDto.builder()
                     .seq(history.getDoctor().getSeq())
