@@ -275,10 +275,14 @@ export default function Header() {
                 </span>
               </div>
               <li>
-                {state.loginUser.userName}
-                <span style={{ color: "gray" }} onClick={() => {}}>
-                  님 환영합니다
-                </span>
+                <div
+                  onClick={() => {
+                    navigate("/mypage/information");
+                  }}
+                >
+                  {state.loginUser.userName}
+                  <span style={{ color: "gray" }}>님 환영합니다</span>
+                </div>
                 {state.loginUser.userRole === "patient" && (
                   <div className={style.sub_menu + " " + style.sub_menu_common}>
                     <dl
