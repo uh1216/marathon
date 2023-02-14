@@ -320,4 +320,8 @@ input[type="password"] {
   .welcome {
     display: none;
   }
+
+  .input_middle {
+    width: 100%;
+  }
 }
