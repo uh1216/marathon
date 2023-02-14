@@ -18,6 +18,10 @@
   margin-left: 20px;
 }
 
+.profile {
+  object-fit: cover;
+}
+
 .profile_left {
   display: flex;
   flex-direction: column;

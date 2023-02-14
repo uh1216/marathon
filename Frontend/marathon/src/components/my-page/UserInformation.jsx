@@ -218,6 +218,21 @@ export default function UserInformation() {
       .then((result) => {
         if (result.isConfirmed) {
           $.delete(`/user-sign/withdraw`).then(() => {
+            //카카오 - 어플리케이션 연결 끊기
+            if (window.Kakao.Auth.getAccessToken()) {
+              console.log("카카오 계정 회원탈퇴 시키기");
+              window.Kakao.API.request({
+                url: "/v1/user/unlink",
+                success: (response) => {
+                  console.log(response);
+                },
+                fail: (error) => {
+                  console.log(error);
+                },
+              });
+              window.Kakao.Auth.setAccessToken(undefined);
+            }
+
             Swal.fire({
               icon: "success",
               text: "정상적으로 회원탈퇴 되었습니다.",
@@ -375,11 +390,14 @@ export default function UserInformation() {
       }
 
       const formData = new FormData();
-      formData.append("image", imgFile);
+      if (imgFile) formData.append("image", imgFile);
+      else formData.append("image", "");
+      console.log(imgFile);
       formData.append(
         `${state.loginUser.userRole}`,
         new Blob([JSON.stringify(userInfo)], { type: "application/json" })
       );
+      console.log(userInfo);
 
       $.put(`/${state.loginUser.userRole}-sign/modify`, formData)
         .then((res) => {
