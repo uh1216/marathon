@@ -134,8 +134,7 @@ public class UserCommunicationService {
                     .build())
                 .collect(Collectors.toList()));
         } else {
-            userResDtoList = treatmentRepository.findDistinctByPatient_SeqAndDateBetween(userSeq,
-                    LocalDate.now().plusDays(1), LocalDate.now().minusYears(1))
+            userResDtoList = treatmentRepository.findDistinctByPatient_Seq(userSeq)
                 .stream()
                 .map(treatment -> UserResDto.builder()
                     .seq(treatment.getDoctor().getSeq())
@@ -145,8 +144,7 @@ public class UserCommunicationService {
                     .build())
                 .collect(Collectors.toList());
 
-            userResDtoList.addAll(historyRepository.findDistinctByPatient_SeqAndDateBetween(userSeq,
-                    LocalDate.now().plusDays(1), LocalDate.now().minusYears(1))
+            userResDtoList.addAll(historyRepository.findDistinctByPatient_Seq(userSeq)
                 .stream()
                 .map(history -> UserResDto.builder()
                     .seq(history.getDoctor().getSeq())

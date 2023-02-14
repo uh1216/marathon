@@ -23,10 +23,10 @@ export default function NoticeBoard() {
   const [searchContent, setSearchContent] = useState("");
 
   const onChange = (e) => {
-    if (searchOption.value === "title") {
+    if (searchOption === "title") {
       setSearchTitle(e.target.value);
       setSearchContent("");
-    } else if (searchOption.value === "content") {
+    } else if (searchOption === "content") {
       setSearchTitle("");
       setSearchContent(e.target.value);
     } else {
@@ -46,7 +46,7 @@ export default function NoticeBoard() {
   /** 공지사항 접속시 최초 get 호출 */
   const { isLoading, data, refetch } = useQuery(["NoticeBoard", pageNum], () =>
     $.get(
-      `/user-board/list?pageNum=${pageNum}&contentCondition=${searchTitle}&titleCondition=${searchContent}`
+      `/user-board/list?pageNum=${pageNum}&contentCondition=${searchContent}&titleCondition=${searchTitle}`
     )
   );
 
