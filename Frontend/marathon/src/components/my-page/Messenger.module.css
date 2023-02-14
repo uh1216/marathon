@@ -1,5 +1,6 @@
 .message_box {
   width: 100%;
+  min-height: 130px;
   height: auto;
 
   padding: 20px;
@@ -19,6 +20,9 @@
 }
 
 .content_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 70%;
 }
 
