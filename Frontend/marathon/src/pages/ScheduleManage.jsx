@@ -213,21 +213,21 @@ export default function ScheduleManage() {
       {!isLoading && (
         <div className={style.container}>
           <div className={style.inner_container}>
-            <div className={style.title}>
-              <span className={style.title_name}>
-                {state.loginUser.userName}{" "}
-              </span>
-              <span className={style.title_position}>선생님</span>
-              <span className={style.title_schedule}>수업 스케쥴</span>
-            </div>
             <div className={style.content}>
+              <div className={style.title}>
+                <span className={style.title_name}>
+                  {state.loginUser.userName}{" "}
+                </span>
+                <span className={style.title_position}>선생님</span>
+                <span className={style.title_schedule}>수업 스케쥴</span>
+              </div>
               <div className={style.date_header}>
                 <button
                   className={cnt === 0 ? style.button_disable : style.button}
                   onClick={prevWeek}
                   disabled={cnt === 0 ? true : false}
                 >
-                  ◁ 이전
+                  〈&nbsp; 이전
                 </button>
                 <span className={style.date_text}>
                   {thisYear(0)}.{thisMonth(0)}.{thisDay(0)} ~ {thisYear(6)}.
@@ -238,13 +238,13 @@ export default function ScheduleManage() {
                   onClick={nextWeek}
                   disabled={cnt === 2 ? true : false}
                 >
-                  다음 ▷
+                  다음 &nbsp;〉
                 </button>
               </div>
-              <div className={style.date_item}>
+              <div className={style.date_items}>
                 <div className={style.day_start}>
                   <div className={style.day_header}>
-                    {thisDay(0)} &#40;월&#41;
+                    {thisDay(0)}일 &#40;월&#41;
                   </div>
                   <div className={style.day_item}>
                     {checkSchedule(totalThisDate(0))}
@@ -252,7 +252,7 @@ export default function ScheduleManage() {
                 </div>
                 <div className={style.day}>
                   <div className={style.day_header}>
-                    {thisDay(1)} &#40;화&#41;
+                    {thisDay(1)}일 &#40;화&#41;
                   </div>
                   <div className={style.day_item}>
                     {checkSchedule(totalThisDate(1))}
@@ -260,7 +260,7 @@ export default function ScheduleManage() {
                 </div>
                 <div className={style.day}>
                   <div className={style.day_header}>
-                    {thisDay(2)} &#40;수&#41;
+                    {thisDay(2)}일 &#40;수&#41;
                   </div>
                   <div className={style.day_item}>
                     {checkSchedule(totalThisDate(2))}
@@ -268,7 +268,7 @@ export default function ScheduleManage() {
                 </div>
                 <div className={style.day}>
                   <div className={style.day_header}>
-                    {thisDay(3)} &#40;목&#41;
+                    {thisDay(3)}일 &#40;목&#41;
                   </div>
                   <div className={style.day_item}>
                     {checkSchedule(totalThisDate(3))}
@@ -276,23 +276,29 @@ export default function ScheduleManage() {
                 </div>
                 <div className={style.day}>
                   <div className={style.day_header}>
-                    {thisDay(4)} &#40;금&#41;
+                    {thisDay(4)}일 &#40;금&#41;
                   </div>
                   <div className={style.day_item}>
                     {checkSchedule(totalThisDate(4))}
                   </div>
                 </div>
                 <div className={style.day}>
-                  <div className={style.day_header} style={{ color: "blue" }}>
-                    {thisDay(5)} &#40;토&#41;
+                  <div
+                    className={style.day_header}
+                    style={{ color: "#3080f8" }}
+                  >
+                    {thisDay(5)}일 &#40;토&#41;
                   </div>
                   <div className={style.day_item}>
                     {checkSchedule(totalThisDate(5))}
                   </div>
                 </div>
                 <div className={style.day_end}>
-                  <div className={style.day_header} style={{ color: "red" }}>
-                    {thisDay(6)} &#40;일&#41;
+                  <div
+                    className={style.day_header}
+                    style={{ color: "#ff6969" }}
+                  >
+                    {thisDay(6)}일 &#40;일&#41;
                   </div>
                   <div className={style.day_item}>
                     {checkSchedule(totalThisDate(6))}

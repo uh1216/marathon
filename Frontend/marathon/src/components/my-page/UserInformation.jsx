@@ -439,7 +439,9 @@ export default function UserInformation() {
               }
               alt="프로필 사진"
             />
-            <div className={style.user_name}>{userName} 님</div>
+            <div className={style.user_name}>
+              {userName} <span className={style.nim}>님</span>
+            </div>
             <div className={style.welcome}>환영합니다.</div>
             <label className={style.btn_upload}>
               사진 업로드

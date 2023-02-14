@@ -306,7 +306,18 @@ input[type="password"] {
   }
   .side_right_board {
     width: 100%;
-    min-width: 390px;
+    /* min-width: 390px; */
     padding: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .user_name {
+    /* width: auto; */
+    font-size: 1.1em;
+  }
+  .nim,
+  .welcome {
+    display: none;
   }
 }
