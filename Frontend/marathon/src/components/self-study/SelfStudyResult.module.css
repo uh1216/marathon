@@ -88,6 +88,8 @@
   }
 
   .icon_box p {
-    width: 35px;
+    width: 40px;
+    font-size: 1.1em;
+    padding-left: 2px;
   }
 }
