@@ -6,6 +6,7 @@ import { changeNowSideNav } from "stores/toggle.store";
 import style from "./UserInformation.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { $ } from "util/axiosFile";
+import { $ as $2 } from "util/axios";
 import { useNavigate } from "react-router-dom";
 import { userLogout } from "stores/user.store";
 import { changeImg } from "stores/user.store";
@@ -418,7 +419,7 @@ export default function UserInformation() {
           });
       } else {
         console.log(userInfo);
-        $.put(`/${state.loginUser.userRole}-sign/modify-noimg`, userInfo)
+        $2.put(`/${state.loginUser.userRole}-sign/modify-noimg`, userInfo)
           .then((res) => {
             Swal.fire({
               icon: "success",
@@ -664,7 +665,8 @@ export default function UserInformation() {
                     />
                   </div>
                 </>
-              ) : state.loginUser.userRole === "doctor" ? (
+              ) : null}
+              {state.loginUser.userRole === "doctor" ? (
                 <>
                   <div className={style.input_div}>
                     <label
