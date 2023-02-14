@@ -17,14 +17,12 @@ export default function TreatmentDetail() {
   const [content, setContent] = useState("");
 
   const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
-  const { isLoading, data, isError, error } = useQuery(
-    ["mypageHistoryDetail"],
-    () =>
-      $.get(
-        state.loginUser.userRole === "doctor"
-          ? `/doctor-history/detail/${no}`
-          : `/patient-history/detail/${no}`
-      )
+  const { isLoading, data } = useQuery(["mypageHistoryDetail"], () =>
+    $.get(
+      state.loginUser.userRole === "doctor"
+        ? `/doctor-history/detail/${no}`
+        : `/patient-history/detail/${no}`
+    )
   );
 
   const { mutate } = useMutation(
@@ -132,15 +130,8 @@ export default function TreatmentDetail() {
               </div>
             </div>
           </div>
-          <video className={style.video} controls>
-            <source
-              src={!isLoading && data.data.videoUrl}
-              type="video/mp4"
-            ></source>
-            <source
-              src={!isLoading && data.data.videoUrl}
-              type="video/ogg"
-            ></source>
+          <video className={style.video} key={isLoading} controls>
+            <source src={!isLoading && data.data.videoUrl} type="video/mp4" />
           </video>
         </div>
         <div className={style.right}>

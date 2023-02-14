@@ -113,6 +113,10 @@
     font-size: 0.75em;
   }
 
+  .content_container {
+    font-size: 0.8em;
+  }
+
   .button3 {
     font-size: 0.95em;
     padding: 6px 8px;
