@@ -389,39 +389,52 @@ export default function UserInformation() {
         userInfo.introduce = userSelfIntroduce;
       }
 
-      const formData = new FormData();
-      if (imgFile) formData.append("image", imgFile);
-      else formData.append("image", "");
-      console.log(imgFile);
-      formData.append(
-        `${state.loginUser.userRole}`,
-        new Blob([JSON.stringify(userInfo)], { type: "application/json" })
-      );
-      console.log(userInfo);
+      if (imgFile) {
+        const formData = new FormData();
+        formData.append("image", imgFile);
+        formData.append(
+          `${state.loginUser.userRole}`,
+          new Blob([JSON.stringify(userInfo)], { type: "application/json" })
+        );
 
-      $.put(`/${state.loginUser.userRole}-sign/modify`, formData)
-        .then((res) => {
-          Swal.fire({
-            icon: "success",
-            title: "",
-            text: "수정 완료되었습니다.",
-            confirmButtonText: "닫기",
+        $.put(`/${state.loginUser.userRole}-sign/modify`, formData)
+          .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "",
+              text: "수정 완료되었습니다.",
+              confirmButtonText: "닫기",
+            });
+            console.log(res);
+            sessionStorage.setItem("access-token", res.data.accessToken);
+            setUserPwd("");
+            setUserPwdChk("");
+            if (newImgUrl) {
+              dispatch(changeImg(newImgUrl));
+            }
+          })
+          .catch((error) => {
+            console.log(error);
           });
-          console.log(res);
-          sessionStorage.setItem("access-token", res.data.accessToken);
-          setUserPwd("");
-          setUserPwdChk("");
-          if (newImgUrl) {
-            dispatch(changeImg(newImgUrl));
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      // console.log({
-      //   userSelfIntroduce: userSelfIntroduce,
-      // });
+      } else {
+        console.log(userInfo);
+        $.put(`/${state.loginUser.userRole}-sign/modify-noimg`, userInfo)
+          .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "",
+              text: "수정 완료되었습니다.",
+              confirmButtonText: "닫기",
+            });
+            console.log(res);
+            sessionStorage.setItem("access-token", res.data.accessToken);
+            setUserPwd("");
+            setUserPwdChk("");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     }
   };
 
