@@ -1,6 +1,7 @@
 import style from "./SelectBox.module.css";
 import React, { forwardRef, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
 
 /**
  * 부모 컴포넌트에서는 다음과 같이 사용하기 (참고)
@@ -13,24 +14,24 @@ import { v4 as uuidv4 } from "uuid";
  * ref : ref 변수명
  * readonly : readonly로 하고 싶은지 (선택)
  */
-
 const SelectBox = forwardRef((props, ref) => {
+  const [option, setOption] = useState(props.defaultValue);
   /** Select Box에서 옵션 하나가 선택되었을 때,
    * 부모 컴포넌트에서 정의한 onChange 함수가
    * 선택된 옵션의 value값이 인자로 담겨서 실행됩니다.
    * */
   const handleChange = (e) => {
     props.onChange(e.target.value);
+    setOption(e.target.value);
   };
 
   return (
     <select
-      key={uuidv4()}
       className={style.select_box}
       onChange={handleChange}
       style={{ width: props.width }}
       ref={ref}
-      defaultValue={props.defaultValue}
+      value={option}
     >
       {props.options.map((option, idx) => (
         <option
