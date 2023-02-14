@@ -25,7 +25,7 @@ const SelectBox = forwardRef((props, ref) => {
 
   return (
     <select
-      key={props.defaultValue}
+      key={uuidv4()}
       className={style.select_box}
       onChange={handleChange}
       style={{ width: props.width }}
