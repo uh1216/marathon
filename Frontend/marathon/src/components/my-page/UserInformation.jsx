@@ -373,6 +373,16 @@ export default function UserInformation() {
         confirmButtonText: "닫기",
       });
       inputUserSecondResponderRelationship.current.focus();
+    } else if (
+      state.loginUser.userRole === "doctor" &&
+      userSelfIntroduce.length > 100
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "자기소개는 최대 100자까지 입력가능합니다.",
+        confirmButtonText: "닫기",
+      });
     } else {
       let userInfo = {
         password: userPwd,
@@ -686,6 +696,15 @@ export default function UserInformation() {
                       value={userSelfIntroduce}
                       placeholder="이용자들에게 보여질 자기소개 글을 작성해주세요."
                     ></textarea>
+                    <div
+                      className={
+                        userSelfIntroduce.length <= 100
+                          ? style.introduce_length
+                          : style.introduce_length_over
+                      }
+                    >
+                      {userSelfIntroduce.length} / 100
+                    </div>
                   </div>
                 </>
               ) : null}
