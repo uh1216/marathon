@@ -277,7 +277,11 @@ export default function Header() {
               <li>
                 <div
                   onClick={() => {
-                    navigate("/mypage/information");
+                    {
+                      !state.loginUser.userRole === "admin"
+                        ? navigate("/mypage/information")
+                        : navigate("/mypage/messenger");
+                    }
                   }}
                 >
                   {state.loginUser.userName}
@@ -373,13 +377,6 @@ export default function Header() {
                   <div className={style.sub_menu + " " + style.sub_menu_admin}>
                     <dl
                       onClick={() => {
-                        navigate("/mypage/information");
-                      }}
-                    >
-                      회원 정보 관리
-                    </dl>
-                    <dl
-                      onClick={() => {
                         navigate("/mypage/messenger");
                       }}
                     >
@@ -441,15 +438,18 @@ export default function Header() {
           )}
           {state.loginUser.userRole && (
             <>
-              <li
-                onClick={() => {
-                  if (isToggled) setIsToggled(!isToggled);
-                  if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/mypage/information");
-                }}
-              >
-                <span>회원 정보 관리</span>
-              </li>
+              {!state.loginUser.userRole === "admin" ? (
+                <li
+                  onClick={() => {
+                    if (isToggled) setIsToggled(!isToggled);
+                    if (isUserToggled) setIsUserToggled(!isUserToggled);
+                    navigate("/mypage/information");
+                  }}
+                >
+                  <span>회원 정보 관리</span>
+                </li>
+              ) : null}
+
               <li
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);
