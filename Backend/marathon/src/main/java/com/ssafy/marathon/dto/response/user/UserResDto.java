@@ -1,11 +1,8 @@
 package com.ssafy.marathon.dto.response.user;
 
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
@@ -14,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @ToString
+@EqualsAndHashCode(of = "seq")
 public class UserResDto {
 
     private Long seq;

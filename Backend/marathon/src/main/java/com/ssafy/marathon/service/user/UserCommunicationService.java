@@ -153,7 +153,9 @@ public class UserCommunicationService {
                 .collect(Collectors.toList()));
         }
 
-        return userResDtoList;
+        return userResDtoList.stream()
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     public UserCommuCntResDto countUncheckedCommunication(Long userSeq) {
