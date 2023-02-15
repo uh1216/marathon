@@ -25,26 +25,49 @@ const SelectBox = forwardRef((props, ref) => {
     setOption(e.target.value);
   };
 
-  return (
-    <select
-      className={style.select_box}
-      onChange={handleChange}
-      style={{ width: props.width }}
-      ref={ref}
-      value={option}
-    >
-      {props.options.map((option, idx) => (
-        <option
-          key={uuidv4()}
-          value={option.value}
-          // selected={props.defaultValue === option.value}
-          disabled={props.hasOwnProperty("readonly")}
-        >
-          {option.name}
-        </option>
-      ))}
-    </select>
-  );
+  if (!props.defaultValue)
+    return (
+      <select
+        className={style.select_box}
+        onChange={handleChange}
+        style={{ width: props.width }}
+        ref={ref}
+        value={option}
+      >
+        {props.options.map((option, idx) => (
+          <option
+            key={uuidv4()}
+            value={option.value}
+            // selected={props.defaultValue === option.value}
+            disabled={props.hasOwnProperty("readonly")}
+          >
+            {option.name}
+          </option>
+        ))}
+      </select>
+    );
+  else
+    return (
+      <select
+        key={uuidv4()}
+        defaultValue={props.defaultValue}
+        className={style.select_box}
+        onChange={handleChange}
+        style={{ width: props.width }}
+        ref={ref}
+      >
+        {props.options.map((option, idx) => (
+          <option
+            key={uuidv4()}
+            value={option.value}
+            // selected={props.defaultValue === option.value}
+            disabled={props.hasOwnProperty("readonly")}
+          >
+            {option.name}
+          </option>
+        ))}
+      </select>
+    );
 });
 
 export default SelectBox;
