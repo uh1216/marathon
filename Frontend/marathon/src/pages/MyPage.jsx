@@ -27,12 +27,7 @@ export default function MyPage() {
     "수업 기록",
     "로그아웃",
   ];
-  const sideNavContentAdmin = [
-    "회원 정보 관리",
-    "알림 / 메시지",
-    "상담 관리",
-    "로그아웃",
-  ];
+  const sideNavContentAdmin = ["알림 / 메시지", "상담 관리", "로그아웃"];
   const urlsPatient = [
     "information",
     "messenger",
@@ -45,7 +40,7 @@ export default function MyPage() {
     "schedule/1",
     "treatment-list/1",
   ];
-  const urlsAdmin = ["information", "messenger", "consult-list/1"];
+  const urlsAdmin = ["messenger", "consult-list/1"];
 
   return (
     <div className="container">
