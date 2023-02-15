@@ -172,12 +172,7 @@ export default function Messenger() {
                 </div>
                 {item.content !== null ? (
                   <div className={style.sub_content}>
-                    from. {item.senderName}{" "}
-                    {state.loginUser.userRole === "doctor" ? (
-                      <span>선생님</span>
-                    ) : (
-                      <span>님</span>
-                    )}
+                    from. {item.senderName} 님
                   </div>
                 ) : null}
               </div>
