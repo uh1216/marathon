@@ -20,7 +20,7 @@ public class PatientHistoryServiceImpl implements PatientHistoryService{
 
     @Override
     public Page<HistoryResDto> getHistories(Long patientSeq, int page) {
-        List<History> list = historyRepository.findAllByPatient_Seq(patientSeq);
+        List<History> list = historyRepository.findAllByPatient_SeqOrderByDateDesc(patientSeq);
         List<HistoryResDto> resList = new ArrayList<>();
 
         for (History history:list) {
