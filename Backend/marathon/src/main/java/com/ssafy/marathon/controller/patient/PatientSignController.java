@@ -70,4 +70,16 @@ public class PatientSignController {
         LOGGER.info("[modifyPatient] 환자정보 수정 완료 ");
         return new ResponseEntity<HashMap<String, String>>(tokenMap, HttpStatus.CREATED);
     }
+
+    @PutMapping("/modify-noimg")
+    public ResponseEntity<?> modifyPatient2(@RequestHeader("Access-Token") String accessToken, @RequestBody PatientReqDto patientReqDto)
+        throws Exception {
+        Long seq = jwtTokenProvider.getUserSeq(accessToken);
+        LOGGER.info("[modifyPatient] 환자정보 수정 시작 ");
+        String token = patientSignService.modifyPatient(seq, patientReqDto);
+        HashMap<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("accessToken", token);
+        LOGGER.info("[modifyPatient] 환자정보 수정 완료 ");
+        return new ResponseEntity<HashMap<String, String>>(tokenMap, HttpStatus.CREATED);
+    }
 }

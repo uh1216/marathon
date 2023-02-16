@@ -172,7 +172,7 @@ export default function Messenger() {
                 </div>
                 {item.content !== null ? (
                   <div className={style.sub_content}>
-                    from. {item.senderName} 선생님
+                    from. {item.senderName} 님
                   </div>
                 ) : null}
               </div>

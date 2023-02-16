@@ -6,6 +6,7 @@ import { changeNowSideNav } from "stores/toggle.store";
 import style from "./UserInformation.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { $ } from "util/axiosFile";
+import { $ as $2 } from "util/axios";
 import { useNavigate } from "react-router-dom";
 import { userLogout } from "stores/user.store";
 import { changeImg } from "stores/user.store";
@@ -193,7 +194,7 @@ export default function UserInformation() {
         if (state.loginUser.userRole === "patient") {
           setUserFirstResponder(data.mainPhone.replaceAll("-", ""));
           setUserFirstResponderRelationship(data.mainRelationship);
-          setUserSecondResponder(data.mainPhone.replaceAll("-", ""));
+          setUserSecondResponder(data.subPhone.replaceAll("-", ""));
           setUserSecondResponderRelationship(data.subRelationship);
         } else if (state.loginUser.userRole === "doctor") {
           setUserSelfIntroduce(data.introduce ? data.introduce : "");
@@ -218,6 +219,21 @@ export default function UserInformation() {
       .then((result) => {
         if (result.isConfirmed) {
           $.delete(`/user-sign/withdraw`).then(() => {
+            //카카오 - 어플리케이션 연결 끊기
+            if (window.Kakao.Auth.getAccessToken()) {
+              console.log("카카오 계정 회원탈퇴 시키기");
+              window.Kakao.API.request({
+                url: "/v1/user/unlink",
+                success: (response) => {
+                  console.log(response);
+                },
+                fail: (error) => {
+                  console.log(error);
+                },
+              });
+              window.Kakao.Auth.setAccessToken(undefined);
+            }
+
             Swal.fire({
               icon: "success",
               text: "정상적으로 회원탈퇴 되었습니다.",
@@ -357,6 +373,16 @@ export default function UserInformation() {
         confirmButtonText: "닫기",
       });
       inputUserSecondResponderRelationship.current.focus();
+    } else if (
+      state.loginUser.userRole === "doctor" &&
+      userSelfIntroduce.length > 100
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "자기소개는 최대 100자까지 입력가능합니다.",
+        confirmButtonText: "닫기",
+      });
     } else {
       let userInfo = {
         password: userPwd,
@@ -373,37 +399,53 @@ export default function UserInformation() {
       } else if (state.loginUser.userRole === "doctor") {
         userInfo.introduce = userSelfIntroduce;
       }
+      console.log(userInfo);
+      if (imgFile) {
+        const formData = new FormData();
+        formData.append("image", imgFile);
+        formData.append(
+          `${state.loginUser.userRole}`,
+          new Blob([JSON.stringify(userInfo)], { type: "application/json" })
+        );
 
-      const formData = new FormData();
-      formData.append("image", imgFile);
-      formData.append(
-        `${state.loginUser.userRole}`,
-        new Blob([JSON.stringify(userInfo)], { type: "application/json" })
-      );
-
-      $.put(`/${state.loginUser.userRole}-sign/modify`, formData)
-        .then((res) => {
-          Swal.fire({
-            icon: "success",
-            title: "",
-            text: "수정 완료되었습니다.",
-            confirmButtonText: "닫기",
+        $.put(`/${state.loginUser.userRole}-sign/modify`, formData)
+          .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "",
+              text: "수정 완료되었습니다.",
+              confirmButtonText: "닫기",
+            });
+            console.log(res);
+            sessionStorage.setItem("access-token", res.data.accessToken);
+            setUserPwd("");
+            setUserPwdChk("");
+            if (newImgUrl) {
+              dispatch(changeImg(newImgUrl));
+            }
+          })
+          .catch((error) => {
+            console.log(error);
           });
-          console.log(res);
-          sessionStorage.setItem("access-token", res.data.accessToken);
-          setUserPwd("");
-          setUserPwdChk("");
-          if (newImgUrl) {
-            dispatch(changeImg(newImgUrl));
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      // console.log({
-      //   userSelfIntroduce: userSelfIntroduce,
-      // });
+      } else {
+        console.log(userInfo);
+        $2.put(`/${state.loginUser.userRole}-sign/modify-noimg`, userInfo)
+          .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "",
+              text: "수정 완료되었습니다.",
+              confirmButtonText: "닫기",
+            });
+            console.log(res);
+            sessionStorage.setItem("access-token", res.data.accessToken);
+            setUserPwd("");
+            setUserPwdChk("");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     }
   };
 
@@ -633,7 +675,8 @@ export default function UserInformation() {
                     />
                   </div>
                 </>
-              ) : state.loginUser.userRole === "doctor" ? (
+              ) : null}
+              {state.loginUser.userRole === "doctor" ? (
                 <>
                   <div className={style.input_div}>
                     <label
@@ -653,6 +696,15 @@ export default function UserInformation() {
                       value={userSelfIntroduce}
                       placeholder="이용자들에게 보여질 자기소개 글을 작성해주세요."
                     ></textarea>
+                    <div
+                      className={
+                        userSelfIntroduce.length <= 100
+                          ? style.introduce_length
+                          : style.introduce_length_over
+                      }
+                    >
+                      {userSelfIntroduce.length} / 100
+                    </div>
                   </div>
                 </>
               ) : null}

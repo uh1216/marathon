@@ -22,6 +22,7 @@ export default function Header() {
     () => $.get(`/user-commu/count`),
     {
       enabled: !!state.loginUser.userRole,
+      refetchInterval: 1000,
       onSuccess: (data) => {
         dispatch(updateUnReadMsgNum(data.data.count));
       },
@@ -275,10 +276,18 @@ export default function Header() {
                 </span>
               </div>
               <li>
-                {state.loginUser.userName}
-                <span style={{ color: "gray" }} onClick={() => {}}>
-                  님 환영합니다
-                </span>
+                <div
+                  onClick={() => {
+                    {
+                      !state.loginUser.userRole === "admin"
+                        ? navigate("/mypage/information")
+                        : navigate("/mypage/messenger");
+                    }
+                  }}
+                >
+                  {state.loginUser.userName}
+                  <span style={{ color: "gray" }}>님 환영합니다</span>
+                </div>
                 {state.loginUser.userRole === "patient" && (
                   <div className={style.sub_menu + " " + style.sub_menu_common}>
                     <dl
@@ -369,13 +378,6 @@ export default function Header() {
                   <div className={style.sub_menu + " " + style.sub_menu_admin}>
                     <dl
                       onClick={() => {
-                        navigate("/mypage/information");
-                      }}
-                    >
-                      회원 정보 관리
-                    </dl>
-                    <dl
-                      onClick={() => {
                         navigate("/mypage/messenger");
                       }}
                     >
@@ -437,15 +439,18 @@ export default function Header() {
           )}
           {state.loginUser.userRole && (
             <>
-              <li
-                onClick={() => {
-                  if (isToggled) setIsToggled(!isToggled);
-                  if (isUserToggled) setIsUserToggled(!isUserToggled);
-                  navigate("/mypage/information");
-                }}
-              >
-                <span>회원 정보 관리</span>
-              </li>
+              {state.loginUser.userRole !== "admin" ? (
+                <li
+                  onClick={() => {
+                    if (isToggled) setIsToggled(!isToggled);
+                    if (isUserToggled) setIsUserToggled(!isUserToggled);
+                    navigate("/mypage/information");
+                  }}
+                >
+                  <span>회원 정보 관리</span>
+                </li>
+              ) : null}
+
               <li
                 onClick={() => {
                   if (isToggled) setIsToggled(!isToggled);

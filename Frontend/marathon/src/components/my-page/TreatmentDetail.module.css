@@ -18,6 +18,10 @@
   margin-left: 20px;
 }
 
+.profile {
+  object-fit: cover;
+}
+
 .profile_left {
   display: flex;
   flex-direction: column;
@@ -74,6 +78,7 @@
 }
 
 .right_title h2 {
+  margin-top: 3px;
   font-size: 1.87em;
 }
 
@@ -81,6 +86,7 @@
   height: 120px;
   width: 120px;
   border-radius: 100%;
+  object-fit: cover;
   box-shadow: 1px 1px 2px 2px rgb(0, 0, 0, 0.4);
 }
 
@@ -91,13 +97,19 @@
 }
 
 .btn {
-  width: 75px;
-  height: 24px;
-  border-radius: 5px;
+  height: 35px;
+  background-color: #a4a3ee;
+  padding: 8px 13px;
+  border-radius: 30px;
+  border: 0;
+  transition: 0.25s;
   color: white;
-  border: none;
-  background-color: #6e74fc;
-  font-size: 0.75em;
+  box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 25%);
+}
+
+.btn:hover {
+  background-color: #c5b7ed;
+  color: gray;
 }
 
 .content {

@@ -142,22 +142,28 @@ export default function SignIn() {
   const [isNotIdDuplicated, setIsNotIdDuplicated] = useState(false);
 
   const [userName, setUserName] = useState(
-    kakao === "kakao" ? kakaoInfo.userName : ""
+    kakao === "kakao" && kakaoInfo.userName ? kakaoInfo.userName : ""
   );
   const [userGender, setUserGender] = useState("none");
   const [userYear, setUserYear] = useState("none");
   const [userMonth, setUserMonth] = useState("none");
   const [userDay, setUserDay] = useState("none");
   const [userId, setUserId] = useState(
-    kakao === "kakao" ? kakaoInfo.userEmail.split("@")[0] : ""
+    kakao === "kakao" && kakaoInfo.userEmail
+      ? kakaoInfo.userEmail.split("@")[0]
+      : ""
   );
   const [userPwd, setUserPwd] = useState("");
   const [userPwdChk, setUserPwdChk] = useState("");
   const [userEmailId, setUserEmailId] = useState(
-    kakao === "kakao" ? kakaoInfo.userEmail.split("@")[0] : ""
+    kakao === "kakao" && kakaoInfo.userEmail
+      ? kakaoInfo.userEmail.split("@")[0]
+      : ""
   );
   const [userEmailHost, setUserEmailHost] = useState(
-    kakao === "kakao" ? kakaoInfo.userEmail.split("@")[1] : ""
+    kakao === "kakao" && kakaoInfo.userEmail
+      ? kakaoInfo.userEmail.split("@")[1]
+      : ""
   );
   const [userPhone, setUserPhone] = useState("");
   const [userFirstResponder, setUserFirstResponder] = useState("");

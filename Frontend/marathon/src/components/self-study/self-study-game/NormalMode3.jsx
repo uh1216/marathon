@@ -193,7 +193,7 @@ export default function NormalMode3() {
         text: "모바일에서는 지원하지 않는 게임입니다. 빠르게 기능을 업데이트 하도록 하겠습니다!",
         confirmButtonText: "닫기",
       });
-      navigate("/self-study-list");
+      navigate("/self-study-list", { replace: true });
     }
   }, []);
 

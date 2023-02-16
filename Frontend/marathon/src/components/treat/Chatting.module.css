@@ -36,7 +36,7 @@
 }
 /* 나의 말풍선 */
 .my_bubble_container {
-  min-height: 32px;
+  /* min-height: 32px; */
   height: auto;
   margin: 0 5px 25px 0;
   display: flex;

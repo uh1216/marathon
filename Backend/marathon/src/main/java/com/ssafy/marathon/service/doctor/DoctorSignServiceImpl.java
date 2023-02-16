@@ -96,17 +96,28 @@ public class DoctorSignServiceImpl implements DoctorSignService {
         doctor.setPhone(doctorReqDto.getPhone());
         doctor.setIntroduce(doctorReqDto.getIntroduce());
         LOGGER.info("[modifyPatient] 환자정보 수정 시작");
-        //이미지 url이 다르면 파일 저장하고 유저이미지 정보 수정
-        if(doctorReqDto.getImg()!= doctor.getImg()) {
-            //랜덤식별자 생성
-            UUID uuid = UUID.randomUUID();
-            //파일이름 설정
-            String fileName = uuid + "_" + image.getOriginalFilename();
-            //aws s3 저장
-            String url = awsS3Service.uploadFileV1(fileName, image);
-            LOGGER.info("바뀐 이미지 url : {}", url);
-            doctor.setImg(url);
-        }
+        //랜덤식별자 생성
+        UUID uuid = UUID.randomUUID();
+        //파일이름 설정
+        String fileName = uuid + "_" + image.getOriginalFilename();
+        //aws s3 저장
+        String url = awsS3Service.uploadFileV1(fileName, image);
+        LOGGER.info("바뀐 이미지 url : {}", url);
+        doctor.setImg(url);
+        String token = jwtTokenProvider.createToken(doctor);
+        LOGGER.info("[modifyPatient] 환자정보 수정 완료");
+        return token;
+    }
+
+    @Override
+    public String modifyDoctor(Long seq, DoctorReqDto doctorReqDto)
+        throws Exception {
+        LOGGER.info("[modifyPatient] 환자정보 수정 시작");
+        Doctor doctor = doctorRepository.getBySeq(seq);
+        doctor.setPassword(passwordEncoder.encode(doctorReqDto.getPassword()));
+        doctor.setEmail(doctorReqDto.getEmail());
+        doctor.setPhone(doctorReqDto.getPhone());
+        doctor.setIntroduce(doctorReqDto.getIntroduce());
         String token = jwtTokenProvider.createToken(doctor);
         LOGGER.info("[modifyPatient] 환자정보 수정 완료");
         return token;
