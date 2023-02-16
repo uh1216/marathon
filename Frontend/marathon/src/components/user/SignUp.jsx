@@ -562,6 +562,9 @@ export default function SignIn() {
     } else if (userId.length < 8) {
       setUserIdMsg("아이디는 최소 8자 이상이어야 합니다.");
       SetIsIdValid(false);
+    } else if (!RegExpId.test(userId)) {
+      setUserIdMsg("아이디에 한글, 특수문자, 공백기호는 사용불가능합니다.");
+      SetIsIdValid(false);
     } else {
       setUserIdMsg("유효한 아이디입니다.");
       SetIsIdValid(true);
