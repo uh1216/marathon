@@ -33,7 +33,12 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
                 className={style.content_container}
                 style={{ gridTemplateColumns: grid }}
               >
-                <div>{new Date(content.dateTime).toLocaleDateString()}</div>
+                <div>
+                  {new Date(content.dateTime).toLocaleDateString() +
+                    " " +
+                    new Date(content.dateTime).getHours() +
+                    "시"}
+                </div>
                 <div>
                   {content.doctorName || content.patientName}
                   {state.loginUser.userRole === "patient" ? " 선생님 " : " 님 "}

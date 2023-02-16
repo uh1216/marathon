@@ -22,6 +22,7 @@ export default function Header() {
     () => $.get(`/user-commu/count`),
     {
       enabled: !!state.loginUser.userRole,
+      refetchInterval: 1000,
       onSuccess: (data) => {
         dispatch(updateUnReadMsgNum(data.data.count));
       },
