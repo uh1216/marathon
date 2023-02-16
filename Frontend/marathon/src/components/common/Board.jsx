@@ -60,7 +60,9 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
           })}
         {!data.length ? (
           <h5 style={{ textAlign: "center", marginTop: "8px" }}>
-            미작성 내역이 없습니다
+            {state.loginUser.userRole === "doctor"
+              ? "미작성 내역이 없습니다"
+              : "수업 내역이 없습니다"}
           </h5>
         ) : null}
       </>
