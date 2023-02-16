@@ -207,7 +207,7 @@
 
 ## 🖥️ 사용된 기술
 
-<img src="./Docs/skill-spec.png" width=850>
+<img src="../Docs/skill-spec.png" width=850>
 
 **[ BACK END ]**
 
@@ -253,7 +253,7 @@
 
 ## 🖥️ 시스템 아키텍쳐
 
-![System_Architecture](./Docs/architecture.png)
+![System_Architecture](../Docs/architecture.png)
 
 ## 📼 서비스 소개
 
