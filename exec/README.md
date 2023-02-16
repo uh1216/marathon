@@ -1,4 +1,4 @@
-<img src='./Docs/logo.png'>
+<img src='../Docs/logo.png'>
 
 # <center>🏃‍♂️ Marathon 🏃‍♀️</center>
 
