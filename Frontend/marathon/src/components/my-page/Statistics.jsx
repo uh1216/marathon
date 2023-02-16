@@ -221,8 +221,16 @@ export default function Statistics() {
             dataHard.push(Number(item.split(",")[1]) * 10);
           });
 
-          labels.push([[...labelEasy], [...labelNormal], [...labelHard]]);
-          datas.push([[...dataEasy], [...dataNormal], [...dataHard]]);
+          labels.push([
+            [...labelEasy.reverse()],
+            [...labelNormal.reverse()],
+            [...labelHard.reverse()],
+          ]);
+          datas.push([
+            [...dataEasy.reverse()],
+            [...dataNormal.reverse()],
+            [...dataHard.reverse()],
+          ]);
         }
 
         setGraphData(datas);
