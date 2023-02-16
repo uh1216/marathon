@@ -112,17 +112,30 @@ public class PatientSignServiceImpl implements PatientSignService {
         patient.setSubPhone(patientReqDto.getSubPhone());
         patient.setSubRelationship(patientReqDto.getSubRelationship());
         LOGGER.info("[modifyPatient] 이미지 비교 시작");
-        //이미지 url이 다르면 파일 저장하고 유저이미지 정보 수정
-        if (patientReqDto.getImg() != patient.getImg()) {
-            //랜덤식별자 생성
-            UUID uuid = UUID.randomUUID();
-            //파일이름 설정
-            String fileName = uuid + "_" + image.getOriginalFilename();
-            //aws s3 저장
-            String url = awsS3Service.uploadFileV1(fileName, image);
-            patient.setImg(url);
-        }
+        //랜덤식별자 생성
+        UUID uuid = UUID.randomUUID();
+        //파일이름 설정
+        String fileName = uuid + "_" + image.getOriginalFilename();
+        //aws s3 저장
+        String url = awsS3Service.uploadFileV1(fileName, image);
+        patient.setImg(url);
         //토큰 정보 수정
+        String token = jwtTokenProvider.createToken(patient);
+        LOGGER.info("[modifyPatient] 환자정보 수정 완료");
+        return token;
+    }
+
+    @Override
+    public String modifyPatient(Long seq, PatientReqDto patientReqDto) {
+        LOGGER.info("[modifyPatient] 환자정보 수정 시작");
+        Patient patient = patientRepository.getBySeq(seq);
+        patient.setPassword(passwordEncoder.encode(patientReqDto.getPassword()));
+        patient.setEmail(patientReqDto.getEmail());
+        patient.setPhone(patientReqDto.getPhone());
+        patient.setMainPhone(patientReqDto.getMainPhone());
+        patient.setMainRelationship(patientReqDto.getMainRelationship());
+        patient.setSubPhone(patientReqDto.getSubPhone());
+        patient.setSubRelationship(patientReqDto.getSubRelationship());
         String token = jwtTokenProvider.createToken(patient);
         LOGGER.info("[modifyPatient] 환자정보 수정 완료");
         return token;

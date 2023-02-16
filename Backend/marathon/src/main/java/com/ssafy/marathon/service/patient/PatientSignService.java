@@ -19,4 +19,5 @@ public interface PatientSignService {
 
     String modifyPatient(Long seq, PatientReqDto patientReqDto, MultipartFile file)
         throws Exception;
+    String modifyPatient(Long seq, PatientReqDto patientReqDto);
 }

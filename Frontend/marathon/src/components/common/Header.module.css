@@ -70,7 +70,7 @@
   bottom: -250px;
 }
 .sub_menu_admin {
-  bottom: -210px;
+  bottom: -170px;
 }
 
 .sub_menu:before {
@@ -313,7 +313,7 @@
   }
 
   .header_right_on {
-    top: -300%;
+    top: -400%;
     z-index: -1;
   }
 

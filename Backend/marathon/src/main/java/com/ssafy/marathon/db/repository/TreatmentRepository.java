@@ -11,11 +11,9 @@ public interface TreatmentRepository extends JpaRepository<Treatment, Long> {
 
     List<Treatment> findAllByPatient_Seq(Long patientSeq);
 
-    List<Treatment> findDistinctByDoctor_SeqAndDateBetween(Long doctorSeq, LocalDate start,
-        LocalDate end);
+    List<Treatment> findDistinctByDoctor_Seq(Long doctorSeq);
 
-    List<Treatment> findDistinctByPatient_SeqAndDateBetween(Long patientSeq, LocalDate start,
-        LocalDate end);
+    List<Treatment> findDistinctByPatient_Seq(Long patientSeq);
 
     Treatment findBySeq(Long seq);
 

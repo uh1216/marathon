@@ -87,7 +87,9 @@ export default function ConsultListModal({ setIsModalOpen }) {
           </tr>
           <tr className={style.table_tr}>
             <td className={style.table_td1}>
-              <span>대상자 생년월일</span>
+              <span>대상자</span>
+              <br />
+              <span> 생년월일</span>
             </td>
             <td className={style.table_td2 + " " + style.table_d3}>
               <span>{!isLoading && data.data.birthDate}</span>
@@ -121,7 +123,9 @@ export default function ConsultListModal({ setIsModalOpen }) {
           </tr>
           <tr className={style.table_tr}>
             <td className={style.table_td1}>
-              <span>뇌손상 발병시기</span>
+              <span>뇌손상</span>
+              <br />
+              <span> 발병시기</span>
             </td>
             <td className={style.table_td2 + " " + style.table_d3}>
               <span>{!isLoading && data.data.sickDate}</span>

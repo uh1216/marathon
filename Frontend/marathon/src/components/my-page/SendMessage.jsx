@@ -92,7 +92,7 @@ export default function SendMessage({
             width="65%"
             onChange={(x) => selectSeq(x)}
             defaultValue={senderSeq}
-            readonly={true}
+            key={senderSeq}
           />
         )}
       </div>

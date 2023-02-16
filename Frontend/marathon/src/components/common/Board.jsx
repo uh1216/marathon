@@ -33,7 +33,12 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
                 className={style.content_container}
                 style={{ gridTemplateColumns: grid }}
               >
-                <div>{new Date(content.dateTime).toLocaleDateString()}</div>
+                <div>
+                  {new Date(content.dateTime).toLocaleDateString() +
+                    " " +
+                    new Date(content.dateTime).getHours() +
+                    "시"}
+                </div>
                 <div>
                   {content.doctorName || content.patientName}
                   {state.loginUser.userRole === "patient" ? " 선생님 " : " 님 "}
@@ -53,6 +58,13 @@ export default function Board({ headRow, grid, data, type, setIsModalOpen }) {
               </div>
             );
           })}
+        {!data.length ? (
+          <h5 style={{ textAlign: "center", marginTop: "8px" }}>
+            {state.loginUser.userRole === "doctor"
+              ? "미작성 내역이 없습니다"
+              : "수업 내역이 없습니다"}
+          </h5>
+        ) : null}
       </>
     );
   }

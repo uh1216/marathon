@@ -10,7 +10,8 @@ import { v4 as uuidv4 } from "uuid";
 export default function ScheduleModal({ modalData, setIsModalOpen }) {
   const state = useSelector((state) => state);
   const queryClient = useQueryClient();
-  const [isCreatable, setIsCreatable] = useState(true);
+
+  const [isCreatable, setIsCreatable] = useState(false);
 
   // 모바일일때 돌아가게 만들기
   const isMobile = () => {

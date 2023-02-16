@@ -259,6 +259,14 @@ input[type="password"] {
   font-family: "GmarketLight";
   font-size: 0.75em;
 }
+
+.introduce_length {
+  color: #9b9a9a;
+}
+
+.introduce_length_over {
+  color: #ff1313;
+}
 @media (max-width: 1400px) {
   .information_box {
     width: 800px;
@@ -319,5 +327,9 @@ input[type="password"] {
   .nim,
   .welcome {
     display: none;
+  }
+
+  .input_middle {
+    width: 100%;
   }
 }
