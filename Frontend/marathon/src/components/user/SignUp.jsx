@@ -7,6 +7,10 @@ import { useState } from "react";
 import { $ } from "util/axios";
 import { useSelector } from "react-redux";
 
+/** 유효성 검사 */
+const RegExpId = /^[a-zA-z0-9]{8,16}$/;
+const RegExpEmail = /^[a-zA-z0-9]{3,64}$/;
+
 /** 성별 select box 옵션 */
 const optionsGender = [
   { value: "none", name: "성별" },
@@ -262,6 +266,14 @@ export default function SignIn() {
         confirmButtonText: "닫기",
       });
       inputUserEmailId.current.focus();
+    } else if (!RegExpEmail.test(userEmailId)) {
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이메일은 최소3자, 최대 64자 입력가능하며 한글, 특수문자 및 공백은 불가능합니다.",
+        confirmButtonText: "닫기",
+      });
+      inputUserEmailId.current.focus();
     } else if (
       userEmailHost === "" ||
       userEmailHost === null ||
@@ -270,7 +282,7 @@ export default function SignIn() {
       Swal.fire({
         icon: "error",
         title: "",
-        text: "이메일을 입력해주세요.",
+        text: "이메일 도메인주소를 입력해주세요.",
         confirmButtonText: "닫기",
       });
       inputUserEmailHost.current.focus();
@@ -479,26 +491,49 @@ export default function SignIn() {
 
   /** 아이디 중복 체크 (axios 연결 필요함) */
   const chkIdDuplicated = () => {
-    $.get(`/user-sign/checkid/${userId}`)
-      .then(() => {
-        setIsNotIdDuplicated(true);
-        Swal.fire({
-          icon: "success",
-          title: "",
-          text: "사용 가능한 아이디입니다.",
-          confirmButtonText: "닫기",
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsNotIdDuplicated(false);
-        Swal.fire({
-          icon: "error",
-          title: "",
-          text: "이미 존재하는 아이디입니다.",
-          confirmButtonText: "닫기",
-        });
+    if (!userId) {
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "아이디를 입력해주세요.",
+        confirmButtonText: "닫기",
       });
+    } else if (userId.length < 8 || userId.length > 16) {
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "8자 이상, 16자 이하만 가능합니다.",
+        confirmButtonText: "닫기",
+      });
+    } else if (!RegExpId.test(userId)) {
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "아이디에 한글, 특수문자, 공백기호는 사용불가능합니다.",
+        confirmButtonText: "닫기",
+      });
+    } else {
+      $.get(`/user-sign/checkid/${userId}`)
+        .then(() => {
+          setIsNotIdDuplicated(true);
+          Swal.fire({
+            icon: "success",
+            title: "",
+            text: "사용 가능한 아이디입니다.",
+            confirmButtonText: "닫기",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsNotIdDuplicated(false);
+          Swal.fire({
+            icon: "error",
+            title: "",
+            text: "이미 존재하는 아이디입니다.",
+            confirmButtonText: "닫기",
+          });
+        });
+    }
   };
 
   /** year와 month가 선택되고 난 뒤 day 일 수를 결정 */
