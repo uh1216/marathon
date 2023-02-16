@@ -276,7 +276,7 @@
 
 ### 1. 메인페이지
 
-<img src="./Docs/gif/메인페이지.gif" width=450>
+<img src="./Docs/gif/asdf.gif" width=450>
 
 - **[메인화면] :** 서비스 소개 및 이용가이드 안내에 대한 내용이 게시되어 있는 페이지다.
 
