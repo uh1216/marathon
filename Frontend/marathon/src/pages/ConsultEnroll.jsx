@@ -14,6 +14,9 @@ import "Calendar.css";
 import { $ } from "util/axios";
 
 export default function ConsultEnroll() {
+  /** 유효성 검사 */
+  const RegExpEmail = /^[a-zA-z0-9]{3,64}$/;
+
   /** 성별 select box 옵션 */
   const optionsGender = [
     { value: "none", name: "성별" },
@@ -191,6 +194,14 @@ export default function ConsultEnroll() {
         confirmButtonText: "닫기",
       });
       inputUserEmailId.current.focus();
+    } else if (!RegExpEmail.test(userEmailId)) {
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "이메일은 최소3자, 최대 64자 입력가능하며 한글, 특수문자 및 공백은 불가능합니다.",
+        confirmButtonText: "닫기",
+      });
+      inputUserEmailId.current.focus();
     } else if (
       userEmailHost === "" ||
       userEmailHost === null ||
@@ -199,7 +210,7 @@ export default function ConsultEnroll() {
       Swal.fire({
         icon: "error",
         title: "",
-        text: "이메일을 입력해주세요.",
+        text: "이메일 도메인주소를 입력해주세요.",
         confirmButtonText: "닫기",
       });
       inputUserEmailHost.current.focus();
@@ -601,7 +612,7 @@ export default function ConsultEnroll() {
             </label>
             <input
               className={`${style.input_number} ${style.input_long}`}
-              type="text"
+              type="number"
               id="user_phone"
               placeholder="'-'를 제외한 숫자만 입력해 주세요."
               value={userPhone}
@@ -620,7 +631,7 @@ export default function ConsultEnroll() {
             <div className={style.display_flex}>
               <input
                 className={`${style.input_number} ${style.input_middle}`}
-                type="text"
+                type="number"
                 id="user_first_responder"
                 placeholder="'-'를 제외한 숫자만 입력해 주세요."
                 value={userFirstResponder}
@@ -652,7 +663,7 @@ export default function ConsultEnroll() {
             <div className={style.display_flex}>
               <input
                 className={`${style.input_number} ${style.input_middle}`}
-                type="text"
+                type="number"
                 id="user_second_responder"
                 placeholder="'-'를 제외한 숫자만 입력해 주세요."
                 value={userSecondResponder}
