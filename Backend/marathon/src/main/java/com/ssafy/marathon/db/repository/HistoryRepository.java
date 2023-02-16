@@ -16,7 +16,7 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     List<History> findAllByDoctor_SeqAndFeedbackEquals(Long doctorSeq, String emptyString);
     List<History> findAllByDoctor_Seq(Long doctorSeq);
 
-    List<History> findAllByPatient_Seq(Long patientSeq);
+    List<History> findAllByPatient_SeqOrderByDateDesc(Long patientSeq);
 
     List<History> findAllByDoctor_SeqAndPatient_NameContaining(Long doctorSeq, String name);
 
