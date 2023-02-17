@@ -9,7 +9,7 @@ import {
 /** 서버로부터 도착한 페이지네이션 데이터에서 number, first, last, totalPages, url을 찾아서 주입 */
 export default function Pagination({ number, first, last, totalPages, url }) {
   const navigate = useNavigate();
-  const startNum = Math.floor((Math.max(number, 1) - 1) / 10) * 10 + 1;
+  const startNum = Math.floor((Math.max(number + 1, 1) - 1) / 10) * 10 + 1;
 
   const pageListRander = () => {
     const pageList = [];
