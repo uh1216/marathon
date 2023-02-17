@@ -1,4 +1,4 @@
-<img src='https://i8a304.p.ssafy.io/static/media/logoMain.f4f1b7e0f25882579452.png'>
+<img src='./exec/Docs/logo.png'>
 
 # <center>🏃‍♂️ Marathon 🏃‍♀️</center>
 
@@ -225,7 +225,7 @@
 
 ## 🖥️ 사용된 기술
 
-<img src="./Docs/skill-spec.png" width=850>
+<img src="./exec/Docs/skill-spec.png" width=850>
 
 **[ BACK END ]**
 
@@ -271,7 +271,7 @@
 
 ## 🖥️ 시스템 아키텍쳐
 
-<img src="./Docs/architecture.png" width=850>
+<img src="./exec/Docs/architecture.png" width=850>
 
 ## 시연연상
 
@@ -281,55 +281,55 @@
 
 ### 1. 메인페이지
 
-<img src="./Docs/gif/mainpage.gif" width=450>
+<img src="./exec/Docs/gif/mainpage.gif" width=450>
 
 - **[메인화면] :** 서비스 소개 및 이용가이드 안내에 대한 내용이 게시되어 있는 페이지다.
 
 ### 2. 상담신청
 
-<img src="./Docs/gif/consultenroll.gif" width=450>
+<img src="./exec/Docs/gif/consultenroll.gif" width=450>
 
 - **[상담신청] :** 비회원/회원 모두 동일하게 상담신청을 한다. 작성 후 관리자에 의해 상담방이 생성한다.(최대 4명)
 
 ### 3. 화상상담
 
-<img src="./Docs/gif/consult.gif" width=450>
+<img src="./exec/Docs/gif/consult.gif" width=450>
 
 - **[화상상담] :** 링크를 통해 상담방 입장 후 화상상담을 진행한다. 상담방 내부에서는 채팅기능이 가능하다.
 
 ### 4. 환자 회원가입
 
-<img src="./Docs/gif/patientsignup.gif" width=450>
+<img src="./exec/Docs/gif/patientsignup.gif" width=450>
 
 - **[환자 회원가입] :** 링크를 통해 상담방 입장 후 화상상담을 진행한다. 상담방 내부에서는 채팅기능이 가능하다.
 
 ### 5. 비밀번호 찾기
 
-<img src="./Docs/gif/findpassword.gif" width=450>
+<img src="./exec/Docs/gif/findpassword.gif" width=450>
 
 - **[비밀번호 찾기] :** 비밀번호를 분실했을 시 해당아이디와 가입 시 입력했던 이메일 주소를 입력하면 해당 이메일로 임시 비밀번호를 발급받는다.
 
 ### 6. 회원정보 조회 및 수정
 
-<img src="./Docs/gif/information.gif" width=450>
+<img src="./exec/Docs/gif/information.gif" width=450>
 
 - **[회원정보 조회 및 수정] :** 미이페이지 - 회원 정보 관리 탭에서 자신의 프로필사진, 비밀번호, 이메일주소, 연락처 등을 수정할 수 있다.
 
 ### 7. 수업예약
 
-<img src="./Docs/gif/treatenroll.gif" width=450>
+<img src="./exec/Docs/gif/treatenroll.gif" width=450>
 
 - **[수업예약] :** 환자의 계정으로 로그인 시 상단에 수업예약 탭이 생긴다. 사이트에 등록되어 있는 선생님들 목록을 캐러셀 방식으로 확인 가능하며 원하는 선생님을 선택 후 예약하기 버튼을 누르면 해당 선생님이 설정해놓은 시간표를 기준으로 원하는 시간대에 수업을 예약할 수 있다.
 
 ### 8. 알림/메시지
 
-<img src="./Docs/gif/sendmessage.gif" width=450>
+<img src="./exec/Docs/gif/sendmessage.gif" width=450>
 
 - **[알림/메시지] :** 자신한테 보낸 메시지를 확인하거나 상대방에게 메시지를 전달할 수 있다. 환자의 경우 선생님이 화상수업을 위한 방을 개설 시 이곳에서 수업 참여 알림을 받을 수 있다.
 
 ### 9. 화상수업
 
-<img src="./Docs/gif/camstudy.gif" width=450>
+<img src="./exec/Docs/gif/camstudy.gif" width=450>
 
 - **[화상수업] :** 화상 수업 방에 접속하면 새 창으로 화상 재활방이 열리게 된다. 화상 통화와 음성 기능이 제공되며, 4가지 상호작용 보드와 6가지 이모티콘을 사용할 수 있다. 하단에 채팅 아이콘을 눌러 실시간 채팅을 할 수도 있다. 상호작용 보드 및 이모티콘은 웹소켓 통신이 가능하여 실시간으로 공유가 된다.
   - 스케치보드는 드로잉 도구를 선택하여 그림을 그릴 수 있는 보드이다.
@@ -339,7 +339,7 @@
 
 ### 10. 지난수업기록 확인
 
-<img src="./Docs/gif/studyhistory.gif" width=450>
+<img src="./exec/Docs/gif/studyhistory.gif" width=450>
 
 - **[지난수업기록 확인] :** 화상수업이 종료되면 영상이 자동 저장되어 지난수업시록 확인페이지에서 녹화된 영상과 수업 피드백 내용을 확인할 수 있다. 선생님이 피드백을 작성하면 환자계정에서 조회가 가능하다.
 
@@ -347,49 +347,49 @@
 
 - 그림카드 맞추기
 
-  <img src="./Docs/gif/matchpicture.gif" width=450>
+  <img src="./exec/Docs/gif/matchpicture.gif" width=450>
 
   - **[그림카드 맞추기] :** 주어진 그림에 대한 이름을 기억하는 게임이다. 환자의 특정 동물에 따른 이름을 기억하는 데 도움을 주는 게임이다.
 
 - 동물위치 맞추기
 
-  <img src="./Docs/gif/matchanimal.gif" width=450>
+  <img src="./exec/Docs/gif/matchanimal.gif" width=450>
 
   - **[동물위치 맞추기] :** 주어진 보드에서 해당 동물들을 맞는 위치에 배치하는 게임이다. 환자의 공간 기억력을 훈련하는 게임이다.
 
 - 색깔위치 맞추기
 
-  <img src="./Docs/gif/matchcolor.gif" width=450>
+  <img src="./exec/Docs/gif/matchcolor.gif" width=450>
 
   - **[색깔위치 맞추기] :** 색칠되어있는 칸을 기억한 후 기억을 토대로 똑같이 맞추는 게임이다. 동물위치 맞추기와 유사하게 공간 기억력 훈련에 도움을 주는 게임이다.
 
 ### 12. 스스로학습하기 통계
 
-<img src="./Docs/gif/selfstudy.gif" width=450>
+<img src="./exec/Docs/gif/selfstudy.gif" width=450>
 
 - **[스스로학습하기 통계] :** 스스로학습 게임을 10라운드까지 종료하면 총 점수가 기록이 된다. 기록된 점수는 통계 페이지에서 확인가능하며 최근 게임날짜, 정확도를 그래프를 통해 시각적으로 볼 수 있으며 자신의 성장세를 쉽게 확인할 수 있다.
 
 ### 13. 재활사 회원가입(카카오)
 
-<img src="./Docs/gif/kakaosignup.gif" width=450>
+<img src="./exec/Docs/gif/kakaosignup.gif" width=450>
 
 - **[재활사 회원가입(카카오)] :** 일반 로그인 외에 카카오 계정을 통해 회원가입을 진행할 수 있다.
 
 ### 14. 재활사 일정관리
 
-<img src="./Docs/gif/schedulemanage.gif" width=450>
+<img src="./exec/Docs/gif/schedulemanage.gif" width=450>
 
 - **[재활사 일정관리] :** 선생님 계정으로 로그인 시 상단에 일정관리 탭이 생성된다. 선생님은 자신에게 맞게 스케쥴을 관리할 수 있으며 원하는 시간대를 클릭하여 수업시간을 할당할 수 있다. 수업 일정의 경우 현재시간 기준 1시간 이상 여유가 있는 시간부터 할당할 수 있으며 환자가 이미 예약한 시간대의 경우 취소할 일이 생기게 되면 별도로 연락한 후 마이페이지 - 재활일정에서 취소할 수 있다.
 
 ### 15. 수업일정관리
 
-<img src="./Docs/gif/treatmanage.gif" width=450>
+<img src="./exec/Docs/gif/treatmanage.gif" width=450>
 
 - **[수업일정관리] :** 환자가 수업을 예약하면 선생님은 수업일정관리 탭에서 해당 환자의 화상 수업 채팅방을 이곳에서 생성 혹은 취소할 수 있다. 수업을 생성하면 해당 환자에게 방생성 알림 메시지가 전송된다.
 
 ### 16. 기타페이지
 
-<img src="./Docs/gif/etc.gif" width=450>
+<img src="./exec/Docs/gif/etc.gif" width=450>
 
 - **[기타 페이지] :** 서비스 안내 게시판은 말아톤 사이트의 이용목적, 이용가치, 재활사에 대한 안내 등이 소개되어 있다. 공지사항 게시판은 사이트에서 공지할 내용을 확인할 수 있으며 관리자만 작성, 수정, 삭제 등이 가능하고 나머지 유저는 조회만 할 수 있다. 공지사항 게시판의 경우 제목 or 내용 or 제목 + 내용으로 검색 기능도 제공한다.
 
