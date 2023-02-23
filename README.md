@@ -244,6 +244,7 @@
 - **AWS**
   - EC2 서비스를 이용하여 Ubuntu 서버를 구축 (호스팅).
   - S3 서비스를 이용하여 프로필을 저장하기 위해 사용.
+  - CloudFront 서비스를 이용하고 S3에 데이터를 캐싱하여 데이터 접근에 용이
 - **Nginx** : 요청 uri를 분기하고, 웹 서버 및 리버스 프록시 서버를 구축
 - **Openvidu** : openvidu에서 제공하는 docker container를 생성하고, WebRTC를 통해 화상그룹상담, 화상재활 기능 구현
 - **WebSocket** : 웹 상에서 쉽게 소켓 통신을 하게 해주는 라이브러리를 활용하여 상호작용보드, 그룹 채팅 기능을 구현.
@@ -271,7 +272,7 @@
 
 ## 🖥️ 시스템 아키텍쳐
 
-<img src="./exec/Docs/architecture.png" width=850>
+<img src="./exec/Docs/server-architecture.png" width=850>
 
 ## 시연연상
 
