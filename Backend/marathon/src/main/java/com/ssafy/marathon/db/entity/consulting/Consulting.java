@@ -1,23 +1,17 @@
 package com.ssafy.marathon.db.entity.consulting;
 
-import java.time.LocalDate;
-import javax.persistence.Column;
 import lombok.*;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.time.LocalDateTime;
 import org.springframework.lang.Nullable;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @Entity
 @Table(name = "consulting")
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Consulting {
 
     @Id

@@ -4,17 +4,13 @@ import com.ssafy.marathon.db.entity.user.User;
 import java.time.LocalDateTime;
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
@@ -26,11 +22,11 @@ public class Communication {
     @GeneratedValue
     private Long seq;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_user_seq")
     private User sender;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_user_seq")
     private User receiver;
 

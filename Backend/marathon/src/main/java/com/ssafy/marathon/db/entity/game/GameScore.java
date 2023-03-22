@@ -1,17 +1,15 @@
 package com.ssafy.marathon.db.entity.game;
 
 import com.ssafy.marathon.db.entity.user.Patient;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Entity
 @Table(name = "game_score")
@@ -21,8 +19,6 @@ public class GameScore {
     @GeneratedValue
     private Long seq;
 
-//    @ManyToOne(targetEntity = GameCategory.class)
-//    @JoinColumn(name = "game_category_seq")
     private int gameType;
 
     private String difficulty;
@@ -33,7 +29,7 @@ public class GameScore {
 
     private int correct;
 
-    @ManyToOne(targetEntity = Patient.class)
+    @ManyToOne(targetEntity = Patient.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_seq")
     private Patient patient;
 }
